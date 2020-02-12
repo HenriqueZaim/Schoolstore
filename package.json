@@ -1,0 +1,28 @@
+{
+  "name": "les-project",
+  "version": "1.0.0",
+  "description": "E-commerce for school material supplement as a approval method on the class subject of 'Software Engineering laboratory'",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HenriqueZaim/les-project.git"
+  },
+  "keywords": [
+    "E-commerce",
+    "School",
+    "supplies",
+    "Web",
+    "App",
+    "Software",
+    "Development"
+  ],
+  "author": "Henrique Zaim Sanches",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/HenriqueZaim/les-project/issues"
+  },
+  "homepage": "https://github.com/HenriqueZaim/les-project#readme"
+}
