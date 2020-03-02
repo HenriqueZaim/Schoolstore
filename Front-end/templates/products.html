@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Material Design for Bootstrap</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/mdb.min.css">
+    <!-- Your custom styles (optional) -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        .link-black a {
+            color: black;
+        }
+
+        .link-black a:hover {
+            color: #0056b3;
+        }
+
+        .link-black .active {
+            color: #0056b3;
+        }
+
+        .divider-small {
+            width: 30px;
+            background-color: rgba(0, 0, 0, .1);
+            height: 3px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark stylish-color scrolling-navbar">
+            <a class="navbar-brand" href="#">Navbar</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-5"
+                aria-controls="navbarSupportedContent-5" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent-5">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item ">
+                        <a class="nav-link waves-effect waves-light" href="index.html">Inicial
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link waves-effect waves-light" href="about.html">Sobre</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link waves-effect waves-light" href="products.html">Produtos</a>
+                    </li>
+                </ul>
+                <!-- <ul class="navbar-nav ml-auto nav-flex-icons align-items-center flex-row-reverse flex-md-row justify-content-between">
+        <li class="nav-item pr-0 pr-lg-3">
+          <a class="nav-link waves-effect waves-light">
+            <i class="fas fa-shopping-cart"></i>
+          </a>
+        </li>
+        <li class="nav-item avatar dropdown">
+          <a class="nav-link dropdown-toggle waves-effect waves-light" id="navbarDropdownMenuLink-5" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <img src="https://mdbootstrap.com/img/Photos/Avatars/avatar-2.jpg" class="rounded-circle z-depth-0" height="35px" alt="avatar image">
+          </a>
+          <div class="dropdown-menu dropdown-menu-lg-right py-0 dropdown-secondary" aria-labelledby="navbarDropdownMenuLink-5">
+            <a class="dropdown-item waves-effect waves-light" href="#">Perfil</a>
+            <a class="dropdown-item waves-effect waves-light" href="#">Pedidos</a>
+            <div class="dropdown-divider my-0"></div>
+            <a class="dropdown-item waves-effect waves-light" href="#">Sair</a>
+          </div>
+        </li>
+      </ul> -->
+                <ul
+                    class="navbar-nav ml-auto nav-flex-icons align-items-center flex-row-reverse flex-md-row justify-content-between">
+                    <li class="nav-item pr-0 pr-lg-3">
+                        <a href="login.html" class="m-0 nav-link btn btn-link text-white waves-effect font-weight-bold">
+                            LOGIN
+                        </a>
+                    </li>
+                    <li class="nav-item avatar dropdown">
+                        <a href="register.html" class="m-0 nav-link btn  btn-outline-success waves-effect font-weight-bold">
+                            Cadastro
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="jumbotron jumbotron-fluid mb-0 white-text rounded-0 shadow-none"
+            style="text-shadow: 1px 1px 4px black;background-image: linear-gradient(to right, #4b515cc4, #4b515c3d),url(../img/about.jpg);background-size: cover;background-position: center;">
+            <div class="container">
+                <h1 class="display-4 font-weight-bold">Produtos</h1>
+                <p class="lead font-weight-bold">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Animi, nihil.
+                </p>
+            </div>
+        </section>
+
+        <section class="px-2 mt-4">
+            <div class="container">
+                <div class="row">
+                    <div class="col-3 mx-3">
+                        <div class="row flex-grow-1">
+                            <div class="col-lg-12 border p-4">
+                                <div class="mb-5 mx-3">
+                                    <h5 class="font-weight-bold mb-3">Filtrar por categoria</h5>
+
+                                    <div class="divider-small mb-3"></div>
+
+                                    <div class="form-check pl-0 mb-2">
+                                        <input type="radio" class="form-check-input" id="categoria1"
+                                            name="categoria" checked>
+                                        <label class="form-check-label" for="categoria1">Todos</label>
+                                    </div>
+                                    <div class="form-check pl-0 mb-2">
+                                        <input type="radio" class="form-check-input" id="categoria2"
+                                            name="categoria" >
+                                        <label class="form-check-label" for="categoria2">Avulsos</label>
+                                    </div>
+                                    <div class="form-check pl-0 mb-2">
+                                        <input type="radio" class="form-check-input" id="categoria3"
+                                            name="categoria">
+                                        <label class="form-check-label" for="categoria3">Lotes</label>
+                                    </div>
+                                    <div class="form-check pl-0 mb-2">
+                                        <input type="radio" class="form-check-input" id="categoria4"
+                                            name="categoria">
+                                        <label class="form-check-label" for="categoria4">Conjuntos</label>
+                                    </div>
+                                </div>
+                                <div class="mb-2 mx-3">
+                                    <h5 class="font-weight-bold mb-3">Filtrar por tipo</h5>
+                                    <div class="divider-small mb-3"></div>
+                                    <div class="form-check pl-0 mb-2">
+                                        <input type="radio" checked class="form-check-input" id="tipo1"
+                                            name="tipo">
+                                        <label class="form-check-label" for="tipo1">Todos</label>
+                                    </div>
+                                    <div class="form-check pl-0 mb-2">
+                                        <input type="radio" class="form-check-input" id="tipo2"
+                                            name="tipo" >
+                                        <label class="form-check-label" for="tipo2">Escritório</label>
+                                    </div>
+                                    <div class="form-check pl-0 mb-2">
+                                        <input type="radio" class="form-check-input" id="tipo3"
+                                            name="tipo">
+                                        <label class="form-check-label" for="tipo3">Sala de aula</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-8">
+                        <div class="container-fluid my-5 mx-3">
+                            <div class="row">
+                                <div class="col-lg-4 col-md-12">
+                                    <div class="card hoverable mb-4">
+                                        <a href="productinfo.html">
+                                            <div class="card-body">
+                                                <div class="row align-items-center">
+                                                    <div class="col-3 px-0">
+                                                        <img src="../img/desk.jpg" class="img-fluid">
+                                                    </div>
+                                                    <div class="col-9">
+                                                        <span class="badge badge-pill default-color">Conjunto</span>
+                                                        <br>
+                                                        <strong class="teal-text">Mesa Alta</strong>
+                                                        
+                                                        <h6 class="h6-responsive font-weight-bold dark-grey-text">
+                                                            <strong>R$ 100,00</strong>
+                                                        </h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div class="card hoverable mb-4">
+                                        <a href="productinfo.html">
+                                            <div class="card-body">
+                                                <div class="row align-items-center">
+                                                    <div class="col-3 px-0">
+                                                        <img src="../img/lote-pen.jpg" class="img-fluid">
+                                                    </div>
+                                                    <div class="col-9">
+                                                        <span class="badge badge-pill danger-color">Lote</span>
+                                                        <br>
+                                                        <strong class="teal-text">Caneta Preta</strong>
+                                                        
+                                                        <h6 class="h6-responsive font-weight-bold dark-grey-text">
+                                                            <strong>R$ 100,00</strong>
+                                                        </h6>
+                                                        <small class="text-muted"><s>R$ 120,00</s></small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div class="card hoverable mb-4">
+                                        <a href="productinfo.html">
+                                            <div class="card-body">
+                                                <div class="row align-items-center">
+                                                    <div class="col-3 px-0">
+                                                        <img src="../img/chair.jpg" class="img-fluid">
+                                                    </div>
+                                                    <div class="col-9">
+                                                        <strong class="teal-text">Cadeira</strong>
+                                                        
+                                                        <h6 class="h6-responsive font-weight-bold dark-grey-text">
+                                                            <strong>R$ 100,00</strong>
+                                                        </h6>
+                                                        <small class="text-muted"><s>R$ 120,00</s></small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4 col-md-12">
+                                    <div class="card hoverable mb-4">
+                                        <a href="productinfo.html">
+                                            <div class="card-body">
+                                                <div class="row align-items-center">
+                                                    <div class="col-3 px-0">
+                                                        <img src="../img/desk.jpg" class="img-fluid">
+                                                    </div>
+                                                    <div class="col-9">
+                                                        <span class="badge badge-pill default-color">Conjunto</span>
+                                                        <br>
+                                                        <strong class="teal-text">Mesa Alta</strong>
+                                                        
+                                                        <h6 class="h6-responsive font-weight-bold dark-grey-text">
+                                                            <strong>R$ 100,00</strong>
+                                                        </h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div class="card hoverable mb-4">
+                                        <a href="productinfo.html">
+                                            <div class="card-body">
+                                                <div class="row align-items-center">
+                                                    <div class="col-3 px-0">
+                                                        <img src="../img/lote-pen.jpg" class="img-fluid">
+                                                    </div>
+                                                    <div class="col-9">
+                                                        <span class="badge badge-pill danger-color">Lote</span>
+                                                        <br>
+                                                        <strong class="teal-text">Caneta Preta</strong>
+                                                        
+                                                        <h6 class="h6-responsive font-weight-bold dark-grey-text">
+                                                            <strong>R$ 100,00</strong>
+                                                        </h6>
+                                                        <small class="text-muted"><s>R$ 120,00</s></small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div class="card hoverable mb-4">
+                                        <a href="productinfo.html">
+                                            <div class="card-body">
+                                                <div class="row align-items-center">
+                                                    <div class="col-3 px-0">
+                                                        <img src="../img/chair.jpg" class="img-fluid">
+                                                    </div>
+                                                    <div class="col-9">
+                                                        <strong class="teal-text">Cadeira</strong>
+                                                        
+                                                        <h6 class="h6-responsive font-weight-bold dark-grey-text">
+                                                            <strong>R$ 100,00</strong>
+                                                        </h6>
+                                                        <small class="text-muted"><s>R$ 120,00</s></small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4 col-md-12">
+                                    <div class="card hoverable mb-4">
+                                        <a href="productinfo.html">
+                                            <div class="card-body">
+                                                <div class="row align-items-center">
+                                                    <div class="col-3 px-0">
+                                                        <img src="../img/desk.jpg" class="img-fluid">
+                                                    </div>
+                                                    <div class="col-9">
+                                                        <span class="badge badge-pill default-color">Conjunto</span>
+                                                        <br>
+                                                        <strong class="teal-text">Mesa Alta</strong>
+                                                        
+                                                        <h6 class="h6-responsive font-weight-bold dark-grey-text">
+                                                            <strong>R$ 100,00</strong>
+                                                        </h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div class="card hoverable mb-4">
+                                        <a href="productinfo.html">
+                                            <div class="card-body">
+                                                <div class="row align-items-center">
+                                                    <div class="col-3 px-0">
+                                                        <img src="../img/lote-pen.jpg" class="img-fluid">
+                                                    </div>
+                                                    <div class="col-9">
+                                                        <span class="badge badge-pill danger-color">Lote</span>
+                                                        <br>
+                                                        <strong class="teal-text">Caneta Preta</strong>
+                                                        
+                                                        <h6 class="h6-responsive font-weight-bold dark-grey-text">
+                                                            <strong>R$ 100,00</strong>
+                                                        </h6>
+                                                        <small class="text-muted"><s>R$ 120,00</s></small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div class="card hoverable mb-4">
+                                        <a href="productinfo.html">
+                                            <div class="card-body">
+                                                <div class="row align-items-center">
+                                                    <div class="col-3 px-0">
+                                                        <img src="../img/chair.jpg" class="img-fluid">
+                                                    </div>
+                                                    <div class="col-9">
+                                                        <strong class="teal-text">Cadeira</strong>
+                                                        
+                                                        <h6 class="h6-responsive font-weight-bold dark-grey-text">
+                                                            <strong>R$ 100,00</strong>
+                                                        </h6>
+                                                        <small class="text-muted"><s>R$ 120,00</s></small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination pagination-circle pg-blue">
+                                    <li class="page-item disabled"><a class="page-link">Primeiro</a></li>
+                                    <li class="page-item disabled">
+                                        <a class="page-link" aria-label="Previous">
+                                            <span aria-hidden="true">&laquo;</span>
+                                            <span class="sr-only">Previous</span>
+                                        </a>
+                                    </li>
+                                    <li class="page-item active"><a class="page-link">1</a></li>
+                                    <li class="page-item"><a class="page-link">2</a></li>
+                                    <li class="page-item"><a class="page-link">3</a></li>
+                                    <li class="page-item"><a class="page-link">4</a></li>
+                                    <li class="page-item"><a class="page-link">5</a></li>
+                                    <li class="page-item">
+                                        <a class="page-link" aria-label="Next">
+                                            <span aria-hidden="true">&raquo;</span>
+                                            <span class="sr-only">Next</span>
+                                        </a>
+                                    </li>
+                                    <li class="page-item"><a class="page-link">Último</a></li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+
+    </main>
+
+    <footer class="page-footer stylish-color font-small">
+        <div class="footer-copyright text-center text-white stylish-color-dark py-3">© 2020 Todos os direitos
+            reservados:
+            <a class="text-light font-weight-bold" href="https://mdbootstrap.com/education/bootstrap/">
+                foxdevlabs.com</a>
+        </div>
+    </footer>
+
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/popper.min.js"></script>
+    <script type="text/javascript" src="../js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../js/mdb.min.js"></script>
+
+</body>
+
+</html>

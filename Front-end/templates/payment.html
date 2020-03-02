@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Material Design for Bootstrap</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/mdb.min.css">
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        .dropzone{
+            background-color: #cecece;
+            border: 2px dotted #aeaeae;
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <header style="background: rgba(0,0,0,0.8);">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-transparent shadow-none scrolling-navbar">
+            <div class="container">
+                <a class="navbar-brand mx-auto font-weight-bold" href="index.html">SCHOOLSTORE</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="py-5 px-2">
+            <div class="container mt-5 dark-grey-text">
+                <h1 class="text-center">DADOS DE PAGAMENTO</h1>
+                <hr>
+
+                <section>
+                    <div class="row mt-4">
+                        <div class="col-lg-6">
+                            <h2>Endereço da entrega</h2>
+                            <div class="row mt-3">
+                                <div class="col">
+                                    <div class="md-form">
+                                        <input type="text" value="08873-496" required maxlength="11" id="txtep" name="txtCep"
+                                            class="form-control mb-0">
+                                        <label for="txtCep">CEP</label>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="md-form">
+                                        <input type="text" value="São Paulo" readonly required id="txtEstado" name="txtEstado"
+                                            class="form-control mb-0">
+                                        <label for="txtEstado">Estado</label>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="md-form">
+                                        <input type="text" value="Mogi das Cruzes" readonly required id="txtCidade" name="txtCidade"
+                                            class="form-control mb-0">
+                                        <label for="txtCidade">Cidade</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-lg-6">
+                                    <div class="md-form">
+                                        <input type="text" readonly value="Rua rua da rua do bairro da cidade" required maxlength="11" id="txtep" name="txtCep"
+                                            class="form-control mb-0">
+                                        <label for="txtCep">Rua</label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="md-form">
+                                        <input type="text" value="Mogilar" readonly required id="txtEstado" name="txtEstado"
+                                            class="form-control mb-0">
+                                        <label for="txtEstado">Bairro</label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="md-form">
+                                        <input type="number" value="10" required id="txtEstado" name="txtEstado"
+                                            class="form-control mb-0">
+                                        <label for="txtEstado">Número</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="md-form">
+                                <input type="text" value="Perto do bar da cachaça" required id="txtEstado" name="txtEstado"
+                                    class="form-control mb-0">
+                                <label for="txtEstado">Ponto de referência</label>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <h2>Modo de pagamento</h2>
+                            
+                            <div class="row mt-3">
+                                <div class="col">
+                                    <div class="md-form">
+                                        <input type="text" readonly value="1241 1253 3432 2345" required maxlength="11" id="txtep" name="txtCep"
+                                            class="form-control mb-0">
+                                        <label for="txtCep">Número do cartão</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col">
+                                    <div class="md-form">
+                                        <input type="text" value="Mastercard" required maxlength="11" id="txtep" name="txtCep"
+                                            class="form-control mb-0">
+                                        <label for="txtCep">Cartão</label>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="md-form">
+                                        <input type="text" value="10/22" required id="txtEstado" name="txtEstado"
+                                            class="form-control mb-0">
+                                        <label for="txtEstado">Validade</label>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="md-form">
+                                        <input type="text" value="NaN" readonly required id="txtEstado" name="txtEstado"
+                                            class="form-control mb-0">
+                                        <label for="txtEstado">Código</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center mt-5">
+                        <div class="col-lg-6">
+                            <h2 class="text-center">Confirme sua compra</h2>
+                            <ul class="mx-5 mt-4">
+                                <li class="d-flex justify-content-between">
+                                    <p>1x  Mesa Alta</p>
+                                    <p>R$ 100,00</p>
+                                </li>
+                                <li class="d-flex justify-content-between">
+                                    <p>1x  cadeira Alta</p>
+                                    <p>R$ 100,00</p>
+                                </li>
+                                <li class="d-flex justify-content-between">
+                                    <p>1x  Cadeira Alta X</p>
+                                    <p>R$ 100,00</p>
+                                </li>
+                                <li class="d-flex justify-content-between">
+                                    <p>Desconto do conjunto</p>
+                                    <p>- R$ 2,00</p>
+                                </li>
+                                <li class="d-flex justify-content-between">
+                                    <p>Frete</p>
+                                    <p>R$ 2,00</p>
+                                </li>
+                                <hr>
+                                <li class="d-flex justify-content-between">
+                                    <p class="font-weight-bold">Valor final</p>
+                                    <p class="font-weight-bold">R$ 300,00</p>
+                                </li>
+                            </ul>
+                            <a href="request.html" id="btnCadastrar" class="btn btn-success float-right mr-5">Comprar</a>
+
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </section>
+    </main>
+
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/popper.min.js"></script>
+    <script type="text/javascript" src="../js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../js/mdb.min.js"></script>
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Material Design for Bootstrap</title>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+  <link rel="stylesheet" href="../css/bootstrap.min.css">
+  <link rel="stylesheet" href="../css/mdb.min.css">
+  <!-- Your custom styles (optional) -->
+  <link rel="stylesheet" href="../css/style.css">
+
+  <style>
+    .dropdown-menu.show {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .dropdown-item:active,
+    .dropdown-item:hover {
+      background-color: #4b515d;
+      color: #f8f9fa !important;
+    }
+
+    .searchInput {
+      background-color: #489468;
+    }
+
+    .searchInput::placeholder {
+      color: white;
+    }
+
+    .nav-tabs .nav-item.show .nav-link,
+    .nav-tabs .nav-link.active {
+      background-color: #489468;
+      border: 0;
+    }
+
+    .nav-tabs .nav-link:focus,
+    .nav-tabs .nav-link:hover {
+      border: 1px solid #489468;
+      background-color: #489468;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-dark stylish-color scrolling-navbar">
+      <a class="navbar-brand" href="#">Navbar</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-5"
+        aria-controls="navbarSupportedContent-5" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent-5">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link waves-effect waves-light" href="#">Inicial
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link waves-effect waves-light" href="about.html">Sobre</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link waves-effect waves-light" href="products.html">Produtos</a>
+          </li>
+        </ul>
+        <!-- <ul class="navbar-nav ml-auto nav-flex-icons align-items-center flex-row-reverse flex-md-row justify-content-between">
+        <li class="nav-item pr-0 pr-lg-3">
+          <a class="nav-link waves-effect waves-light">
+            <i class="fas fa-shopping-cart"></i>
+          </a>
+        </li>
+        <li class="nav-item avatar dropdown">
+          <a class="nav-link dropdown-toggle waves-effect waves-light" id="navbarDropdownMenuLink-5" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <img src="https://mdbootstrap.com/img/Photos/Avatars/avatar-2.jpg" class="rounded-circle z-depth-0" height="35px" alt="avatar image">
+          </a>
+          <div class="dropdown-menu dropdown-menu-lg-right py-0 dropdown-secondary" aria-labelledby="navbarDropdownMenuLink-5">
+            <a class="dropdown-item waves-effect waves-light" href="#">Perfil</a>
+            <a class="dropdown-item waves-effect waves-light" href="#">Pedidos</a>
+            <div class="dropdown-divider my-0"></div>
+            <a class="dropdown-item waves-effect waves-light" href="#">Sair</a>
+          </div>
+        </li>
+      </ul> -->
+        <ul
+          class="navbar-nav ml-auto nav-flex-icons align-items-center flex-row-reverse flex-md-row justify-content-between">
+          <li class="nav-item pr-0 pr-lg-3">
+            <a href="login.html" class="m-0 nav-link btn btn-link text-white waves-effect font-weight-bold">
+              LOGIN
+            </a>
+          </li>
+          <li class="nav-item avatar dropdown">
+            <a href="register.html" class="m-0 nav-link btn  btn-outline-success waves-effect font-weight-bold">
+              Cadastro
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="jumbotron jumbotron-fluid mb-0 white-text rounded-0"
+      style="text-shadow: 1px 1px 4px black;background-image: linear-gradient(to right, #4b515c7d, #4b515c00),url(../img/white-blank-notebook-733857.jpg);background-size: cover;background-position: center;">
+      <div class="container">
+        <h1 class="display-4 font-weight-bold">SchoolStore</h1>
+        <p class="lead font-weight-bold">Lorem ipsum dolor sit amet consectetur adipisicing.</p>
+      </div>
+    </section>
+
+    <section class="py-2" style="background-color: #16a270;">
+      <div class="container d-flex justify-content-center">
+        <ul class="nav font-weight-bold nav-tabs nav-justified md-tabs border-0" id="myTabJust" role="tablist">
+          <li class="nav-item">
+            <a class="nav-link white-text active" id="popular-tab-just" data-toggle="tab" href="#popular-just"
+              role="tab" aria-controls="popular-just" aria-selected="true">Populares</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link white-text" id="novo-tab-just" data-toggle="tab" href="#novo-just" role="tab"
+              aria-controls="novo-just" aria-selected="false">Novos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link white-text" id="promocao-tab-just" data-toggle="tab" href="#promocao-just" role="tab"
+              aria-controls="promocao-just" aria-selected="false">Promoção</a>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="text-center">
+      <div class="tab-content card shadow-none rounded-0" id="myTabContentJust">
+        <div class="tab-pane fade show active" id="popular-just" role="tabpanel" aria-labelledby="home-tab-just">
+          <h2 class="h1-responsive font-weight-bold text-center my-5">Mais Vendidos</h2>
+          <p class="dark-text text-center w-responsive mx-auto mb-5">Confira abaixo os itens mais vendidos em nossa loja
+            virtual</p>
+          <div class="container">
+            <div class="row">
+
+              <div class="col-lg-3 col-md-6 mb-lg-0 mb-4">
+                <div class="card align-items-center">
+                  <div class="view overlay">
+                    <img src="../img/desk.jpg" height="250px" class="card-img-top" alt="">
+                    <a>
+                      <div class="mask rgba-white-slight"></div>
+                    </a>
+                  </div>
+                  <div class="card-body text-center">
+                    <a href="" class="grey-text">
+                      <h6>Escritório</h6>
+                    </a>
+                    <h5>
+                      <strong>
+                        <a href="" class="dark-grey-text">Mesa Alta
+                          <span class="badge badge-pill danger-color">CONJ</span>
+                        </a>
+                      </strong>
+                    </h5>
+                    <p class="card-text ">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste, porro.
+                    </p>
+                    <div class="card-footer bg-white px-1">
+                      <span class="float-left font-weight-bold">
+                        <strong>R$ 99,99</strong>
+                      </span>
+                      <span class="float-right">
+                        <a data-toggle="tooltip" data-placement="top" title="Add to Cart">
+                          <i class="fas fa-shopping-cart grey-text ml-3"></i>
+                        </a>
+                      </span>
+                      <span class="float-right">
+                        <a data-toggle="tooltip" data-placement="top" title="Ver mais" href="productinfo.html">
+                          <i class="fas fa-search  grey-text ml-3"></i>
+                        </a>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-3 col-md-6 mb-lg-0 mb-4">
+                <div class="card align-items-center">
+                  <div class="view overlay">
+                    <img src="../img/chair.jpg" height="250px" class="card-img-top" alt="">
+                    <a>
+                      <div class="mask rgba-white-slight"></div>
+                    </a>
+                  </div>
+                  <div class="card-body text-center">
+                    <a href="" class="grey-text">
+                      <h6>Escritório</h6>
+                    </a>
+                    <h5>
+                      <strong>
+                        <a href="" class="dark-grey-text">Cadeira
+                        </a>
+                      </strong>
+                    </h5>
+                    <p class="card-text ">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste, porro.
+                    </p>
+                    <div class="card-footer bg-white px-1">
+                      <span class="float-left font-weight-bold">
+                        <strong>R$ 49,99</strong>
+                      </span>
+                      <span class="float-right">
+                        <a data-toggle="tooltip" data-placement="top" title="Add to Cart">
+                          <i class="fas fa-shopping-cart grey-text ml-3"></i>
+                        </a>
+                      </span>
+                      <span class="float-right">
+                        <a data-toggle="tooltip" data-placement="top" title="Ver mais" href="productinfo.html">
+                          <i class="fas fa-search  grey-text ml-3"></i>
+                        </a>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-3 col-md-6 mb-lg-0 mb-4">
+                <div class="card align-items-center">
+                  <div class="view overlay">
+                    <img src="../img/lote-pen.jpg" height="250px" class="card-img-top" alt="">
+                    <a>
+                      <div class="mask rgba-white-slight"></div>
+                    </a>
+                  </div>
+                  <div class="card-body text-center">
+                    <a href="" class="grey-text">
+                      <h6>Sala de Aula</h6>
+                    </a>
+                    <h5>
+                      <strong>
+                        <a href="" class="dark-grey-text">Canetas
+                          <span class="badge badge-pill default-color">LOTE</span>
+                        </a>
+                      </strong>
+
+                    </h5>
+
+                    <p class="card-text ">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste, porro.
+                    </p>
+                    <small class="text-black-50">*Contém 12 unidades*</small>
+                    <div class="card-footer bg-white px-1">
+                      <span class="float-left font-weight-bold">
+                        <strong>R$ 49,99</strong>
+                      </span>
+                      <span class="float-right">
+                        <a data-toggle="tooltip" data-placement="top" title="Add to Cart">
+                          <i class="fas fa-shopping-cart grey-text ml-3"></i>
+                        </a>
+                      </span>
+                      <span class="float-right">
+                        <a data-toggle="tooltip" data-placement="top" title="Ver mais" href="productinfo.html">
+                          <i class="fas fa-search  grey-text ml-3"></i>
+                        </a>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-3 col-md-6 mb-lg-0 mb-4">
+                <div class="card align-items-center">
+                  <div class="view overlay">
+                    <img src="../img/lote-pencil.jpg" height="250px" class="card-img-top" alt="">
+                    <a>
+                      <div class="mask rgba-white-slight"></div>
+                    </a>
+                  </div>
+                  <div class="card-body text-center">
+                    <a href="" class="grey-text">
+                      <h6>Sala de Aula</h6>
+                    </a>
+                    <h5>
+                      <strong>
+                        <a href="" class="dark-grey-text">Lápis de Cor
+                          <span class="badge badge-pill default-color">LOTE</span>
+                        </a>
+                      </strong>
+                    </h5>
+                    <p class="card-text ">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste, porro.
+                    </p>
+                    <small class="text-black-50">*Contém 12 unidades*</small>
+                    <div class="card-footer bg-white px-1">
+                      <span class="float-left font-weight-bold">
+                        <strong>R$ 49,99</strong>
+                      </span>
+                      <span class="float-right">
+                        <a data-toggle="tooltip" data-placement="top" title="Add to Cart">
+                          <i class="fas fa-shopping-cart grey-text ml-3"></i>
+                        </a>
+                      </span>
+                      <span class="float-right">
+                        <a data-toggle="tooltip" data-placement="top" title="Ver mais" href="productinfo.html">
+                          <i class="fas fa-search  grey-text ml-3"></i>
+                        </a>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p class="dark-text text-center w-responsive mx-auto my-5">Lorem ipsum dolor sit amet, consectetur
+            adipisicing elit. Fugit, error amet numquam iure provident voluptate esse quasi, veritatis totam voluptas
+            nostrum quisquam eum porro a pariatur veniam.</p>
+        </div>
+        <div class="tab-pane fade" id="novo-just" role="tabpanel" aria-labelledby="profile-tab-just">
+          <h2 class="h1-responsive font-weight-bold text-center my-5">Novos Produtos</h2>
+          <p class="dark-text text-center w-responsive mx-auto mb-5">Produtos que acabaram de sair do forno justamente
+            para você!</p>
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-3 col-md-6 mb-lg-0 mb-4">
+                <div class="card align-items-center">
+                  <div class="view overlay">
+                    <img src="../img/desk.jpg" height="250px" class="card-img-top" alt="">
+                    <a>
+                      <div class="mask rgba-white-slight"></div>
+                    </a>
+                  </div>
+                  <div class="card-body text-center">
+                    <a href="" class="grey-text">
+                      <h6>Escritório</h6>
+                    </a>
+                    <h5>
+                      <strong>
+                        <a href="" class="dark-grey-text">Mesa Alta
+                          <span class="badge badge-pill danger-color">CONJ</span>
+                        </a>
+                      </strong>
+                    </h5>
+                    <p class="card-text ">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste, porro.
+                    </p>
+                    <div class="card-footer bg-white px-1">
+                      <span class="float-left font-weight-bold">
+                        <strong>R$ 99,99</strong>
+                      </span>
+                      <span class="float-right">
+                        <a data-toggle="tooltip" data-placement="top" title="Add to Cart">
+                          <i class="fas fa-shopping-cart grey-text ml-3"></i>
+                        </a>
+                      </span>
+                      <span class="float-right">
+                        <a data-toggle="tooltip" data-placement="top" title="Ver mais" href="productinfo.html">
+                          <i class="fas fa-search  grey-text ml-3"></i>
+                        </a>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-3 col-md-6 mb-lg-0 mb-4">
+                <div class="card align-items-center">
+                  <div class="view overlay">
+                    <img src="../img/chair.jpg" height="250px" class="card-img-top" alt="">
+                    <a>
+                      <div class="mask rgba-white-slight"></div>
+                    </a>
+                  </div>
+                  <div class="card-body text-center">
+                    <a href="" class="grey-text">
+                      <h6>Escritório</h6>
+                    </a>
+                    <h5>
+                      <strong>
+                        <a href="" class="dark-grey-text">Cadeira
+                        </a>
+                      </strong>
+                    </h5>
+                    <p class="card-text ">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste, porro.
+                    </p>
+                    <div class="card-footer bg-white px-1">
+                      <span class="float-left font-weight-bold">
+                        <strong>R$ 49,99</strong>
+                      </span>
+                      <span class="float-right">
+                        <a data-toggle="tooltip" data-placement="top" title="Add to Cart">
+                          <i class="fas fa-shopping-cart grey-text ml-3"></i>
+                        </a>
+                      </span>
+                      <span class="float-right">
+                        <a data-toggle="tooltip" data-placement="top" title="Ver mais" href="productinfo.html">
+                          <i class="fas fa-search  grey-text ml-3"></i>
+                        </a>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-3 col-md-6 mb-lg-0 mb-4">
+                <div class="card align-items-center">
+                  <div class="view overlay">
+                    <img src="../img/lote-pen.jpg" height="250px" class="card-img-top" alt="">
+                    <a>
+                      <div class="mask rgba-white-slight"></div>
+                    </a>
+                  </div>
+                  <div class="card-body text-center">
+                    <a href="" class="grey-text">
+                      <h6>Sala de Aula</h6>
+                    </a>
+                    <h5>
+                      <strong>
+                        <a href="" class="dark-grey-text">Canetas
+                          <span class="badge badge-pill default-color">LOTE</span>
+                        </a>
+                      </strong>
+
+                    </h5>
+
+                    <p class="card-text ">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste, porro.
+                    </p>
+                    <small class="text-black-50">*Contém 12 unidades*</small>
+                    <div class="card-footer bg-white px-1">
+                      <span class="float-left font-weight-bold">
+                        <strong>R$ 49,99</strong>
+                      </span>
+                      <span class="float-right">
+                        <a data-toggle="tooltip" data-placement="top" title="Add to Cart">
+                          <i class="fas fa-shopping-cart grey-text ml-3"></i>
+                        </a>
+                      </span>
+                      <span class="float-right">
+                        <a data-toggle="tooltip" data-placement="top" title="Ver mais" href="productinfo.html">
+                          <i class="fas fa-search  grey-text ml-3"></i>
+                        </a>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-3 col-md-6 mb-lg-0 mb-4">
+                <div class="card align-items-center">
+                  <div class="view overlay">
+                    <img src="../img/lote-pencil.jpg" height="250px" class="card-img-top" alt="">
+                    <a>
+                      <div class="mask rgba-white-slight"></div>
+                    </a>
+                  </div>
+                  <div class="card-body text-center">
+                    <a href="" class="grey-text">
+                      <h6>Sala de Aula</h6>
+                    </a>
+                    <h5>
+                      <strong>
+                        <a href="" class="dark-grey-text">Lápis de Cor
+                          <span class="badge badge-pill default-color">LOTE</span>
+                        </a>
+                      </strong>
+                    </h5>
+                    <p class="card-text ">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste, porro.
+                    </p>
+                    <small class="text-black-50">*Contém 12 unidades*</small>
+                    <div class="card-footer bg-white px-1">
+                      <span class="float-left font-weight-bold">
+                        <strong>R$ 49,99</strong>
+                      </span>
+                      <span class="float-right">
+                        <a data-toggle="tooltip" data-placement="top" title="Add to Cart">
+                          <i class="fas fa-shopping-cart grey-text ml-3"></i>
+                        </a>
+                      </span>
+                      <span class="float-right">
+                        <a data-toggle="tooltip" data-placement="top" title="Ver mais" href="productinfo.html">
+                          <i class="fas fa-search  grey-text ml-3"></i>
+                        </a>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p class="dark-text text-center w-responsive mx-auto my-5">Lorem ipsum dolor sit amet, consectetur
+            adipisicing elit. Fugit, error amet numquam iure provident voluptate esse quasi, veritatis totam voluptas
+            nostrum quisquam eum porro a pariatur veniam.</p>
+        </div>
+        <div class="tab-pane fade" id="promocao-just" role="tabpanel" aria-labelledby="contact-tab-just">
+          <h2 class="h1-responsive font-weight-bold text-center my-5">Em Promoção</h2>
+          <p class="dark-text text-center w-responsive mx-auto mb-5">Aproveite as promoções de nosso site por tempo
+            limitado!.</p>
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-3 col-md-6 mb-lg-0 mb-4">
+                <div class="card align-items-center">
+                  <div class="view overlay">
+                    <img src="../img/desk.jpg" height="250px" class="card-img-top" alt="">
+                    <a>
+                      <div class="mask rgba-white-slight"></div>
+                    </a>
+                  </div>
+                  <div class="card-body text-center">
+                    <a href="" class="grey-text">
+                      <h6>Escritório</h6>
+                    </a>
+                    <h5>
+                      <strong>
+                        <a href="" class="dark-grey-text">Mesa Alta
+                          <span class="badge badge-pill danger-color">CONJ</span>
+                        </a>
+                      </strong>
+                    </h5>
+                    <p class="card-text ">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste, porro.
+                    </p>
+                    <div class="card-footer bg-white px-1">
+                      <span class="float-left font-weight-bold">
+                        <strong>R$ 99,99</strong>
+                      </span>
+                      <span class="float-right">
+                        <a data-toggle="tooltip" data-placement="top" title="Add to Cart">
+                          <i class="fas fa-shopping-cart grey-text ml-3"></i>
+                        </a>
+                      </span>
+                      <span class="float-right">
+                        <a data-toggle="tooltip" data-placement="top" title="Ver mais" href="productinfo.html">
+                          <i class="fas fa-search  grey-text ml-3"></i>
+                        </a>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-3 col-md-6 mb-lg-0 mb-4">
+                <div class="card align-items-center">
+                  <div class="view overlay">
+                    <img src="../img/chair.jpg" height="250px" class="card-img-top" alt="">
+                    <a>
+                      <div class="mask rgba-white-slight"></div>
+                    </a>
+                  </div>
+                  <div class="card-body text-center">
+                    <a href="" class="grey-text">
+                      <h6>Escritório</h6>
+                    </a>
+                    <h5>
+                      <strong>
+                        <a href="" class="dark-grey-text">Cadeira
+                        </a>
+                      </strong>
+                    </h5>
+                    <p class="card-text ">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste, porro.
+                    </p>
+                    <div class="card-footer bg-white px-1">
+                      <span class="float-left font-weight-bold">
+                        <strong>R$ 49,99</strong>
+                      </span>
+                      <span class="float-right">
+                        <a data-toggle="tooltip" data-placement="top" title="Add to Cart">
+                          <i class="fas fa-shopping-cart grey-text ml-3"></i>
+                        </a>
+                      </span>
+                      <span class="float-right">
+                        <a data-toggle="tooltip" data-placement="top" title="Ver mais" href="productinfo.html">
+                          <i class="fas fa-search  grey-text ml-3"></i>
+                        </a>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-3 col-md-6 mb-lg-0 mb-4">
+                <div class="card align-items-center">
+                  <div class="view overlay">
+                    <img src="../img/lote-pen.jpg" height="250px" class="card-img-top" alt="">
+                    <a>
+                      <div class="mask rgba-white-slight"></div>
+                    </a>
+                  </div>
+                  <div class="card-body text-center">
+                    <a href="" class="grey-text">
+                      <h6>Sala de Aula</h6>
+                    </a>
+                    <h5>
+                      <strong>
+                        <a href="" class="dark-grey-text">Canetas
+                          <span class="badge badge-pill default-color">LOTE</span>
+                        </a>
+                      </strong>
+
+                    </h5>
+
+                    <p class="card-text ">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste, porro.
+                    </p>
+                    <small class="text-black-50">*Contém 12 unidades*</small>
+                    <div class="card-footer bg-white px-1">
+                      <span class="float-left font-weight-bold">
+                        <strong>R$ 49,99</strong>
+                      </span>
+                      <span class="float-right">
+                        <a data-toggle="tooltip" data-placement="top" title="Add to Cart">
+                          <i class="fas fa-shopping-cart grey-text ml-3"></i>
+                        </a>
+                      </span>
+                      <span class="float-right">
+                        <a data-toggle="tooltip" data-placement="top" title="Ver mais" href="productinfo.html">
+                          <i class="fas fa-search  grey-text ml-3"></i>
+                        </a>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-3 col-md-6 mb-lg-0 mb-4">
+                <div class="card align-items-center">
+                  <div class="view overlay">
+                    <img src="../img/lote-pencil.jpg" height="250px" class="card-img-top" alt="">
+                    <a>
+                      <div class="mask rgba-white-slight"></div>
+                    </a>
+                  </div>
+                  <div class="card-body text-center">
+                    <a href="" class="grey-text">
+                      <h6>Sala de Aula</h6>
+                    </a>
+                    <h5>
+                      <strong>
+                        <a href="" class="dark-grey-text">Lápis de Cor
+                          <span class="badge badge-pill default-color">LOTE</span>
+                        </a>
+                      </strong>
+                    </h5>
+                    <p class="card-text ">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste, porro.
+                    </p>
+                    <small class="text-black-50">*Contém 12 unidades*</small>
+                    <div class="card-footer bg-white px-1">
+                      <span class="float-left font-weight-bold">
+                        <strong>R$ 49,99</strong>
+                      </span>
+                      <span class="float-right">
+                        <a data-toggle="tooltip" data-placement="top" title="Add to Cart">
+                          <i class="fas fa-shopping-cart grey-text ml-3"></i>
+                        </a>
+                      </span>
+                      <span class="float-right">
+                        <a data-toggle="tooltip" data-placement="top" title="Ver mais" href="productinfo.html">
+                          <i class="fas fa-search  grey-text ml-3"></i>
+                        </a>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p class="dark-text text-center w-responsive mx-auto my-5">Lorem ipsum dolor sit amet, consectetur
+            adipisicing elit. Fugit, error amet numquam iure provident voluptate esse quasi, veritatis totam voluptas
+            nostrum quisquam eum porro a pariatur veniam.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="page-footer stylish-color font-small lighten-5">
+    <div style="background-color: #16a270;">
+      <div class="container">
+        <div class="row py-4 d-flex align-items-center">
+          <div class="col-md-6 col-lg-5 text-center text-md-left mb-4 mb-md-0">
+            <h6 class="mb-0 font-weight-bold">Conheça nossas redes sociais!</h6>
+          </div>
+          <div class="col-md-6 col-lg-7 text-center text-md-right">
+            <a class="fb-ic">
+              <i class="fab fa-facebook-f white-text mr-4"> </i>
+            </a>
+            <a class="li-ic">
+              <i class="fab fa-linkedin-in white-text mr-4"> </i>
+            </a>
+            <a class="ins-ic">
+              <i class="fab fa-instagram white-text"> </i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container  text-center text-md-left mt-5">
+      <div class="row mt-3 text-white">
+        <div class="col-md-3 col-lg-4 col-xl-3 mb-4">
+          <h6 class="text-uppercase font-weight-bold">SchoolStore</h6>
+          <hr class="teal accent-3 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+          <p class="font-weight-bold">Here you can use rows and columns to organize your footer content. Lorem ipsum
+            dolor sit amet,
+            consectetur
+            adipisicing elit.</p>
+        </div>
+        <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+          <h6 class="text-uppercase font-weight-bold">Produtos</h6>
+          <hr class="teal accent-3 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+          <p>
+            <a class="text-light font-weight-bold" href="#!">Conjuntos</a>
+          </p>
+          <p>
+            <a class="text-light font-weight-bold" href="#!">Personalizados</a>
+          </p>
+          <p>
+            <a class="text-light font-weight-bold" href="#!">Avulsos</a>
+          </p>
+        </div>
+        <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+          <h6 class="text-uppercase font-weight-bold">Links Úteis</h6>
+          <hr class="teal accent-3 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+          <p>
+            <a class="text-light font-weight-bold" href="#!">Seu Perfil</a>
+          </p>
+          <p>
+            <a class="text-light font-weight-bold" href="#!">Seja um Fornecedor</a>
+          </p>
+          <p>
+            <a class="text-light font-weight-bold" href="#!">Sobre</a>
+          </p>
+        </div>
+        <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+          <h6 class="text-uppercase font-weight-bold">Contact</h6>
+          <hr class="teal accent-3 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+          <p class="font-weight-bold">
+            <i class="fas fa-home mr-3"></i> Mogi das Cruzes, São Paulo, BR</p>
+          <p class="font-weight-bold">
+            <i class="fas fa-envelope mr-3"></i> schoolstore@gmail.com</p>
+          <p class="font-weight-bold">
+            <i class="fas fa-phone mr-3"></i> + 55 11 4002 8922</p>
+        </div>
+      </div>
+    </div>
+    <div class="footer-copyright text-center text-white stylish-color-dark py-3">© 2020 Todos os direitos reservados:
+      <a class="text-light font-weight-bold" href="https://mdbootstrap.com/education/bootstrap/"> foxdevlabs.com</a>
+    </div>
+  </footer>
+
+  <script type="text/javascript" src="../js/jquery.min.js"></script>
+  <script type="text/javascript" src="../js/popper.min.js"></script>
+  <script type="text/javascript" src="../js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="../js/mdb.min.js"></script>
+  <!-- Your custom scripts (optional) -->
+  <script type="text/javascript"></script>
+
+</body>
+
+</html>
