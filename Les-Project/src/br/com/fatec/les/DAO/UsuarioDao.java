@@ -41,9 +41,10 @@ public class UsuarioDao implements IDao{
 			mensagem = "Usuário atualizado com sucesso";
 		}catch(SQLException e) {
 			mensagem = e.getMessage();
-		}finally {
-			ConexaoFactory.closeConnection(conexao, pstm);
 		}
+//		finally {
+//			ConexaoFactory.closeConnection(conexao, pstm);
+//		}
 		
 		return mensagem;
 	}
@@ -62,7 +63,12 @@ public class UsuarioDao implements IDao{
 				+ "usu_email, "
 				+ "usu_numeroTelefone, "
 				+ "usu_numeroDocumento "
-				+ " FROM usuarios";
+				+ " FROM usuarios WHERE usu_ativo = 1 ";
+		if(usuario.getId() != null) {
+			sql += "AND usu_id = " + usuario.getId();
+		}
+		
+		// TODO: Fazer verificação de filtro aqui
 		
 		try {
 			pstm = conexao.prepareStatement(sql);
@@ -80,9 +86,10 @@ public class UsuarioDao implements IDao{
 			}
 		}catch(SQLException e) {
 			System.err.println(e.getMessage());
-		}finally {
-			ConexaoFactory.closeConnection(conexao, pstm, rs);
 		}
+//		finally {
+//			ConexaoFactory.closeConnection(conexao, pstm, rs);
+//		}
 		
 		return usuarios;
 	}
@@ -102,9 +109,10 @@ public class UsuarioDao implements IDao{
 			mensagem = "Usuário deletado com sucesso";
 		}catch(SQLException e) {
 			mensagem = e.getMessage();
-		}finally {
-			ConexaoFactory.closeConnection(conexao, pstm);
 		}
+//		finally {
+//			ConexaoFactory.closeConnection(conexao, pstm);
+//		}
 		
 		return mensagem;
 	}
@@ -113,35 +121,36 @@ public class UsuarioDao implements IDao{
 	public String salvar(EntidadeDominio entidadeDominio) throws SQLException {
 		Usuario usuario = (Usuario) entidadeDominio;
 		String sql = "INSERT INTO usuarios "
-				+ "(usu_ativo, "
+				+ "("
 				+ "usu_nome, "
 				+ "usu_email, "
 				+ "usu_senha, "
 				+ "usu_numeroTelefone, "
 				+ "usu_numeroDocumento, "
 				+ "usu_genero, "
+				+ "usu_ativo, "
 				+ "usu_dataHoraCriacao) "
-				+ " VALUES (?, ?, ?, ?, ?, ?, ?, NOW())";
+				+ " VALUES (?, ?, ?, ?, ?, ?, true, NOW())";
 		
 		PreparedStatement pstm = null;
 		
 		try {
 			pstm = conexao.prepareStatement(sql);
-			pstm.setBoolean(1, usuario.isAtivo());
-			pstm.setString(2, usuario.getNome());
-			pstm.setString(3, usuario.getEmail());
-			pstm.setString(4, usuario.getSenha());
-			pstm.setString(5, usuario.getNumeroTelefone());
-			pstm.setString(6, usuario.getNumeroDocumento());
-			pstm.setString(7, usuario.getGenero().toString());
+			pstm.setString(1, usuario.getNome());
+			pstm.setString(2, usuario.getEmail());
+			pstm.setString(3, usuario.getSenha());
+			pstm.setString(4, usuario.getNumeroTelefone());
+			pstm.setString(5, usuario.getNumeroDocumento());
+			pstm.setString(6, usuario.getGenero().toString());
 			pstm.executeUpdate();
 			mensagem = "Usuário cadastrado com sucesso!";
 		}catch(SQLException e){
 			mensagem = e.toString();
 			mensagem = "Erro: " + mensagem;
-		}finally {
-			ConexaoFactory.closeConnection(conexao, pstm);
 		}
+//		finally {
+//			ConexaoFactory.closeConnection(conexao, pstm);
+//		}
 		return mensagem;
 	}
 }

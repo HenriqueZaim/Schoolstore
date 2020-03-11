@@ -12,28 +12,57 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 		<title>Usuários</title>
+		<style>
+			td{
+				margin: 5px 10px;
+			}
+		</style>
 	</head>
 	
 
 	<body>	
-	
-		<%
-			System.out.print(request.getAttribute("usuarios"));
-		
-		%>
-
-
-		<table>
-			<tr>
-				<th> Nome </th>
-
-			</tr> 
-			<c:forEach var="li" items="${usuarios}">
-		        <tr>
-		            <td><c:out value="${li.getNome()}" /></td>
-			     </tr>
+			<ul>
+			<c:forEach var="li" items="${mensagens}">
+				<li><c:out value="${li}" /></li>
 			</c:forEach>
-			
+		</ul>
+		<table>
+		<caption>Lista de usuários</caption>
+			<theader>
+				<tr>
+					<th> Id </th>
+					<th> Nome </th>
+					<th> E-mail </th>
+					<th> Telefone </th>
+					<th> Documento </th>
+					<th colspan="2"> Ação </th>
+				</tr> 
+			</theader>
+			<tbody>
+				<c:forEach var="li" items="${usuarios}">
+			        <tr>
+			            <td><c:out value="${li.getId()}" /></td>
+			            <td><c:out value="${li.getNome()}" /></td>
+			            <td><c:out value="${li.getEmail()}" /></td>
+			            <td><c:out value="${li.getNumeroTelefone()}" /></td>
+			            <td><c:out value="${li.getNumeroDocumento()}" /></td>
+			            <td>
+			            	<form action="usuario" method="GET">
+			            		<input type="hidden" name="txtId" value="${li.getId()}">
+			            		<input type="hidden" name="tarefa" value="editaUsuario">
+			            		<input type="submit" value="EDITAR" >
+			            	</form>
+			            </td>
+			            <td>
+			            	<form action="usuario" method="GET">
+			            		<input type="hidden" name="txtId" value="${li.getId()}">
+			            		<input type="hidden" name="tarefa" value="deletarUsuario">
+			            		<input type="submit" value="EXCLUIR" >
+			            	</form>
+			            </td>
+				     </tr>
+				</c:forEach>
+			</tbody>
 		</table>		
 	</body>
 </html>

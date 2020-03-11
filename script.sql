@@ -1,4 +1,6 @@
-use les-project
+CREATE DATABASE lesProject;
+
+use lesProject;
 
 CREATE TABLE usuarios
 ( 
@@ -26,5 +28,4 @@ CREATE TABLE clientes
 );*/
 
 
-INSERT INTO usuarios (usu_email, usu_senha, usu_status, usu_dataHoraCriacao) VALUES ("qerqwer","qwerqewr",true,NOW())
 

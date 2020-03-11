@@ -35,13 +35,17 @@ public class ServletController extends HttpServlet{
     	
     	vhMap.put("cadastrarUsuario", new UsuarioVH());
     	vhMap.put("consultarUsuario", new UsuarioVH());
+    	vhMap.put("atualizarUsuario", new UsuarioVH());
+    	vhMap.put("deletarUsuario", new UsuarioVH());
+    	vhMap.put("editaUsuario", new UsuarioVH());
     	
     	commandMap = new HashMap<String, ICommand>();
     	
     	commandMap.put("cadastrarUsuario", new SalvarCommand());
-    	commandMap.put("atualizarUsuario", new AtualizarCommand());
+    	commandMap.put("editaUsuario", new ConsultarCommand());
     	commandMap.put("deletarUsuario", new DeletarCommand());
     	commandMap.put("consultarUsuario", new ConsultarCommand());
+    	commandMap.put("atualizarUsuario", new AtualizarCommand());
 	}
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -61,6 +65,7 @@ public class ServletController extends HttpServlet{
             
             request.setAttribute("resultado", resultado);
             request.setAttribute("operacao", tarefa);
+            request.setAttribute("mensagens", resultado.getMensagem());
             
             vhCorrespondente.setEntidade(request, response);
             

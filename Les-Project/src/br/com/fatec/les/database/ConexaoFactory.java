@@ -12,7 +12,7 @@ public class ConexaoFactory {
 	
 	public static Connection getConnection() {
 		String driverName = "com.mysql.jdbc.Driver";
-		String url = "jdbc:mysql://localhost/les-project";
+		String url = "jdbc:mysql://localhost/lesProject";
 		String username = "root";
 		String password = "CG1d)*J13m@*";
 			

@@ -21,8 +21,14 @@ public class UsuarioVH implements IViewHelper{
 	public IDominio getEntidade(HttpServletRequest request) {
 		Usuario usuario = new Usuario();
 		
-		usuario.setNome(request.getParameter("txtNome"));
+		if(request.getParameter("tarefa").equals("atualizarUsuario") ||
+				request.getParameter("tarefa").equals("deletarUsuario") || 
+				request.getParameter("tarefa").equals("editaUsuario")) {
+			usuario.setId(Long.parseLong(request.getParameter("txtId")));
+		}
+		
 		usuario.setAtivo(true);
+		usuario.setNome(request.getParameter("txtNome"));
 		usuario.setEmail(request.getParameter("txtEmail"));
 		usuario.setGenero(Genero.MASCULINO);
 		usuario.setNumeroTelefone(request.getParameter("txtTelefone"));
@@ -47,16 +53,33 @@ public class UsuarioVH implements IViewHelper{
 			
 			for(EntidadeDominio u : result.getEntidades()) {
 				Usuario user = (Usuario) u;
-
 				usuarios.add(user);
-
 			}
 			
 			
 			request.setAttribute("usuarios", usuarios);
 			request.getRequestDispatcher("usuariosLista.jsp").
 			forward(request, response);
-		}else {
+		}
+		else if(operacao.equals("editaUsuario")) {
+			List<Usuario> usuarios = new ArrayList<Usuario>();
+			Result result = new Result();
+			
+			result = (Result)request.getAttribute("resultado");
+			
+			for(EntidadeDominio u : result.getEntidades()) {
+				Usuario user = (Usuario) u;
+				usuarios.add(user);
+			}
+			
+			Usuario u = usuarios.get(0);
+			
+			
+			request.setAttribute("usuario", u);
+			request.getRequestDispatcher("usuarioEditar.jsp").
+			forward(request, response);
+		}
+		else {
 			request.getRequestDispatcher("usuarioMenu.jsp").
 			forward(request, response);
 		}
