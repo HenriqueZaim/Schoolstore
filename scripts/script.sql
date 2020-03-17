@@ -47,7 +47,7 @@ CREATE TABLE cidades
  cid_nome VARCHAR(100) NOT NULL,
  cid_ativo BOOLEAN NOT NULL,
  cid_dataHoraCriacao DATETIME NOT NULL,
- cid_est_id INT NOT NULL,
+ cid_est_id LONG NOT NULL,
  PRIMARY KEY (cid_id),
  FOREIGN KEY(cid_est_id) REFERENCES estados(est_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -69,7 +69,7 @@ CREATE TABLE usuarios
  usu_dataHoraCriacao DATETIME NOT NULL,
  usu_email VARCHAR(100) NOT NULL,
  usu_senha VARCHAR(100) NOT NULL,
- usu_ima_id INT NOT NULL,
+ usu_ima_id INT,
  PRIMARY KEY (usu_id),
  FOREIGN KEY(usu_ima_id) REFERENCES imagens(ima_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
