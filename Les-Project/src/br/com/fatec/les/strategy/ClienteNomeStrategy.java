@@ -2,14 +2,14 @@ package br.com.fatec.les.strategy;
 
 import br.com.fatec.les.model.Cliente;
 import br.com.fatec.les.model.IDominio;
+import br.com.fatec.les.model.Usuario;
 
-public class UsuarioEmailStrategy implements IStrategy {
+public class ClienteNomeStrategy implements IStrategy{
 	@Override
 	public String execute(IDominio iDominio) {
 		Cliente cliente = (Cliente) iDominio;
-		if(cliente.getUsuario().getEmail().isEmpty() ||
-				cliente.getUsuario().getEmail() == null) {
-			return "E-mail é obrigatório";
+		if(cliente.getNome().isEmpty() || cliente.getNome() == null) {
+			return "Nome é obrigatório";
 		}
 		return "";
 	}

@@ -6,16 +6,28 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import br.com.fatec.les.DAO.ClienteDao;
+import br.com.fatec.les.DAO.EnderecoDao;
 import br.com.fatec.les.DAO.IDao;
 import br.com.fatec.les.DAO.UsuarioDao;
+import br.com.fatec.les.model.Cliente;
+import br.com.fatec.les.model.Endereco;
 import br.com.fatec.les.model.EntidadeDominio;
 import br.com.fatec.les.model.Usuario;
+import br.com.fatec.les.strategy.ClienteDataNascimentoStrategy;
+import br.com.fatec.les.strategy.ClienteDocumentoStrategy;
+import br.com.fatec.les.strategy.ClienteNomeStrategy;
+import br.com.fatec.les.strategy.ClienteTelefoneStrategy;
+import br.com.fatec.les.strategy.EnderecoBairroStrategy;
+import br.com.fatec.les.strategy.EnderecoCepStrategy;
+import br.com.fatec.les.strategy.EnderecoComplementoStrategy;
+import br.com.fatec.les.strategy.EnderecoLogradouroStrategy;
+import br.com.fatec.les.strategy.EnderecoNumeroStrategy;
+import br.com.fatec.les.strategy.EnderecoReferenciaStrategy;
 import br.com.fatec.les.strategy.IStrategy;
-import br.com.fatec.les.strategy.UsuarioDocumentoStrategy;
 import br.com.fatec.les.strategy.UsuarioEmailStrategy;
-import br.com.fatec.les.strategy.UsuarioNomeStrategy;
 import br.com.fatec.les.strategy.UsuarioSenhaStrategy;
-import br.com.fatec.les.strategy.UsuarioTelefoneStrategy;
+
 
 public class Facade implements IFacade{
 	
@@ -28,23 +40,48 @@ public class Facade implements IFacade{
 		daoMap = new HashMap<String, IDao>();
 		strategyMap = new HashMap<String, ArrayList<IStrategy>>();
 		
-		UsuarioDao usuarioDao = new UsuarioDao();
-		daoMap.put(Usuario.class.getName(), usuarioDao);
+		ClienteDao clienteDao = new ClienteDao();
 		
-		IStrategy usuarioDocumentoStrategy = new UsuarioDocumentoStrategy();
+		daoMap.put(Cliente.class.getName(), clienteDao);
+		
+		IStrategy clienteDataNascimentoStrategy = new ClienteDataNascimentoStrategy();
+		IStrategy clienteDocumentoStrategy = new ClienteDocumentoStrategy();
+		IStrategy clienteNomeStrategy = new ClienteNomeStrategy();
+		IStrategy clienteTelefoneStrategy = new ClienteTelefoneStrategy();
+		
+		IStrategy enderecoBairroStrategy = new EnderecoBairroStrategy();
+		IStrategy enderecoCepStrategy = new EnderecoCepStrategy();
+		IStrategy enderecoComplementoStragegy = new EnderecoComplementoStrategy();
+		IStrategy enderecoLogradouroStrategy = new EnderecoLogradouroStrategy();
+		IStrategy enderecoNumeroStrategy = new EnderecoNumeroStrategy();
+		IStrategy enderecoReferenciaStrategy = new EnderecoReferenciaStrategy();
+		
 		IStrategy usuarioEmailStrategy = new UsuarioEmailStrategy();
-		IStrategy usuarioNomeStrategy = new UsuarioNomeStrategy();
 		IStrategy usuarioSenhaStrategy = new UsuarioSenhaStrategy();
-		IStrategy usuarioTelefoneStrategy = new UsuarioTelefoneStrategy();
 		
 		ArrayList<IStrategy> usuarioStrategies = new ArrayList<IStrategy>();
-		usuarioStrategies.add(usuarioDocumentoStrategy);
-		usuarioStrategies.add(usuarioNomeStrategy);
 		usuarioStrategies.add(usuarioSenhaStrategy);
 		usuarioStrategies.add(usuarioEmailStrategy);
-		usuarioStrategies.add(usuarioTelefoneStrategy);
 		
-		strategyMap.put(Usuario.class.getName(), usuarioStrategies);
+		ArrayList<IStrategy> clienteStrategies = new ArrayList<IStrategy>();
+		clienteStrategies.add(clienteDataNascimentoStrategy);
+		clienteStrategies.add(clienteDocumentoStrategy);
+		clienteStrategies.add(clienteNomeStrategy);
+		clienteStrategies.add(clienteTelefoneStrategy);
+		
+		ArrayList<IStrategy> enderecoStrategies = new ArrayList<IStrategy>();
+		enderecoStrategies.add(enderecoBairroStrategy);
+		enderecoStrategies.add(enderecoCepStrategy);
+		enderecoStrategies.add(enderecoComplementoStragegy);
+		enderecoStrategies.add(enderecoLogradouroStrategy);
+		enderecoStrategies.add(enderecoNumeroStrategy);
+		enderecoStrategies.add(enderecoReferenciaStrategy);
+		
+		clienteStrategies.addAll(enderecoStrategies);
+		clienteStrategies.addAll(usuarioStrategies);
+
+		strategyMap.put(Cliente.class.getName(), clienteStrategies);
+
 	}
 
 	@Override

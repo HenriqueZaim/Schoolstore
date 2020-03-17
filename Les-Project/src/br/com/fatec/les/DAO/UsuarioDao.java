@@ -12,7 +12,6 @@ import br.com.fatec.les.model.EntidadeDominio;
 import br.com.fatec.les.model.IDominio;
 import br.com.fatec.les.model.Usuario;
 
-//TODO: colocar os campos restantes e imagem
 public class UsuarioDao implements IDao{
 	
 	private Connection conexao = null;
@@ -26,11 +25,8 @@ public class UsuarioDao implements IDao{
 	public String atualizar(EntidadeDominio entidadeDominio) throws SQLException {
 		Usuario usuario  = (Usuario) entidadeDominio;
 		String sql = "UPDATE usuarios SET "
-				+ "usu_ativo = " + usuario.isAtivo() +","
-				+ "usu_nome = '" + usuario.getNome() + "',"
 				+ "usu_senha = '" + usuario.getSenha() + "',"
-				+ "usu_numeroTelefone = '" + usuario.getNumeroTelefone() +"',"
-				+ "usu_numeroDocumento = '" + usuario.getNumeroDocumento() + "'"
+				+ "usu_email = '" + usuario.getEmail() + "',"
 				+ " WHERE usu_id = " + usuario.getId() + "";
 		
 		PreparedStatement pstm = null;
@@ -77,10 +73,7 @@ public class UsuarioDao implements IDao{
 			while(rs.next()) {
 				u = new Usuario();
 				u.setId(Long.parseLong(rs.getString("usu_id")));
-				u.setNome(rs.getString("usu_nome"));
 				u.setEmail(rs.getString("usu_email"));
-				u.setNumeroTelefone(rs.getString("usu_numeroTelefone"));
-				u.setNumeroDocumento(rs.getString("usu_numeroDocumento"));
 				
 				usuarios.add(u);
 			}
@@ -120,37 +113,38 @@ public class UsuarioDao implements IDao{
 	@Override
 	public String salvar(EntidadeDominio entidadeDominio) throws SQLException {
 		Usuario usuario = (Usuario) entidadeDominio;
+		ResultSet rs;
 		String sql = "INSERT INTO usuarios "
 				+ "("
-				+ "usu_nome, "
 				+ "usu_email, "
 				+ "usu_senha, "
-				+ "usu_numeroTelefone, "
-				+ "usu_numeroDocumento, "
-				+ "usu_genero, "
 				+ "usu_ativo, "
-				+ "usu_dataHoraCriacao) "
-				+ " VALUES (?, ?, ?, ?, ?, ?, true, NOW())";
+				+ "usu_dataHoraCriacao"
+				+ ") "
+				+ " VALUES ( ?, ?, true, NOW())";
+		String sql2 = "SELECT MAX(usu_id) FROM usuarios";
 		
 		PreparedStatement pstm = null;
 		
 		try {
 			pstm = conexao.prepareStatement(sql);
-			pstm.setString(1, usuario.getNome());
-			pstm.setString(2, usuario.getEmail());
-			pstm.setString(3, usuario.getSenha());
-			pstm.setString(4, usuario.getNumeroTelefone());
-			pstm.setString(5, usuario.getNumeroDocumento());
-			pstm.setString(6, usuario.getGenero().toString());
+			pstm.setString(1, usuario.getEmail());
+			pstm.setString(2, usuario.getSenha());
 			pstm.executeUpdate();
-			mensagem = "Usuário cadastrado com sucesso!";
+			
+			pstm = conexao.prepareStatement(sql2);
+			rs = pstm.executeQuery();
+			while(rs.next()) {
+				System.out.println(rs.getString("MAX(usu_id)"));
+				return rs.getString("MAX(usu_id)");
+			}
+			
 		}catch(SQLException e){
-			mensagem = e.toString();
-			mensagem = "Erro: " + mensagem;
+			e.printStackTrace();
 		}
 //		finally {
 //			ConexaoFactory.closeConnection(conexao, pstm);
 //		}
-		return mensagem;
+		return null;
 	}
 }

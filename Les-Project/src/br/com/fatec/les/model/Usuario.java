@@ -1,15 +1,10 @@
 package br.com.fatec.les.model;
 
-import java.util.Date;
-
-public class Usuario extends EntidadeNomeada{
+public class Usuario extends EntidadeDominio{
 
 	private String email;
 	private String senha;
-	private String numeroTelefone;
-	private String numeroDocumento;
-	private Date dataNascimento;
-	private Genero genero;
+	private Imagem imagem;
 	
 	public String getEmail() {
 		return email;
@@ -23,29 +18,11 @@ public class Usuario extends EntidadeNomeada{
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
-	public String getNumeroTelefone() {
-		return numeroTelefone;
+	public Imagem getImagem() {
+		return imagem;
 	}
-	public void setNumeroTelefone(String numeroTelefone) {
-		this.numeroTelefone = numeroTelefone;
-	}
-	public String getNumeroDocumento() {
-		return numeroDocumento;
-	}
-	public void setNumeroDocumento(String numeroDocumento) {
-		this.numeroDocumento = numeroDocumento;
-	}
-	public Date getDataNascimento() {
-		return dataNascimento;
-	}
-	public void setDataNascimento(Date dataNascimento) {
-		this.dataNascimento = dataNascimento;
-	}
-	public Genero getGenero() {
-		return genero;
-	}
-	public void setGenero(Genero genero) {
-		this.genero = genero;
+	public void setImagem(Imagem imagem) {
+		this.imagem = imagem;
 	}
 	
 }

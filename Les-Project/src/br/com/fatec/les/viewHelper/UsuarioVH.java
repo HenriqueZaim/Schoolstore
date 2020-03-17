@@ -3,16 +3,13 @@ package br.com.fatec.les.viewHelper;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import br.com.fatec.les.facade.Result;
 import br.com.fatec.les.model.EntidadeDominio;
-import br.com.fatec.les.model.Genero;
 import br.com.fatec.les.model.IDominio;
+import br.com.fatec.les.model.Imagem;
 import br.com.fatec.les.model.Usuario;
 
 public class UsuarioVH implements IViewHelper{
@@ -20,6 +17,7 @@ public class UsuarioVH implements IViewHelper{
 	@Override
 	public IDominio getEntidade(HttpServletRequest request) {
 		Usuario usuario = new Usuario();
+		ImagemVH imagemVH = new ImagemVH();
 		
 		if(request.getParameter("tarefa").equals("atualizarUsuario") ||
 				request.getParameter("tarefa").equals("deletarUsuario") || 
@@ -27,13 +25,9 @@ public class UsuarioVH implements IViewHelper{
 			usuario.setId(Long.parseLong(request.getParameter("txtId")));
 		}
 		
-		usuario.setAtivo(true);
-		usuario.setNome(request.getParameter("txtNome"));
 		usuario.setEmail(request.getParameter("txtEmail"));
-		usuario.setGenero(Genero.MASCULINO);
-		usuario.setNumeroTelefone(request.getParameter("txtTelefone"));
-		usuario.setNumeroDocumento(request.getParameter("txtDocumento"));
 		usuario.setSenha(request.getParameter("txtSenha"));	
+		usuario.setImagem((Imagem)imagemVH.getEntidade(request));
 		
 		return usuario;
 	}
