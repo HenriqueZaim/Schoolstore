@@ -4,9 +4,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import br.com.fatec.les.database.ConexaoFactory;
+import br.com.fatec.les.model.Cidade;
+import br.com.fatec.les.model.Cliente;
 import br.com.fatec.les.model.Endereco;
 import br.com.fatec.les.model.EntidadeDominio;
 import br.com.fatec.les.model.IDominio;
@@ -39,12 +44,11 @@ public class EnderecoDao implements IDao{
 				+ "end_dataHoraCriacao"
 				+ ") "
 				+ " VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, true, NOW())";
-		String sql2 = "SELECT MAX(end_id) FROM enderecos";
 		
 		PreparedStatement pstm = null;
 		
 		try {
-			pstm = conexao.prepareStatement(sql);
+			pstm = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			pstm.setString(1, endereco.getLogradouro());
 			pstm.setString(2, endereco.getBairro());
 			pstm.setString(3, endereco.getCep());
@@ -55,12 +59,9 @@ public class EnderecoDao implements IDao{
 			pstm.setLong(8, endereco.getCidade().getId());
 			pstm.executeUpdate();
 			
-			pstm = conexao.prepareStatement(sql2);
-			rs = pstm.executeQuery();
-			
-			while(rs.next()) {
-				System.out.println(rs.getString("MAX(end_id)"));
-				return rs.getString("MAX(end_id)");
+			rs = pstm.getGeneratedKeys();
+			if (rs.next()){
+				return Integer.toString(rs.getInt(1));
 			}
 
 		}catch(SQLException e){
@@ -74,20 +75,112 @@ public class EnderecoDao implements IDao{
 
 	@Override
 	public String deletar(EntidadeDominio entidadeDominio) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		Endereco endereco = (Endereco) entidadeDominio;
+		String sql = "UPDATE enderecos SET "
+				+ "end_ativo = false"
+				+ " WHERE end_id = " + endereco.getId() + "";
+		
+		PreparedStatement pstm = null;
+		
+		try {
+			pstm = conexao.prepareStatement(sql);
+			pstm.executeUpdate();
+			mensagem = "Endereco deletado sucesso";
+		}catch(SQLException e) {
+			mensagem = e.getMessage();
+		}
+//		finally {
+//			ConexaoFactory.closeConnection(conexao, pstm);
+//		}
+		
+		return mensagem;
 	}
 
 	@Override
 	public String atualizar(EntidadeDominio entidadeDominio) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		Endereco endereco  = (Endereco) entidadeDominio;
+		String sql = "UPDATE enderecos SET "
+				+ "end_logradouro = '" + endereco.getLogradouro() + "',"
+				+ "end_bairro = '" + endereco.getBairro() + "',"
+				+ "end_cep = '" + endereco.getCep() + "',"
+				+ "end_numero = '" + endereco.getNumero() + "',"
+				+ "end_complemento = '" + endereco.getComplemento() + "',"
+				+ "end_referencia = '" + endereco.getReferencia() + "',"
+				+ "end_favorito = '" + endereco.isFavorito() + "',"
+				+ " WHERE end_id = " + endereco.getId() + "";
+		
+		PreparedStatement pstm = null;
+		
+		try {
+			pstm = conexao.prepareStatement(sql);
+			pstm.executeUpdate();
+			mensagem = "Endereco atualizado com sucesso";
+		}catch(SQLException e) {
+			mensagem = e.getMessage();
+		}
+//		finally {
+//			ConexaoFactory.closeConnection(conexao, pstm);
+//		}
+		
+		return mensagem;
 	}
 
 	@Override
 	public List<EntidadeDominio> consultar(IDominio entidade) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		Endereco endereco = (Endereco) entidade;
+		Endereco e = new Endereco();
+		Cidade c = new Cidade();
+		
+		List<EntidadeDominio> enderecos = new ArrayList<EntidadeDominio>();
+		
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		String sql = "SELECT "
+				+ "end_id, "
+				+ "end_logradouro, "
+				+ "end_bairro, "
+				+ "end_cep, "
+				+ "end_numero, "
+				+ "end_complemento, "
+				+ "end_referencia, "
+				+ "end_favorito, "
+				+ "end_cid_id "
+				+ " FROM enderecos WHERE end_ativo = 1 ";
+		if(endereco.getId() != null) {
+			sql += "AND end_id = " + endereco.getId();
+		}
+				
+		try {
+			pstm = conexao.prepareStatement(sql);
+			rs = pstm.executeQuery();
+			
+			while(rs.next()) {
+				e = new Endereco();
+				c = new Cidade();
+				
+				c.setId(Long.parseLong(rs.getString("end_cid_id")));
+				e.setCidade(c);
+				
+				e.setId(Long.parseLong(rs.getString("end_id")));
+				e.setLogradouro(rs.getString("end_logradouro"));
+				e.setBairro(rs.getString("end_bairro"));
+				e.setCep(rs.getString("end_cep"));
+				e.setNumero(Integer.parseInt(rs.getString("end_numero")));
+				e.setComplemento(rs.getString("end_complemento"));
+				e.setReferencia(rs.getString("end_referencia"));
+				e.setFavorito(Boolean.parseBoolean(rs.getString("end_favorito")));
+//				e.setDataHoraCriacao(LocalDateTime.parse(rs.getString("end_dataHoraCriacao")));
+				
+				enderecos.add(e);
+			}
+		}catch(SQLException ex) {
+			System.err.println(ex.getMessage());
+		}
+//		finally {
+//			ConexaoFactory.closeConnection(conexao, pstm, rs);
+//		}
+		
+		return enderecos;
 	}
 
 }

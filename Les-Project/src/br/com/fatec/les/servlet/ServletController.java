@@ -18,6 +18,7 @@ import br.com.fatec.les.command.ICommand;
 import br.com.fatec.les.command.SalvarCommand;
 import br.com.fatec.les.facade.Result;
 import br.com.fatec.les.model.IDominio;
+import br.com.fatec.les.viewHelper.ClienteVH;
 import br.com.fatec.les.viewHelper.IViewHelper;
 import br.com.fatec.les.viewHelper.UsuarioVH;
 
@@ -33,19 +34,19 @@ public class ServletController extends HttpServlet{
     public ServletController() {
     	vhMap = new HashMap<String, IViewHelper>();
     	
-    	vhMap.put("cadastrarUsuario", new UsuarioVH());
-    	vhMap.put("consultarUsuario", new UsuarioVH());
-    	vhMap.put("atualizarUsuario", new UsuarioVH());
-    	vhMap.put("deletarUsuario", new UsuarioVH());
-    	vhMap.put("editaUsuario", new UsuarioVH());
+    	vhMap.put("cadastrarCliente", new ClienteVH());
+    	vhMap.put("consultarCliente", new ClienteVH());
+    	vhMap.put("atualizarCliente", new ClienteVH());
+    	vhMap.put("deletarCliente", new ClienteVH());
+    	vhMap.put("editaCliente", new ClienteVH());
     	
     	commandMap = new HashMap<String, ICommand>();
     	
-    	commandMap.put("cadastrarUsuario", new SalvarCommand());
-    	commandMap.put("editaUsuario", new ConsultarCommand());
-    	commandMap.put("deletarUsuario", new DeletarCommand());
-    	commandMap.put("consultarUsuario", new ConsultarCommand());
-    	commandMap.put("atualizarUsuario", new AtualizarCommand());
+    	commandMap.put("cadastrarCliente", new SalvarCommand());
+    	commandMap.put("editaCliente", new ConsultarCommand());
+    	commandMap.put("deletarCliente", new DeletarCommand());
+    	commandMap.put("consultarCliente", new ConsultarCommand());
+    	commandMap.put("atualizarCliente", new AtualizarCommand());
 	}
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)

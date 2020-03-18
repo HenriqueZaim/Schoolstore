@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,17 +57,13 @@ public class UsuarioDao implements IDao{
 		ResultSet rs = null;
 		String sql = "SELECT "
 				+ "usu_id, "
-				+ "usu_nome, "
-				+ "usu_email, "
-				+ "usu_numeroTelefone, "
-				+ "usu_numeroDocumento "
+				+ "usu_senha, "
+				+ "usu_email "
 				+ " FROM usuarios WHERE usu_ativo = 1 ";
 		if(usuario.getId() != null) {
 			sql += "AND usu_id = " + usuario.getId();
 		}
-		
-		// TODO: Fazer verificação de filtro aqui
-		
+				
 		try {
 			pstm = conexao.prepareStatement(sql);
 			rs = pstm.executeQuery();
@@ -74,6 +72,8 @@ public class UsuarioDao implements IDao{
 				u = new Usuario();
 				u.setId(Long.parseLong(rs.getString("usu_id")));
 				u.setEmail(rs.getString("usu_email"));
+				u.setSenha(rs.getString("usu_senha"));
+//				u.setDataHoraCriacao(LocalDateTime.parse(rs.getString("usu_dataHoraCriacao")));
 				
 				usuarios.add(u);
 			}
@@ -89,7 +89,7 @@ public class UsuarioDao implements IDao{
 	
 	@Override
 	public String deletar(EntidadeDominio entidadeDominio) throws SQLException {
-		Usuario usuario  = (Usuario) entidadeDominio;
+		Usuario usuario = (Usuario) entidadeDominio;
 		String sql = "UPDATE usuarios SET "
 				+ "usu_ativo = false"
 				+ " WHERE usu_id = " + usuario.getId() + "";
@@ -122,23 +122,20 @@ public class UsuarioDao implements IDao{
 				+ "usu_dataHoraCriacao"
 				+ ") "
 				+ " VALUES ( ?, ?, true, NOW())";
-		String sql2 = "SELECT MAX(usu_id) FROM usuarios";
 		
 		PreparedStatement pstm = null;
 		
 		try {
-			pstm = conexao.prepareStatement(sql);
+			pstm = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			pstm.setString(1, usuario.getEmail());
 			pstm.setString(2, usuario.getSenha());
 			pstm.executeUpdate();
 			
-			pstm = conexao.prepareStatement(sql2);
-			rs = pstm.executeQuery();
-			while(rs.next()) {
-				System.out.println(rs.getString("MAX(usu_id)"));
-				return rs.getString("MAX(usu_id)");
+			rs = pstm.getGeneratedKeys();
+			if (rs.next()){
+				return Integer.toString(rs.getInt(1));
 			}
-			
+						
 		}catch(SQLException e){
 			e.printStackTrace();
 		}

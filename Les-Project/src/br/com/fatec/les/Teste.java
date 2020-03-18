@@ -14,33 +14,40 @@ public class Teste {
 
 	public static void main(String[] args) throws SQLException {
 		ClienteDao clienteDao = new ClienteDao();
-		
-		Cidade cidade = new Cidade();
-		cidade.setId(8L);
-		
-		Usuario usuario = new Usuario();
-		usuario.setEmail("qwnerqwe");
-		usuario.setSenha("knwerkjwnerq");
-		
-		Endereco endereco = new Endereco();
-		endereco.setBairro("nwerjqwer");
-		endereco.setCep("8888");
-		endereco.setCidade(cidade);
-		endereco.setComplemento("qmwelkrqwer");
-		endereco.setFavorito(false);
-		endereco.setReferencia("kqwnerlqwer");
-		endereco.setNumero(100);
-		endereco.setLogradouro("kwmerlkqwer");
-
+//		
+//		Cidade cidade = new Cidade();
+//		cidade.setId(8L);
+//		
+//		Usuario usuario = new Usuario();
+//		usuario.setEmail("qwnerqwe");
+//		usuario.setSenha("knwerkjwnerq");
+//		
+//		Endereco endereco = new Endereco();
+//		endereco.setBairro("nwerjqwer");
+//		endereco.setCep("8888");
+//		endereco.setCidade(cidade);
+//		endereco.setComplemento("qmwelkrqwer");
+//		endereco.setFavorito(false);
+//		endereco.setReferencia("kqwnerlqwer");
+//		endereco.setNumero(100);
+//		endereco.setLogradouro("kwmerlkqwer");
+//
+//		Cliente cliente = new Cliente();
+//		cliente.setDataNascimento(LocalDate.now());
+//		cliente.setNome("qwmerlkqwer");
+//		cliente.setNumeroDocumento("lkwqelrkqwer");
+//		cliente.setNumeroTelefone("lwqenrwer");
+//		cliente.setUsuario(usuario);
+//		cliente.setEndereco(endereco);
+//		
+//		System.out.println(clienteDao.salvar((EntidadeDominio) cliente));
 		Cliente cliente = new Cliente();
-		cliente.setDataNascimento(LocalDate.now());
-		cliente.setNome("qwmerlkqwer");
-		cliente.setNumeroDocumento("lkwqelrkqwer");
-		cliente.setNumeroTelefone("lwqenrwer");
-		cliente.setUsuario(usuario);
+		Endereco endereco = new Endereco();
+		Usuario usuario = new Usuario();
 		cliente.setEndereco(endereco);
+		cliente.setUsuario(usuario);
 		
-		System.out.println(clienteDao.salvar((EntidadeDominio) cliente));
+		System.out.println(clienteDao.consultar(cliente));
 
 	}
 
