@@ -44,7 +44,7 @@ public class Facade implements IFacade{
 		
 		daoMap.put(Cliente.class.getName(), clienteDao);
 		
-		IStrategy clienteDataNascimentoStrategy = new ClienteDataNascimentoStrategy();
+//		IStrategy clienteDataNascimentoStrategy = new ClienteDataNascimentoStrategy();
 		IStrategy clienteDocumentoStrategy = new ClienteDocumentoStrategy();
 		IStrategy clienteNomeStrategy = new ClienteNomeStrategy();
 		IStrategy clienteTelefoneStrategy = new ClienteTelefoneStrategy();
@@ -64,7 +64,7 @@ public class Facade implements IFacade{
 		usuarioStrategies.add(usuarioEmailStrategy);
 		
 		ArrayList<IStrategy> clienteStrategies = new ArrayList<IStrategy>();
-		clienteStrategies.add(clienteDataNascimentoStrategy);
+//		clienteStrategies.add(clienteDataNascimentoStrategy);
 		clienteStrategies.add(clienteDocumentoStrategy);
 		clienteStrategies.add(clienteNomeStrategy);
 		clienteStrategies.add(clienteTelefoneStrategy);
@@ -165,7 +165,6 @@ public class Facade implements IFacade{
 	@Override
 	public Result consultar(EntidadeDominio entidadeDominio) {
 		result = new Result();
-		
 		ArrayList<String> mensagens = new ArrayList<String>();
 		String entidadeCorrespondente = entidadeDominio.getClass().getName();
 	    IDao daoEntidade = daoMap.get(entidadeCorrespondente);

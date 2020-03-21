@@ -100,20 +100,29 @@ public class EnderecoDao implements IDao{
 	public String atualizar(EntidadeDominio entidadeDominio) throws SQLException {
 		Endereco endereco  = (Endereco) entidadeDominio;
 		String sql = "UPDATE enderecos SET "
-				+ "end_logradouro = '" + endereco.getLogradouro() + "',"
-				+ "end_bairro = '" + endereco.getBairro() + "',"
-				+ "end_cep = '" + endereco.getCep() + "',"
-				+ "end_numero = '" + endereco.getNumero() + "',"
-				+ "end_complemento = '" + endereco.getComplemento() + "',"
-				+ "end_referencia = '" + endereco.getReferencia() + "',"
-				+ "end_favorito = '" + endereco.isFavorito() + "',"
-				+ " WHERE end_id = " + endereco.getId() + "";
+				+ "end_logradouro = ?, "
+				+ "end_bairro = ?, "
+				+ "end_cep = ?, "
+				+ "end_numero = ?, "
+				+ "end_complemento = ?, "
+				+ "end_referencia = ?, "
+				+ "end_favorito = ? "
+				+ " WHERE end_id = ? ";
 		
 		PreparedStatement pstm = null;
 		
 		try {
 			pstm = conexao.prepareStatement(sql);
+			pstm.setString(1, endereco.getLogradouro());
+			pstm.setString(2, endereco.getBairro());
+			pstm.setString(3, endereco.getCep());
+			pstm.setInt(4, endereco.getNumero());
+			pstm.setString(5, endereco.getComplemento());
+			pstm.setString(6, endereco.getReferencia());
+			pstm.setBoolean(7, endereco.isFavorito());
+			pstm.setLong(8, endereco.getId());
 			pstm.executeUpdate();
+			
 			mensagem = "Endereco atualizado com sucesso";
 		}catch(SQLException e) {
 			mensagem = e.getMessage();

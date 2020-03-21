@@ -101,24 +101,30 @@ public class ClienteDao implements IDao{
 	public String atualizar(EntidadeDominio entidadeDominio) throws SQLException {
 		Cliente cliente  = (Cliente) entidadeDominio;
 		
-		String sql = "UPDATE usuarios SET "
+		String sql = "UPDATE clientes SET "
 				
-				+ "cli_nome = '" + cliente.getNome() + "', "
-				+ "cli_numeroTelefone = '" + cliente.getNumeroTelefone() +"', "
-				+ "cli_numeroDocumento = '" + cliente.getNumeroDocumento() + "', "				
-				+ " WHERE cli_id = " + cliente.getId() + "";
+				+ "cli_nome = ?, "
+				+ "cli_numeroTelefone = ?, "
+				+ "cli_numeroDocumento = ? "				
+				+ " WHERE cli_id = ?";
 		
 		PreparedStatement pstm = null;
 		
 		try {
 			pstm = conexao.prepareStatement(sql);
+			pstm.setString(1, cliente.getNome());
+			pstm.setString(2, cliente.getNumeroTelefone());
+			pstm.setString(3, cliente.getNumeroDocumento());
+			pstm.setLong(4, cliente.getId());
+			
 			if(enderecoDao.atualizar(cliente.getEndereco()) == null || usuarioDao.atualizar(cliente.getUsuario()) == null) {
 				return null;
 			}
+			
 			pstm.executeUpdate();
 			mensagem = "Usuário atualizado com sucesso";
 		}catch(SQLException e) {
-			mensagem = e.getMessage();
+			mensagem = "Erro ao tentar atualizar usuário. Contacte a equipe de desenvolvimento";
 		}
 //		finally {
 //			ConexaoFactory.closeConnection(conexao, pstm);
@@ -163,6 +169,9 @@ public class ClienteDao implements IDao{
 				c = new Cliente();
 				u = new Usuario();
 				e = new Endereco();
+				
+				usuarios = new ArrayList<EntidadeDominio>();
+				enderecos = new ArrayList<EntidadeDominio>();
 				
 				c.setId(Long.parseLong(rs.getString("cli_id")));
 				c.setNome(rs.getString("cli_nome"));

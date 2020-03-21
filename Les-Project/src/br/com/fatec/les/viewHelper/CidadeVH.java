@@ -15,10 +15,12 @@ public class CidadeVH implements IViewHelper{
 	@Override
 	public IDominio getEntidade(HttpServletRequest request) {
 		Cidade cidade = new Cidade();
-		EstadoVH estadoVH = new EstadoVH();
 		
-		cidade.setId(Long.parseLong(request.getParameter("txtCidadeId")));
-		cidade.setEstado((Estado)estadoVH.getEntidade(request));
+		if(request.getParameter("txtCidadeId") == null || request.getParameter("txtCidadeId") == "") {
+			cidade.setId(null);
+		}else {
+			cidade.setId(Long.parseLong(request.getParameter("txtCidadeId")));
+		}
 		
 		return cidade;
 	}

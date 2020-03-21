@@ -35,28 +35,36 @@
 					<th> E-mail </th>
 					<th> Telefone </th>
 					<th> Documento </th>
+					<th> Logradouro </th>
 					<th colspan="2"> Ação </th>
 				</tr> 
 			</theader>
 			<tbody>
-				<c:forEach var="li" items="${usuarios}">
+				<c:forEach var="li" items="${clientes}">
 			        <tr>
 			            <td><c:out value="${li.getId()}" /></td>
 			            <td><c:out value="${li.getNome()}" /></td>
-			            <td><c:out value="${li.getEmail()}" /></td>
+			            <td><c:out value="${li.getUsuario().getEmail()}" /></td>
 			            <td><c:out value="${li.getNumeroTelefone()}" /></td>
 			            <td><c:out value="${li.getNumeroDocumento()}" /></td>
+			            <td><c:out value="${li.getEndereco().getLogradouro()}" /></td>
 			            <td>
-			            	<form action="usuario" method="GET">
-			            		<input type="hidden" name="txtId" value="${li.getId()}">
-			            		<input type="hidden" name="tarefa" value="editaUsuario">
+			            	<form action="cliente" method="POST">
+			            		<input type="hidden" name="txtUsuarioId" value="${li.getUsuario().getId()}">
+			            		<input type="hidden" name="txtEnderecoId" value="${li.getEndereco().getId()}">
+			            		<input type="hidden" name="txtClienteId" value="${li.getId()}">
+			            		
+			            		<input type="hidden" name="tarefa" value="editaCliente">
 			            		<input type="submit" value="EDITAR" >
 			            	</form>
 			            </td>
 			            <td>
-			            	<form action="usuario" method="GET">
-			            		<input type="hidden" name="txtId" value="${li.getId()}">
-			            		<input type="hidden" name="tarefa" value="deletarUsuario">
+			            	<form action="cliente" method="POST">
+			            		<input type="hidden" name="txtUsuarioId" value="${li.getUsuario().getId()}">
+			            		<input type="hidden" name="txtEnderecoId" value="${li.getEndereco().getId()}">
+			            		<input type="hidden" name="txtClienteId" value="${li.getId()}">
+			            		
+			            		<input type="hidden" name="tarefa" value="deletarCliente">
 			            		<input type="submit" value="EXCLUIR" >
 			            	</form>
 			            </td>

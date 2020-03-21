@@ -17,15 +17,32 @@ public class EnderecoVH implements IViewHelper{
 		CidadeVH cidadeVH = new CidadeVH();
 		Endereco endereco = new Endereco();
 		
+		if(request.getParameter("tarefa").equals("atualizarCliente") ||
+				request.getParameter("tarefa").equals("deletarCliente") || 
+				request.getParameter("tarefa").equals("editaCliente")) {
+			endereco.setId(Long.parseLong(request.getParameter("txtEnderecoId")));
+		}
+		
 		endereco.setBairro(request.getParameter("txtBairro"));
 		endereco.setCep(request.getParameter("txtCep"));
 		endereco.setComplemento(request.getParameter("txtComplemento"));
-		endereco.setNumero(Integer.parseInt(request.getParameter("txtNumero")));
+		
+		if (request.getParameter("txtNumero") == null || request.getParameter("txtNumero") == "") {
+			endereco.setNumero(0);
+		}else {
+			endereco.setNumero(Integer.parseInt(request.getParameter("txtNumero")));
+		}
+		
+		if(request.getParameter("txtFavorito") == null || request.getParameter("txtFavorito") == "") {
+			endereco.setFavorito(false);
+		}else {
+			endereco.setFavorito(Boolean.parseBoolean(request.getParameter("txtFavorito")));
+		}
+			
 		endereco.setReferencia(request.getParameter("txtReferencia"));
 		endereco.setLogradouro(request.getParameter("txtLogradouro"));
 		endereco.setCidade((Cidade)cidadeVH.getEntidade(request));
-		endereco.setFavorito(Boolean.parseBoolean(request.getParameter("txtFavorito")));
-		
+
 		return endereco;
 	}
 

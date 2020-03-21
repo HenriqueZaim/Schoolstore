@@ -14,15 +14,15 @@
 	
 
 	<body>
-				<ul>
+		<ul>
 			<c:forEach var="li" items="${mensagens}">
 				<li><c:out value="${li}" /></li>
 			</c:forEach>
 		</ul>
 	
 		<h1>Menu</h1>
-		<form action="usuario" method="get">
-			<input value="consultarUsuario" name="tarefa" type="hidden">
+		<form action="cliente" method="get">
+			<input value="consultarCliente" name="tarefa" type="hidden">
 			<input value="LISTA DE USUÁRIOS" type="submit">
 		</form>
 	</body>

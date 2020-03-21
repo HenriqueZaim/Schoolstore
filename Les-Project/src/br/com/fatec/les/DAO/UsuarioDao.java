@@ -27,14 +27,17 @@ public class UsuarioDao implements IDao{
 	public String atualizar(EntidadeDominio entidadeDominio) throws SQLException {
 		Usuario usuario  = (Usuario) entidadeDominio;
 		String sql = "UPDATE usuarios SET "
-				+ "usu_senha = '" + usuario.getSenha() + "',"
-				+ "usu_email = '" + usuario.getEmail() + "',"
-				+ " WHERE usu_id = " + usuario.getId() + "";
+				+ "usu_senha = ?, "
+				+ "usu_email = ? "
+				+ " WHERE usu_id = ?";
 		
 		PreparedStatement pstm = null;
 		
 		try {
 			pstm = conexao.prepareStatement(sql);
+			pstm.setString(1, usuario.getSenha());
+			pstm.setString(2, usuario.getEmail());
+			pstm.setLong(3, usuario.getId());
 			pstm.executeUpdate();
 			mensagem = "Usuário atualizado com sucesso";
 		}catch(SQLException e) {

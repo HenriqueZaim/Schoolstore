@@ -22,7 +22,7 @@ import br.com.fatec.les.viewHelper.ClienteVH;
 import br.com.fatec.les.viewHelper.IViewHelper;
 import br.com.fatec.les.viewHelper.UsuarioVH;
 
-@WebServlet(name = "servletController", urlPatterns = "/usuario")
+@WebServlet(name = "servletController", urlPatterns = "/cliente")
 public class ServletController extends HttpServlet{
 
 	private static final long serialVersionUID = 1L;
@@ -61,7 +61,6 @@ public class ServletController extends HttpServlet{
             IDominio entidadeCorrespondente = vhCorrespondente.getEntidade(request);
             
             ICommand commandCorrespondente = commandMap.get(tarefa);
-            
             resultado = commandCorrespondente.execute(entidadeCorrespondente);
             
             request.setAttribute("resultado", resultado);

@@ -47,7 +47,7 @@ CREATE TABLE cidades
  cid_nome VARCHAR(100) NOT NULL,
  cid_ativo BOOLEAN NOT NULL,
  cid_dataHoraCriacao DATETIME NOT NULL,
- cid_est_id LONG NOT NULL,
+ cid_est_id INT NOT NULL,
  PRIMARY KEY (cid_id),
  FOREIGN KEY(cid_est_id) REFERENCES estados(est_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
