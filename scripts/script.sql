@@ -2,7 +2,7 @@ CREATE DATABASE lesProject;
 
 use lesProject;
 
-CREATE TABLE estados
+CREATE TABLE tb_estado
 (
  est_id INT NOT NULL AUTO_INCREMENT,
  est_nome VARCHAR(100) NOT NULL,
@@ -12,7 +12,7 @@ CREATE TABLE estados
  PRIMARY KEY (est_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `estados` (`est_id`, `est_dataHoraCriacao`, `est_ativo`, `est_nome`, `est_sigla`) VALUES
+INSERT INTO `tb_estado` (`est_id`, `est_dataHoraCriacao`, `est_ativo`, `est_nome`, `est_sigla`) VALUES
 (1, NOW(), b'1', 'Acre', 'AC'),
 (2, NOW(), b'1', 'Alagoas', 'AL'),
 (3, NOW(), b'1', 'Amapá', 'AP'),
@@ -41,7 +41,7 @@ INSERT INTO `estados` (`est_id`, `est_dataHoraCriacao`, `est_ativo`, `est_nome`,
 (26, NOW(), b'1', 'Sergipe', 'SE'),
 (27, NOW(), b'1', 'Tocantins', 'TO');
 
-CREATE TABLE cidades
+CREATE TABLE tb_cidade
 (
  cid_id INT NOT NULL AUTO_INCREMENT,
  cid_nome VARCHAR(100) NOT NULL,
@@ -49,10 +49,10 @@ CREATE TABLE cidades
  cid_dataHoraCriacao DATETIME NOT NULL,
  cid_est_id INT NOT NULL,
  PRIMARY KEY (cid_id),
- FOREIGN KEY(cid_est_id) REFERENCES estados(est_id)
+ FOREIGN KEY(cid_est_id) REFERENCES tb_estado(est_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE imagens
+CREATE TABLE tb_imagem
 ( 
  ima_id INT NOT NULL AUTO_INCREMENT,
  ima_ativo BOOLEAN NOT NULL,
@@ -62,7 +62,7 @@ CREATE TABLE imagens
  PRIMARY KEY (ima_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE usuarios
+CREATE TABLE tb_usuario
 ( 
  usu_id INT NOT NULL AUTO_INCREMENT,
  usu_ativo BOOLEAN NOT NULL,
@@ -71,10 +71,10 @@ CREATE TABLE usuarios
  usu_senha VARCHAR(100) NOT NULL,
  usu_ima_id INT,
  PRIMARY KEY (usu_id),
- FOREIGN KEY(usu_ima_id) REFERENCES imagens(ima_id)
+ FOREIGN KEY(usu_ima_id) REFERENCES tb_imagem(ima_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE enderecos
+CREATE TABLE tb_endereco
 ( 
  end_id INT NOT NULL AUTO_INCREMENT,
  end_logradouro VARCHAR(100) NOT NULL,
@@ -88,10 +88,10 @@ CREATE TABLE enderecos
  end_dataHoraCriacao DATETIME NOT NULL,
  end_cid_id INT NOT NULL,
  PRIMARY KEY (end_id),
- FOREIGN KEY(end_cid_id) REFERENCES cidades(cid_id)
+ FOREIGN KEY(end_cid_id) REFERENCES tb_cidade(cid_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE clientes
+CREATE TABLE tb_cliente
 ( 
  cli_id INT NOT NULL AUTO_INCREMENT,
  cli_nome VARCHAR(100) NOT NULL,
@@ -102,7 +102,7 @@ CREATE TABLE clientes
  cli_usu_id INT NOT NULL,
  cli_end_id INT NOT NULL,
  PRIMARY KEY (cli_id),
- FOREIGN KEY(cli_usu_id) REFERENCES usuarios(usu_id),
- FOREIGN KEY(cli_end_id) REFERENCES enderecos(end_id)
+ FOREIGN KEY(cli_usu_id) REFERENCES tb_usuario(usu_id),
+ FOREIGN KEY(cli_end_id) REFERENCES tb_endereco(end_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

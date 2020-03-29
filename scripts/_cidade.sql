@@ -1,5 +1,5 @@
 use lesProject;
-INSERT INTO `cidades` (`cid_id`, `cid_dataHoraCriacao`, `cid_ativo`, `cid_nome`, `cid_est_id`) VALUES
+INSERT INTO `tb_cidade` (`cid_id`, `cid_dataHoraCriacao`, `cid_ativo`, `cid_nome`, `cid_est_id`) VALUES
 (1, NOW(), b'1', 'Afonso Cláudio', 8),
 (2, NOW(), b'1', 'Água Doce do Norte', 8),
 (3, NOW(), b'1', 'Águia Branca', 8),

@@ -24,6 +24,9 @@
 		<br>
 		<input name="txtNumeroDocumento" maxlength="14" type="text" placeholder="Documento">
 		<br>
+		<input type="file" placeholder="imagem" id="file">
+		<input id="button" type="button" value="inserir imagem">
+		<br>
 		<hr>
 		<br>
 		<input name="txtEmail" maxlength="100" type="text" placeholder="E-mail">
@@ -47,10 +50,33 @@
 		<input type="hidden" name="txtCidadeId" value="8">
 		<input type="radio" name="txtFavorito" value="true">Favorito - sim
 		<br>
-		<input type="radio" name="txtFavorito" value="false">NÃ£o  
+		<input type="radio" name="txtFavorito" value="false">Não  
 		
+		<input type="hidden" id="base64" name="file">
 		<input type="hidden" name="tarefa" value="cadastrarCliente"/>
         <input type="submit" value="CADASTRAR">
 	</form>
 </body>
+
+<script>
+
+document.getElementById('button').addEventListener('click', function() {
+  var files = document.getElementById('file').files;
+  if (files.length > 0) {
+	getBase64(files[0]);
+  }
+});
+
+function getBase64(file) {
+   var reader = new FileReader();
+   reader.readAsDataURL(file);
+   reader.onload = function () {
+	   document.getElementById('base64').value = reader.result;
+   };
+   reader.onerror = function (error) {
+     console.log('Error: ', error);
+   };
+}
+
+</script>
 </html>

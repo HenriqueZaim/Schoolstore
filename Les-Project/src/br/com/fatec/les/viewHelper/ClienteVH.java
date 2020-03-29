@@ -5,10 +5,15 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.tomcat.util.http.fileupload.FileItem;
+import org.apache.tomcat.util.http.fileupload.disk.DiskFileItemFactory;
+import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
 import br.com.fatec.les.facade.Result;
 import br.com.fatec.les.model.Cliente;
@@ -24,13 +29,17 @@ public class ClienteVH implements IViewHelper{
 		Cliente cliente = new Cliente();
 		EnderecoVH enderecoVH = new EnderecoVH();
 		UsuarioVH usuarioVH = new UsuarioVH();
+		String tarefa = request.getParameter("tarefa");
 		
+//		if(!tarefa.contentEquals("cadastrarCliente")) {
+//			cliente.setId(request.getParameter("txtClienteId") == "" ? 0 : Long.parseLong(request.getParameter("txtClienteId")));
+//		}
 		if(request.getParameter("tarefa").equals("atualizarCliente") ||
 				request.getParameter("tarefa").equals("deletarCliente") || 
 				request.getParameter("tarefa").equals("editaCliente")) {
 			cliente.setId(Long.parseLong(request.getParameter("txtClienteId")));
 		}
-		
+
 //		cliente.setDataNascimento(LocalDate.parse(request.getParameter("txtDataNascimento")));
 		cliente.setNome(request.getParameter("txtNome"));
 		cliente.setNumeroDocumento(request.getParameter("txtNumeroDocumento"));
@@ -38,7 +47,7 @@ public class ClienteVH implements IViewHelper{
 		cliente.setUsuario((Usuario)usuarioVH.getEntidade(request));
 		cliente.setEndereco((Endereco)enderecoVH.getEntidade(request));
 		
-		return cliente;
+		return cliente;	
 	}
 
 	@Override

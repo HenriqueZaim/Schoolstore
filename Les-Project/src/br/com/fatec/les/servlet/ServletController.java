@@ -1,8 +1,13 @@
 package br.com.fatec.les.servlet;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -10,6 +15,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.bind.DatatypeConverter;
+
+import org.apache.tomcat.util.http.fileupload.FileItem;
+import org.apache.tomcat.util.http.fileupload.disk.DiskFileItemFactory;
+import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
 import br.com.fatec.les.command.AtualizarCommand;
 import br.com.fatec.les.command.ConsultarCommand;
@@ -17,7 +27,9 @@ import br.com.fatec.les.command.DeletarCommand;
 import br.com.fatec.les.command.ICommand;
 import br.com.fatec.les.command.SalvarCommand;
 import br.com.fatec.les.facade.Result;
+import br.com.fatec.les.model.Endereco;
 import br.com.fatec.les.model.IDominio;
+import br.com.fatec.les.model.Usuario;
 import br.com.fatec.les.viewHelper.ClienteVH;
 import br.com.fatec.les.viewHelper.IViewHelper;
 import br.com.fatec.les.viewHelper.UsuarioVH;
@@ -52,14 +64,13 @@ public class ServletController extends HttpServlet{
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        
         try (PrintWriter out = response.getWriter()) {
         	Result resultado;
-            
         	tarefa = request.getParameter("tarefa");
-           
+        	           
             vhCorrespondente = vhMap.get(tarefa);
             IDominio entidadeCorrespondente = vhCorrespondente.getEntidade(request);
-            
             ICommand commandCorrespondente = commandMap.get(tarefa);
             resultado = commandCorrespondente.execute(entidadeCorrespondente);
             

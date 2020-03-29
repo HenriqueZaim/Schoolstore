@@ -30,7 +30,7 @@ public class ClienteDao implements IDao{
 	public String salvar(EntidadeDominio entidadeDominio) throws SQLException {
 		Cliente cliente = (Cliente) entidadeDominio;
 		
-		String sql = "INSERT INTO clientes "
+		String sql = "INSERT INTO tb_cliente "
 				+ "("
 				+ "cli_nome, "
 				+ "cli_numeroTelefone, "
@@ -74,7 +74,7 @@ public class ClienteDao implements IDao{
 	public String deletar(EntidadeDominio entidadeDominio) throws SQLException {
 		Cliente cliente  = (Cliente) entidadeDominio;
 		
-		String sql = "UPDATE clientes SET "
+		String sql = "UPDATE tb_cliente SET "
 				+ "cli_ativo = false"
 				+ " WHERE cli_id = " + cliente.getId() + "";
 		
@@ -101,7 +101,7 @@ public class ClienteDao implements IDao{
 	public String atualizar(EntidadeDominio entidadeDominio) throws SQLException {
 		Cliente cliente  = (Cliente) entidadeDominio;
 		
-		String sql = "UPDATE clientes SET "
+		String sql = "UPDATE tb_cliente SET "
 				
 				+ "cli_nome = ?, "
 				+ "cli_numeroTelefone = ?, "
@@ -155,7 +155,7 @@ public class ClienteDao implements IDao{
 				+ "cli_numeroDocumento, "
 				+ "cli_usu_id, "
 				+ "cli_end_id "
-				+ " FROM clientes WHERE cli_ativo = 1 ";
+				+ " FROM tb_cliente WHERE cli_ativo = 1 ";
 		if(cliente.getId() != null) {
 			sql += "AND cli_id = " + cliente.getId();
 		}

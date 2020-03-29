@@ -30,7 +30,7 @@ public class EnderecoDao implements IDao{
 	public String salvar(EntidadeDominio entidadeDominio) throws SQLException {
 		Endereco endereco = (Endereco) entidadeDominio;
 		ResultSet rs;
-		String sql = "INSERT INTO enderecos "
+		String sql = "INSERT INTO tb_endereco "
 				+ "("
 				+ "end_logradouro, "
 				+ "end_bairro, "
@@ -76,7 +76,7 @@ public class EnderecoDao implements IDao{
 	@Override
 	public String deletar(EntidadeDominio entidadeDominio) throws SQLException {
 		Endereco endereco = (Endereco) entidadeDominio;
-		String sql = "UPDATE enderecos SET "
+		String sql = "UPDATE tb_endereco SET "
 				+ "end_ativo = false"
 				+ " WHERE end_id = " + endereco.getId() + "";
 		
@@ -99,7 +99,7 @@ public class EnderecoDao implements IDao{
 	@Override
 	public String atualizar(EntidadeDominio entidadeDominio) throws SQLException {
 		Endereco endereco  = (Endereco) entidadeDominio;
-		String sql = "UPDATE enderecos SET "
+		String sql = "UPDATE tb_endereco SET "
 				+ "end_logradouro = ?, "
 				+ "end_bairro = ?, "
 				+ "end_cep = ?, "
@@ -154,7 +154,7 @@ public class EnderecoDao implements IDao{
 				+ "end_referencia, "
 				+ "end_favorito, "
 				+ "end_cid_id "
-				+ " FROM enderecos WHERE end_ativo = 1 ";
+				+ " FROM tb_endereco WHERE end_ativo = 1 ";
 		if(endereco.getId() != null) {
 			sql += "AND end_id = " + endereco.getId();
 		}

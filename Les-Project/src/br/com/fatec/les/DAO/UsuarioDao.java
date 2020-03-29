@@ -18,6 +18,7 @@ public class UsuarioDao implements IDao{
 	
 	private Connection conexao = null;
 	private String mensagem = null;
+	ImagemDao imagemDao = new ImagemDao();
 	
 	public UsuarioDao() {
 		conexao = ConexaoFactory.getConnection();
@@ -26,7 +27,7 @@ public class UsuarioDao implements IDao{
 	@Override
 	public String atualizar(EntidadeDominio entidadeDominio) throws SQLException {
 		Usuario usuario  = (Usuario) entidadeDominio;
-		String sql = "UPDATE usuarios SET "
+		String sql = "UPDATE tb_usuario SET "
 				+ "usu_senha = ?, "
 				+ "usu_email = ? "
 				+ " WHERE usu_id = ?";
@@ -34,6 +35,7 @@ public class UsuarioDao implements IDao{
 		PreparedStatement pstm = null;
 		
 		try {
+			
 			pstm = conexao.prepareStatement(sql);
 			pstm.setString(1, usuario.getSenha());
 			pstm.setString(2, usuario.getEmail());
@@ -62,7 +64,7 @@ public class UsuarioDao implements IDao{
 				+ "usu_id, "
 				+ "usu_senha, "
 				+ "usu_email "
-				+ " FROM usuarios WHERE usu_ativo = 1 ";
+				+ " FROM tb_usuario WHERE usu_ativo = 1 ";
 		if(usuario.getId() != null) {
 			sql += "AND usu_id = " + usuario.getId();
 		}
@@ -93,7 +95,7 @@ public class UsuarioDao implements IDao{
 	@Override
 	public String deletar(EntidadeDominio entidadeDominio) throws SQLException {
 		Usuario usuario = (Usuario) entidadeDominio;
-		String sql = "UPDATE usuarios SET "
+		String sql = "UPDATE tb_usuario SET "
 				+ "usu_ativo = false"
 				+ " WHERE usu_id = " + usuario.getId() + "";
 		
@@ -117,21 +119,24 @@ public class UsuarioDao implements IDao{
 	public String salvar(EntidadeDominio entidadeDominio) throws SQLException {
 		Usuario usuario = (Usuario) entidadeDominio;
 		ResultSet rs;
-		String sql = "INSERT INTO usuarios "
+		String sql = "INSERT INTO tb_usuario "
 				+ "("
 				+ "usu_email, "
 				+ "usu_senha, "
+				+ "usu_ima_id, "
 				+ "usu_ativo, "
 				+ "usu_dataHoraCriacao"
 				+ ") "
-				+ " VALUES ( ?, ?, true, NOW())";
+				+ " VALUES ( ?, ?, ?, true, NOW())";
 		
 		PreparedStatement pstm = null;
 		
 		try {
+			String idImagem = imagemDao.salvar(usuario.getImagem());
 			pstm = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			pstm.setString(1, usuario.getEmail());
 			pstm.setString(2, usuario.getSenha());
+			pstm.setInt(3, Integer.parseInt(idImagem));
 			pstm.executeUpdate();
 			
 			rs = pstm.getGeneratedKeys();
