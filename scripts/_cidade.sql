@@ -1,4 +1,34 @@
 use lesProject;
+
+INSERT INTO `tb_estado` (`est_id`, `est_dataHoraCriacao`, `est_ativo`, `est_nome`, `est_sigla`) VALUES
+(1, NOW(), b'1', 'Acre', 'AC'),
+(2, NOW(), b'1', 'Alagoas', 'AL'),
+(3, NOW(), b'1', 'Amapá', 'AP'),
+(4, NOW(), b'1', 'Amazonas', 'AM'),
+(5, NOW(), b'1', 'Bahia', 'BA'),
+(6, NOW(), b'1', 'Ceará', 'CE'),
+(7, NOW(), b'1', 'Distrito Federal', 'DF'),
+(8, NOW(), b'1', 'Espírito Santo', 'ES'),
+(9, NOW(), b'1', 'Goiás', 'GO'),
+(10, NOW(), b'1', 'Maranhão', 'MA'),
+(11, NOW(), b'1', 'Mato Grosso', 'MT'),
+(12, NOW(), b'1', 'Mato Grosso do Sul', 'MS'),
+(13, NOW(), b'1', 'Minhas Gerais', 'MG'),
+(14, NOW(), b'1', 'Pará', 'PA'),
+(15, NOW(), b'1', 'Paraíba', 'PB'),
+(16, NOW(), b'1', 'Paraná', 'PN'),
+(17, NOW(), b'1', 'Pernambuco', 'PE'),
+(18, NOW(), b'1', 'Piauí', 'PI'),
+(19, NOW(), b'1', 'Rio de Janeiro', 'RJ'),
+(20, NOW(), b'1', 'Rio Grande do Norte', 'RN'),
+(21, NOW(), b'1', 'Rio Grande do Sul', 'RS'),
+(22, NOW(), b'1', 'Rondônia', 'RO'),
+(23, NOW(), b'1', 'Rorâima', 'RR'),
+(24, NOW(), b'1', 'Santa Catarina', 'SC'),
+(25, NOW(), b'1', 'São Paulo', 'SP'),
+(26, NOW(), b'1', 'Sergipe', 'SE'),
+(27, NOW(), b'1', 'Tocantins', 'TO');
+
 INSERT INTO `tb_cidade` (`cid_id`, `cid_dataHoraCriacao`, `cid_ativo`, `cid_nome`, `cid_est_id`) VALUES
 (1, NOW(), b'1', 'Afonso Cláudio', 8),
 (2, NOW(), b'1', 'Água Doce do Norte', 8),
