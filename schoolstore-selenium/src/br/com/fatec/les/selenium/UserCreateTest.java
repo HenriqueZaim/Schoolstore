@@ -40,7 +40,7 @@ public class UserCreateTest {
   }
   @Test
   public void userCreate() {
-    driver.get("http://localhost:8085/Les-Project/");
+    driver.get("http://localhost:8085/schoolstore/");
     driver.manage().window().setSize(new Dimension(550, 662));
     driver.findElement(By.name("txtNome")).click();
     driver.findElement(By.name("txtNome")).sendKeys("Henrique Zaim");
