@@ -28,14 +28,12 @@ public class ImagemVH implements IViewHelper{
 		Imagem imagem = new Imagem();
 		String tarefa = request.getParameter("tarefa");
 		
-		if(request.getParameter("tarefa").equals("atualizarCliente") ||
-				request.getParameter("tarefa").equals("deletarCliente") || 
-				request.getParameter("tarefa").equals("editaCliente")) {
-			imagem.setId(Long.parseLong(request.getParameter("txtUsuarioId")));
-		}else if(request.getParameter("tarefa").equals("cadastrarCliente")) {
-	
-
-			String base64String = request.getParameter("file");
+		if(tarefa.equals("atualizarCliente") ||
+				tarefa.equals("deletarCliente") || 
+				tarefa.equals("editaCliente")) {
+			imagem.setId(Long.parseLong(request.getParameter("txtImagemId")));
+		}else {
+			String base64String = request.getParameter("txtFile");
 			String[] strings = base64String.split(",");
 			String extension;
 			switch (strings[0]) {//check image's extension

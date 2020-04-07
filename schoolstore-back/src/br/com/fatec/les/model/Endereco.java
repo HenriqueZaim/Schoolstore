@@ -10,7 +10,14 @@ public class Endereco extends EntidadeDominio{
 	private int numero;
 	private boolean favorito;
 	private Cidade cidade;
+	private Cliente cliente;
 	
+	public Cliente getCliente() {
+		return cliente;
+	}
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
 	public String getLogradouro() {
 		return Logradouro;
 	}

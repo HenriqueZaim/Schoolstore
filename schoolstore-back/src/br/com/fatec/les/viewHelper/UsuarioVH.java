@@ -29,12 +29,9 @@ public class UsuarioVH implements IViewHelper{
 		ImagemVH imagemVh = new ImagemVH();
 		String tarefa = request.getParameter("tarefa");
 		
-//		if(!tarefa.equals("cadastrarCliente")) {
-//			usuario.setId(Long.parseLong(request.getParameter("txtUsuarioId")));
-//		}
-		if(request.getParameter("tarefa").equals("atualizarCliente") ||
-				request.getParameter("tarefa").equals("deletarCliente") || 
-				request.getParameter("tarefa").equals("editaCliente")) {
+		if(tarefa.equals("atualizarCliente") ||
+				tarefa.equals("deletarCliente") || 
+				tarefa.equals("editaCliente")) {
 			usuario.setId(Long.parseLong(request.getParameter("txtUsuarioId")));
 		}
 		

@@ -8,9 +8,9 @@ public class EnderecoNumeroStrategy implements IStrategy{
 	@Override
 	public String execute(IDominio iDominio) {
 		Cliente cliente = (Cliente) iDominio;	
-		if(cliente.getEndereco().getNumero() == 0) {
-			return "Número residencial é obrigatório";
-		}
+//		if(cliente.getEndereco().getNumero() == 0) {
+//			return "Número residencial é obrigatório";
+//		}
 		return "";
 	}
 

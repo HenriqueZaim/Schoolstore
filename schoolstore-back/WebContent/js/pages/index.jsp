@@ -48,9 +48,42 @@
 		<input name="txtCep" maxlength="9" type="text" placeholder="Cep">
 		<br>
 		<input type="hidden" name="txtCidadeId" value="8">
-		<input type="radio" name="txtFavorito" value="true">Favorito - sim
+		<input type="hidden" name="txtEnderecoId" value="1">
 		<br>
-		<input type="radio" name="txtFavorito" value="false">Não  
+		<hr>
+		<br>
+		<input name="txtLogradouro" maxlength="100" type="text" placeholder="Rua">
+		<br>
+		<input name="txtBairro" maxlength="100" type="text" placeholder="Bairro">
+		<br>
+		<input name="txtNumero" maxlength="4" type="text" placeholder="Numero">
+		<br>
+		<input name="txtComplemento" maxlength="100" type="text" placeholder="Complemento">
+		<br>
+		<input name="txtReferencia" maxlength="100" type="text" placeholder="Referencia">
+		<br>
+		<input name="txtCep" maxlength="9" type="text" placeholder="Cep">
+		<br>
+		<input type="hidden" name="txtCidadeId" value="8">
+		<input type="hidden" name="txtEnderecoId" value="2">
+ 
+				<br>
+		<hr>
+		<br>
+		<input name="txtLogradouro" maxlength="100" type="text" placeholder="Rua">
+		<br>
+		<input name="txtBairro" maxlength="100" type="text" placeholder="Bairro">
+		<br>
+		<input name="txtNumero" maxlength="4" type="text" placeholder="Numero">
+		<br>
+		<input name="txtComplemento" maxlength="100" type="text" placeholder="Complemento">
+		<br>
+		<input name="txtReferencia" maxlength="100" type="text" placeholder="Referencia">
+		<br>
+		<input name="txtCep" maxlength="9" type="text" placeholder="Cep">
+		<br>
+		<input type="hidden" name="txtCidadeId" value="8">
+		<input type="hidden" name="txtEnderecoId" value="3">		
 		
 		<input type="hidden" id="base64" name="file">
 		<input type="hidden" name="tarefa" value="cadastrarCliente"/>

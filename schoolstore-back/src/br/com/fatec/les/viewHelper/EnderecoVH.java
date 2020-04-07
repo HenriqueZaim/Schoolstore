@@ -1,6 +1,7 @@
 package br.com.fatec.les.viewHelper;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -18,42 +19,93 @@ import br.com.fatec.les.model.IDominio;
 import br.com.fatec.les.model.Usuario;
 
 public class EnderecoVH implements IViewHelper{
+	
+	public ArrayList<Endereco> getEntidades(HttpServletRequest request){
+		ArrayList<Endereco> enderecos = new ArrayList<Endereco>();
+		String tarefa = request.getParameter("tarefa");
+			
+		Endereco endereco = new Endereco();
+		Cidade cidade = new Cidade();
+		
+		String[] enderecosForm = request.getParameterValues("txtEndereco");
+		
+		for(int i = 0 ; i < enderecosForm.length ; i++) {
+			endereco = new Endereco();
+			cidade = new Cidade();
+			
+			if(tarefa.equals("atualizarCliente") ||
+					tarefa.equals("deletarCliente") || 
+					tarefa.equals("editaCliente")) {
+				endereco.setId(Long.parseLong(request.getParameter("txtEnderecoId")));
+			}
+			
+			endereco.setBairro(request.getParameterValues("txtBairro")[i]);
+			endereco.setCep(request.getParameterValues("txtCep")[i]);
+			endereco.setComplemento(request.getParameterValues("txtComplemento")[i]);
+			endereco.setNumero(Integer.parseInt(request.getParameterValues("txtNumero")[i]));
+			endereco.setReferencia(request.getParameterValues("txtReferencia")[i]);
+			endereco.setLogradouro(request.getParameterValues("txtLogradouro")[i]);
+			endereco.setFavorito(Boolean.parseBoolean(request.getParameterValues("txtFavoritoEndereco")[i]));
+			
+			cidade.setId(Long.parseLong(request.getParameterValues("txtCidadeId")[i]));
+			endereco.setCidade(cidade);
+			
+			enderecos.add(endereco);
+		}
+		
+		return enderecos;
+	}
 
 	@Override
 	public IDominio getEntidade(HttpServletRequest request) {
-		CidadeVH cidadeVH = new CidadeVH();
-		Endereco endereco = new Endereco();
-		String tarefa = request.getParameter("tarefa");
+//		CidadeVH cidadeVH = new CidadeVH();
+//		Endereco endereco = new Endereco();
+//		String tarefa = request.getParameter("tarefa");
+//		
+//		ArrayList<Endereco> enderecos = new ArrayList<Endereco>();
+//		
+//		String[] enderecosForm = request.getParameterValues("txtEnderecoId");
+//		
+//		for(int i = 0 ; i < enderecosForm.length ; i++) {
+//			endereco = new Endereco();
+//			System.out.println("Iteração: " + i);
+//			endereco.setBairro(request.getParameterValues("txtBairro")[i]);
+//			endereco.setCep(request.getParameterValues("txtCep")[i]);
+//			endereco.setComplemento(request.getParameterValues("txtComplemento")[i]);
+//			endereco.setNumero(Integer.parseInt(request.getParameterValues("txtNumero")[i]));
+//			endereco.setReferencia(request.getParameterValues("txtReferencia")[i]);
+//			endereco.setLogradouro(request.getParameterValues("txtLogradouro")[i]);
+//			
+//			
+//			enderecos.add(endereco);
+//		}
 		
-//		if(!tarefa.equals("cadastrarCliente")) {
+//		if(tarefa.equals("atualizarCliente") ||
+//				tarefa.equals("deletarCliente") || 
+//				tarefa.equals("editaCliente")) {
 //			endereco.setId(Long.parseLong(request.getParameter("txtEnderecoId")));
 //		}
 		
-		if(request.getParameter("tarefa").equals("atualizarCliente") ||
-				request.getParameter("tarefa").equals("deletarCliente") || 
-				request.getParameter("tarefa").equals("editaCliente")) {
-			endereco.setId(Long.parseLong(request.getParameter("txtEnderecoId")));
-		}
-		
-		endereco.setBairro(request.getParameter("txtBairro"));
-		endereco.setCep(request.getParameter("txtCep"));
-		endereco.setComplemento(request.getParameter("txtComplemento"));
-		if (request.getParameter("txtNumero") == null || request.getParameter("txtNumero") == "") {
-			endereco.setNumero(0);
-		}else {
-			endereco.setNumero(Integer.parseInt(request.getParameter("txtNumero")));
-		}
-		
-		if(request.getParameter("txtFavorito") == null || request.getParameter("txtFavorito") == "") {
-			endereco.setFavorito(false);
-		}else {
-			endereco.setFavorito(Boolean.parseBoolean(request.getParameter("txtFavorito")));
-		}
-		endereco.setReferencia(request.getParameter("txtReferencia"));
-		endereco.setLogradouro(request.getParameter("txtLogradouro"));
-		endereco.setCidade((Cidade)cidadeVH.getEntidade(request));
+//		endereco.setBairro(request.getParameter("txtBairro"));
+//		endereco.setCep(request.getParameter("txtCep"));
+//		endereco.setComplemento(request.getParameter("txtComplemento"));
+//		if (request.getParameter("txtNumero") == null || request.getParameter("txtNumero") == "") {
+//			endereco.setNumero(0);
+//		}else {
+//			endereco.setNumero(Integer.parseInt(request.getParameter("txtNumero")));
+//		}
+//		
+//		if(request.getParameter("txtFavorito") == null || request.getParameter("txtFavorito") == "") {
+//			endereco.setFavorito(false);
+//		}else {
+//			endereco.setFavorito(Boolean.parseBoolean(request.getParameter("txtFavorito")));
+//		}
+//		endereco.setReferencia(request.getParameter("txtReferencia"));
+//		endereco.setLogradouro(request.getParameter("txtLogradouro"));
+//		endereco.setCidade((Cidade)cidadeVH.getEntidade(request));
+//		System.out.println("Enderecos: " + enderecos);
 
-		return endereco;
+		return null;
 	}
 
 	@Override

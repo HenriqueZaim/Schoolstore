@@ -28,7 +28,7 @@ public class ImagemDao implements IDao{
 		ResultSet rs;
 		String sql = "INSERT INTO tb_imagem "
 				+ "("
-				+ "ima_foto, "
+				+ "ima_nome, "
 				+ "ima_descricao, "
 				+ "ima_ativo, "
 				+ "ima_dataHoraCriacao"

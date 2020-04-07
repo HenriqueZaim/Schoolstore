@@ -8,10 +8,10 @@ public class EnderecoCepStrategy implements IStrategy{
 	@Override
 	public String execute(IDominio iDominio) {
 		Cliente cliente = (Cliente) iDominio;
-		if(cliente.getEndereco().getCep().isEmpty() || 
-				cliente.getEndereco().getCep() == null) {
-			return "CEP é obrigatório";
-		}
+//		if(cliente.getEndereco().getCep().isEmpty() || 
+//				cliente.getEndereco().getCep() == null) {
+//			return "CEP é obrigatório";
+//		}
 		return "";
 	}
 

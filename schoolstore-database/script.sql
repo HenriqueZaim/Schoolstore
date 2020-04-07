@@ -50,7 +50,7 @@ CREATE TABLE tb_cupomTroca
   cut_id INT NOT NULL AUTO_INCREMENT,
   cut_ativo BOOLEAN NOT NULL,
   cut_dataHoraCriacao DATETIME NOT NULL,
-  cut_valor NUMBER(4,2) NOT NULL,
+  cut_valor DECIMAL(4,2) NOT NULL,
   cut_usu_id INT NOT NULL,
   PRIMARY KEY (cut_id),
   FOREIGN KEY (cut_usu_id) REFERENCES tb_usuario(usu_id)
@@ -59,7 +59,7 @@ CREATE TABLE tb_cupomTroca
 CREATE TABLE tb_carrinho
 (
   car_id INT NOT NULL AUTO_INCREMENT,
-  car_subTotal NUMBER(4,2) DEFAULT NULL,
+  car_subTotal DECIMAL(4,2) DEFAULT NULL,
   car_validade DATETIME DEFAULT NULL,
   car_ativo BOOLEAN NOT NULL,
   car_dataHoraCriacao DATETIME NOT NULL,
@@ -72,11 +72,10 @@ CREATE TABLE tb_cliente
  cli_nome VARCHAR(100) NOT NULL,
  cli_numeroTelefone VARCHAR(12) NOT NULL,
  cli_numeroDocumento VARCHAR(14) NOT NULL,
- cli_dataNascimento DATE NOT NULL,
  cli_ativo BOOLEAN NOT NULL,
  cli_dataHoraCriacao DATETIME NOT NULL,
  cli_usu_id INT NOT NULL,
- cli_car_id INT NOT NULL,
+ cli_car_id INT,
  PRIMARY KEY (cli_id),
  FOREIGN KEY(cli_usu_id) REFERENCES tb_usuario(usu_id),
  FOREIGN KEY(cli_car_id) REFERENCES tb_carrinho(car_id)
@@ -104,11 +103,11 @@ CREATE TABLE tb_endereco
 CREATE TABLE tb_frete
 ( 
   fre_id INT NOT NULL AUTO_INCREMENT,
-  fre_valor NUMBER(4,2),
+  fre_valor DECIMAL(4,2),
   fre_previsao INT NOT NULL,
   fre_end_id INT NOT NULL,
   PRIMARY KEY (fre_id),
-  FOREIGN KEY(fre_end_id) REFERENCES tb_endereco(end_id),
+  FOREIGN KEY(fre_end_id) REFERENCES tb_endereco(end_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /****************************************/
@@ -116,7 +115,7 @@ CREATE TABLE tb_produto
 (
   pro_id INT NOT NULL AUTO_INCREMENT,
   pro_nome VARCHAR(100) NOT NULL,
-  pro_preco NUMBER(4,2) NOT NULL.
+  pro_preco DECIMAL(4,2) NOT NULL,
   pro_descricao VARCHAR(400) NOT NULL,
   pro_ativo BOOLEAN NOT NULL,
   pro_dataHoraCriacao DATETIME NOT NULL,
@@ -128,14 +127,14 @@ CREATE TABLE tb_produto
 CREATE TABLE tb_pagamentoCupom
 (
   pcu_id INT NOT NULL AUTO_INCREMENT,
-  pcu_valorTotalCupom NUMBER(4,2) NOT NULL,
+  pcu_valorTotalCupom DECIMAL(4,2) NOT NULL,
   PRIMARY KEY (pcu_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE tb_cupom
 (
   cup_id INT NOT NULL AUTO_INCREMENT,
-  cup_valor NUMBER(4,2) NOT NULL,
+  cup_valor DECIMAL(4,2) NOT NULL,
   cup_ativo BOOLEAN NOT NULL,
   cup_dataHoraCriacao DATETIME NOT NULL,
   cup_pcu_id INT NOT NULL,
@@ -148,8 +147,8 @@ CREATE TABLE tb_cartaoCredito
   pca_id INT NOT NULL AUTO_INCREMENT,
   pca_ativo BOOLEAN NOT NULL,
   pca_dataHoraCriacao DATETIME NOT NULL,
-  pca_numero VARCHAR(20) NOT NULL,
-  pca_codigo VARCHAR(5) NOT NULL,
+  pca_numero VARCHAR(16) NOT NULL,
+  pca_codigo VARCHAR(3) NOT NULL,
   pca_nomeImpresso VARCHAR(100) NOT NULL,
   pca_favorito BOOLEAN NOT NULL,
   pca_cli_id INT NOT NULL,
@@ -160,7 +159,7 @@ CREATE TABLE tb_cartaoCredito
 CREATE TABLE tb_pagamentoCartao
 (
   pca_id INT NOT NULL AUTO_INCREMENT,
-  pca_valorTotalCartao NUMBER(4,2) NOT NULL,
+  pca_valorTotalCartao DECIMAL(4,2) NOT NULL,
   pca_cre_id INT NOT NULL,
   PRIMARY KEY (pca_id),
   FOREIGN KEY(pca_cre_id) REFERENCES tb_cartaoCredito(pca_id)
@@ -169,7 +168,7 @@ CREATE TABLE tb_pagamentoCartao
 CREATE TABLE tb_formaPagamento
 (
   fpag_id INT NOT NULL AUTO_INCREMENT,
-  fpag_valorTotal NUMBER(4,2) NOT NULL,
+  fpag_valorTotal DECIMAL(4,2) NOT NULL,
   fpag_pcu_id INT DEFAULT NULL,
   fpag_pca_id INT DEFAULT NULL,
   PRIMARY KEY (fpag_id),
@@ -180,7 +179,7 @@ CREATE TABLE tb_formaPagamento
 CREATE TABLE tb_pedido
 (
   ped_id INT NOT NULL AUTO_INCREMENT,
-  ped_valor NUMBER(4,2) NOT NULL,
+  ped_valor DECIMAL(4,2) NOT NULL,
   ped_statusPedido VARCHAR(20) NOT NULL,
   ped_ativo BOOLEAN NOT NULL,
   ped_dataHoraCriacao DATETIME NOT NULL,
@@ -190,7 +189,7 @@ CREATE TABLE tb_pedido
   PRIMARY KEY (ped_id),
   FOREIGN KEY(ped_fpag_id) REFERENCES tb_formaPagamento(fpag_id),
   FOREIGN KEY(ped_fre_id) REFERENCES tb_frete(fre_id),
-  FOREIGN KEY(ped_cli_id) REFERENCES tb_cliente(cli_id),
+  FOREIGN KEY(ped_cli_id) REFERENCES tb_cliente(cli_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE tb_troca
@@ -224,7 +223,7 @@ CREATE TABLE tb_itemTroca
   itro_tro_id INT NOT NULL,
   PRIMARY KEY (itro_id),
   FOREIGN KEY(itro_pro_id) REFERENCES tb_produto(pro_id),
-  FOREIGN KEY(itro_tro_id) REFERENCES tb_troca(ped_id)
+  FOREIGN KEY(itro_tro_id) REFERENCES tb_troca(tro_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE tb_itemCarrinho
@@ -248,7 +247,7 @@ CREATE TABLE tb_inativacao
   ina_pro_id INT NOT NULL,
   PRIMARY KEY (ina_id),
   FOREIGN KEY(ina_pro_id) REFERENCES tb_produto(pro_id)
-)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE tb_ativacao 
 (
@@ -260,4 +259,4 @@ CREATE TABLE tb_ativacao
   ati_pro_id INT NOT NULL,
   PRIMARY KEY (ati_id),
   FOREIGN KEY(ati_pro_id) REFERENCES tb_produto(pro_id)
-)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;

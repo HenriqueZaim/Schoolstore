@@ -40,10 +40,11 @@ public class EnderecoDao implements IDao{
 				+ "end_referencia, "
 				+ "end_favorito, "
 				+ "end_cid_id, "
+				+ "end_cli_id, "
 				+ "end_ativo, "
 				+ "end_dataHoraCriacao"
 				+ ") "
-				+ " VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, true, NOW())";
+				+ " VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, true, NOW())";
 		
 		PreparedStatement pstm = null;
 		
@@ -57,6 +58,7 @@ public class EnderecoDao implements IDao{
 			pstm.setString(6, endereco.getReferencia());
 			pstm.setBoolean(7, endereco.isFavorito());
 			pstm.setLong(8, endereco.getCidade().getId());
+			pstm.setLong(9, endereco.getCliente().getId());
 			pstm.executeUpdate();
 			
 			rs = pstm.getGeneratedKeys();

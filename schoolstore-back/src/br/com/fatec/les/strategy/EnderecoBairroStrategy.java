@@ -9,10 +9,10 @@ public class EnderecoBairroStrategy implements IStrategy{
 	@Override
 	public String execute(IDominio iDominio) {
 		Cliente cliente = (Cliente) iDominio;
-		if(cliente.getEndereco().getBairro().isEmpty() || 
-				cliente.getEndereco().getBairro() == null) {
-			return "Bairro é obrigatório";
-		}
+//		if(cliente.getEndereco().getBairro().isEmpty() || 
+//				cliente.getEndereco().getBairro() == null) {
+//			return "Bairro é obrigatório";
+//		}
 		return "";
 	}
 

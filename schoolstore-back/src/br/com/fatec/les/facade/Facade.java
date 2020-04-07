@@ -14,7 +14,6 @@ import br.com.fatec.les.model.Cliente;
 import br.com.fatec.les.model.Endereco;
 import br.com.fatec.les.model.EntidadeDominio;
 import br.com.fatec.les.model.Usuario;
-import br.com.fatec.les.strategy.ClienteDataNascimentoStrategy;
 import br.com.fatec.les.strategy.ClienteDocumentoStrategy;
 import br.com.fatec.les.strategy.ClienteNomeStrategy;
 import br.com.fatec.les.strategy.ClienteTelefoneStrategy;

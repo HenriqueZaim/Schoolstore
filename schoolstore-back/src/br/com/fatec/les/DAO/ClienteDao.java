@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +30,7 @@ public class ClienteDao implements IDao{
 	@Override
 	public String salvar(EntidadeDominio entidadeDominio) throws SQLException {
 		Cliente cliente = (Cliente) entidadeDominio;
+		ResultSet rs;
 		
 		String sql = "INSERT INTO tb_cliente "
 				+ "("
@@ -36,29 +38,34 @@ public class ClienteDao implements IDao{
 				+ "cli_numeroTelefone, "
 				+ "cli_numeroDocumento, "
 				+ "cli_usu_id, "
-				+ "cli_end_id, "
 				+ "cli_ativo, "
 				+ "cli_dataHoraCriacao "
 				+ ")"
-				+ " VALUES ( ?, ?, ?, ?, ?, true, NOW())";
+				+ " VALUES ( ?, ?, ?, ?, true, NOW())";
 		
 		PreparedStatement pstm = null;
 		
 		try {
-			String idEndereco = enderecoDao.salvar(cliente.getEndereco());
 			String idUsuario = usuarioDao.salvar(cliente.getUsuario());
 			
-			if(idEndereco == null || idUsuario == null) {
-				return "Erro ao tentar cadastrar cliente";
-			}
-			
-			pstm = conexao.prepareStatement(sql);
+			pstm = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			pstm.setString(1, cliente.getNome());
 			pstm.setString(2, cliente.getNumeroTelefone());
 			pstm.setString(3, cliente.getNumeroDocumento());
 			pstm.setInt(4, Integer.parseInt(idUsuario));
-			pstm.setInt(5, Integer.parseInt(idEndereco));
 			pstm.executeUpdate();
+			
+			rs = pstm.getGeneratedKeys();
+			if (rs.next()){
+				String idCliente = Integer.toString(rs.getInt(1));
+				for(Endereco e : cliente.getEnderecos()) {
+					cliente = new Cliente();
+					cliente.setId(Long.parseLong(idCliente));
+					e.setCliente(cliente);
+					enderecoDao.salvar(e);
+				}
+			}
+			
 			mensagem = "Usuário cadastrado com sucesso!";
 		}catch(SQLException e){
 			mensagem = e.toString();
@@ -82,9 +89,9 @@ public class ClienteDao implements IDao{
 		
 		try {
 			pstm = conexao.prepareStatement(sql);
-			if(enderecoDao.deletar(cliente.getEndereco()) == null || usuarioDao.deletar(cliente.getUsuario()) == null) {
-				return null;
-			}
+//			if(enderecoDao.deletar(cliente.getEndereco()) == null || usuarioDao.deletar(cliente.getUsuario()) == null) {
+//				return null;
+//			}
 			pstm.executeUpdate();
 			mensagem = "Usuário deletado com sucesso";
 		}catch(SQLException e) {
@@ -117,9 +124,9 @@ public class ClienteDao implements IDao{
 			pstm.setString(3, cliente.getNumeroDocumento());
 			pstm.setLong(4, cliente.getId());
 			
-			if(enderecoDao.atualizar(cliente.getEndereco()) == null || usuarioDao.atualizar(cliente.getUsuario()) == null) {
-				return null;
-			}
+//			if(enderecoDao.atualizar(cliente.getEndereco()) == null || usuarioDao.atualizar(cliente.getUsuario()) == null) {
+//				return null;
+//			}
 			
 			pstm.executeUpdate();
 			mensagem = "Usuário atualizado com sucesso";
@@ -184,7 +191,7 @@ public class ClienteDao implements IDao{
 				usuarios.addAll(usuarioDao.consultar(u));
 				enderecos.addAll(enderecoDao.consultar(e));
 				
-				c.setEndereco((Endereco)enderecos.get(0));
+//				c.setEndereco((Endereco)enderecos.get(0));
 				c.setUsuario((Usuario)usuarios.get(0));
 //				c.setDataHoraCriacao(LocalDateTime.parse(rs.getString("cli_dataHoraCriacao")));
 

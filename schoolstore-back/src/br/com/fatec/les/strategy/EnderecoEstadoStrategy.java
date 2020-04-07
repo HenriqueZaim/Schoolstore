@@ -8,9 +8,9 @@ public class EnderecoEstadoStrategy implements IStrategy{
 	@Override
 	public String execute(IDominio iDominio) {
 		Cliente cliente = (Cliente) iDominio;
-		if(cliente.getEndereco().getCidade().getEstado().getId() == null) {
-			return "Selecione o estado de residência";
-		}
+//		if(cliente.getEndereco().getCidade().getEstado().getId() == null) {
+//			return "Selecione o estado de residência";
+//		}
 		return "";
 	}
 

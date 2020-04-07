@@ -29,23 +29,24 @@ public class ClienteVH implements IViewHelper{
 		Cliente cliente = new Cliente();
 		EnderecoVH enderecoVH = new EnderecoVH();
 		UsuarioVH usuarioVH = new UsuarioVH();
+		
 		String tarefa = request.getParameter("tarefa");
 		
-//		if(!tarefa.contentEquals("cadastrarCliente")) {
-//			cliente.setId(request.getParameter("txtClienteId") == "" ? 0 : Long.parseLong(request.getParameter("txtClienteId")));
-//		}
-		if(request.getParameter("tarefa").equals("atualizarCliente") ||
-				request.getParameter("tarefa").equals("deletarCliente") || 
-				request.getParameter("tarefa").equals("editaCliente")) {
+		
+		if(tarefa.equals("atualizarCliente") ||
+				tarefa.equals("deletarCliente") || 
+				tarefa.equals("editaCliente")) {
 			cliente.setId(Long.parseLong(request.getParameter("txtClienteId")));
 		}
 
-//		cliente.setDataNascimento(LocalDate.parse(request.getParameter("txtDataNascimento")));
 		cliente.setNome(request.getParameter("txtNome"));
 		cliente.setNumeroDocumento(request.getParameter("txtNumeroDocumento"));
 		cliente.setNumeroTelefone(request.getParameter("txtNumeroTelefone"));
 		cliente.setUsuario((Usuario)usuarioVH.getEntidade(request));
-		cliente.setEndereco((Endereco)enderecoVH.getEntidade(request));
+		
+		cliente.setEnderecos(enderecoVH.getEntidades(request));
+
+		System.out.println(cliente.getEnderecos());
 		
 		return cliente;	
 	}
@@ -102,8 +103,9 @@ public class ClienteVH implements IViewHelper{
 			}
 		}
 		else {
-			request.getRequestDispatcher("clienteMenu.jsp").
-			forward(request, response);
+			response.sendRedirect("clienteMenu.jsp");
+//			request.getRequestDispatcher("clienteMenu.jsp").
+//			forward(request, response);
 		}
 		
 	}
