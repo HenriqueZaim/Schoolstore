@@ -32,7 +32,6 @@ public class ClienteVH implements IViewHelper{
 		
 		String tarefa = request.getParameter("tarefa");
 		
-		
 		if(tarefa.equals("atualizarCliente") ||
 				tarefa.equals("deletarCliente") || 
 				tarefa.equals("editaCliente")) {
@@ -42,12 +41,9 @@ public class ClienteVH implements IViewHelper{
 		cliente.setNome(request.getParameter("txtNome"));
 		cliente.setNumeroDocumento(request.getParameter("txtNumeroDocumento"));
 		cliente.setNumeroTelefone(request.getParameter("txtNumeroTelefone"));
-		cliente.setUsuario((Usuario)usuarioVH.getEntidade(request));
-		
+		cliente.setUsuario((Usuario)usuarioVH.getEntidade(request));		
 		cliente.setEnderecos(enderecoVH.getEntidades(request));
 
-		System.out.println(cliente.getEnderecos());
-		
 		return cliente;	
 	}
 
@@ -68,7 +64,6 @@ public class ClienteVH implements IViewHelper{
 				Cliente user = (Cliente) c;
 				clientes.add(user);
 			}
-			
 			
 			request.setAttribute("clientes", clientes);
 			request.getRequestDispatcher("clientesLista.jsp").
@@ -91,21 +86,10 @@ public class ClienteVH implements IViewHelper{
 			request.setAttribute("cliente", cliente);
 			request.getRequestDispatcher("clienteEditar.jsp").
 			forward(request, response);
-		}else if(operacao.equals("cadastrarCliente")) {
-			Result resultado = new Result();
-			resultado.setMensagem((ArrayList<String>) request.getAttribute("mensagens"));
-			if(resultado.getMensagem().size() > 1) {
-				request.getRequestDispatcher("index.jsp").
-				forward(request, response);
-			}else {
-				request.getRequestDispatcher("clienteMenu.jsp").
-				forward(request, response);
-			}
-		}
-		else {
-			response.sendRedirect("clienteMenu.jsp");
-//			request.getRequestDispatcher("clienteMenu.jsp").
-//			forward(request, response);
+		}else {
+//			response.sendRedirect("clienteMenu.jsp");
+			request.getRequestDispatcher("clienteMenu.jsp").
+			forward(request, response);
 		}
 		
 	}

@@ -23,15 +23,13 @@ public class EnderecoVH implements IViewHelper{
 	public ArrayList<Endereco> getEntidades(HttpServletRequest request){
 		ArrayList<Endereco> enderecos = new ArrayList<Endereco>();
 		String tarefa = request.getParameter("tarefa");
+		CidadeVH cidadeVH = new CidadeVH();
 			
 		Endereco endereco = new Endereco();
-		Cidade cidade = new Cidade();
-		
 		String[] enderecosForm = request.getParameterValues("txtEndereco");
 		
 		for(int i = 0 ; i < enderecosForm.length ; i++) {
 			endereco = new Endereco();
-			cidade = new Cidade();
 			
 			if(tarefa.equals("atualizarCliente") ||
 					tarefa.equals("deletarCliente") || 
@@ -47,8 +45,9 @@ public class EnderecoVH implements IViewHelper{
 			endereco.setLogradouro(request.getParameterValues("txtLogradouro")[i]);
 			endereco.setFavorito(Boolean.parseBoolean(request.getParameterValues("txtFavoritoEndereco")[i]));
 			
-			cidade.setId(Long.parseLong(request.getParameterValues("txtCidadeId")[i]));
-			endereco.setCidade(cidade);
+			request.setAttribute("txtCidadeIdAtual", request.getParameterValues("txtCidadeId")[i]);
+
+			endereco.setCidade((Cidade)cidadeVH.getEntidade(request));
 			
 			enderecos.add(endereco);
 		}

@@ -6,13 +6,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import br.com.fatec.les.DAO.CidadeDao;
 import br.com.fatec.les.DAO.ClienteDao;
 import br.com.fatec.les.DAO.EnderecoDao;
+import br.com.fatec.les.DAO.EstadoDao;
 import br.com.fatec.les.DAO.IDao;
 import br.com.fatec.les.DAO.UsuarioDao;
+import br.com.fatec.les.model.Cidade;
 import br.com.fatec.les.model.Cliente;
 import br.com.fatec.les.model.Endereco;
 import br.com.fatec.les.model.EntidadeDominio;
+import br.com.fatec.les.model.Estado;
 import br.com.fatec.les.model.Usuario;
 import br.com.fatec.les.strategy.ClienteDocumentoStrategy;
 import br.com.fatec.les.strategy.ClienteNomeStrategy;
@@ -40,10 +44,11 @@ public class Facade implements IFacade{
 		strategyMap = new HashMap<String, ArrayList<IStrategy>>();
 		
 		ClienteDao clienteDao = new ClienteDao();
+		EstadoDao estadoDao = new EstadoDao();
 		
 		daoMap.put(Cliente.class.getName(), clienteDao);
-		
-//		IStrategy clienteDataNascimentoStrategy = new ClienteDataNascimentoStrategy();
+		daoMap.put(Estado.class.getName(), estadoDao);
+
 		IStrategy clienteDocumentoStrategy = new ClienteDocumentoStrategy();
 		IStrategy clienteNomeStrategy = new ClienteNomeStrategy();
 		IStrategy clienteTelefoneStrategy = new ClienteTelefoneStrategy();
@@ -63,7 +68,6 @@ public class Facade implements IFacade{
 		usuarioStrategies.add(usuarioEmailStrategy);
 		
 		ArrayList<IStrategy> clienteStrategies = new ArrayList<IStrategy>();
-//		clienteStrategies.add(clienteDataNascimentoStrategy);
 		clienteStrategies.add(clienteDocumentoStrategy);
 		clienteStrategies.add(clienteNomeStrategy);
 		clienteStrategies.add(clienteTelefoneStrategy);
@@ -170,6 +174,7 @@ public class Facade implements IFacade{
 		
 	    try {
 			List<EntidadeDominio> listaEntidades = daoEntidade.consultar(entidadeDominio);
+						
 	        result.setEntidades(listaEntidades);
 	    } catch(SQLException e) {
 	       	e.printStackTrace();

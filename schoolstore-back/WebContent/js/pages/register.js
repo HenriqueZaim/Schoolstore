@@ -39,6 +39,11 @@ function getBase64(file) {
   };
 }
 
+$("#txtEstadoModal").change(function(){
+	$("#txtCidadeModal").find(`option`).css("display","none")
+	let id = $("#txtEstadoModal").val()
+	$("#txtCidadeModal").find(`option.${id}`).css("display", "block")
+})
 
 $("#btnSalvarEndereco").click(function () {
 
@@ -51,6 +56,9 @@ $("#btnSalvarEndereco").click(function () {
   let favorito = $("#txtFavoritoModal").val()
   let bairro = $("#txtBairroModal").val()
   let estado = $("#txtEstadoModal").val()
+  
+  let cidadeTexto = $("#txtCidadeModal").find(`option[value=${cidade}]`).text()
+  let estadoTexto = $("#txtEstadoModal").find(`option[value=${estado}]`).text()
 
   let idHeading = `${logradouro}-${numero}`
   let idCollapse = `collapse-${numero}`
@@ -74,8 +82,8 @@ $("#btnSalvarEndereco").click(function () {
               <div class="card-body">
                   <ul>
                     <li><b>CEP: </b>${cep}</li>
-                    <li><b>Estado: </b>${estado}</li>
-                    <li><b>Cidade: </b>${cidade}</li>
+                    <li><b>Estado: </b>${estadoTexto}</li>
+                    <li><b>Cidade: </b>${cidadeTexto}</li>
                     <li><b>Logradouro: </b>${logradouro}</li>
                     <li><b>Número: </b>${numero}</li>
                     <li><b>Bairro: </b>${bairro}</li>
