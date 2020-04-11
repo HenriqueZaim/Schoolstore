@@ -5,18 +5,11 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.List;
-import java.util.Map;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.bind.DatatypeConverter;
-
-import org.apache.tomcat.util.http.fileupload.FileItem;
-import org.apache.tomcat.util.http.fileupload.disk.DiskFileItemFactory;
-import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
 import br.com.fatec.les.model.IDominio;
 import br.com.fatec.les.model.Imagem;
@@ -32,7 +25,9 @@ public class ImagemVH implements IViewHelper{
 				tarefa.equals("deletarCliente") || 
 				tarefa.equals("editaCliente")) {
 			imagem.setId(Long.parseLong(request.getParameter("txtImagemId")));
-		}else {
+		}
+		
+		if(tarefa.equals("cadastrarCliente")) {
 			String base64String = request.getParameter("txtFile");
 			String[] strings = base64String.split(",");
 			String extension;
@@ -56,6 +51,7 @@ public class ImagemVH implements IViewHelper{
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+			
 			imagem.setFoto(nomeImagem);
 			imagem.setDescricao(nomeImagem);
 		}

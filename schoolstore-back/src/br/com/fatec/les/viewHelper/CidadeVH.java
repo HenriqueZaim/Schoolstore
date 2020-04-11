@@ -15,7 +15,7 @@ public class CidadeVH implements IViewHelper{
 	public IDominio getEntidade(HttpServletRequest request) {
 		Cidade cidade = new Cidade();
 		
-		cidade.setId(Long.parseLong(request.getParameter("txtCidadeIdAtual")));
+		cidade.setId(Long.parseLong((String) request.getAttribute("txtCidadeIdAtual")));
 		
 		return cidade;
 		

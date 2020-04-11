@@ -5,7 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,7 +65,7 @@ public class ClienteDao implements IDao{
 				}
 			}
 			
-			mensagem = "Usuário cadastrado com sucesso!";
+			mensagem = "Cliente cadastrado com sucesso!";
 		}catch(SQLException e){
 			mensagem = e.toString();
 			mensagem = "Erro: " + mensagem;
@@ -80,6 +79,8 @@ public class ClienteDao implements IDao{
 	@Override
 	public String deletar(EntidadeDominio entidadeDominio) throws SQLException {
 		Cliente cliente  = (Cliente) entidadeDominio;
+		Endereco endereco = new Endereco();
+		endereco.setCliente(cliente);
 		
 		String sql = "UPDATE tb_cliente SET "
 				+ "cli_ativo = false"
@@ -89,11 +90,15 @@ public class ClienteDao implements IDao{
 		
 		try {
 			pstm = conexao.prepareStatement(sql);
-//			if(enderecoDao.deletar(cliente.getEndereco()) == null || usuarioDao.deletar(cliente.getUsuario()) == null) {
-//				return null;
-//			}
+
+			if(enderecoDao.deletar(endereco) == null)
+				return null;
+
+			if(usuarioDao.deletar(cliente.getUsuario()) == null)
+				return null;
+			
 			pstm.executeUpdate();
-			mensagem = "Usuário deletado com sucesso";
+			mensagem = "Cliente deletado com sucesso!";
 		}catch(SQLException e) {
 			mensagem = e.getMessage();
 		}
@@ -107,6 +112,8 @@ public class ClienteDao implements IDao{
 	@Override
 	public String atualizar(EntidadeDominio entidadeDominio) throws SQLException {
 		Cliente cliente  = (Cliente) entidadeDominio;
+//		List<Endereco> enderecos = new ArrayList<Endereco>();
+//		enderecos.addAll(cliente.getEnderecos());
 		
 		String sql = "UPDATE tb_cliente SET "
 				
@@ -124,12 +131,18 @@ public class ClienteDao implements IDao{
 			pstm.setString(3, cliente.getNumeroDocumento());
 			pstm.setLong(4, cliente.getId());
 			
-//			if(enderecoDao.atualizar(cliente.getEndereco()) == null || usuarioDao.atualizar(cliente.getUsuario()) == null) {
-//				return null;
+//			for(Endereco endereco : enderecos) {
+//				if(enderecoDao.atualizar(endereco) == null) 
+//					return null;
+//				else
+//					continue;
 //			}
+			if(usuarioDao.atualizar(cliente.getUsuario()) == null) {
+				return null;
+			}
 			
 			pstm.executeUpdate();
-			mensagem = "Usuário atualizado com sucesso";
+			mensagem = "Cliente atualizado com sucesso!";
 		}catch(SQLException e) {
 			mensagem = "Erro ao tentar atualizar usuário. Contacte a equipe de desenvolvimento";
 		}
@@ -143,14 +156,10 @@ public class ClienteDao implements IDao{
 	@Override
 	public List<EntidadeDominio> consultar(IDominio entidade) throws SQLException {
 		Cliente cliente = (Cliente) entidade;
-		
-		Usuario u = new Usuario();
-		Cliente c = new Cliente();
-		Endereco e = new Endereco();
-		
-		List<EntidadeDominio> clientes = new ArrayList<EntidadeDominio>();
-		List<EntidadeDominio> enderecos = new ArrayList<EntidadeDominio>();
-		List<EntidadeDominio> usuarios = new ArrayList<EntidadeDominio>();
+
+		List<EntidadeDominio> clientesEntidade = new ArrayList<EntidadeDominio>();
+		List<EntidadeDominio> enderecosEntidade = new ArrayList<EntidadeDominio>();
+		List<Endereco> enderecos = new ArrayList<Endereco>();
 		
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
@@ -160,8 +169,7 @@ public class ClienteDao implements IDao{
 				+ "cli_nome, "
 				+ "cli_numeroTelefone, "
 				+ "cli_numeroDocumento, "
-				+ "cli_usu_id, "
-				+ "cli_end_id "
+				+ "cli_usu_id "
 				+ " FROM tb_cliente WHERE cli_ativo = 1 ";
 		if(cliente.getId() != null) {
 			sql += "AND cli_id = " + cliente.getId();
@@ -170,15 +178,18 @@ public class ClienteDao implements IDao{
 		try {
 			pstm = conexao.prepareStatement(sql);
 			rs = pstm.executeQuery();
-			
+
+			Usuario u = new Usuario();
+			Cliente c = new Cliente();
+			Endereco e = new Endereco();
 
 			while(rs.next()) {
 				c = new Cliente();
 				u = new Usuario();
 				e = new Endereco();
 				
-				usuarios = new ArrayList<EntidadeDominio>();
-				enderecos = new ArrayList<EntidadeDominio>();
+				enderecosEntidade = new ArrayList<EntidadeDominio>();
+				enderecos = new ArrayList<Endereco>();
 				
 				c.setId(Long.parseLong(rs.getString("cli_id")));
 				c.setNome(rs.getString("cli_nome"));
@@ -186,16 +197,17 @@ public class ClienteDao implements IDao{
 				c.setNumeroDocumento(rs.getString("cli_numeroDocumento"));
 				
 				u.setId(Long.parseLong(rs.getString("cli_usu_id")));
-				e.setId(Long.parseLong(rs.getString("cli_end_id")));
 				
-				usuarios.addAll(usuarioDao.consultar(u));
-				enderecos.addAll(enderecoDao.consultar(e));
-				
-//				c.setEndereco((Endereco)enderecos.get(0));
-				c.setUsuario((Usuario)usuarios.get(0));
-//				c.setDataHoraCriacao(LocalDateTime.parse(rs.getString("cli_dataHoraCriacao")));
+				e.setCliente(c);
+				enderecosEntidade.addAll(enderecoDao.consultar(e));
+				for(EntidadeDominio endereco : enderecosEntidade) {
+					enderecos.add((Endereco)endereco);
+				}
 
-				clientes.add(c);
+				c.setUsuario((Usuario)usuarioDao.consultar(u).get(0));
+				c.setEnderecos(enderecos);
+
+				clientesEntidade.add(c);
 			}
 		}catch(SQLException ex) {
 			System.err.println(ex.getMessage());
@@ -204,7 +216,7 @@ public class ClienteDao implements IDao{
 //			ConexaoFactory.closeConnection(conexao, pstm, rs);
 //		}
 		
-		return clientes;
+		return clientesEntidade;
 	}
 
 }

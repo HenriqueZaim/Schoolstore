@@ -5,13 +5,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 import br.com.fatec.les.database.ConexaoFactory;
 import br.com.fatec.les.model.EntidadeDominio;
 import br.com.fatec.les.model.IDominio;
 import br.com.fatec.les.model.Imagem;
-import br.com.fatec.les.model.Usuario;
 
 public class ImagemDao implements IDao{
 
@@ -59,20 +59,94 @@ public class ImagemDao implements IDao{
 
 	@Override
 	public String deletar(EntidadeDominio entidadeDominio) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		Imagem imagem = (Imagem) entidadeDominio;
+		String sql = "UPDATE tb_imagem SET "
+				+ "ima_ativo = false"
+				+ " WHERE ima_id = " + imagem.getId() + "";
+		
+		PreparedStatement pstm = null;
+		
+		try {		
+			pstm = conexao.prepareStatement(sql);
+			pstm.executeUpdate();
+			mensagem = "Imagem deletada com sucesso";
+		}catch(SQLException e) {
+			mensagem = e.getMessage();
+		}
+//		finally {
+//			ConexaoFactory.closeConnection(conexao, pstm);
+//		}
+		
+		return mensagem;
 	}
 
 	@Override
 	public String atualizar(EntidadeDominio entidadeDominio) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		Imagem imagem = (Imagem) entidadeDominio;
+		String sql = "UPDATE tb_imagem SET "
+				+ "ima_nome = ?, "
+				+ "ima_descricao = ? "
+				+ " WHERE ima_id = " + imagem.getId() + " AND ima_ativo = 1";
+		
+		PreparedStatement pstm = null;
+		
+		try {		
+			pstm = conexao.prepareStatement(sql);
+			pstm.setString(1, imagem.getFoto());
+			pstm.setString(2, imagem.getDescricao());
+			pstm.setLong(3, imagem.getId());
+			pstm.executeUpdate();
+			mensagem = "Imagem atualizada com sucesso";
+		}catch(SQLException e) {
+			mensagem = e.getMessage();
+		}
+//		finally {
+//			ConexaoFactory.closeConnection(conexao, pstm);
+//		}
+		
+		return mensagem;
 	}
 
 	@Override
 	public List<EntidadeDominio> consultar(IDominio entidade) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		Imagem imagem = (Imagem) entidade;
+		
+		List<EntidadeDominio> imagens = new ArrayList<EntidadeDominio>();
+				
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		String sql = "SELECT "
+				+ "ima_id, "
+				+ "ima_nome, "
+				+ "ima_descricao "
+				+ " FROM tb_imagem WHERE ima_ativo = 1 ";
+		if(imagem.getId() != null) {
+			sql += "AND ima_id = " + imagem.getId();
+		}
+				
+		try {
+			pstm = conexao.prepareStatement(sql);
+			rs = pstm.executeQuery();
+			
+			Imagem i = new Imagem();
+			
+			while(rs.next()) {
+				i = new Imagem();
+				
+				i.setId(Long.parseLong(rs.getString("ima_id")));
+				i.setFoto(rs.getString("ima_nome"));
+				i.setDescricao(rs.getString("ima_descricao"));
+
+				imagens.add(i);
+			}
+		}catch(SQLException e) {
+			System.err.println(e.getMessage());
+		}
+//		finally {
+//			ConexaoFactory.closeConnection(conexao, pstm, rs);
+//		}
+		
+		return imagens;
 	}
 
 }

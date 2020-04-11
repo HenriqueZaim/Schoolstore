@@ -1,15 +1,26 @@
+<%@page import="java.util.List"%>
+<%@page import="javax.security.auth.message.callback.PrivateKeyCallback.Request"%>
+<%@page import="br.com.fatec.les.model.Usuario"%>
+<%@page import="br.com.fatec.les.model.EntidadeDominio"%>
+<%@page import="br.com.fatec.les.facade.Result"%>
+<%@page import="java.util.ArrayList"%>
+<%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="pt">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt-br" xml:lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    
     <title>Material Design for Bootstrap</title>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
-    <link rel="stylesheet" href="./css/bootstrap.min.css">
-    <link rel="stylesheet" href="./css/mdb.min.css">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/mdb.min.css">
 </head>
 
 <body>
@@ -24,17 +35,21 @@
     <main>
         <section class="py-5 px-2">
             <div class="container mt-5 dark-grey-text">
-                <h1 class="text-center">CADASTRO DE USUÁRIO</h1>
+                <h1 class="text-center">Editar Perfil</h1>
                 <hr>
                 <section>
-                    <form class="needs-validation" novalidate>
+                    <form class="needs-validation" method="post" action="cliente" novalidate>
+                        <input name="txtClienteId" type="hidden" value="${cliente.getId()}">
+                        <input name="txtUsuarioId" type="hidden" value="${cliente.getUsuario().getId()}">
+                        <input name="txtImagemId" type="hidden" value="${cliente.getUsuario().getImagem().getId()}">
+                        
                         <div class="row justify-content-center">
                             <div class="col-md-10">
                                 <h2 class="mt-5">1. Informações Gerais</h2>
                                 <div class="form-row">
                                     <div class="col mb-3 md-form">
-                                        <label for="txtNome">Nome Completo*</label>
-                                        <input type="text" class="form-control" id="txtNome" required maxlength="100"
+                                        <label for="txtNome" class="active">Nome Completo*</label>
+                                        <input type="text" class="form-control" value="${cliente.getNome()}" id="txtNome" name="txtNome" required maxlength="100"
                                             minlength="3">
                                         <div class="valid-feedback">
                                             Bonito nome!
@@ -44,8 +59,8 @@
                                         </div>
                                     </div>
                                     <div class="col mb-3 md-form">
-                                        <label for="txtEmail">E-mail*</label>
-                                        <input type="email" class="form-control" id="txtEmail" name="txtEmail" required
+                                        <label for="txtEmail" class="active">E-mail*</label>
+                                        <input type="email" class="form-control" id="txtEmail" value="${cliente.getEmail()}" name="txtEmail" required
                                             maxlength="100">
                                         <div class="valid-feedback">
                                             E-mail válido!
@@ -57,9 +72,9 @@
                                 </div>
                                 <div class="form-row">
                                     <div class="col mb-3 md-form">
-                                        <label for="txtNumeroDocumento">CPF/CNPJ*</label>
-                                        <input type="text" class="form-control" name="txtNumeroDocumento"
-                                            id="txtNumeroDocumento" required maxlength="20">
+                                        <label for="txtNumeroDocumento" class="active">CPF/CNPJ*</label>
+                                        <input type="text" class="form-control" value="${cliente.getNumeroDocumento()}" name="txtNumeroDocumento"
+                                            id="txtNumeroDocumento" required maxlength="14">
                                         <div class="valid-feedback">
                                             Documento válido!
                                         </div>
@@ -68,33 +83,11 @@
                                         </div>
                                     </div>
                                     <div class="col mb-3 md-form">
-                                        <label for="txtNumeroTelefone">Número de Telefone*</label>
-                                        <input type="text" class="form-control" name="txtNumeroTelefone"
-                                            id="txtNumeroTelefone" required maxlength="15">
+                                        <label for="txtNumeroTelefone" class="active">Número de Telefone*</label>
+                                        <input type="text" class="form-control" value="${cliente.getNumeroTelefone()}" name="txtNumeroTelefone"
+                                            id="txtNumeroTelefone" required maxlength="12">
                                         <div class="valid-feedback">
                                             Número de telefone válido!
-                                        </div>
-                                        <div class="invalid-feedback">
-                                            Campo inválido
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="col mb-3 md-form">
-                                        <label for="txtSenha">Senha*</label>
-                                        <input type="text" class="form-control" name="txtSenha" id="txtSenha" required>
-                                        <div class="valid-feedback">
-                                            Senha válida!
-                                        </div>
-                                        <div class="invalid-feedback">
-                                            Campo inválido
-                                        </div>
-                                    </div>
-                                    <div class="col mb-3 md-form">
-                                        <label for="txtConfirmacaoSenha">Confirmação de Senha*</label>
-                                        <input type="text" class="form-control" id="txtConfirmacaoSenha" required>
-                                        <div class="valid-feedback">
-                                            Confirmação de senha válida!
                                         </div>
                                         <div class="invalid-feedback">
                                             Campo inválido
@@ -104,7 +97,7 @@
                                 <div class="file-field md-form">
                                     <div class="btn btn-primary btn-sm float-left">
                                         <span>Procurar</span>
-                                        <input type="file" id="file">
+                                        <input type="file" id="file" >
                                     </div>
                                     <div class="file-path-wrapper">
                                         <input class="file-path validate" type="text"
@@ -126,7 +119,45 @@
                                 </div>
                                 <div class="accordion md-accordion" id="accordionEndereco" role="tablist"
                                     aria-multiselectable="true">
-
+                                    <c:foreach var="endereco" items="${cliente.getEnderecos()}">
+                                        <div class="card">
+                                            <div class="card-header" role="tab" id="${endereco.getId()}">
+                                                <h5 class="mb-0">
+                                                    ${endereco.getNome()}
+                                                    <a data-toggle="collapse" data-parent="#accordionEndereco" href="#${endereco.getNome()-${endereco.getId()}" aria-expanded="false" aria-controls="${endereco.getNome()}-${endereco.getId()}">
+                                                        <i class="fas fa-angle-down rotate-icon"></i>
+                                                    </a>
+                                                    <button onclick="$(this).parent().parent().parent().remove()" class="btn btn-link p-0 m-0 float-right mr-5">
+                                                        <i class="fas fa-times text-danger"></i>
+                                                    </button>
+                                                </h5>
+                                            </div>
+                                            <div id="${endereco.getNome()-${endereco.getId()}" class="collapse" role="tabpanel" aria-labelledby="${endereco.getId()}" data-parent="#accordionEndereco">
+                                                <div class="card-body">
+                                                    <ul>
+                                                      <li><b>CEP: </b>${endereco.getCep()}</li>
+                                                      <li><b>Estado: </b>${endereco.getCidade().getEstado().getNome()}</li>
+                                                      <li><b>Cidade: </b>${endereco.getCidade().getNome()}</li>
+                                                      <li><b>Logradouro: </b>${endereco.getLogradouro()}</li>
+                                                      <li><b>Número: </b>${endereco.getNumero()}</li>
+                                                      <li><b>Bairro: </b>${endereco.getBairro()}</li>
+                                                      <li><b>Complemento: </b>${endereco.getComplemento()}</li>
+                                                      <li><b>Referência: </b>${endereco.getReferencia()}</li>
+                                                      <li><b>Favorito: </b>${endereco.isFavorito()}</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                  
+                                            <!-- <input type="hidden" name="txtCep" value="${cep}">
+                                            <input type="hidden" name="txtBairro" value="${bairro}">
+                                            <input type="hidden" name="txtLogradouro" value="${logradouro}">
+                                            <input type="hidden" name="txtCidadeId" value="${cidade}">
+                                            <input type="hidden" name="txtReferencia" value="${referencia}">
+                                            <input type="hidden" name="txtComplemento" value="${complemento}">
+                                            <input type="hidden" name="txtNumero" value="${numero}">
+                                            <input type="hidden" name="txtFavoritoEndereco" value="${favorito}"> -->
+                                        </div>
+                                    </c:foreach>
                                 </div>
                             </div>
                         </div>
@@ -149,18 +180,7 @@
 
                         <div class="row mt-5 text-center">
                             <div class="col-md-12">
-                                <div class="form-group mt-3">
-                                    <div class="form-check pl-0">
-                                        <input class="form-check-input" type="checkbox" value="" id="invalidCheck2"
-                                            required>
-                                        <label class="form-check-label" for="invalidCheck2">
-                                            Li e concordo com os termos de uso
-                                        </label>
-                                        <div class="invalid-feedback">
-                                            É necessário concordar com os termos de uso
-                                        </div>
-                                    </div>
-                                </div>
+                                <input type="hidden" name="tarefa" value="atualizarCliente"/>
                                 <button class="btn btn-success btn-lg btn-rounded" type="submit">Cadastrar</button>
                             </div>
                         </div>
@@ -182,35 +202,41 @@
                 <div class="modal-body mx-3">
                     <div class="form-row">
                         <div class="col-md-4 mb-3 md-form">
-                            <label for="txtCepModal">CEP</label>
+                            <label for="txtCepModal">CEP*</label>
                             <input type="text" class="form-control" id="txtCepModal" required maxlength="9">
                         </div>
                         <div class="col-md-8 mb-3 md-form">
-                            <label for="txtLogradouroModal">Logradouro</label>
+                            <label for="txtLogradouroModal">Logradouro*</label>
                             <input type="text" class="form-control" id="txtLogradouroModal" required maxlength="100">
                         </div>
                     </div>
                     <div class="form-row">
-                        <div class="col mb-3 md-form">
+                        <div class="col-md-6 mb-3 md-form">
                             <select class="mdb-select" id="txtEstadoModal" required searchable="Selecione..">
-                                <option value="" disabled selected>Selecione seu estado</option>
-                                <option value="1">São Paulo</option>
+                                <option value="" disabled selected>Selecione seu estado*</option>
+                                <c:forEach var="estado" items="${estados}">
+									<option value="${estado.getId()}">${ estado.getNome() }</option>
+								</c:forEach>
                             </select>
                         </div>
-                        <div class="col mb-3 md-form">
-                            <select class="mdb-select " id="txtCidadeModal" required searchable="Selecione..">
-                                <option value="" disabled selected>Selecione sua cidade</option>
-                                <option value="1">Mogi das Cruzes</option>
+                        <div class="col-md-6 mb-3 md-form">
+                            <select id="txtCidadeModal" required placeholder="Selecione">
+                                <option value="" disabled selected>Selecione sua cidade*</option>
+							    <c:forEach var="estado" items="${estados}">
+							     	<c:forEach var="cidade" items="${estado.getCidades()}">
+							       		<option value="${cidade.getId()}" class="${cidade.getEstado().getId()}">${ cidade.getNome() }</option>
+						        	</c:forEach>
+						        </c:forEach>
                             </select>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="col-md-4 mb-3 md-form">
-                            <label for="txtNumeroModal">Número</label>
+                            <label for="txtNumeroModal">Número*</label>
                             <input type="number" min="1" max="9999" maxlength="4" class="form-control" id="txtNumeroModal" required>
                         </div>
                         <div class="col-md-4 mb-3 md-form">
-                            <label for="txtBairroModal">Bairro</label>
+                            <label for="txtBairroModal">Bairro*</label>
                             <input type="text" class="form-control"
                                 id="txtBairroModal" required maxlength="100">
                         </div>
@@ -225,6 +251,12 @@
                         <div class="col mb-3 md-form">
                             <label for="txtReferenciaModal">Referência</label>
                             <input type="text" class="form-control" id="txtReferenciaModal" required maxlength="100">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col mb-3 md-form">
+                            <label for="txtNomeEnderecoModal">Identificação de Endereço*</label>
+                            <input type="text" class="form-control" id="txtNomeEnderecoModal" required maxlength="100">
                         </div>
                     </div>
                     <div class="form-row">
@@ -285,11 +317,11 @@
         </div>
     </div>
 
-    <script type="text/javascript" src="./js/jquery.min.js"></script>
-    <script type="text/javascript" src="./js/popper.min.js"></script>
-    <script type="text/javascript" src="./js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="./js/mdb.min.js"></script>
-    <script tupe="text/javascript" src="./js/pages/register.js"></script>
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/popper.min.js"></script>
+    <script type="text/javascript" src="../js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../js/mdb.min.js"></script>
+    <script type="text/javascript" src="../js/pages/register.js"></script>
 
 </body>
 

@@ -31,7 +31,6 @@ function getBase64(file) {
   var reader = new FileReader();
   reader.readAsDataURL(file);
   reader.onload = function () {
-      alert(reader.result)
       document.getElementById('base64').value = reader.result;
   };
   reader.onerror = function (error) {
@@ -56,6 +55,7 @@ $("#btnSalvarEndereco").click(function () {
   let favorito = $("#txtFavoritoModal").val()
   let bairro = $("#txtBairroModal").val()
   let estado = $("#txtEstadoModal").val()
+  let nome = $("#txtNomeEnderecoModal").val()
   
   let cidadeTexto = $("#txtCidadeModal").find(`option[value=${cidade}]`).text()
   let estadoTexto = $("#txtEstadoModal").find(`option[value=${estado}]`).text()
@@ -69,7 +69,7 @@ $("#btnSalvarEndereco").click(function () {
       <div class="card">
           <div class="card-header" role="tab" id="${idHeading}">
               <h5 class="mb-0">
-                  ${logradouro}, ${numero} - ${cep}
+                  ${nome}
                   <a data-toggle="collapse" data-parent="#accordionEndereco" href="#${idCollapse}" aria-expanded="false" aria-controls="${idCollapse}">
                       <i class="fas fa-angle-down rotate-icon"></i>
                   </a>
@@ -86,7 +86,7 @@ $("#btnSalvarEndereco").click(function () {
                     <li><b>Cidade: </b>${cidadeTexto}</li>
                     <li><b>Logradouro: </b>${logradouro}</li>
                     <li><b>Número: </b>${numero}</li>
-                    <li><b>Bairro: </b>${bairro}</li>
+                    <li><b>Bairro: </b>${ bairro = bairro != "" ? bairro : "Nenhum" }</li>
                     <li><b>Complemento: </b>${complemento}</li>
                     <li><b>Referência: </b>${referencia}</li>
                     <li><b>Favorito: </b>${favorito}</li>
@@ -94,6 +94,7 @@ $("#btnSalvarEndereco").click(function () {
               </div>
           </div>
 
+		  <input type="hidden" name="txtNomeEndereco" value="${nome}">
           <input type="hidden" name="txtCep" value="${cep}">
           <input type="hidden" name="txtBairro" value="${bairro}">
           <input type="hidden" name="txtLogradouro" value="${logradouro}">

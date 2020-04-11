@@ -1,6 +1,6 @@
 package br.com.fatec.les.model;
 
-public class Endereco extends EntidadeDominio{
+public class Endereco extends EntidadeNomeada{
 
 	private String Logradouro;
 	private String Bairro;

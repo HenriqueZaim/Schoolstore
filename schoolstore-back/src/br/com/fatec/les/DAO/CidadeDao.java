@@ -9,17 +9,14 @@ import java.util.List;
 
 import br.com.fatec.les.database.ConexaoFactory;
 import br.com.fatec.les.model.Cidade;
-import br.com.fatec.les.model.Cliente;
-import br.com.fatec.les.model.Endereco;
 import br.com.fatec.les.model.EntidadeDominio;
 import br.com.fatec.les.model.Estado;
 import br.com.fatec.les.model.IDominio;
-import br.com.fatec.les.model.Usuario;
 
 public class CidadeDao implements IDao{
 	
 	private Connection conexao = null;
-	private String mensagem = null;
+	
 	
 	public CidadeDao() {
 		conexao = ConexaoFactory.getConnection();
@@ -27,26 +24,24 @@ public class CidadeDao implements IDao{
 
 	@Override
 	public String salvar(EntidadeDominio entidadeDominio) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+        throw new UnsupportedOperationException("Operação não suportada.");
 	}
 
 	@Override
 	public String deletar(EntidadeDominio entidadeDominio) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+        throw new UnsupportedOperationException("Operação não suportada.");
 	}
 
 	@Override
 	public String atualizar(EntidadeDominio entidadeDominio) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException("Operação não suportada.");
 	}
 
 	@Override
 	public List<EntidadeDominio> consultar(IDominio entidade) throws SQLException {
 		Cidade cidade = (Cidade) entidade;
 		List<EntidadeDominio> cidades = new ArrayList<EntidadeDominio>();
+		EstadoDao estadoDao = new EstadoDao();
 
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
@@ -60,7 +55,7 @@ public class CidadeDao implements IDao{
 		if(cidade.getId() != null) {
 			sql += " AND cid_id = " + cidade.getId();
 		}
-		if(cidade.getEstado().getId() != null) {
+		if(cidade.getEstado() != null) {
 			sql += " AND cid_est_id = " + cidade.getEstado().getId();
 		}
 				
@@ -78,9 +73,16 @@ public class CidadeDao implements IDao{
 				c.setId(Long.parseLong(rs.getString("cid_id")));
 				c.setNome(rs.getString("cid_nome"));
 				
-				e.setId(cidade.getEstado().getId());
-				c.setEstado(e);
-				
+				if(cidade.getId() != null) {
+					e.setId(Long.parseLong(rs.getString("cid_est_id")));
+					c.setEstado((Estado)estadoDao.consultar(e).get(0));
+				}else if(cidade.getEstado() != null) {
+					e.setId(cidade.getEstado().getId());
+					c.setEstado(e);
+				}else {
+					throw new RuntimeException();
+				}
+
 				cidades.add(c);
 			}
 		}catch(SQLException ex) {

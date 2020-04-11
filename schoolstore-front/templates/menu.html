@@ -1,14 +1,4 @@
-<%@page import="java.util.List"%>
-<%@page import="javax.security.auth.message.callback.PrivateKeyCallback.Request"%>
-<%@page import="br.com.fatec.les.model.Usuario"%>
-<%@page import="br.com.fatec.les.model.EntidadeDominio"%>
-<%@page import="br.com.fatec.les.facade.Result"%>
-<%@page import="java.util.ArrayList"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-
+<!DOCTYPE html>
 <html lang="pt">
 
 <head>
@@ -18,8 +8,8 @@
     <title>Material Design for Bootstrap</title>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
-    <link rel="stylesheet" href="./css/bootstrap.min.css">
-    <link rel="stylesheet" href="./css/mdb.min.css">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/mdb.min.css">
 
     <link rel="stylesheet" href="css/style.css">
 
@@ -168,11 +158,6 @@
 
         <main class="pt-5 mx-lg-5">
             <div class="container-fluid mt-5">
-            	<div class="alert alert-success" role="alert">
-            		<c:forEach var="mensagem" items="${mensagens}">
-            			<span>${mensagem}</span>
-            		</c:forEach>
-            	</div>
                 <div class="card mb-4 wow fadeIn">
                     <div class="card-body d-sm-flex justify-content-between">
                         <h1 class="mb-2 mb-sm-0 pt-1">
@@ -297,10 +282,10 @@
     </div>
 
 
-    <script type="text/javascript" src="./js/jquery.min.js"></script>
-    <script type="text/javascript" src="./js/popper.min.js"></script>
-    <script type="text/javascript" src="./js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="./js/mdb.min.js"></script>
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/popper.min.js"></script>
+    <script type="text/javascript" src="../js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../js/mdb.min.js"></script>
 
 </body>
 

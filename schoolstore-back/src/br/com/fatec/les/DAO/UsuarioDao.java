@@ -5,13 +5,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import br.com.fatec.les.database.ConexaoFactory;
 import br.com.fatec.les.model.EntidadeDominio;
 import br.com.fatec.les.model.IDominio;
+import br.com.fatec.les.model.Imagem;
 import br.com.fatec.les.model.Usuario;
 
 public class UsuarioDao implements IDao{
@@ -35,6 +35,8 @@ public class UsuarioDao implements IDao{
 		PreparedStatement pstm = null;
 		
 		try {
+			if(imagemDao.atualizar(usuario.getImagem()) == null)
+				return null;
 			
 			pstm = conexao.prepareStatement(sql);
 			pstm.setString(1, usuario.getSenha());
@@ -57,13 +59,14 @@ public class UsuarioDao implements IDao{
 		Usuario usuario = (Usuario) entidade;
 		
 		List<EntidadeDominio> usuarios = new ArrayList<EntidadeDominio>();
-		Usuario u = new Usuario();
+		
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		String sql = "SELECT "
 				+ "usu_id, "
 				+ "usu_senha, "
-				+ "usu_email "
+				+ "usu_email, "
+				+ "usu_ima_id "
 				+ " FROM tb_usuario WHERE usu_ativo = 1 ";
 		if(usuario.getId() != null) {
 			sql += "AND usu_id = " + usuario.getId();
@@ -73,12 +76,18 @@ public class UsuarioDao implements IDao{
 			pstm = conexao.prepareStatement(sql);
 			rs = pstm.executeQuery();
 			
+			Usuario u = new Usuario();
+			Imagem i = new Imagem();
+			
 			while(rs.next()) {
 				u = new Usuario();
+				i = new Imagem();
+				
 				u.setId(Long.parseLong(rs.getString("usu_id")));
 				u.setEmail(rs.getString("usu_email"));
 				u.setSenha(rs.getString("usu_senha"));
-//				u.setDataHoraCriacao(LocalDateTime.parse(rs.getString("usu_dataHoraCriacao")));
+				i.setId(Long.parseLong(rs.getString("usu_ima_id")));
+				u.setImagem((Imagem)imagemDao.consultar(i).get(0));
 				
 				usuarios.add(u);
 			}
@@ -102,6 +111,9 @@ public class UsuarioDao implements IDao{
 		PreparedStatement pstm = null;
 		
 		try {
+			if(imagemDao.deletar(usuario.getImagem()) == null)
+				return null;
+			
 			pstm = conexao.prepareStatement(sql);
 			pstm.executeUpdate();
 			mensagem = "Usuário deletado com sucesso";

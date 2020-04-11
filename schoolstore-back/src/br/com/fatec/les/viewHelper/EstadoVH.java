@@ -9,8 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import br.com.fatec.les.facade.Result;
-import br.com.fatec.les.model.Cidade;
-import br.com.fatec.les.model.Cliente;
 import br.com.fatec.les.model.EntidadeDominio;
 import br.com.fatec.les.model.Estado;
 import br.com.fatec.les.model.IDominio;
@@ -32,7 +30,6 @@ public class EstadoVH implements IViewHelper{
 		if(operacao.equals("cadastroCliente")) {
 			
 			List<Estado> estados = new ArrayList<Estado>();
-			List<Cidade> cidades = new ArrayList<Cidade>();
 			Result result = new Result();
 			
 			result = (Result)request.getAttribute("resultado");

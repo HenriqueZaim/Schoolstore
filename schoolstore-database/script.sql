@@ -84,6 +84,7 @@ CREATE TABLE tb_cliente
 CREATE TABLE tb_endereco
 ( 
  end_id INT NOT NULL AUTO_INCREMENT,
+ end_nome VARCHAR(100) NOT NULL,
  end_logradouro VARCHAR(100) NOT NULL,
  end_bairro VARCHAR(100) NOT NULL,
  end_cep VARCHAR(9) NOT NULL,
