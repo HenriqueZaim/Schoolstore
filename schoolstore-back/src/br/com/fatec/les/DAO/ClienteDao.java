@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.fatec.les.database.ConexaoFactory;
+import br.com.fatec.les.facade.Mensagem;
+import br.com.fatec.les.facade.MensagemStatus;
 import br.com.fatec.les.model.Cliente;
 import br.com.fatec.les.model.Endereco;
 import br.com.fatec.les.model.EntidadeDominio;
@@ -18,7 +20,7 @@ import br.com.fatec.les.model.Usuario;
 public class ClienteDao implements IDao{
 	
 	private Connection conexao = null;
-	private String mensagem = null;
+	private Mensagem mensagem;
 	EnderecoDao enderecoDao = new EnderecoDao();
 	UsuarioDao usuarioDao = new UsuarioDao();
 	
@@ -27,8 +29,9 @@ public class ClienteDao implements IDao{
 	}
 
 	@Override
-	public String salvar(EntidadeDominio entidadeDominio) throws SQLException {
+	public Mensagem salvar(EntidadeDominio entidadeDominio) throws SQLException {
 		Cliente cliente = (Cliente) entidadeDominio;
+		mensagem = new Mensagem();
 		ResultSet rs;
 		
 		String sql = "INSERT INTO tb_cliente "
@@ -45,7 +48,7 @@ public class ClienteDao implements IDao{
 		PreparedStatement pstm = null;
 		
 		try {
-			String idUsuario = usuarioDao.salvar(cliente.getUsuario());
+			String idUsuario = usuarioDao.salvar(cliente.getUsuario()).getMensagem();
 			
 			pstm = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			pstm.setString(1, cliente.getNome());
@@ -65,10 +68,11 @@ public class ClienteDao implements IDao{
 				}
 			}
 			
-			mensagem = "Cliente cadastrado com sucesso!";
+			mensagem.setMensagem("Cliente cadastrado com sucesso!");
+			mensagem.setMensagemStatus(MensagemStatus.SUCESSO);
 		}catch(SQLException e){
-			mensagem = e.toString();
-			mensagem = "Erro: " + mensagem;
+			mensagem.setMensagem("Ocorreu um erro durante a operação. Tente novamente ou consulte a equipe de desenvolvimento.");
+			mensagem.setMensagemStatus(MensagemStatus.ERRO);
 		}
 //		finally {
 //			ConexaoFactory.closeConnection(conexao, pstm);
@@ -77,8 +81,9 @@ public class ClienteDao implements IDao{
 	}
 
 	@Override
-	public String deletar(EntidadeDominio entidadeDominio) throws SQLException {
+	public Mensagem deletar(EntidadeDominio entidadeDominio) throws SQLException {
 		Cliente cliente  = (Cliente) entidadeDominio;
+		mensagem = new Mensagem();
 		Endereco endereco = new Endereco();
 		endereco.setCliente(cliente);
 		
@@ -98,9 +103,11 @@ public class ClienteDao implements IDao{
 				return null;
 			
 			pstm.executeUpdate();
-			mensagem = "Cliente deletado com sucesso!";
+			mensagem.setMensagem("Cliente deletado com sucesso!");
+			mensagem.setMensagemStatus(MensagemStatus.SUCESSO);
 		}catch(SQLException e) {
-			mensagem = e.getMessage();
+			mensagem.setMensagem("Ocorreu um erro durante a operação. Tente novamente ou consulte a equipe de desenvolvimento.");
+			mensagem.setMensagemStatus(MensagemStatus.ERRO);
 		}
 //		finally {
 //			ConexaoFactory.closeConnection(conexao, pstm);
@@ -110,10 +117,9 @@ public class ClienteDao implements IDao{
 	}
 
 	@Override
-	public String atualizar(EntidadeDominio entidadeDominio) throws SQLException {
+	public Mensagem atualizar(EntidadeDominio entidadeDominio) throws SQLException {
 		Cliente cliente  = (Cliente) entidadeDominio;
-//		List<Endereco> enderecos = new ArrayList<Endereco>();
-//		enderecos.addAll(cliente.getEnderecos());
+		mensagem = new Mensagem();
 		
 		String sql = "UPDATE tb_cliente SET "
 				
@@ -131,20 +137,40 @@ public class ClienteDao implements IDao{
 			pstm.setString(3, cliente.getNumeroDocumento());
 			pstm.setLong(4, cliente.getId());
 			
-//			for(Endereco endereco : enderecos) {
-//				if(enderecoDao.atualizar(endereco) == null) 
-//					return null;
-//				else
-//					continue;
-//			}
+			List<EntidadeDominio> enderecosBanco = new ArrayList<EntidadeDominio>();
+			Endereco endereco = new Endereco();
+			endereco.setCliente(cliente);
+			
+			enderecosBanco.addAll(enderecoDao.consultar(endereco));
+			
+			for(EntidadeDominio entidade : enderecosBanco) {
+				entidade = (Endereco) entidade;
+				boolean flag = false;
+				for(Endereco e : cliente.getEnderecos()) {
+					if(e.getId() != null) {
+						if(e.getId() == entidade.getId()) {
+							flag = true;
+							break;
+						}
+					}else {
+						enderecoDao.salvar(e);
+					}
+				}
+				if(!flag) {
+					enderecoDao.deletar(entidade);
+				}
+			}
+			
 			if(usuarioDao.atualizar(cliente.getUsuario()) == null) {
 				return null;
 			}
 			
 			pstm.executeUpdate();
-			mensagem = "Cliente atualizado com sucesso!";
+			mensagem.setMensagem("Cliente atualizado com sucesso!");
+			mensagem.setMensagemStatus(MensagemStatus.SUCESSO);
 		}catch(SQLException e) {
-			mensagem = "Erro ao tentar atualizar usuário. Contacte a equipe de desenvolvimento";
+			mensagem.setMensagem("Ocorreu um erro durante a operação. Tente novamente ou consulte a equipe de desenvolvimento.");
+			mensagem.setMensagemStatus(MensagemStatus.ERRO);
 		}
 //		finally {
 //			ConexaoFactory.closeConnection(conexao, pstm);
@@ -209,8 +235,8 @@ public class ClienteDao implements IDao{
 
 				clientesEntidade.add(c);
 			}
-		}catch(SQLException ex) {
-			System.err.println(ex.getMessage());
+		}catch(SQLException e) {
+			e.printStackTrace();
 		}
 //		finally {
 //			ConexaoFactory.closeConnection(conexao, pstm, rs);

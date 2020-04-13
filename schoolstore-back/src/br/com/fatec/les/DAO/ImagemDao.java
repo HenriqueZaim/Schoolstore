@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.fatec.les.database.ConexaoFactory;
+import br.com.fatec.les.facade.Mensagem;
+import br.com.fatec.les.facade.MensagemStatus;
 import br.com.fatec.les.model.EntidadeDominio;
 import br.com.fatec.les.model.IDominio;
 import br.com.fatec.les.model.Imagem;
@@ -16,16 +18,18 @@ import br.com.fatec.les.model.Imagem;
 public class ImagemDao implements IDao{
 
 	private Connection conexao = null;
-	private String mensagem = null;
+	private Mensagem mensagem;
 	
 	public ImagemDao() {
 		conexao = ConexaoFactory.getConnection();
 	}
 	
 	@Override
-	public String salvar(EntidadeDominio entidadeDominio) throws SQLException {
+	public Mensagem salvar(EntidadeDominio entidadeDominio) throws SQLException {
 		Imagem imagem = (Imagem) entidadeDominio;
 		ResultSet rs;
+		mensagem = new Mensagem();
+		
 		String sql = "INSERT INTO tb_imagem "
 				+ "("
 				+ "ima_nome, "
@@ -45,21 +49,25 @@ public class ImagemDao implements IDao{
 			
 			rs = pstm.getGeneratedKeys();
 			if (rs.next()){
-				return Integer.toString(rs.getInt(1));
+				mensagem.setMensagem(Integer.toString(rs.getInt(1)));
+				mensagem.setMensagemStatus(MensagemStatus.OPERACAO);
+				return mensagem;
 			}
 						
 		}catch(SQLException e){
-			e.printStackTrace();
+			mensagem.setMensagem("Ocorreu um erro durante a operação. Tente novamente ou consulte a equipe de desenvolvimento.");
+			mensagem.setMensagemStatus(MensagemStatus.ERRO);
 		}
 //		finally {
 //			ConexaoFactory.closeConnection(conexao, pstm);
 //		}
-		return null;
+		return mensagem;
 	}
 
 	@Override
-	public String deletar(EntidadeDominio entidadeDominio) throws SQLException {
+	public Mensagem deletar(EntidadeDominio entidadeDominio) throws SQLException {
 		Imagem imagem = (Imagem) entidadeDominio;
+		mensagem = new Mensagem();
 		String sql = "UPDATE tb_imagem SET "
 				+ "ima_ativo = false"
 				+ " WHERE ima_id = " + imagem.getId() + "";
@@ -69,9 +77,11 @@ public class ImagemDao implements IDao{
 		try {		
 			pstm = conexao.prepareStatement(sql);
 			pstm.executeUpdate();
-			mensagem = "Imagem deletada com sucesso";
+			mensagem.setMensagem("Imagem deletado com sucesso!");
+			mensagem.setMensagemStatus(MensagemStatus.SUCESSO);
 		}catch(SQLException e) {
-			mensagem = e.getMessage();
+			mensagem.setMensagem("Ocorreu um erro durante a operação. Tente novamente ou consulte a equipe de desenvolvimento.");
+			mensagem.setMensagemStatus(MensagemStatus.ERRO);
 		}
 //		finally {
 //			ConexaoFactory.closeConnection(conexao, pstm);
@@ -81,8 +91,9 @@ public class ImagemDao implements IDao{
 	}
 
 	@Override
-	public String atualizar(EntidadeDominio entidadeDominio) throws SQLException {
+	public Mensagem atualizar(EntidadeDominio entidadeDominio) throws SQLException {
 		Imagem imagem = (Imagem) entidadeDominio;
+		mensagem = new Mensagem();
 		String sql = "UPDATE tb_imagem SET "
 				+ "ima_nome = ?, "
 				+ "ima_descricao = ? "
@@ -96,9 +107,11 @@ public class ImagemDao implements IDao{
 			pstm.setString(2, imagem.getDescricao());
 			pstm.setLong(3, imagem.getId());
 			pstm.executeUpdate();
-			mensagem = "Imagem atualizada com sucesso";
+			mensagem.setMensagem("Imagem atualizada com sucesso!");
+			mensagem.setMensagemStatus(MensagemStatus.SUCESSO);
 		}catch(SQLException e) {
-			mensagem = e.getMessage();
+			mensagem.setMensagem("Ocorreu um erro durante a operação. Tente novamente ou consulte a equipe de desenvolvimento.");
+			mensagem.setMensagemStatus(MensagemStatus.ERRO);
 		}
 //		finally {
 //			ConexaoFactory.closeConnection(conexao, pstm);
@@ -110,7 +123,6 @@ public class ImagemDao implements IDao{
 	@Override
 	public List<EntidadeDominio> consultar(IDominio entidade) throws SQLException {
 		Imagem imagem = (Imagem) entidade;
-		
 		List<EntidadeDominio> imagens = new ArrayList<EntidadeDominio>();
 				
 		PreparedStatement pstm = null;
@@ -140,7 +152,7 @@ public class ImagemDao implements IDao{
 				imagens.add(i);
 			}
 		}catch(SQLException e) {
-			System.err.println(e.getMessage());
+			e.printStackTrace();
 		}
 //		finally {
 //			ConexaoFactory.closeConnection(conexao, pstm, rs);

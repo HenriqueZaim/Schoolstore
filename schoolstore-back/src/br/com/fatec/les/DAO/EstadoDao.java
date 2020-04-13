@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.fatec.les.database.ConexaoFactory;
+import br.com.fatec.les.facade.Mensagem;
 import br.com.fatec.les.model.Cidade;
 import br.com.fatec.les.model.EntidadeDominio;
 import br.com.fatec.les.model.Estado;
@@ -17,23 +18,22 @@ public class EstadoDao implements IDao{
 	
 	private Connection conexao = null;
 	
-	
 	public EstadoDao() {
 		conexao = ConexaoFactory.getConnection();
 	}
 
 	@Override
-	public String salvar(EntidadeDominio entidadeDominio) throws SQLException {
+	public Mensagem salvar(EntidadeDominio entidadeDominio) throws SQLException {
         throw new UnsupportedOperationException("Operação não suportada.");
 	}
 
 	@Override
-	public String deletar(EntidadeDominio entidadeDominio) throws SQLException {
+	public Mensagem deletar(EntidadeDominio entidadeDominio) throws SQLException {
         throw new UnsupportedOperationException("Operação não suportada.");
 	}
 
 	@Override
-	public String atualizar(EntidadeDominio entidadeDominio) throws SQLException {
+	public Mensagem atualizar(EntidadeDominio entidadeDominio) throws SQLException {
         throw new UnsupportedOperationException("Operação não suportada.");
 	}
 
@@ -95,8 +95,8 @@ public class EstadoDao implements IDao{
 			
 			entidadeEstados.addAll(estados);
 			
-		}catch(SQLException ex) {
-			System.err.println(ex.getMessage());
+		}catch(SQLException e) {
+			e.printStackTrace();
 		}
 //		finally {
 //			ConexaoFactory.closeConnection(conexao, pstm, rs);

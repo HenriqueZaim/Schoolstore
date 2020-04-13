@@ -24,8 +24,7 @@ public class CidadeVH implements IViewHelper{
 	@Override
 	public void setEntidade(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		
+
 	}
 
 }

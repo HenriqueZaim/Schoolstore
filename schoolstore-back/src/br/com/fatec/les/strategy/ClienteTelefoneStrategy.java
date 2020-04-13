@@ -1,16 +1,19 @@
 package br.com.fatec.les.strategy;
 
+import br.com.fatec.les.facade.Mensagem;
+import br.com.fatec.les.facade.MensagemStatus;
 import br.com.fatec.les.model.Cliente;
 import br.com.fatec.les.model.IDominio;
-import br.com.fatec.les.model.Usuario;
 
 public class ClienteTelefoneStrategy implements IStrategy{
 	@Override
-	public String execute(IDominio iDominio) {
+	public Mensagem execute(IDominio iDominio) {
 		Cliente cliente = (Cliente) iDominio;
+		Mensagem mensagem = new Mensagem();
 		if(cliente.getNumeroTelefone().isEmpty() || cliente.getNumeroTelefone() == null) {
-			return "Número de telefone é obrigatório";
+			mensagem.setMensagem("Insira um número de telefone");
+			mensagem.setMensagemStatus(MensagemStatus.ERRO);
 		}
-		return "";
+		return mensagem;
 	}
 }

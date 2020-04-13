@@ -1,24 +1,64 @@
+var estados;
+
 $(document).ready(function () {
   $('.mdb-select').materialSelect();
+  
+//  $("#txtNumeroModal").mask("0000")
+//  $("#txtCepModal").mask("00000-000")
+//  $("#txtNumeroTelefone").mask("(00) 00000-0000")
+//  
+//  $("#txtNumeroDocumento").keydown(function(){
+//    try {
+//        $("#txtNumeroDocumento").unmask();
+//    } catch (e) {}
+//
+//    var tamanho = $("#txtNumeroDocumento").val().length;
+//
+//    if(tamanho < 11){
+//        $("#txtNumeroDocumento").mask("999.999.999-99");
+//    } else {
+//        $("#txtNumeroDocumento").mask("99.999.999/9999-99");
+//    }
+//
+//    // ajustando foco
+//    var elem = this;
+//    setTimeout(function(){
+//        // mudo a posição do seletor
+//        elem.selectionStart = elem.selectionEnd = 10000;
+//    }, 0);
+//    // reaplico o valor para mudar o foco
+//    var currentValue = $(this).val();
+//    $(this).val('');
+//    $(this).val(currentValue);
+//});
+//  
+  $.ajax({
+	  url: "http://localhost:8085/schoolstore/app?tarefa=cadastroCliente",
+	  type: "GET",
+	  success: response => {
+		  response.forEach(function(data){
+			  $("#txtEstadoModal").append(
+				`<option value="${data.id}">${data.nome}</option>`
+			  )
+		  })
+		  estados = response
+	  }
+  })
 });
 
-(function () {
-  'use strict';
-  window.addEventListener('load', function () {
-      // Fetch all the forms we want to apply custom Bootstrap validation styles to
-      var forms = document.getElementsByClassName('needs-validation');
-      // Loop over them and prevent submission
-      var validation = Array.prototype.filter.call(forms, function (form) {
-          form.addEventListener('submit', function (event) {
-              if (form.checkValidity() === false) {
-                  event.preventDefault();
-                  event.stopPropagation();
-              }
-              form.classList.add('was-validated');
-          }, false);
-      });
-  }, false);
-})();
+$("#txtEstadoModal").change(function(){
+	$("#txtCidadeModal").children(".cidade").remove()
+	let id = $("#txtEstadoModal").val()
+	estados.forEach(function(data){
+		if(id == data.id){
+			data.cidades.forEach(function(cidade){
+				$("#txtCidadeModal").append(
+					`<option value="${cidade.id}" class="cidade">${cidade.nome}</option>`
+				)
+			})
+		}
+	})
+})
 
 $("#file").change(() => {
   var files = document.getElementById('file').files;
@@ -38,14 +78,7 @@ function getBase64(file) {
   };
 }
 
-$("#txtEstadoModal").change(function(){
-	$("#txtCidadeModal").find(`option`).css("display","none")
-	let id = $("#txtEstadoModal").val()
-	$("#txtCidadeModal").find(`option.${id}`).css("display", "block")
-})
-
 $("#btnSalvarEndereco").click(function () {
-
   let cep = $("#txtCepModal").val()
   let logradouro = $("#txtLogradouroModal").val()
   let numero = $("#txtNumeroModal").val()

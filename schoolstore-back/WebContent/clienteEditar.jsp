@@ -2,7 +2,7 @@
 <%@page import="javax.security.auth.message.callback.PrivateKeyCallback.Request"%>
 <%@page import="br.com.fatec.les.model.Usuario"%>
 <%@page import="br.com.fatec.les.model.EntidadeDominio"%>
-<%@page import="br.com.fatec.les.facade.Result"%>
+<%@page import="br.com.fatec.les.facade.Resultado"%>
 <%@page import="java.util.ArrayList"%>
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=utf-8"
@@ -36,9 +36,14 @@
         <section class="py-5 px-2">
             <div class="container mt-5 dark-grey-text">
                 <h1 class="text-center">Editar Perfil</h1>
+				<c:forEach var="mensagem" items="${resultado.getMensagens()}">
+	                <div class="alert alert-danger" role="alert">
+	            		<span>${mensagem.getMensagem()}</span>
+	            	</div>
+            	</c:forEach>
                 <hr>
                 <section>
-                    <form class="needs-validation" method="post" action="cliente" novalidate>
+                    <form class="needs-validation" method="post" action="app" novalidate>
                         <input name="txtClienteId" type="hidden" value="${cliente.getId()}">
                         <input name="txtUsuarioId" type="hidden" value="${cliente.getUsuario().getId()}">
                         <input name="txtImagemId" type="hidden" value="${cliente.getUsuario().getImagem().getId()}">
@@ -147,15 +152,18 @@
                                                     </ul>
                                                 </div>
                                             </div>
-                                  
-                                            <!-- <input type="hidden" name="txtCep" value="${cep}">
-                                            <input type="hidden" name="txtBairro" value="${bairro}">
-                                            <input type="hidden" name="txtLogradouro" value="${logradouro}">
-                                            <input type="hidden" name="txtCidadeId" value="${cidade}">
-                                            <input type="hidden" name="txtReferencia" value="${referencia}">
-                                            <input type="hidden" name="txtComplemento" value="${complemento}">
-                                            <input type="hidden" name="txtNumero" value="${numero}">
-                                            <input type="hidden" name="txtFavoritoEndereco" value="${favorito}"> -->
+                                 
+											<input type="hidden" name="txtEndereco" value="true">
+                                  			<input type="hidden" name="txtEnderecoId" value="${endereco.getId()}">
+                                            <input type="hidden" name="txtCep" value="${endereco.getCep()}">
+                                            <input type="hidden" name="txtBairro" value="${endereco.getBairro()}">
+                                            <input type="hidden" name="txtLogradouro" value="${endereco.getLogradouro()}">
+                                            <input type="hidden" name="txtCidadeId" value="${endereco.getCidade().getId()}">
+                                            <input type="hidden" name="txtReferencia" value="${endereco.getReferencia()}">
+                                            <input type="hidden" name="txtComplemento" value="${endereco.getComplemento()}">
+                                            <input type="hidden" name="txtNumero" value="${endereco.getNumero()}">
+                                            <input type="hidden" name="txtFavoritoEndereco" value="${endereco.isFavorito()}"> 
+                                        	<input type="hidden" name="txtNomeEndereco" value="${endereco.getNome() }">
                                         </div>
                                     </c:forEach>
                                 </div>
@@ -181,7 +189,7 @@
                         <div class="row mt-5 text-center">
                             <div class="col-md-12">
                                 <input type="hidden" name="tarefa" value="atualizarCliente"/>
-                                <button class="btn btn-success btn-lg btn-rounded" type="submit">Cadastrar</button>
+                                <button class="btn btn-warning btn-lg btn-rounded" type="submit">Editar Cadastro</button>
                             </div>
                         </div>
                     </form>

@@ -6,27 +6,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import br.com.fatec.les.DAO.CidadeDao;
 import br.com.fatec.les.DAO.ClienteDao;
-import br.com.fatec.les.DAO.EnderecoDao;
 import br.com.fatec.les.DAO.EstadoDao;
 import br.com.fatec.les.DAO.IDao;
-import br.com.fatec.les.DAO.UsuarioDao;
-import br.com.fatec.les.model.Cidade;
 import br.com.fatec.les.model.Cliente;
-import br.com.fatec.les.model.Endereco;
 import br.com.fatec.les.model.EntidadeDominio;
 import br.com.fatec.les.model.Estado;
-import br.com.fatec.les.model.Usuario;
 import br.com.fatec.les.strategy.ClienteDocumentoStrategy;
 import br.com.fatec.les.strategy.ClienteNomeStrategy;
 import br.com.fatec.les.strategy.ClienteTelefoneStrategy;
-import br.com.fatec.les.strategy.EnderecoBairroStrategy;
-import br.com.fatec.les.strategy.EnderecoCepStrategy;
-import br.com.fatec.les.strategy.EnderecoComplementoStrategy;
-import br.com.fatec.les.strategy.EnderecoLogradouroStrategy;
-import br.com.fatec.les.strategy.EnderecoNumeroStrategy;
-import br.com.fatec.les.strategy.EnderecoReferenciaStrategy;
 import br.com.fatec.les.strategy.IStrategy;
 import br.com.fatec.les.strategy.UsuarioEmailStrategy;
 import br.com.fatec.les.strategy.UsuarioSenhaStrategy;
@@ -36,8 +24,10 @@ public class Facade implements IFacade{
 	
 	private Map<String, IDao> daoMap;
 	private Map<String, ArrayList<IStrategy>> strategyMap;
-	private Result result;
-	private String mensagem;
+	private Resultado resultado;
+	private Mensagem mensagem;
+	ArrayList<Mensagem> mensagens = new ArrayList<Mensagem>();
+
 	
 	public Facade() {
 		daoMap = new HashMap<String, IDao>();
@@ -53,13 +43,6 @@ public class Facade implements IFacade{
 		IStrategy clienteNomeStrategy = new ClienteNomeStrategy();
 		IStrategy clienteTelefoneStrategy = new ClienteTelefoneStrategy();
 		
-		IStrategy enderecoBairroStrategy = new EnderecoBairroStrategy();
-		IStrategy enderecoCepStrategy = new EnderecoCepStrategy();
-		IStrategy enderecoComplementoStragegy = new EnderecoComplementoStrategy();
-		IStrategy enderecoLogradouroStrategy = new EnderecoLogradouroStrategy();
-		IStrategy enderecoNumeroStrategy = new EnderecoNumeroStrategy();
-		IStrategy enderecoReferenciaStrategy = new EnderecoReferenciaStrategy();
-		
 		IStrategy usuarioEmailStrategy = new UsuarioEmailStrategy();
 		IStrategy usuarioSenhaStrategy = new UsuarioSenhaStrategy();
 		
@@ -72,15 +55,6 @@ public class Facade implements IFacade{
 		clienteStrategies.add(clienteNomeStrategy);
 		clienteStrategies.add(clienteTelefoneStrategy);
 		
-		ArrayList<IStrategy> enderecoStrategies = new ArrayList<IStrategy>();
-		enderecoStrategies.add(enderecoBairroStrategy);
-		enderecoStrategies.add(enderecoCepStrategy);
-		enderecoStrategies.add(enderecoComplementoStragegy);
-		enderecoStrategies.add(enderecoLogradouroStrategy);
-		enderecoStrategies.add(enderecoNumeroStrategy);
-		enderecoStrategies.add(enderecoReferenciaStrategy);
-		
-		clienteStrategies.addAll(enderecoStrategies);
 		clienteStrategies.addAll(usuarioStrategies);
 
 		strategyMap.put(Cliente.class.getName(), clienteStrategies);
@@ -88,101 +62,91 @@ public class Facade implements IFacade{
 	}
 
 	@Override
-	public Result salvar(EntidadeDominio entidadeDominio) {
-		result = new Result();
+	public Resultado salvar(EntidadeDominio entidadeDominio) {
+		resultado = new Resultado();
+		mensagem = new Mensagem();
+		mensagens = new ArrayList<Mensagem>();
 		
-		ArrayList<String> mensagens = new ArrayList<String>();
 		ArrayList<IStrategy> strategies = strategyMap.get(entidadeDominio.getClass().getName());
 		
 		for(IStrategy s : strategies) {
 			mensagem = s.execute(entidadeDominio);
-			if(!mensagem.equals("")) {
+			if(mensagem.getMensagemStatus() == MensagemStatus.ERRO) {
 				mensagens.add(mensagem);
 			}else
 				continue;
 		}
 		
 		if(!mensagens.isEmpty()) {
-			result.setMensagem(mensagens);
-			return result;
+			resultado.setMensagens(mensagens);;
+			return resultado;
 		}
 		
 		IDao daoEntidade = daoMap.get(entidadeDominio.getClass().getName());
 		
 		try {
-			String resposta = daoEntidade.salvar(entidadeDominio);
-			mensagens.add(resposta);
-			result.setMensagem(mensagens);
+			mensagem = daoEntidade.salvar(entidadeDominio);
+			mensagens.add(mensagem);
+			resultado.setMensagens(mensagens);
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}
-		return result;
+		return resultado;
 	}
 
 	@Override
-	public Result atualizar(EntidadeDominio entidadeDominio) {
-		result = new Result();
+	public Resultado atualizar(EntidadeDominio entidadeDominio) {
+		resultado = new Resultado();
+		mensagem = new Mensagem();
+		mensagens = new ArrayList<Mensagem>();
 		
-		ArrayList<String> mensagens = new ArrayList<String>();
-		
-		String entidadeCorrespondente = entidadeDominio.getClass().getName();
-	    IDao daoEntidade = daoMap.get(entidadeCorrespondente);
+	    IDao daoEntidade = daoMap.get(entidadeDominio.getClass().getName());
 
 		try {
-			String mensagem = daoEntidade.atualizar(entidadeDominio);
+			mensagem = daoEntidade.atualizar(entidadeDominio);
 			mensagens.add(mensagem);
-	        result.setMensagem(mensagens);
+	        resultado.setMensagens(mensagens);
 	    } catch(SQLException e) {
 	    	e.printStackTrace();
-	    	mensagem = "Não foi possível atualizar a entidade no banco de dados";
-	    	mensagens.add(mensagem);
-			result.setMensagem(mensagens);
 	    }
 	        
-		return result;
+		return resultado;
 	}
 
 	@Override
-	public Result deletar(EntidadeDominio entidadeDominio) {
-		result = new Result();
+	public Resultado deletar(EntidadeDominio entidadeDominio) {
+		resultado = new Resultado();
+		mensagem = new Mensagem();
+		mensagens = new ArrayList<Mensagem>();
 		
-		ArrayList<String> mensagens = new ArrayList<String>();
-		
-		String entidadeCorrespondente = entidadeDominio.getClass().getName();
-	    IDao daoEntidade = daoMap.get(entidadeCorrespondente);
+	    IDao daoEntidade = daoMap.get(entidadeDominio.getClass().getName());
 
 		try {
-			String mensagem = daoEntidade.deletar(entidadeDominio);
+			mensagem = daoEntidade.deletar(entidadeDominio);
 			mensagens.add(mensagem);
-	        result.setMensagem(mensagens);
+	        resultado.setMensagens(mensagens);
 	    } catch(SQLException e) {
 	    	e.printStackTrace();
-	    	mensagem = "Não foi possível deletar esta entidade no banco de dados";
-	    	mensagens.add(mensagem);
-			result.setMensagem(mensagens);
 	    }
 	        
-		return result;
+		return resultado;
 	}
 
 	@Override
-	public Result consultar(EntidadeDominio entidadeDominio) {
-		result = new Result();
-		ArrayList<String> mensagens = new ArrayList<String>();
-		String entidadeCorrespondente = entidadeDominio.getClass().getName();
-	    IDao daoEntidade = daoMap.get(entidadeCorrespondente);
+	public Resultado consultar(EntidadeDominio entidadeDominio) {
+		resultado = new Resultado();
+		mensagem = new Mensagem();
+		mensagens = new ArrayList<Mensagem>();
+		
+	    IDao daoEntidade = daoMap.get(entidadeDominio.getClass().getName());
 		
 	    try {
-			List<EntidadeDominio> listaEntidades = daoEntidade.consultar(entidadeDominio);
-						
-	        result.setEntidades(listaEntidades);
+			List<EntidadeDominio> listaEntidades = daoEntidade.consultar(entidadeDominio);			
+	        resultado.setEntidades(listaEntidades);
 	    } catch(SQLException e) {
 	       	e.printStackTrace();
-	       	mensagem = "Não foi possível listar o pessoal";
-	       	mensagens.add(mensagem);
-			result.setMensagem(mensagens);
 	    }
-		return result;
+		return resultado;
 	}
 	
 }

@@ -2,7 +2,7 @@
 <%@page import="javax.security.auth.message.callback.PrivateKeyCallback.Request"%>
 <%@page import="br.com.fatec.les.model.Usuario"%>
 <%@page import="br.com.fatec.les.model.EntidadeDominio"%>
-<%@page import="br.com.fatec.les.facade.Result"%>
+<%@page import="br.com.fatec.les.facade.Resultado"%>
 <%@page import="java.util.ArrayList"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -101,7 +101,7 @@
                         <ul class="navbar-nav mr-auto">
                             <li class="nav-item">
                                 <a class="nav-link waves-effect" href="index.html"
-                                    >InÃ­cio
+                                    >Iní­cio
                                 </a>
                             </li>
                             <li class="nav-item">
@@ -161,18 +161,18 @@
                     <a href="requestlist.html" class="list-group-item list-group-item-action waves-effect">
                         <i class="fa fa-user mr-3"></i>Lista de Pedidos</a> 
                     <a href="relatorios.html" class="list-group-item list-group-item-action waves-effect">
-                        <i class="fa fa-table mr-3"></i>RelatÃ³rios</a>   
+                        <i class="fa fa-table mr-3"></i>Relatórios</a>   
                 </div>
             </div>
         </header>
 
         <main class="pt-5 mx-lg-5">
             <div class="container-fluid mt-5">
-            	<div class="alert alert-success" role="alert">
-            		<c:forEach var="mensagem" items="${mensagens}">
-            			<span>${mensagem}</span>
-            		</c:forEach>
-            	</div>
+            	<c:forEach var="mensagem" items="${resultado.getMensagens()}">
+					<div class="alert alert-success" role="alert">
+						<span>${mensagem.getMensagem()}</span>
+					</div>
+				</c:forEach>
                 <div class="card mb-4 wow fadeIn">
                     <div class="card-body d-sm-flex justify-content-between">
                         <h1 class="mb-2 mb-sm-0 pt-1">
@@ -243,7 +243,7 @@
                               <p>Lorem ipsum dolor sit amet.</p>
                             </div>
                             <div class="card-footer text-right green darken-1">
-                              <form action="cliente" method="get">
+                              <form action="app" method="get">
                                 <input value="consultarCliente" name="tarefa" type="hidden">
                                 <button type="submit" class="btn btn-link p-0 text-white font-weight-bold" >Visualizar Clientes</button>
                               </form> 

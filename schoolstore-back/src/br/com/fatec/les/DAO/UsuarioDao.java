@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.fatec.les.database.ConexaoFactory;
+import br.com.fatec.les.facade.Mensagem;
+import br.com.fatec.les.facade.MensagemStatus;
 import br.com.fatec.les.model.EntidadeDominio;
 import br.com.fatec.les.model.IDominio;
 import br.com.fatec.les.model.Imagem;
@@ -17,7 +19,7 @@ import br.com.fatec.les.model.Usuario;
 public class UsuarioDao implements IDao{
 	
 	private Connection conexao = null;
-	private String mensagem = null;
+	private Mensagem mensagem;
 	ImagemDao imagemDao = new ImagemDao();
 	
 	public UsuarioDao() {
@@ -25,8 +27,9 @@ public class UsuarioDao implements IDao{
 	}
 
 	@Override
-	public String atualizar(EntidadeDominio entidadeDominio) throws SQLException {
+	public Mensagem atualizar(EntidadeDominio entidadeDominio) throws SQLException {
 		Usuario usuario  = (Usuario) entidadeDominio;
+		mensagem = new Mensagem();
 		String sql = "UPDATE tb_usuario SET "
 				+ "usu_senha = ?, "
 				+ "usu_email = ? "
@@ -43,9 +46,11 @@ public class UsuarioDao implements IDao{
 			pstm.setString(2, usuario.getEmail());
 			pstm.setLong(3, usuario.getId());
 			pstm.executeUpdate();
-			mensagem = "Usuário atualizado com sucesso";
+			mensagem.setMensagem("Usuário atualizado com sucesso!");
+			mensagem.setMensagemStatus(MensagemStatus.SUCESSO);
 		}catch(SQLException e) {
-			mensagem = e.getMessage();
+			mensagem.setMensagem("Ocorreu um erro durante a operação. Tente novamente ou consulte a equipe de desenvolvimento.");
+			mensagem.setMensagemStatus(MensagemStatus.ERRO);
 		}
 //		finally {
 //			ConexaoFactory.closeConnection(conexao, pstm);
@@ -57,7 +62,6 @@ public class UsuarioDao implements IDao{
 	@Override
 	public List<EntidadeDominio> consultar(IDominio entidade) throws SQLException {
 		Usuario usuario = (Usuario) entidade;
-		
 		List<EntidadeDominio> usuarios = new ArrayList<EntidadeDominio>();
 		
 		PreparedStatement pstm = null;
@@ -102,8 +106,9 @@ public class UsuarioDao implements IDao{
 	}
 	
 	@Override
-	public String deletar(EntidadeDominio entidadeDominio) throws SQLException {
+	public Mensagem deletar(EntidadeDominio entidadeDominio) throws SQLException {
 		Usuario usuario = (Usuario) entidadeDominio;
+		mensagem = new Mensagem();
 		String sql = "UPDATE tb_usuario SET "
 				+ "usu_ativo = false"
 				+ " WHERE usu_id = " + usuario.getId() + "";
@@ -116,9 +121,11 @@ public class UsuarioDao implements IDao{
 			
 			pstm = conexao.prepareStatement(sql);
 			pstm.executeUpdate();
-			mensagem = "Usuário deletado com sucesso";
+			mensagem.setMensagem("Usuário deletado com sucesso!");
+			mensagem.setMensagemStatus(MensagemStatus.SUCESSO);
 		}catch(SQLException e) {
-			mensagem = e.getMessage();
+			mensagem.setMensagem("Ocorreu um erro durante a operação. Tente novamente ou consulte a equipe de desenvolvimento.");
+			mensagem.setMensagemStatus(MensagemStatus.ERRO);
 		}
 //		finally {
 //			ConexaoFactory.closeConnection(conexao, pstm);
@@ -128,8 +135,9 @@ public class UsuarioDao implements IDao{
 	}
 	
 	@Override
-	public String salvar(EntidadeDominio entidadeDominio) throws SQLException {
+	public Mensagem salvar(EntidadeDominio entidadeDominio) throws SQLException {
 		Usuario usuario = (Usuario) entidadeDominio;
+		mensagem = new Mensagem();
 		ResultSet rs;
 		String sql = "INSERT INTO tb_usuario "
 				+ "("
@@ -144,7 +152,8 @@ public class UsuarioDao implements IDao{
 		PreparedStatement pstm = null;
 		
 		try {
-			String idImagem = imagemDao.salvar(usuario.getImagem());
+			String idImagem = imagemDao.salvar(usuario.getImagem()).getMensagem();
+			
 			pstm = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			pstm.setString(1, usuario.getEmail());
 			pstm.setString(2, usuario.getSenha());
@@ -153,15 +162,18 @@ public class UsuarioDao implements IDao{
 			
 			rs = pstm.getGeneratedKeys();
 			if (rs.next()){
-				return Integer.toString(rs.getInt(1));
+				mensagem.setMensagem(Integer.toString(rs.getInt(1)));
+				mensagem.setMensagemStatus(MensagemStatus.OPERACAO);
+				return mensagem;
 			}
 						
 		}catch(SQLException e){
-			e.printStackTrace();
+			mensagem.setMensagem("Ocorreu um erro durante a operação. Tente novamente ou consulte a equipe de desenvolvimento.");
+			mensagem.setMensagemStatus(MensagemStatus.ERRO);
 		}
 //		finally {
 //			ConexaoFactory.closeConnection(conexao, pstm);
 //		}
-		return null;
+		return mensagem;
 	}
 }

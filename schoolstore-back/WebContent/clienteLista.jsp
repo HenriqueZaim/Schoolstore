@@ -2,7 +2,7 @@
 <%@page import="javax.security.auth.message.callback.PrivateKeyCallback.Request"%>
 <%@page import="br.com.fatec.les.model.Usuario"%>
 <%@page import="br.com.fatec.les.model.EntidadeDominio"%>
-<%@page import="br.com.fatec.les.facade.Result"%>
+<%@page import="br.com.fatec.les.facade.Resultado"%>
 <%@page import="java.util.ArrayList"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -172,6 +172,12 @@
             </h1>
           </div>
         </div>
+        
+		<c:forEach var="mensagem" items="${resultado.getMensagens()}">
+			<div class="alert alert-success" role="alert">
+				<span>${mensagem.getMensagem()}</span>
+			</div>
+		</c:forEach>
 
         <div class="row">
           <div class="col-lg-8">
@@ -220,7 +226,7 @@
 		                      </c:forEach>
 	                      </td>
 	                      <td>
-	                        <form action="cliente" method="POST">
+	                        <form action="app" method="POST">
 	                          <input type="hidden" name="txtUsuarioId" value="${cliente.getUsuario().getId()}">
 	                          <input type="hidden" name="txtClienteId" value="${cliente.getId()}">
 	                          <input type="hidden" name="txtImagemId" value="${cliente.getUsuario().getImagem().getId()}">
@@ -231,7 +237,7 @@
 	                        </form>
 	                      </td>
 	                      <td>
-	                        <form action="cliente" method="POST" class="text-center">
+	                        <form action="app" method="POST" class="text-center">
 	                          <input type="hidden" name="txtUsuarioId" value="${cliente.getUsuario().getId()}">
 	                          <input type="hidden" name="txtClienteId" value="${cliente.getId()}">
 	                          <input type="hidden" name="txtImagemId" value="${cliente.getUsuario().getImagem().getId()}">

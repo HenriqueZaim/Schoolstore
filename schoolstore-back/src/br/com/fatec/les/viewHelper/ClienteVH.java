@@ -8,7 +8,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import br.com.fatec.les.facade.Result;
+import br.com.fatec.les.facade.Mensagem;
+import br.com.fatec.les.facade.MensagemStatus;
+import br.com.fatec.les.facade.Resultado;
 import br.com.fatec.les.model.Cliente;
 import br.com.fatec.les.model.EntidadeDominio;
 import br.com.fatec.les.model.IDominio;
@@ -42,16 +44,16 @@ public class ClienteVH implements IViewHelper{
 	public void setEntidade(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
-		String operacao = (String) request.getAttribute("operacao");
+		String tarefa = request.getParameter("tarefa");
 
-		if(operacao.equals("consultarCliente")) {
+		if(tarefa.equals("consultarCliente")) {
 			
 			List<Cliente> clientes = new ArrayList<Cliente>();
-			Result result = new Result();
+			Resultado resultado = new Resultado();
 			
-			result = (Result)request.getAttribute("resultado");
+			resultado = (Resultado)request.getAttribute("resultado");
 			
-			for(EntidadeDominio c : result.getEntidades()) {
+			for(EntidadeDominio c : resultado.getEntidades()) {
 				Cliente user = (Cliente) c;
 				clientes.add(user);
 			}
@@ -59,13 +61,13 @@ public class ClienteVH implements IViewHelper{
 			request.setAttribute("clientes", clientes);
 			request.getRequestDispatcher("clienteLista.jsp").
 			forward(request, response);
-		}else if(operacao.equals("editaCliente")) {
+		}else if(tarefa.equals("editaCliente")) {
 			List<Cliente> clientes = new ArrayList<Cliente>();
-			Result result = new Result();
+			Resultado resultado = new Resultado();
 			
-			result = (Result)request.getAttribute("resultado");
+			resultado = (Resultado)request.getAttribute("resultado");
 			
-			for(EntidadeDominio c : result.getEntidades()) {
+			for(EntidadeDominio c : resultado.getEntidades()) {
 				Cliente user = (Cliente) c;
 				clientes.add(user);
 			}
@@ -75,9 +77,34 @@ public class ClienteVH implements IViewHelper{
 			request.setAttribute("cliente", cliente);
 			request.getRequestDispatcher("clienteEditar.jsp").
 			forward(request, response);
-		} else {
+		}
+		else if(tarefa.equals("atualizarCliente") || tarefa.equals("cadastrarCliente")){
+			Resultado resultado = new Resultado();
+			resultado = (Resultado)request.getAttribute("resultado");
+			boolean flag = false;
+			
+			for(Mensagem mensagem : resultado.getMensagens()) {
+				if(mensagem.getMensagemStatus() == MensagemStatus.ERRO) {
+					flag = true;
+				}
+			}
+			if(flag && tarefa.equals("atualizarCliente")) {
+				request.getRequestDispatcher("clienteEditar.jsp").
+				forward(request, response);
+			}else if (flag && tarefa.equals("cadastrarCliente")) {
+				request.getRequestDispatcher("clienteCadastro.jsp").
+				forward(request, response);
+			}else {
+				request.getRequestDispatcher("clienteMenu.jsp").
+				forward(request, response);
+			}
+		}
+		else if(tarefa.equals("deletarCliente")) {
 			request.getRequestDispatcher("clienteMenu.jsp").
 			forward(request, response);
+		}
+		else {
+			response.sendRedirect("index.html");
 		}
 		
 	}

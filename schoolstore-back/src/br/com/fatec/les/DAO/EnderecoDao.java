@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.fatec.les.database.ConexaoFactory;
+import br.com.fatec.les.facade.Mensagem;
+import br.com.fatec.les.facade.MensagemStatus;
 import br.com.fatec.les.model.Cidade;
 import br.com.fatec.les.model.Cliente;
 import br.com.fatec.les.model.Endereco;
@@ -18,7 +20,7 @@ import br.com.fatec.les.model.IDominio;
 public class EnderecoDao implements IDao{
 	
 	private Connection conexao = null;
-	private String mensagem = null;
+	private Mensagem mensagem;
 	CidadeDao cidadeDao = new CidadeDao();
 	
 	public EnderecoDao() {
@@ -26,8 +28,9 @@ public class EnderecoDao implements IDao{
 	}
 
 	@Override
-	public String salvar(EntidadeDominio entidadeDominio) throws SQLException {
+	public Mensagem salvar(EntidadeDominio entidadeDominio) throws SQLException {
 		Endereco endereco = (Endereco) entidadeDominio;
+		mensagem = new Mensagem();
 		ResultSet rs;
 		String sql = "INSERT INTO tb_endereco "
 				+ "("
@@ -64,33 +67,44 @@ public class EnderecoDao implements IDao{
 			
 			rs = pstm.getGeneratedKeys();
 			if (rs.next()){
-				return Integer.toString(rs.getInt(1));
+				mensagem.setMensagem(Integer.toString(rs.getInt(1)));
+				mensagem.setMensagemStatus(MensagemStatus.OPERACAO);
+				return mensagem;
 			}
 
 		}catch(SQLException e){
-			e.printStackTrace();
+			mensagem.setMensagem("Ocorreu um erro durante a operação. Tente novamente ou consulte a equipe de desenvolvimento.");
+			mensagem.setMensagemStatus(MensagemStatus.ERRO);
 		}
 //		finally {
 //			ConexaoFactory.closeConnection(conexao, pstm);
 //		}
-		return null;
+		return mensagem;
 	}
 
 	@Override
-	public String deletar(EntidadeDominio entidadeDominio) throws SQLException {
+	public Mensagem deletar(EntidadeDominio entidadeDominio) throws SQLException {
 		Endereco endereco = (Endereco) entidadeDominio;
+		mensagem = new Mensagem();
 		String sql = "UPDATE tb_endereco SET "
 				+ "end_ativo = false"
-				+ " WHERE end_cli_id = " + endereco.getCliente().getId() + "";
+				+ " WHERE ";
+		if(endereco.getId() != null ) {
+			sql += "end_id = " + endereco.getId() + "";
+		}else {
+			sql += "end_cli_id = " + endereco.getCliente().getId() + "";
+		}
 		
 		PreparedStatement pstm = null;
 		
 		try {
 			pstm = conexao.prepareStatement(sql);
 			pstm.executeUpdate();
-			mensagem = "Endereco deletado sucesso";
+			mensagem.setMensagem("Endereço deletado com sucesso!");
+			mensagem.setMensagemStatus(MensagemStatus.SUCESSO);
 		}catch(SQLException e) {
-			mensagem = e.getMessage();
+			mensagem.setMensagem("Ocorreu um erro durante a operação. Tente novamente ou consulte a equipe de desenvolvimento.");
+			mensagem.setMensagemStatus(MensagemStatus.ERRO);
 		}
 //		finally {
 //			ConexaoFactory.closeConnection(conexao, pstm);
@@ -100,41 +114,7 @@ public class EnderecoDao implements IDao{
 	}
 
 	@Override
-	public String atualizar(EntidadeDominio entidadeDominio) throws SQLException {
-//		Endereco endereco  = (Endereco) entidadeDominio;
-//		String sql = "UPDATE tb_endereco SET "
-//				+ "end_logradouro = ?, "
-//				+ "end_bairro = ?, "
-//				+ "end_cep = ?, "
-//				+ "end_numero = ?, "
-//				+ "end_complemento = ?, "
-//				+ "end_referencia = ?, "
-//				+ "end_favorito = ? "
-//				+ " WHERE end_id = ? ";
-//		
-//		PreparedStatement pstm = null;
-//		
-//		try {
-//			pstm = conexao.prepareStatement(sql);
-//			pstm.setString(1, endereco.getLogradouro());
-//			pstm.setString(2, endereco.getBairro());
-//			pstm.setString(3, endereco.getCep());
-//			pstm.setInt(4, endereco.getNumero());
-//			pstm.setString(5, endereco.getComplemento());
-//			pstm.setString(6, endereco.getReferencia());
-//			pstm.setBoolean(7, endereco.isFavorito());
-//			pstm.setLong(8, endereco.getId());
-//			pstm.executeUpdate();
-//			
-//			mensagem = "Endereco atualizado com sucesso";
-//		}catch(SQLException e) {
-//			mensagem = e.getMessage();
-//		}
-//		finally {
-//			ConexaoFactory.closeConnection(conexao, pstm);
-//		}
-//		
-//		return mensagem;
+	public Mensagem atualizar(EntidadeDominio entidadeDominio) throws SQLException {
         throw new UnsupportedOperationException("Operação não suportada.");
 	}
 
@@ -196,8 +176,8 @@ public class EnderecoDao implements IDao{
 				
 				enderecos.add(endereco);
 			}
-		}catch(SQLException ex) {
-			System.err.println(ex.getMessage());
+		}catch(SQLException e) {
+			e.printStackTrace();
 		}
 //		finally {
 //			ConexaoFactory.closeConnection(conexao, pstm, rs);

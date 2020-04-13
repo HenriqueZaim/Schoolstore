@@ -8,7 +8,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import br.com.fatec.les.facade.Result;
+import com.google.gson.Gson;
+
+import br.com.fatec.les.facade.Resultado;
 import br.com.fatec.les.model.EntidadeDominio;
 import br.com.fatec.les.model.Estado;
 import br.com.fatec.les.model.IDominio;
@@ -24,26 +26,22 @@ public class EstadoVH implements IViewHelper{
 	@Override
 	public void setEntidade(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
-		String operacao = (String) request.getAttribute("operacao");
-		
-		if(operacao.equals("cadastroCliente")) {
 			
 			List<Estado> estados = new ArrayList<Estado>();
-			Result result = new Result();
+			Resultado result = new Resultado();
 			
-			result = (Result)request.getAttribute("resultado");
+			result = (Resultado)request.getAttribute("resultado");
 			
 			for(EntidadeDominio c : result.getEntidades()) {
 				Estado estado = (Estado) c;
-				
 				estados.add(estado);
 			}
 			
-			request.setAttribute("estados", estados);
-			request.getRequestDispatcher("clienteCadastro.jsp").
-			forward(request, response);
-		}
+			String json = new Gson().toJson(estados);
+			
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			response.getWriter().write(json);
 		
 	}
 

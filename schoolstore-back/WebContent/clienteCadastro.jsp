@@ -2,7 +2,7 @@
 <%@page import="javax.security.auth.message.callback.PrivateKeyCallback.Request"%>
 <%@page import="br.com.fatec.les.model.Usuario"%>
 <%@page import="br.com.fatec.les.model.EntidadeDominio"%>
-<%@page import="br.com.fatec.les.facade.Result"%>
+<%@page import="br.com.fatec.les.facade.Resultado"%>
 <%@page import="java.util.ArrayList"%>
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=utf-8"
@@ -36,9 +36,14 @@
         <section class="py-5 px-2">
             <div class="container mt-5 dark-grey-text">
                 <h1 class="text-center">CADASTRO DE USUÁRIO</h1>
+                <c:forEach var="mensagem" items="${resultado.getMensagens()}">
+	                <div class="alert alert-danger" role="alert">
+	            		<span>${mensagem.getMensagem()}</span>
+	            	</div>
+            	</c:forEach>
                 <hr>
                 <section>
-                    <form class="needs-validation" method="post" action="cliente" novalidate>
+                    <form class="needs-validation" method="post" action="app" novalidate>
                         <div class="row justify-content-center">
                             <div class="col-md-10">
                                 <h2 class="mt-5">1. Informações Gerais</h2>
@@ -206,19 +211,12 @@
                         <div class="col-md-6 mb-3 md-form">
                             <select class="mdb-select" id="txtEstadoModal" required searchable="Selecione..">
                                 <option value="" disabled selected>Selecione seu estado*</option>
-                                <c:forEach var="estado" items="${estados}">
-									<option value="${estado.getId()}">${ estado.getNome() }</option>
-								</c:forEach>
+                                
                             </select>
                         </div>
                         <div class="col-md-6 mb-3 md-form">
-                            <select id="txtCidadeModal" required placeholder="Selecione">
+                            <select style="width:100%;" id="txtCidadeModal" required placeholder="Selecione">
                                 <option value="" disabled selected>Selecione sua cidade*</option>
-							    <c:forEach var="estado" items="${estados}">
-							     	<c:forEach var="cidade" items="${estado.getCidades()}">
-							       		<option value="${cidade.getId()}" class="${cidade.getEstado().getId()}">${ cidade.getNome() }</option>
-						        	</c:forEach>
-						        </c:forEach>
                             </select>
                         </div>
                     </div>
@@ -313,7 +311,9 @@
     <script type="text/javascript" src="./js/popper.min.js"></script>
     <script type="text/javascript" src="./js/bootstrap.min.js"></script>
     <script type="text/javascript" src="./js/mdb.min.js"></script>
+<!--     <script type="text/javascript" src="./js/jquery.mask.js"></script> -->
     <script type="text/javascript" src="./js/pages/register.js"></script>
+    
 
 </body>
 

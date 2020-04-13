@@ -16,13 +16,13 @@ import br.com.fatec.les.command.ConsultarCommand;
 import br.com.fatec.les.command.DeletarCommand;
 import br.com.fatec.les.command.ICommand;
 import br.com.fatec.les.command.SalvarCommand;
-import br.com.fatec.les.facade.Result;
+import br.com.fatec.les.facade.Resultado;
 import br.com.fatec.les.model.IDominio;
 import br.com.fatec.les.viewHelper.ClienteVH;
 import br.com.fatec.les.viewHelper.EstadoVH;
 import br.com.fatec.les.viewHelper.IViewHelper;
 
-@WebServlet(name = "servletController", urlPatterns = "/cliente")
+@WebServlet(name = "servletController", urlPatterns = "/app")
 public class ServletController extends HttpServlet{
 
 	private static final long serialVersionUID = 1L;
@@ -59,7 +59,7 @@ public class ServletController extends HttpServlet{
         response.setContentType("text/html;charset=UTF-8");
         
         try (PrintWriter out = response.getWriter()) {
-        	Result resultado;
+        	Resultado resultado;
         	tarefa = request.getParameter("tarefa");
         	           
             vhCorrespondente = vhMap.get(tarefa);
@@ -68,8 +68,6 @@ public class ServletController extends HttpServlet{
             resultado = commandCorrespondente.execute(entidadeCorrespondente);
             
             request.setAttribute("resultado", resultado);
-            request.setAttribute("operacao", tarefa);
-            request.setAttribute("mensagens", resultado.getMensagem());
             
             vhCorrespondente.setEntidade(request, response);
             

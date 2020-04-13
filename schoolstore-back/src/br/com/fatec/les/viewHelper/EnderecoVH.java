@@ -20,14 +20,19 @@ public class EnderecoVH implements IViewHelper{
 			
 		Endereco endereco = new Endereco();
 		
-		if(tarefa.equals("cadastrarCliente")) {
+		if(tarefa.equals("cadastrarCliente") || tarefa.equals("atualizarCliente")) {
 			String[] enderecosForm = request.getParameterValues("txtEndereco");
 			
 			for(int i = 0 ; i < enderecosForm.length ; i++) {
 				endereco = new Endereco();
 				
-				if(tarefa.equals("editaCliente"))
-					endereco.setId(Long.parseLong(request.getParameter("txtEnderecoId")));
+				if(tarefa.equals("atualizarCliente")) {
+					if(request.getParameterValues("txtEnderecoId")[i] != ""){
+						endereco.setId(Long.parseLong(request.getParameterValues("txtEnderecoId")[i]));
+					}else {
+						endereco.setId(null);
+					}
+				}
 				
 				endereco.setNome(request.getParameterValues("txtNomeEndereco")[i]);
 				endereco.setBairro(request.getParameterValues("txtBairro")[i]);

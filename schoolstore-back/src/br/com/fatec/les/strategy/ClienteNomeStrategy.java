@@ -1,16 +1,19 @@
 package br.com.fatec.les.strategy;
 
+import br.com.fatec.les.facade.Mensagem;
+import br.com.fatec.les.facade.MensagemStatus;
 import br.com.fatec.les.model.Cliente;
 import br.com.fatec.les.model.IDominio;
-import br.com.fatec.les.model.Usuario;
 
 public class ClienteNomeStrategy implements IStrategy{
 	@Override
-	public String execute(IDominio iDominio) {
+	public Mensagem execute(IDominio iDominio) {
 		Cliente cliente = (Cliente) iDominio;
+		Mensagem mensagem = new Mensagem();
 		if(cliente.getNome().isEmpty() || cliente.getNome() == null) {
-			return "Nome é obrigatório";
+			mensagem.setMensagem("Insira seu nome completo");
+			mensagem.setMensagemStatus(MensagemStatus.ERRO);
 		}
-		return "";
+		return mensagem;
 	}
 }

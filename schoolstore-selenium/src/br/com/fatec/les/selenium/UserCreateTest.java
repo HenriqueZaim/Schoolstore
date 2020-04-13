@@ -25,39 +25,116 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class UserCreateTest {
-  private WebDriver driver;
-  private Map<String, Object> vars;
-  JavascriptExecutor js;
-  @Before
-  public void setUp() {
-    driver = new FirefoxDriver();
-    js = (JavascriptExecutor) driver;
-    vars = new HashMap<String, Object>();
-  }
-  @After
-  public void tearDown() {
-    driver.quit();
-  }
-  @Test
-  public void userCreate() {
-    driver.get("http://localhost:8085/schoolstore/");
-    driver.manage().window().setSize(new Dimension(550, 662));
-    driver.findElement(By.name("txtNome")).click();
-    driver.findElement(By.name("txtNome")).sendKeys("Henrique Zaim");
-    driver.findElement(By.name("txtNumeroTelefone")).sendKeys("11974056533");
-    driver.findElement(By.name("txtNumeroDocumento")).sendKeys("0123456789");
-    driver.findElement(By.id("file")).sendKeys("/home/henrique/Imagens/logo.svg");
-    driver.findElement(By.id("button")).click();
-    driver.findElement(By.name("txtEmail")).click();
-    driver.findElement(By.name("txtEmail")).sendKeys("henrique@gmail.com");
-    driver.findElement(By.name("txtSenha")).sendKeys("qwer1234");
-    driver.findElement(By.name("txtLogradouro")).sendKeys("Rua Antonio");
-    driver.findElement(By.name("txtBairro")).sendKeys("Mogilar");
-    driver.findElement(By.name("txtNumero")).sendKeys("110");
-    driver.findElement(By.name("txtComplemento")).sendKeys("bloco 19");
-    driver.findElement(By.name("txtReferencia")).sendKeys("fatec");
-    driver.findElement(By.name("txtCep")).sendKeys("08773495");
-    driver.findElement(By.name("txtFavorito")).click();
-    driver.findElement(By.cssSelector("input:nth-child(36)")).click();
-  }
+	private WebDriver driver;
+	private Map<String, Object> vars;
+	JavascriptExecutor js;
+	@Before
+	public void setUp() {
+		driver = new FirefoxDriver();
+		js = (JavascriptExecutor) driver;
+		vars = new HashMap<String, Object>();
+	}
+	@After
+	public void tearDown() {
+		driver.quit();
+	}
+	@Test
+	public void userCreate() {
+		driver.get("http://localhost:8085/schoolstore/");
+		driver.manage().window().fullscreen();
+		driver.findElement(By.cssSelector(".btn-outline-success")).click();
+		driver.findElement(By.cssSelector(".form-row:nth-child(2) > .col:nth-child(1) > label")).click();
+		driver.findElement(By.id("txtNome")).sendKeys("Henrique Zaim Sanches");
+		driver.findElement(By.id("txtEmail")).sendKeys("henrique@gmail.com");
+		driver.findElement(By.id("txtNumeroDocumento")).sendKeys("01.234.567/890");
+		driver.findElement(By.id("txtNumeroTelefone")).sendKeys("(11) 99999-9999");
+		driver.findElement(By.id("txtSenha")).sendKeys("qwer1234");
+		driver.findElement(By.id("txtConfirmacaoSenha")).sendKeys("qwer1234");
+		driver.findElement(By.id("file")).sendKeys("/home/henrique/Imagens/647810.jpg");
+		js.executeScript("window.scrollTo(0,477)");
+		driver.findElement(By.cssSelector(".row:nth-child(2) .fas")).click();
+		driver.findElement(By.id("txtCepModal")).click();
+		driver.findElement(By.id("txtCepModal")).sendKeys("08773-012");
+		driver.findElement(By.id("txtLogradouroModal")).sendKeys("Rua lua");
+		js.executeScript("window.scrollTo(0,477)");
+		driver.findElement(By.cssSelector(".select-dropdown:nth-child(2)")).click();
+		driver.findElement(By.cssSelector(".search")).sendKeys("São");
+		driver.findElement(By.cssSelector("li:nth-child(27) > .filtrable")).click();
+		{
+			WebElement dropdown = driver.findElement(By.id("txtEstadoModal"));
+			dropdown.findElement(By.xpath("//option[. = 'São Paulo']")).click();
+		}
+		driver.findElement(By.id("txtCidadeModal")).click();
+		{
+			WebElement dropdown = driver.findElement(By.id("txtCidadeModal"));
+			dropdown.findElement(By.xpath("//option[. = 'Mogi das Cruzes']")).click();
+		}
+		driver.findElement(By.id("txtCidadeModal")).click();
+		driver.findElement(By.id("txtNumeroModal")).click();
+		driver.findElement(By.id("txtNumeroModal")).sendKeys("1111");
+		driver.findElement(By.id("txtBairroModal")).sendKeys("Centro");
+		driver.findElement(By.id("txtComplementoModal")).sendKeys("Casa 10");
+		driver.findElement(By.id("txtReferenciaModal")).sendKeys("Mercado");
+		driver.findElement(By.id("txtNomeEnderecoModal")).sendKeys("Casa 1");
+		driver.findElement(By.cssSelector(".form-row:nth-child(6) .form-check-label")).click();
+		js.executeScript("window.scrollTo(0,508)");
+		driver.findElement(By.id("btnSalvarEndereco")).click();
+		{
+			WebElement element = driver.findElement(By.cssSelector(".row:nth-child(2) .row .fas"));
+			Actions builder = new Actions(driver);
+			builder.moveToElement(element).perform();
+		}
+		driver.findElement(By.cssSelector(".row:nth-child(2) .row .fas")).click();
+		{
+			WebElement element = driver.findElement(By.tagName("body"));
+			Actions builder = new Actions(driver);
+			builder.moveToElement(element, 0, 0).perform();
+		}
+		driver.findElement(By.id("txtCepModal")).click();
+		driver.findElement(By.id("txtCepModal")).sendKeys("08773-111");
+		driver.findElement(By.id("txtLogradouroModal")).click();
+		driver.findElement(By.id("txtLogradouroModal")).sendKeys("Rua Sol");
+		driver.findElement(By.cssSelector(".select-dropdown:nth-child(2)")).click();
+		driver.findElement(By.cssSelector(".col-md-6:nth-child(2)")).click();
+		{
+			WebElement element = driver.findElement(By.cssSelector("#modalEndereco .modal-body"));
+			Actions builder = new Actions(driver);
+			builder.moveToElement(element).clickAndHold().perform();
+		}
+		{
+			WebElement element = driver.findElement(By.cssSelector("#modalEndereco .modal-body"));
+			Actions builder = new Actions(driver);
+			builder.moveToElement(element).perform();
+		}
+		{
+			WebElement element = driver.findElement(By.cssSelector("#modalEndereco .modal-body"));
+			Actions builder = new Actions(driver);
+			builder.moveToElement(element).release().perform();
+		}
+		driver.findElement(By.cssSelector("#modalEndereco .modal-body")).click();
+		driver.findElement(By.id("txtNumeroModal")).sendKeys("2222");
+		driver.findElement(By.id("txtBairroModal")).sendKeys("Mogilar");
+		driver.findElement(By.id("txtComplementoModal")).sendKeys("Torre 10");
+		driver.findElement(By.id("txtReferenciaModal")).sendKeys("Fatec");
+		driver.findElement(By.id("txtNomeEnderecoModal")).sendKeys("Casa 2");
+		driver.findElement(By.cssSelector(".form-row:nth-child(6) .form-check-label")).click();
+		{
+			WebElement element = driver.findElement(By.id("btnSalvarEndereco"));
+			Actions builder = new Actions(driver);
+			builder.moveToElement(element).perform();
+		}
+		driver.findElement(By.id("btnSalvarEndereco")).click();
+		{
+			WebElement element = driver.findElement(By.tagName("body"));
+			Actions builder = new Actions(driver);
+			builder.moveToElement(element, 0, 0).perform();
+		}
+		driver.findElement(By.cssSelector(".form-check > .form-check-label")).click();
+		{
+			WebElement element = driver.findElement(By.cssSelector(".btn-success"));
+			Actions builder = new Actions(driver);
+			builder.moveToElement(element).perform();
+		}
+		driver.findElement(By.cssSelector(".btn-success")).click();
+	}
 }

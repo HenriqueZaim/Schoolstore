@@ -5,16 +5,17 @@ import java.util.List;
 
 import br.com.fatec.les.model.EntidadeDominio;
 
-public class Result {
+public class Resultado {
 
-	private ArrayList<String> mensagem;
+	private ArrayList<Mensagem> mensagens;
 	private List<EntidadeDominio> entidades;
 	
-	public ArrayList<String> getMensagem() {
-		return mensagem;
+
+	public ArrayList<Mensagem> getMensagens() {
+		return mensagens;
 	}
-	public void setMensagem(ArrayList<String> mensagem) {
-		this.mensagem = mensagem;
+	public void setMensagens(ArrayList<Mensagem> mensagens) {
+		this.mensagens = mensagens;
 	}
 	public List<EntidadeDominio> getEntidades() {
 		return entidades;
