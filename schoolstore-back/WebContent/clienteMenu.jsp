@@ -5,11 +5,10 @@
 <%@page import="br.com.fatec.les.facade.Resultado"%>
 <%@page import="java.util.ArrayList"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-
-<html lang="pt">
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt-br" xml:lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
@@ -101,7 +100,7 @@
                         <ul class="navbar-nav mr-auto">
                             <li class="nav-item">
                                 <a class="nav-link waves-effect" href="index.html"
-                                    >In��cio
+                                    >Iní­cio
                                 </a>
                             </li>
                             <li class="nav-item">
@@ -161,7 +160,7 @@
                     <a href="requestlist.html" class="list-group-item list-group-item-action waves-effect">
                         <i class="fa fa-user mr-3"></i>Lista de Pedidos</a> 
                     <a href="relatorios.html" class="list-group-item list-group-item-action waves-effect">
-                        <i class="fa fa-table mr-3"></i>Relat�rios</a>   
+                        <i class="fa fa-table mr-3"></i>Relatórios</a>   
                 </div>
             </div>
         </header>
@@ -243,10 +242,7 @@
                               <p>Lorem ipsum dolor sit amet.</p>
                             </div>
                             <div class="card-footer text-right green darken-1">
-                              <form action="app" method="get">
-                                <input value="consultarCliente" name="tarefa" type="hidden">
-                                <button type="submit" class="btn btn-link p-0 text-white font-weight-bold" >Visualizar Clientes</button>
-                              </form> 
+                                <a href="clienteLista.jsp" class="btn btn-link p-0 text-white font-weight-bold" >Visualizar Clientes</a>
                             </div>
                           </div>
                         </div>
@@ -290,7 +286,7 @@
 
         <footer class="page-footer text-center font-small primary-color-dark darken-2 mt-4 wow fadeIn">
             <div class="footer-copyright py-3">
-                © 2020 Copyright:
+                Â© 2020 Copyright:
                 <a href="https://mdbootstrap.com/education/bootstrap/" target="_blank"> foxdevlabs.com </a>
             </div>
         </footer>

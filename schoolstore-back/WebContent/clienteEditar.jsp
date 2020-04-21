@@ -43,7 +43,7 @@
             	</c:forEach>
                 <hr>
                 <section>
-                    <form class="needs-validation" method="post" action="app" novalidate>
+                    <form id="clienteFormulario" method="post" action="app">
                         <input name="txtClienteId" type="hidden" value="${cliente.getId()}">
                         <input name="txtUsuarioId" type="hidden" value="${cliente.getUsuario().getId()}">
                         <input name="txtImagemId" type="hidden" value="${cliente.getUsuario().getImagem().getId()}">
@@ -129,7 +129,7 @@
                                             <div class="card-header" role="tab" id="${endereco.getId()}">
                                                 <h5 class="mb-0">
                                                     ${endereco.getNome()}
-                                                    <a data-toggle="collapse" data-parent="#accordionEndereco" href="#${endereco.getNome()}-${endereco.getId()}" aria-expanded="false" aria-controls="${endereco.getNome()}-${endereco.getId()}">
+                                                    <a data-toggle="collapse" data-parent="#accordionEndereco" href="#${endereco.getCep()}-${endereco.getId()}" aria-expanded="false" aria-controls="${endereco.getCep()}-${endereco.getId()}">
                                                         <i class="fas fa-angle-down rotate-icon"></i>
                                                     </a>
                                                     <button onclick="$(this).parent().parent().parent().remove()" class="btn btn-link p-0 m-0 float-right mr-5">
@@ -137,7 +137,7 @@
                                                     </button>
                                                 </h5>
                                             </div>
-                                            <div id="${endereco.getNome()}-${endereco.getId()}" class="collapse" role="tabpanel" aria-labelledby="${endereco.getId()}" data-parent="#accordionEndereco">
+                                            <div id="${endereco.getCep()}-${endereco.getId()}" class="collapse show" role="tabpanel" aria-labelledby="${endereco.getId()}" data-parent="#accordionEndereco">
                                                 <div class="card-body">
                                                     <ul>
                                                       <li><b>CEP: </b>${endereco.getCep()}</li>
@@ -146,9 +146,9 @@
                                                       <li><b>Logradouro: </b>${endereco.getLogradouro()}</li>
                                                       <li><b>Número: </b>${endereco.getNumero()}</li>
                                                       <li><b>Bairro: </b>${endereco.getBairro()}</li>
-                                                      <li><b>Complemento: </b>${endereco.getComplemento()}</li>
-                                                      <li><b>Referência: </b>${endereco.getReferencia()}</li>
-                                                      <li><b>Favorito: </b>${endereco.isFavorito()}</li>
+                                                      <li><b>Complemento: </b>${endereco.getComplemento() == null ? "Nenhum" : endereco.getComplemento()}</li>
+                                                      <li><b>Referência: </b>${endereco.getReferencia() == null ? "Nenhum" : endereco.getReferencia()}</li>
+                                                      <li><b>Favorito: </b>${endereco.isFavorito() ? "sim" : "não"}</li>
                                                     </ul>
                                                 </div>
                                             </div>
@@ -164,7 +164,7 @@
                                             <input type="hidden" name="txtNumero" value="${endereco.getNumero()}">
                                             <input type="hidden" name="txtFavoritoEndereco" value="${endereco.isFavorito()}"> 
                                         	<input type="hidden" name="txtNomeEndereco" value="${endereco.getNome() }">
-                                        </div>
+                                        </div>                                    
                                     </c:forEach>
                                 </div>
                             </div>
@@ -329,6 +329,7 @@
     <script type="text/javascript" src="./js/popper.min.js"></script>
     <script type="text/javascript" src="./js/bootstrap.min.js"></script>
     <script type="text/javascript" src="./js/mdb.min.js"></script>
+    <script type="text/javascript" src="./js/jquery.mask.js"></script>
     <script type="text/javascript" src="./js/pages/register.js"></script>
 
 </body>

@@ -5,11 +5,10 @@
 <%@page import="br.com.fatec.les.facade.Resultado"%>
 <%@page import="java.util.ArrayList"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-
-<html lang="pt">
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt-br" xml:lang="pt-br">
 
 <head>
   <meta charset="UTF-8">
@@ -99,7 +98,7 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
               <li class="nav-item">
-                <a class="nav-link waves-effect" href="index.html">Início
+                <a class="nav-link waves-effect" href="index.html">InÃ­cio
                 </a>
               </li>
               <li class="nav-item">
@@ -156,7 +155,7 @@
           <a href="requestlist.html" class="list-group-item  list-group-item-action waves-effect">
             <i class="fa fa-user mr-3"></i>Lista de Pedidos</a>
           <a href="relatorios.html" class="list-group-item list-group-item-action waves-effect">
-            <i class="fa fa-table mr-3"></i>Relatórios</a>
+            <i class="fa fa-table mr-3"></i>RelatÃ³rios</a>
         </div>
 
 
@@ -172,17 +171,16 @@
             </h1>
           </div>
         </div>
-        
-		<c:forEach var="mensagem" items="${resultado.getMensagens()}">
+        <c:forEach var="mensagem" items="${resultado.getMensagens()}">
 			<div class="alert alert-success" role="alert">
 				<span>${mensagem.getMensagem()}</span>
 			</div>
 		</c:forEach>
-
+        
         <div class="row">
           <div class="col-lg-8">
             <div class="card mb-4 wow fadeIn mb-5">
-              <section class="dark-grey-text  ">
+              <section class="dark-grey-text">
                 <table class="table table-striped table-responsive-md btn-table">
     
                   <thead>
@@ -190,74 +188,22 @@
                       <th >#Id</th>
                       <th >Nome</th>
                       <th >Telefone</th>
-                      <th >Endereço</th>
-                      <th colspan="2">Ação</th>
+                      <th >EndereÃ§os</th>
+                      <th colspan="2">AÃ§Ã£o</th>
                     </tr>
                   </thead>
     
-                  <tbody>
-                  	<c:forEach var="cliente" items="${clientes}">
-                  
-	                    <tr class="text-center">
-	                      <th scope="row">${cliente.getId()}</th>
-	                      <td> ${cliente.getNome()} </td>
-	                      <td> ${cliente.getNumeroTelefone()} </td>
-	                      <td>
-	                     	<c:forEach var="endereco" items="${cliente.getEnderecos()}">
-		                        <div>
-			                        <input type="hidden" name="txtCep" value="${endereco.getCep()}">
-			                        <input type="hidden" name="txtEstado" value="${endereco.getCidade().getEstado().getNome()}">
-			                        <input type="hidden" name="txtCidade" value="${endereco.getCidade().getNome()}">
-			                        <input type="hidden" name="txtLogradouro" value="${endereco.getLogradouro()}">
-			                        <input type="hidden" name="txtNumero" value="${endereco.getNumero()}">
-			                        <input type="hidden" name="txtComplemento" value="${endereco.getComplemento() }">
-			                        <input type="hidden" name="txtBairro" value="${endereco.getBairro() }">
-			                        <input type="hidden" name="txtReferencia" value="${endereco.getReferencia() }">
-			                        <input type="hidden" name="txtFavorito" value="${endereco.isFavorito() }">
-			                        <input type="hidden" name="txtNome" value="${cliente.getNome() }">
-			                        <input type="hidden" name="txtNomeEndereco" value="${endereco.getNome()}">
-			                        <button type="button" class="btn btn-link btn-sm text-info p-0 font-weight-bold visualizarEndereco" >
-			                           ${endereco.getNome()}
-			                           <c:if test="${endereco.isFavorito() }">
-											<i class="fa fa-star text-yellow" aria-hidden="true"></i>
-			                           </c:if>
-		                            </button>
-		                        </div>
-		                      </c:forEach>
-	                      </td>
-	                      <td>
-	                        <form action="app" method="POST">
-	                          <input type="hidden" name="txtUsuarioId" value="${cliente.getUsuario().getId()}">
-	                          <input type="hidden" name="txtClienteId" value="${cliente.getId()}">
-	                          <input type="hidden" name="txtImagemId" value="${cliente.getUsuario().getImagem().getId()}">
-	    
-	                          <input type="hidden" name="tarefa" value="editaCliente">
-	                          <button type="submit"
-	                            class="btn btn-sm btn-link p-0 text-warning font-weight-bold">Editar</button>
-	                        </form>
-	                      </td>
-	                      <td>
-	                        <form action="app" method="POST" class="text-center">
-	                          <input type="hidden" name="txtUsuarioId" value="${cliente.getUsuario().getId()}">
-	                          <input type="hidden" name="txtClienteId" value="${cliente.getId()}">
-	                          <input type="hidden" name="txtImagemId" value="${cliente.getUsuario().getImagem().getId()}">
-	    
-	                          <input type="hidden" name="tarefa" value="deletarCliente">
-	                          <button type="submit"
-	                            class="btn btn-sm btn-link p-0 text-danger font-weight-bold">Excluir</button>
-	                        </form>
-	                      </td>
-	                    </tr>
-                  
-                  	</c:forEach>
+                  <tbody id="tableClientes">
+
                   </tbody>
     
                 </table>
+                </section>
             </div>
           </div>
           <div class="col-lg-4">
             <div class="card mb-4 wow fadeIn px-2 py-3">
-              <h3>Endereço</h3>
+              <h3>EndereÃ§o</h3>
               <section class="dark-grey-text px-3 py-2" id="painelEndereco">
                 
               </section>
@@ -265,13 +211,12 @@
 
           </div>
         </div>
-        </section>
       </div>
     </main>
 
     <footer class="page-footer text-center font-small primary-color-dark darken-2 mt-4 wow fadeIn">
       <div class="footer-copyright py-3">
-        © 2020 Copyright:
+        Â© 2020 Copyright:
         <a href="" target="_blank"> foxdevlabs.com </a>
       </div>
     </footer>

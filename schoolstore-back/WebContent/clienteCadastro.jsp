@@ -36,14 +36,14 @@
         <section class="py-5 px-2">
             <div class="container mt-5 dark-grey-text">
                 <h1 class="text-center">CADASTRO DE USUÁRIO</h1>
-                <c:forEach var="mensagem" items="${resultado.getMensagens()}">
-	                <div class="alert alert-danger" role="alert">
-	            		<span>${mensagem.getMensagem()}</span>
-	            	</div>
-            	</c:forEach>
+                <div class="alert alert-danger p-0 border-0" role="alert">
+	                <c:forEach var="mensagem" items="${resultado.getMensagens()}">
+		            	<span class="d-block px-3 py-2"><i class="fas fa-exclamation-circle p-0 px-2"></i>${mensagem.getMensagem()}</span>
+	            	</c:forEach>
+            	</div>
                 <hr>
                 <section>
-                    <form class="needs-validation" method="post" action="app" novalidate>
+                    <form method="post" action="app" id="clienteFormulario">
                         <div class="row justify-content-center">
                             <div class="col-md-10">
                                 <h2 class="mt-5">1. Informações Gerais</h2>
@@ -311,7 +311,7 @@
     <script type="text/javascript" src="./js/popper.min.js"></script>
     <script type="text/javascript" src="./js/bootstrap.min.js"></script>
     <script type="text/javascript" src="./js/mdb.min.js"></script>
-<!--     <script type="text/javascript" src="./js/jquery.mask.js"></script> -->
+    <script type="text/javascript" src="./js/jquery.mask.js"></script>
     <script type="text/javascript" src="./js/pages/register.js"></script>
     
 

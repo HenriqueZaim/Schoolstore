@@ -97,7 +97,8 @@ public class ImagemDao implements IDao{
 		String sql = "UPDATE tb_imagem SET "
 				+ "ima_nome = ?, "
 				+ "ima_descricao = ? "
-				+ " WHERE ima_id = " + imagem.getId() + " AND ima_ativo = 1";
+				+ " WHERE ima_id = ? "
+				+ " AND ima_ativo = 1";
 		
 		PreparedStatement pstm = null;
 		

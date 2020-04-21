@@ -1,10 +1,8 @@
 package br.com.fatec.les.viewHelper;
 
-import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +18,7 @@ public class ImagemVH implements IViewHelper{
 	public IDominio getEntidade(HttpServletRequest request) {
 		Imagem imagem = new Imagem();
 		String tarefa = request.getParameter("tarefa");
+		String base64String = request.getParameter("txtFile");
 		
 		if(tarefa.equals("atualizarCliente") ||
 				tarefa.equals("deletarCliente") || 
@@ -27,27 +26,28 @@ public class ImagemVH implements IViewHelper{
 			imagem.setId(Long.parseLong(request.getParameter("txtImagemId")));
 		}
 		
-		if(tarefa.equals("cadastrarCliente")) {
-			String base64String = request.getParameter("txtFile");
+		if((tarefa.equals("cadastrarCliente") || tarefa.equals("atualizarCliente")) && base64String != "") {
 			String[] strings = base64String.split(",");
 			String extension;
-			switch (strings[0]) {//check image's extension
+			switch (strings[0]) {
 				case "data:image/jpeg;base64":
 	              extension = "jpeg";
 	              break;
 				case "data:image/png;base64":
 	              extension = "png";
 	              break;
-				default://should write cases for more images types
+				default:
 	              extension = "jpg";
 	              break;
 			}
-			String nomeImagem = request.getParameter("txtNome") + "." + extension;
+			String nomeImagem = request.getParameter("txtNumeroDocumento") + "." + extension;
 			byte[] data = DatatypeConverter.parseBase64Binary(strings[1]);
-			String path = request.getServletContext().getRealPath("img")+File.separator+nomeImagem;
+			String path = "/home/henrique/Documentos/git/les-project/schoolstore-back/WebContent/img/" + nomeImagem;
 			File file = new File(path);
-			try (OutputStream outputStream = new BufferedOutputStream(new FileOutputStream(file))) {
-				outputStream.write(data);
+			try {
+				FileOutputStream fos = new FileOutputStream(file);
+				fos.write(data);
+				fos.close();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

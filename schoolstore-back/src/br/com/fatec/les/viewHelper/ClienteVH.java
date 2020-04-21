@@ -8,10 +8,13 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+
 import br.com.fatec.les.facade.Mensagem;
 import br.com.fatec.les.facade.MensagemStatus;
 import br.com.fatec.les.facade.Resultado;
 import br.com.fatec.les.model.Cliente;
+import br.com.fatec.les.model.Endereco;
 import br.com.fatec.les.model.EntidadeDominio;
 import br.com.fatec.les.model.IDominio;
 import br.com.fatec.les.model.Usuario;
@@ -36,6 +39,10 @@ public class ClienteVH implements IViewHelper{
 		cliente.setNumeroTelefone(request.getParameter("txtNumeroTelefone"));
 		cliente.setUsuario((Usuario)usuarioVH.getEntidade(request));
 		cliente.setEnderecos(enderecoVH.getEntidades(request));
+		
+		for(Endereco e : cliente.getEnderecos()) {
+			e.setCliente(cliente);
+		}
 
 		return cliente;	
 	}
@@ -47,20 +54,15 @@ public class ClienteVH implements IViewHelper{
 		String tarefa = request.getParameter("tarefa");
 
 		if(tarefa.equals("consultarCliente")) {
-			
-			List<Cliente> clientes = new ArrayList<Cliente>();
 			Resultado resultado = new Resultado();
 			
 			resultado = (Resultado)request.getAttribute("resultado");
 			
-			for(EntidadeDominio c : resultado.getEntidades()) {
-				Cliente user = (Cliente) c;
-				clientes.add(user);
-			}
+			String json = new Gson().toJson(resultado);
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			response.getWriter().write(json);
 			
-			request.setAttribute("clientes", clientes);
-			request.getRequestDispatcher("clienteLista.jsp").
-			forward(request, response);
 		}else if(tarefa.equals("editaCliente")) {
 			List<Cliente> clientes = new ArrayList<Cliente>();
 			Resultado resultado = new Resultado();
@@ -81,32 +83,32 @@ public class ClienteVH implements IViewHelper{
 		else if(tarefa.equals("atualizarCliente") || tarefa.equals("cadastrarCliente")){
 			Resultado resultado = new Resultado();
 			resultado = (Resultado)request.getAttribute("resultado");
-			boolean flag = false;
+			boolean flag = false; // flag para indicar se há algum erro
 			
 			for(Mensagem mensagem : resultado.getMensagens()) {
 				if(mensagem.getMensagemStatus() == MensagemStatus.ERRO) {
 					flag = true;
 				}
 			}
-			if(flag && tarefa.equals("atualizarCliente")) {
-				request.getRequestDispatcher("clienteEditar.jsp").
-				forward(request, response);
-			}else if (flag && tarefa.equals("cadastrarCliente")) {
-				request.getRequestDispatcher("clienteCadastro.jsp").
-				forward(request, response);
+			if(flag) {
+				if(tarefa.equals("atualizarCliente")) {
+					request.getRequestDispatcher("clienteLista.jsp").
+					forward(request, response);
+				}else {
+					request.getRequestDispatcher("clienteCadastro.jsp").
+					forward(request, response);
+				}
 			}else {
 				request.getRequestDispatcher("clienteMenu.jsp").
 				forward(request, response);
 			}
 		}
 		else if(tarefa.equals("deletarCliente")) {
-			request.getRequestDispatcher("clienteMenu.jsp").
+			request.getRequestDispatcher("clienteLista.jsp").
 			forward(request, response);
 		}
 		else {
 			response.sendRedirect("index.html");
 		}
-		
 	}
-
 }

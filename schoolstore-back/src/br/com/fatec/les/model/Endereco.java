@@ -2,8 +2,8 @@ package br.com.fatec.les.model;
 
 public class Endereco extends EntidadeNomeada{
 
-	private String Logradouro;
-	private String Bairro;
+	private String logradouro;
+	private String bairro;
 	private String complemento;
 	private String cep;
 	private String referencia;
@@ -19,10 +19,10 @@ public class Endereco extends EntidadeNomeada{
 		this.cliente = cliente;
 	}
 	public String getLogradouro() {
-		return Logradouro;
+		return logradouro;
 	}
 	public void setLogradouro(String logradouro) {
-		Logradouro = logradouro;
+		this.logradouro = logradouro;
 	}
 	public int getNumero() {
 		return numero;
@@ -49,10 +49,10 @@ public class Endereco extends EntidadeNomeada{
 		this.referencia = referencia;
 	}
 	public String getBairro() {
-		return Bairro;
+		return bairro;
 	}
 	public void setBairro(String bairro) {
-		Bairro = bairro;
+		this.bairro = bairro;
 	}
 	public Cidade getCidade() {
 		return cidade;

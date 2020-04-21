@@ -137,12 +137,24 @@ public class ClienteDao implements IDao{
 			pstm.setString(3, cliente.getNumeroDocumento());
 			pstm.setLong(4, cliente.getId());
 			
+			mensagem = usuarioDao.atualizar(cliente.getUsuario());
+			if(mensagem.getMensagemStatus() == MensagemStatus.ERRO)
+				return mensagem;
+			
 			List<EntidadeDominio> enderecosBanco = new ArrayList<EntidadeDominio>();
 			Endereco endereco = new Endereco();
 			endereco.setCliente(cliente);
 			
 			enderecosBanco.addAll(enderecoDao.consultar(endereco));
 			
+			// Adiciona os novos endereços
+			for(Endereco e : cliente.getEnderecos()) {
+				if(e.getId() == null) {
+					enderecoDao.salvar(e);
+				}
+			}
+			
+			// Remove do banco os que não existem mais					
 			for(EntidadeDominio entidade : enderecosBanco) {
 				entidade = (Endereco) entidade;
 				boolean flag = false;
@@ -151,9 +163,9 @@ public class ClienteDao implements IDao{
 						if(e.getId() == entidade.getId()) {
 							flag = true;
 							break;
+						}else {
+							continue;
 						}
-					}else {
-						enderecoDao.salvar(e);
 					}
 				}
 				if(!flag) {
@@ -161,10 +173,7 @@ public class ClienteDao implements IDao{
 				}
 			}
 			
-			if(usuarioDao.atualizar(cliente.getUsuario()) == null) {
-				return null;
-			}
-			
+			mensagem = new Mensagem();
 			pstm.executeUpdate();
 			mensagem.setMensagem("Cliente atualizado com sucesso!");
 			mensagem.setMensagemStatus(MensagemStatus.SUCESSO);

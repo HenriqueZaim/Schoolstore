@@ -2,36 +2,8 @@ var estados;
 
 $(document).ready(function () {
   $('.mdb-select').materialSelect();
+  colocarMascaras(true)
   
-//  $("#txtNumeroModal").mask("0000")
-//  $("#txtCepModal").mask("00000-000")
-//  $("#txtNumeroTelefone").mask("(00) 00000-0000")
-//  
-//  $("#txtNumeroDocumento").keydown(function(){
-//    try {
-//        $("#txtNumeroDocumento").unmask();
-//    } catch (e) {}
-//
-//    var tamanho = $("#txtNumeroDocumento").val().length;
-//
-//    if(tamanho < 11){
-//        $("#txtNumeroDocumento").mask("999.999.999-99");
-//    } else {
-//        $("#txtNumeroDocumento").mask("99.999.999/9999-99");
-//    }
-//
-//    // ajustando foco
-//    var elem = this;
-//    setTimeout(function(){
-//        // mudo a posição do seletor
-//        elem.selectionStart = elem.selectionEnd = 10000;
-//    }, 0);
-//    // reaplico o valor para mudar o foco
-//    var currentValue = $(this).val();
-//    $(this).val('');
-//    $(this).val(currentValue);
-//});
-//  
   $.ajax({
 	  url: "http://localhost:8085/schoolstore/app?tarefa=cadastroCliente",
 	  type: "GET",
@@ -45,6 +17,54 @@ $(document).ready(function () {
 	  }
   })
 });
+
+$("#clienteFormulario").submit(function(event){
+	event.preventDefault()
+	colocarMascaras(false)
+	$(this).unbind('submit').submit()
+})
+
+function colocarMascaras(flag){
+	var SPMaskBehavior = function (val) {
+		return val.replace(/\D/g, '').length === 11 ? '(00) 00000-0000' : '(00) 0000-00009';
+	},
+	spOptions = {
+			onKeyPress: function(val, e, field, options) {
+				field.mask(SPMaskBehavior.apply({}, arguments), options);
+			}
+	};
+	if(flag){
+		  $("#txtNumeroModal").mask("0000")
+		  $("#txtCepModal").mask("00000-000")
+		  $("#txtNumeroTelefone").mask(SPMaskBehavior, spOptions);
+		  $("#txtNumeroDocumento").keydown(function(){
+		    try {
+		        $("#txtNumeroDocumento").unmask();
+		    } catch (e) {}
+
+		    var tamanho = $("#txtNumeroDocumento").val().length;
+
+		    if(tamanho < 11){
+		        $("#txtNumeroDocumento").mask("999.999.999-99");
+		    } else {
+		        $("#txtNumeroDocumento").mask("99.999.999/9999-99");
+		    }
+		    var elem = this;
+		    setTimeout(function(){
+		        elem.selectionStart = elem.selectionEnd = 10000;
+		    }, 0);
+		    var currentValue = $(this).val();
+		    $(this).val('');
+		    $(this).val(currentValue);
+		  })
+		
+	}else{
+		$("#txtNumeroModal").unmask()
+		$("#txtCepModal").unmask()
+		$("#txtNumeroTelefone").unmask()
+		$("#txtNumeroDocumento").unmask()
+	}
+}
 
 $("#txtEstadoModal").change(function(){
 	$("#txtCidadeModal").children(".cidade").remove()
@@ -127,6 +147,7 @@ $("#btnSalvarEndereco").click(function () {
               </div>
           </div>
 
+		  <input type="hidden" name="txtEnderecoId" value="">
 		  <input type="hidden" name="txtNomeEndereco" value="${nome}">
           <input type="hidden" name="txtCep" value="${cep}">
           <input type="hidden" name="txtBairro" value="${bairro}">

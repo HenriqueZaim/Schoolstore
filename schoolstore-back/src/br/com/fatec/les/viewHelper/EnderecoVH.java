@@ -16,30 +16,26 @@ public class EnderecoVH implements IViewHelper{
 	public ArrayList<Endereco> getEntidades(HttpServletRequest request){
 		ArrayList<Endereco> enderecos = new ArrayList<Endereco>();
 		CidadeVH cidadeVH = new CidadeVH();
-		String tarefa = request.getParameter("tarefa");
-			
 		Endereco endereco = new Endereco();
+		String tarefa = request.getParameter("tarefa");
 		
-		if(tarefa.equals("cadastrarCliente") || tarefa.equals("atualizarCliente")) {
+		if(request.getParameterValues("txtEndereco") == null) {
+			return enderecos;
+		}else {
 			String[] enderecosForm = request.getParameterValues("txtEndereco");
-			
 			for(int i = 0 ; i < enderecosForm.length ; i++) {
 				endereco = new Endereco();
 				
 				if(tarefa.equals("atualizarCliente")) {
-					if(request.getParameterValues("txtEnderecoId")[i] != ""){
-						endereco.setId(Long.parseLong(request.getParameterValues("txtEnderecoId")[i]));
-					}else {
-						endereco.setId(null);
-					}
+					endereco.setId(request.getParameterValues("txtEnderecoId")[i] != "" ? Long.parseLong(request.getParameterValues("txtEnderecoId")[i]) : null);
 				}
 				
 				endereco.setNome(request.getParameterValues("txtNomeEndereco")[i]);
 				endereco.setBairro(request.getParameterValues("txtBairro")[i]);
 				endereco.setCep(request.getParameterValues("txtCep")[i]);
-				endereco.setComplemento(request.getParameterValues("txtComplemento")[i]);
+				endereco.setComplemento(request.getParameterValues("txtComplemento")[i] != "" ? request.getParameterValues("txtComplemento")[i] : null);
 				endereco.setNumero(Integer.parseInt(request.getParameterValues("txtNumero")[i]));
-				endereco.setReferencia(request.getParameterValues("txtReferencia")[i]);
+				endereco.setReferencia(request.getParameterValues("txtReferencia")[i] != "" ? request.getParameterValues("txtReferencia")[i] : null);
 				endereco.setLogradouro(request.getParameterValues("txtLogradouro")[i]);
 				endereco.setFavorito(Boolean.parseBoolean(request.getParameterValues("txtFavoritoEndereco")[i]));
 				
@@ -50,7 +46,6 @@ public class EnderecoVH implements IViewHelper{
 				enderecos.add(endereco);
 			}
 		}
-
 		return enderecos;
 	}
 

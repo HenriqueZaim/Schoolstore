@@ -31,20 +31,20 @@ public class UsuarioDao implements IDao{
 		Usuario usuario  = (Usuario) entidadeDominio;
 		mensagem = new Mensagem();
 		String sql = "UPDATE tb_usuario SET "
-				+ "usu_senha = ?, "
 				+ "usu_email = ? "
 				+ " WHERE usu_id = ?";
 		
 		PreparedStatement pstm = null;
 		
 		try {
-			if(imagemDao.atualizar(usuario.getImagem()) == null)
-				return null;
+			mensagem = imagemDao.atualizar(usuario.getImagem());
+			if(mensagem.getMensagemStatus() == MensagemStatus.ERRO)
+				return mensagem;
 			
+			mensagem = new Mensagem();
 			pstm = conexao.prepareStatement(sql);
-			pstm.setString(1, usuario.getSenha());
-			pstm.setString(2, usuario.getEmail());
-			pstm.setLong(3, usuario.getId());
+			pstm.setString(1, usuario.getEmail());
+			pstm.setLong(2, usuario.getId());
 			pstm.executeUpdate();
 			mensagem.setMensagem("Usuário atualizado com sucesso!");
 			mensagem.setMensagemStatus(MensagemStatus.SUCESSO);
