@@ -17,7 +17,7 @@ import br.com.fatec.les.command.DeletarCommand;
 import br.com.fatec.les.command.ICommand;
 import br.com.fatec.les.command.SalvarCommand;
 import br.com.fatec.les.facade.Resultado;
-import br.com.fatec.les.model.IDominio;
+import br.com.fatec.les.model.assets.IDominio;
 import br.com.fatec.les.viewHelper.ClienteVH;
 import br.com.fatec.les.viewHelper.EstadoVH;
 import br.com.fatec.les.viewHelper.IViewHelper;

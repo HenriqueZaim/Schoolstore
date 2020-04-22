@@ -7,9 +7,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import br.com.fatec.les.model.Cidade;
-import br.com.fatec.les.model.Endereco;
-import br.com.fatec.les.model.IDominio;
+import br.com.fatec.les.model.assets.IDominio;
+import br.com.fatec.les.model.endereco.Cidade;
+import br.com.fatec.les.model.endereco.Endereco;
 
 public class EnderecoVH implements IViewHelper{
 	

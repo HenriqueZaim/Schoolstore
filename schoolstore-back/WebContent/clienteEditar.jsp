@@ -1,7 +1,7 @@
 <%@page import="java.util.List"%>
 <%@page import="javax.security.auth.message.callback.PrivateKeyCallback.Request"%>
-<%@page import="br.com.fatec.les.model.Usuario"%>
-<%@page import="br.com.fatec.les.model.EntidadeDominio"%>
+<%@page import="br.com.fatec.les.model.usuario.Usuario"%>
+<%@page import="br.com.fatec.les.model.assets.EntidadeDominio"%>
 <%@page import="br.com.fatec.les.facade.Resultado"%>
 <%@page import="java.util.ArrayList"%>
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>

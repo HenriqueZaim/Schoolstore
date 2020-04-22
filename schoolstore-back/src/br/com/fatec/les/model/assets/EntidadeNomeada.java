@@ -1,4 +1,4 @@
-package br.com.fatec.les.model;
+package br.com.fatec.les.model.assets;
 
 public class EntidadeNomeada extends EntidadeDominio{
 	private String nome;

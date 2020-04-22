@@ -13,11 +13,11 @@ import com.google.gson.Gson;
 import br.com.fatec.les.facade.Mensagem;
 import br.com.fatec.les.facade.MensagemStatus;
 import br.com.fatec.les.facade.Resultado;
-import br.com.fatec.les.model.Cliente;
-import br.com.fatec.les.model.Endereco;
-import br.com.fatec.les.model.EntidadeDominio;
-import br.com.fatec.les.model.IDominio;
-import br.com.fatec.les.model.Usuario;
+import br.com.fatec.les.model.assets.EntidadeDominio;
+import br.com.fatec.les.model.assets.IDominio;
+import br.com.fatec.les.model.endereco.Endereco;
+import br.com.fatec.les.model.usuario.Cliente;
+import br.com.fatec.les.model.usuario.Usuario;
 
 public class ClienteVH implements IViewHelper{
 

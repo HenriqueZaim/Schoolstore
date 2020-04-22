@@ -11,9 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 
 import br.com.fatec.les.facade.Resultado;
-import br.com.fatec.les.model.EntidadeDominio;
-import br.com.fatec.les.model.Estado;
-import br.com.fatec.les.model.IDominio;
+import br.com.fatec.les.model.assets.EntidadeDominio;
+import br.com.fatec.les.model.assets.IDominio;
+import br.com.fatec.les.model.endereco.Estado;
 
 public class EstadoVH implements IViewHelper{
 

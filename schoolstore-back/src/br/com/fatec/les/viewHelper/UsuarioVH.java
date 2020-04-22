@@ -6,9 +6,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import br.com.fatec.les.model.IDominio;
-import br.com.fatec.les.model.Imagem;
-import br.com.fatec.les.model.Usuario;
+import br.com.fatec.les.model.assets.IDominio;
+import br.com.fatec.les.model.assets.Imagem;
+import br.com.fatec.les.model.usuario.Usuario;
 
 public class UsuarioVH implements IViewHelper{
 

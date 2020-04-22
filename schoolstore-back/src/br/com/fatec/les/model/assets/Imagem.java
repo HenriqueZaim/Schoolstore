@@ -1,4 +1,4 @@
-package br.com.fatec.les.model;
+package br.com.fatec.les.model.assets;
 
 public class Imagem extends EntidadeDominio{
 	private String foto;

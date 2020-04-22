@@ -1,4 +1,4 @@
-package br.com.fatec.les.model;
+package br.com.fatec.les.model.assets;
 
 import java.time.LocalDateTime;
 

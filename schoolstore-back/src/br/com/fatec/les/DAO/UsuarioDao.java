@@ -11,10 +11,10 @@ import java.util.List;
 import br.com.fatec.les.database.ConexaoFactory;
 import br.com.fatec.les.facade.Mensagem;
 import br.com.fatec.les.facade.MensagemStatus;
-import br.com.fatec.les.model.EntidadeDominio;
-import br.com.fatec.les.model.IDominio;
-import br.com.fatec.les.model.Imagem;
-import br.com.fatec.les.model.Usuario;
+import br.com.fatec.les.model.assets.EntidadeDominio;
+import br.com.fatec.les.model.assets.IDominio;
+import br.com.fatec.les.model.assets.Imagem;
+import br.com.fatec.les.model.usuario.Usuario;
 
 public class UsuarioDao implements IDao{
 	

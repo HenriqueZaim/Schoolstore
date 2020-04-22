@@ -3,7 +3,7 @@ package br.com.fatec.les.facade;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.fatec.les.model.EntidadeDominio;
+import br.com.fatec.les.model.assets.EntidadeDominio;
 
 public class Resultado {
 

@@ -9,10 +9,10 @@ import java.util.List;
 
 import br.com.fatec.les.database.ConexaoFactory;
 import br.com.fatec.les.facade.Mensagem;
-import br.com.fatec.les.model.Cidade;
-import br.com.fatec.les.model.EntidadeDominio;
-import br.com.fatec.les.model.Estado;
-import br.com.fatec.les.model.IDominio;
+import br.com.fatec.les.model.assets.EntidadeDominio;
+import br.com.fatec.les.model.assets.IDominio;
+import br.com.fatec.les.model.endereco.Cidade;
+import br.com.fatec.les.model.endereco.Estado;
 
 public class CidadeDao implements IDao{
 	

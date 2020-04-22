@@ -1,6 +1,9 @@
-package br.com.fatec.les.model;
+package br.com.fatec.les.model.usuario;
 
 import java.util.List;
+
+import br.com.fatec.les.model.assets.EntidadeNomeada;
+import br.com.fatec.les.model.endereco.Endereco;
 
 public class Cliente extends EntidadeNomeada{
 

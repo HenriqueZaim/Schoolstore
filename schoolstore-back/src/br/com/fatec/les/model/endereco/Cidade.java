@@ -1,4 +1,6 @@
-package br.com.fatec.les.model;
+package br.com.fatec.les.model.endereco;
+
+import br.com.fatec.les.model.assets.EntidadeNomeada;
 
 public class Cidade extends EntidadeNomeada{
 
