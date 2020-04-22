@@ -40,30 +40,9 @@ CREATE TABLE tb_usuario
  usu_dataHoraCriacao DATETIME NOT NULL,
  usu_email VARCHAR(100) NOT NULL,
  usu_senha VARCHAR(100) NOT NULL,
- usu_ima_id INT,
+ usu_ima_id INT NOT NULL,
  PRIMARY KEY (usu_id),
  FOREIGN KEY(usu_ima_id) REFERENCES tb_imagem(ima_id)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-CREATE TABLE tb_cupomTroca
-(
-  cut_id INT NOT NULL AUTO_INCREMENT,
-  cut_ativo BOOLEAN NOT NULL,
-  cut_dataHoraCriacao DATETIME NOT NULL,
-  cut_valor DECIMAL(4,2) NOT NULL,
-  cut_usu_id INT NOT NULL,
-  PRIMARY KEY (cut_id),
-  FOREIGN KEY (cut_usu_id) REFERENCES tb_usuario(usu_id)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-CREATE TABLE tb_carrinho
-(
-  car_id INT NOT NULL AUTO_INCREMENT,
-  car_subTotal DECIMAL(4,2) DEFAULT NULL,
-  car_validade DATETIME DEFAULT NULL,
-  car_ativo BOOLEAN NOT NULL,
-  car_dataHoraCriacao DATETIME NOT NULL,
-  PRIMARY KEY (car_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE tb_cliente
@@ -75,10 +54,12 @@ CREATE TABLE tb_cliente
  cli_ativo BOOLEAN NOT NULL,
  cli_dataHoraCriacao DATETIME NOT NULL,
  cli_usu_id INT NOT NULL,
- cli_car_id INT,
+ cli_car_id INT DEFAULT NULL,
+ cli_cre_id INT DEFAULT NULL,
  PRIMARY KEY (cli_id),
  FOREIGN KEY(cli_usu_id) REFERENCES tb_usuario(usu_id),
- FOREIGN KEY(cli_car_id) REFERENCES tb_carrinho(car_id)
+ FOREIGN KEY(cli_car_id) REFERENCES tb_carrinho(car_id),
+ FOREIGN KEY(cli_ccr_id) REFERENCES tb_cartaoCredito(ccr_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE tb_endereco
@@ -101,130 +82,14 @@ CREATE TABLE tb_endereco
  FOREIGN KEY(end_cli_id) REFERENCES tb_cliente(cli_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE tb_frete
-( 
-  fre_id INT NOT NULL AUTO_INCREMENT,
-  fre_valor DECIMAL(4,2),
-  fre_previsao INT NOT NULL,
-  fre_end_id INT NOT NULL,
-  PRIMARY KEY (fre_id),
-  FOREIGN KEY(fre_end_id) REFERENCES tb_endereco(end_id)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-/****************************************/
-CREATE TABLE tb_produto
+CREATE TABLE tb_carrinho
 (
-  pro_id INT NOT NULL AUTO_INCREMENT,
-  pro_nome VARCHAR(100) NOT NULL,
-  pro_preco DECIMAL(4,2) NOT NULL,
-  pro_descricao VARCHAR(400) NOT NULL,
-  pro_ativo BOOLEAN NOT NULL,
-  pro_dataHoraCriacao DATETIME NOT NULL,
-  pro_ima_id INT DEFAULT NULL, 
-  PRIMARY KEY (pro_id),
-  FOREIGN KEY(pro_ima_id) REFERENCES tb_imagem(ima_id)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-CREATE TABLE tb_pagamentoCupom
-(
-  pcu_id INT NOT NULL AUTO_INCREMENT,
-  pcu_valorTotalCupom DECIMAL(4,2) NOT NULL,
-  PRIMARY KEY (pcu_id)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-CREATE TABLE tb_cupom
-(
-  cup_id INT NOT NULL AUTO_INCREMENT,
-  cup_valor DECIMAL(4,2) NOT NULL,
-  cup_ativo BOOLEAN NOT NULL,
-  cup_dataHoraCriacao DATETIME NOT NULL,
-  cup_pcu_id INT NOT NULL,
-  PRIMARY KEY (cup_id),
-  FOREIGN KEY(cup_pcu_id) REFERENCES tb_pagamentoCupom(pcu_id)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-CREATE TABLE tb_cartaoCredito
-(
-  pca_id INT NOT NULL AUTO_INCREMENT,
-  pca_ativo BOOLEAN NOT NULL,
-  pca_dataHoraCriacao DATETIME NOT NULL,
-  pca_numero VARCHAR(16) NOT NULL,
-  pca_codigo VARCHAR(3) NOT NULL,
-  pca_nomeImpresso VARCHAR(100) NOT NULL,
-  pca_favorito BOOLEAN NOT NULL,
-  pca_cli_id INT NOT NULL,
-  PRIMARY KEY (pca_id),
-  FOREIGN KEY(pca_cli_id) REFERENCES tb_cliente(cli_id)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-CREATE TABLE tb_pagamentoCartao
-(
-  pca_id INT NOT NULL AUTO_INCREMENT,
-  pca_valorTotalCartao DECIMAL(4,2) NOT NULL,
-  pca_cre_id INT NOT NULL,
-  PRIMARY KEY (pca_id),
-  FOREIGN KEY(pca_cre_id) REFERENCES tb_cartaoCredito(pca_id)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-CREATE TABLE tb_formaPagamento
-(
-  fpag_id INT NOT NULL AUTO_INCREMENT,
-  fpag_valorTotal DECIMAL(4,2) NOT NULL,
-  fpag_pcu_id INT DEFAULT NULL,
-  fpag_pca_id INT DEFAULT NULL,
-  PRIMARY KEY (fpag_id),
-  FOREIGN KEY(fpag_pcu_id) REFERENCES tb_pagamentoCupom(pcu_id),
-  FOREIGN KEY(fpag_pca_id) REFERENCES tb_pagamentoCartao(pca_id)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-CREATE TABLE tb_pedido
-(
-  ped_id INT NOT NULL AUTO_INCREMENT,
-  ped_valor DECIMAL(4,2) NOT NULL,
-  ped_statusPedido VARCHAR(20) NOT NULL,
-  ped_ativo BOOLEAN NOT NULL,
-  ped_dataHoraCriacao DATETIME NOT NULL,
-  ped_fpag_id INT NOT NULL,
-  ped_fre_id INT NOT NULL,
-  ped_cli_id INT NOT NULL,
-  PRIMARY KEY (ped_id),
-  FOREIGN KEY(ped_fpag_id) REFERENCES tb_formaPagamento(fpag_id),
-  FOREIGN KEY(ped_fre_id) REFERENCES tb_frete(fre_id),
-  FOREIGN KEY(ped_cli_id) REFERENCES tb_cliente(cli_id)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-CREATE TABLE tb_troca
-(
-  tro_id INT NOT NULL AUTO_INCREMENT,
-  tro_dataHoraCriacao DATETIME NOT NULL,
-  tro_ped_id INT NOT NULL,
-  tro_cli_id INT NOT NULL,
-  tro_statusTroca VARCHAR(20),
-  PRIMARY KEY (tro_id),
-  FOREIGN KEY(tro_ped_id) REFERENCES tb_pedido(ped_id),
-  FOREIGN KEY(tro_cli_id) REFERENCES tb_cliente(cli_id)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-CREATE TABLE tb_itemPedido
-(
-  iped_id INT NOT NULL AUTO_INCREMENT, 
-  iped_quantidade INT NOT NULL,
-  iped_pro_id INT NOT NULL,
-  iped_ped_id INT NOT NULL,
-  PRIMARY KEY (iped_id),
-  FOREIGN KEY(iped_pro_id) REFERENCES tb_produto(pro_id),
-  FOREIGN KEY(iped_ped_id) REFERENCES tb_pedido(ped_id)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-CREATE TABLE tb_itemTroca
-(
-  itro_id INT NOT NULL AUTO_INCREMENT, 
-  itro_quantidade INT NOT NULL,
-  itro_pro_id INT NOT NULL,
-  itro_tro_id INT NOT NULL,
-  PRIMARY KEY (itro_id),
-  FOREIGN KEY(itro_pro_id) REFERENCES tb_produto(pro_id),
-  FOREIGN KEY(itro_tro_id) REFERENCES tb_troca(tro_id)
+  car_id INT NOT NULL AUTO_INCREMENT,
+  car_subTotal DECIMAL(4,2) NOT NULL,
+  car_validade DATETIME NOT NULL,
+  car_ativo BOOLEAN NOT NULL,
+  car_dataHoraCriacao DATETIME NOT NULL,
+  PRIMARY KEY (car_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE tb_itemCarrinho
@@ -238,26 +103,6 @@ CREATE TABLE tb_itemCarrinho
   FOREIGN KEY(icar_car_id) REFERENCES tb_carrinho(car_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE tb_inativacao
-(
-  ina_id INT NOT NULL AUTO_INCREMENT,
-  ina_ativo BOOLEAN NOT NULL,
-  ina_dataCriacao DATETIME NOT NULL,
-  ina_descricao VARCHAR(400) NOT NULL,
-  ina_statusInativacao VARCHAR(20) NOT NULL, 
-  ina_pro_id INT NOT NULL,
-  PRIMARY KEY (ina_id),
-  FOREIGN KEY(ina_pro_id) REFERENCES tb_produto(pro_id)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE tb_ativacao 
-(
-  ati_id INT NOT NULL AUTO_INCREMENT,
-  ati_ativo BOOLEAN NOT NULL,
-  ati_dataCriacao DATETIME NOT NULL,
-  ati_descricao VARCHAR(400) NOT NULL,
-  ati_statusAtivacao VARCHAR(20) NOT NULL, 
-  ati_pro_id INT NOT NULL,
-  PRIMARY KEY (ati_id),
-  FOREIGN KEY(ati_pro_id) REFERENCES tb_produto(pro_id)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
