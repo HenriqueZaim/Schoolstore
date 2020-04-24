@@ -34,10 +34,11 @@ public class ImagemDao implements IDao{
 				+ "("
 				+ "ima_nome, "
 				+ "ima_descricao, "
+				+ "ima_caminho, "
 				+ "ima_ativo, "
 				+ "ima_dataHoraCriacao"
 				+ ") "
-				+ " VALUES ( ?, ?, true, NOW())";
+				+ " VALUES ( ?, ?, ?, true, NOW())";
 		
 		PreparedStatement pstm = null;
 		
@@ -45,6 +46,7 @@ public class ImagemDao implements IDao{
 			pstm = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			pstm.setString(1, imagem.getFoto());
 			pstm.setString(2, imagem.getDescricao());
+			pstm.setString(3, imagem.getCaminho());
 			pstm.executeUpdate();
 			
 			rs = pstm.getGeneratedKeys();
@@ -77,7 +79,7 @@ public class ImagemDao implements IDao{
 		try {		
 			pstm = conexao.prepareStatement(sql);
 			pstm.executeUpdate();
-			mensagem.setMensagem("Imagem deletado com sucesso!");
+			mensagem.setMensagem("Imagem deletada com sucesso!");
 			mensagem.setMensagemStatus(MensagemStatus.SUCESSO);
 		}catch(SQLException e) {
 			mensagem.setMensagem("Ocorreu um erro durante a operação. Tente novamente ou consulte a equipe de desenvolvimento.");
@@ -96,7 +98,8 @@ public class ImagemDao implements IDao{
 		mensagem = new Mensagem();
 		String sql = "UPDATE tb_imagem SET "
 				+ "ima_nome = ?, "
-				+ "ima_descricao = ? "
+				+ "ima_descricao = ?,"
+				+ "ima_caminho = ? "
 				+ " WHERE ima_id = ? "
 				+ " AND ima_ativo = 1";
 		
@@ -106,7 +109,8 @@ public class ImagemDao implements IDao{
 			pstm = conexao.prepareStatement(sql);
 			pstm.setString(1, imagem.getFoto());
 			pstm.setString(2, imagem.getDescricao());
-			pstm.setLong(3, imagem.getId());
+			pstm.setString(3, imagem.getCaminho());
+			pstm.setLong(4, imagem.getId());
 			pstm.executeUpdate();
 			mensagem.setMensagem("Imagem atualizada com sucesso!");
 			mensagem.setMensagemStatus(MensagemStatus.SUCESSO);
@@ -131,7 +135,8 @@ public class ImagemDao implements IDao{
 		String sql = "SELECT "
 				+ "ima_id, "
 				+ "ima_nome, "
-				+ "ima_descricao "
+				+ "ima_descricao,"
+				+ "ima_caminho "
 				+ " FROM tb_imagem WHERE ima_ativo = 1 ";
 		if(imagem.getId() != null) {
 			sql += "AND ima_id = " + imagem.getId();
@@ -149,6 +154,7 @@ public class ImagemDao implements IDao{
 				i.setId(Long.parseLong(rs.getString("ima_id")));
 				i.setFoto(rs.getString("ima_nome"));
 				i.setDescricao(rs.getString("ima_descricao"));
+				i.setCaminho(rs.getString("ima_caminho"));
 
 				imagens.add(i);
 			}

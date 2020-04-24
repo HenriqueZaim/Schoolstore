@@ -37,9 +37,11 @@ public class UsuarioDao implements IDao{
 		PreparedStatement pstm = null;
 		
 		try {
-			mensagem = imagemDao.atualizar(usuario.getImagem());
-			if(mensagem.getMensagemStatus() == MensagemStatus.ERRO)
-				return mensagem;
+			if(usuario.getImagem().getId() == null) {
+				mensagem = imagemDao.atualizar(usuario.getImagem());
+				if(mensagem.getMensagemStatus() == MensagemStatus.ERRO)
+					return mensagem;
+			}
 			
 			mensagem = new Mensagem();
 			pstm = conexao.prepareStatement(sql);
@@ -70,10 +72,17 @@ public class UsuarioDao implements IDao{
 				+ "usu_id, "
 				+ "usu_senha, "
 				+ "usu_email, "
-				+ "usu_ima_id "
+				+ "usu_ima_id,"
+				+ "usu_admin "
 				+ " FROM tb_usuario WHERE usu_ativo = 1 ";
 		if(usuario.getId() != null) {
-			sql += "AND usu_id = " + usuario.getId();
+			sql += " AND usu_id = " + usuario.getId();
+		}
+		if(usuario.getEmail() != null) {
+			sql += " AND usu_email = '" + usuario.getEmail() + "' ";
+		}
+		if(usuario.getSenha() != null) {
+			sql += " AND usu_senha = '" + usuario.getSenha() + "' ";
 		}
 				
 		try {
@@ -90,6 +99,7 @@ public class UsuarioDao implements IDao{
 				u.setId(Long.parseLong(rs.getString("usu_id")));
 				u.setEmail(rs.getString("usu_email"));
 				u.setSenha(rs.getString("usu_senha"));
+				u.setAdmin(rs.getString("usu_admin").equals("1") ? true : false);
 				i.setId(Long.parseLong(rs.getString("usu_ima_id")));
 				u.setImagem((Imagem)imagemDao.consultar(i).get(0));
 				
@@ -111,7 +121,7 @@ public class UsuarioDao implements IDao{
 		mensagem = new Mensagem();
 		String sql = "UPDATE tb_usuario SET "
 				+ "usu_ativo = false"
-				+ " WHERE usu_id = " + usuario.getId() + "";
+				+ " WHERE usu_id = " + usuario.getId() + " AND usu_id != 1 ";
 		
 		PreparedStatement pstm = null;
 		
@@ -144,10 +154,11 @@ public class UsuarioDao implements IDao{
 				+ "usu_email, "
 				+ "usu_senha, "
 				+ "usu_ima_id, "
+				+ "usu_admin, "
 				+ "usu_ativo, "
 				+ "usu_dataHoraCriacao"
 				+ ") "
-				+ " VALUES ( ?, ?, ?, true, NOW())";
+				+ " VALUES ( ?, ?, ?, ?, true, NOW())";
 		
 		PreparedStatement pstm = null;
 		
@@ -157,7 +168,8 @@ public class UsuarioDao implements IDao{
 			pstm = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			pstm.setString(1, usuario.getEmail());
 			pstm.setString(2, usuario.getSenha());
-			pstm.setInt(3, Integer.parseInt(idImagem));
+			pstm.setBoolean(3, usuario.isAdmin());
+			pstm.setInt(4, Integer.parseInt(idImagem));
 			pstm.executeUpdate();
 			
 			rs = pstm.getGeneratedKeys();

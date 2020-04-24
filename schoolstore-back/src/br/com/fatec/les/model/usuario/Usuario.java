@@ -8,6 +8,7 @@ public class Usuario extends EntidadeDominio{
 	private String email;
 	private String senha;
 	private Imagem imagem;
+	private boolean admin;
 	
 	public String getEmail() {
 		return email;
@@ -17,6 +18,12 @@ public class Usuario extends EntidadeDominio{
 	}
 	public String getSenha() {
 		return senha;
+	}
+	public boolean isAdmin() {
+		return admin;
+	}
+	public void setAdmin(boolean admin) {
+		this.admin = admin;
 	}
 	public void setSenha(String senha) {
 		this.senha = senha;

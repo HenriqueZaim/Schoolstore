@@ -36,10 +36,14 @@ public class ImagemVH implements IViewHelper{
 				case "data:image/png;base64":
 	              extension = "png";
 	              break;
+				case "data:image/svg;base64":
+					extension = "svg";
+		            break;
 				default:
 	              extension = "jpg";
 	              break;
 			}
+			// TODO: rever quando chegar em produto
 			String nomeImagem = request.getParameter("txtNumeroDocumento") + "." + extension;
 			byte[] data = DatatypeConverter.parseBase64Binary(strings[1]);
 			String path = "/home/henrique/Documentos/git/les-project/schoolstore-back/WebContent/img/" + nomeImagem;
@@ -53,7 +57,8 @@ public class ImagemVH implements IViewHelper{
 			}
 			
 			imagem.setFoto(nomeImagem);
-			imagem.setDescricao(nomeImagem);
+			imagem.setDescricao("Imagem " + nomeImagem);
+			imagem.setCaminho("./img/"+nomeImagem);
 		}
 		
 		return imagem;
