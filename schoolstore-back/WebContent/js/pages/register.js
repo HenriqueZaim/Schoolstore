@@ -201,7 +201,9 @@ $("#btnSalvarCartao").click(function () {
               </div>
           </div>
 
-          <input type="hidden" name="txtNomeCartao" value="${nome}">
+		  <input type="hidden" name="txtCartaoCreditoId" value="">
+		  <input type="hidden" name="txtCartaoCredito" value="true">
+          <input type="hidden" name="txtNomeImpressoCartao" value="${nome}">
           <input type="hidden" name="txtCodigoCartao" value="${codigo}">
           <input type="hidden" name="txtNumeroCartao" value="${numero}">
           <input type="hidden" name="txtFavoritoCartao" value="${favorito}">

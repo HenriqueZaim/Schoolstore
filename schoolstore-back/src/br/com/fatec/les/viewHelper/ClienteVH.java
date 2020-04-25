@@ -16,6 +16,7 @@ import br.com.fatec.les.facade.Resultado;
 import br.com.fatec.les.model.assets.EntidadeDominio;
 import br.com.fatec.les.model.assets.IDominio;
 import br.com.fatec.les.model.endereco.Endereco;
+import br.com.fatec.les.model.pagamento.cartao.CartaoCredito;
 import br.com.fatec.les.model.usuario.Cliente;
 import br.com.fatec.les.model.usuario.Usuario;
 
@@ -26,6 +27,7 @@ public class ClienteVH implements IViewHelper{
 		Cliente cliente = new Cliente();
 		EnderecoVH enderecoVH = new EnderecoVH();
 		UsuarioVH usuarioVH = new UsuarioVH();
+		CartaoCreditoVH cartaoCreditoVH = new CartaoCreditoVH();
 		
 		String tarefa = request.getParameter("tarefa");
 		
@@ -39,9 +41,14 @@ public class ClienteVH implements IViewHelper{
 		cliente.setNumeroTelefone(request.getParameter("txtNumeroTelefone"));
 		cliente.setUsuario((Usuario)usuarioVH.getEntidade(request));
 		cliente.setEnderecos(enderecoVH.getEntidades(request));
+		cliente.setCartoesCredito(cartaoCreditoVH.getEntidades(request));
 		
 		for(Endereco e : cliente.getEnderecos()) {
 			e.setCliente(cliente);
+		}
+		
+		for(CartaoCredito c : cliente.getCartoesCredito()) {
+			c.setCliente(cliente);
 		}
 
 		return cliente;	

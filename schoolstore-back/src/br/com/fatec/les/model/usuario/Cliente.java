@@ -11,10 +11,10 @@ public class Cliente extends EntidadeNomeada{
 
 	private String numeroTelefone;
 	private String numeroDocumento;
-	private List<Endereco> enderecos;
 	private Carrinho carrinho;
-	private CartaoCredito cartaoCredito;
+	private List<CartaoCredito> cartoesCredito;
 	private List<Pedido> pedidos;
+	private List<Endereco> enderecos;
 	
 	public Carrinho getCarrinho() {
 		return carrinho;
@@ -22,11 +22,12 @@ public class Cliente extends EntidadeNomeada{
 	public void setCarrinho(Carrinho carrinho) {
 		this.carrinho = carrinho;
 	}
-	public CartaoCredito getCartaoCredito() {
-		return cartaoCredito;
+
+	public List<CartaoCredito> getCartoesCredito() {
+		return cartoesCredito;
 	}
-	public void setCartaoCredito(CartaoCredito cartaoCredito) {
-		this.cartaoCredito = cartaoCredito;
+	public void setCartoesCredito(List<CartaoCredito> cartoesCredito) {
+		this.cartoesCredito = cartoesCredito;
 	}
 	public List<Pedido> getPedidos() {
 		return pedidos;

@@ -52,7 +52,7 @@ public class EnderecoDao implements IDao{
 		PreparedStatement pstm = null;
 		
 		try {
-			pstm = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			pstm = conexao.prepareStatement(sql);
 			pstm.setString(1, endereco.getLogradouro());
 			pstm.setString(2, endereco.getBairro());
 			pstm.setString(3, endereco.getCep());
@@ -64,13 +64,10 @@ public class EnderecoDao implements IDao{
 			pstm.setLong(9, endereco.getCliente().getId());
 			pstm.setString(10, endereco.getNome());
 			pstm.executeUpdate();
-			
-			rs = pstm.getGeneratedKeys();
-			if (rs.next()){
-				mensagem.setMensagem(Integer.toString(rs.getInt(1)));
-				mensagem.setMensagemStatus(MensagemStatus.OPERACAO);
-				return mensagem;
-			}
+
+			mensagem.setMensagem("Operação realizada com sucesso!");
+			mensagem.setMensagemStatus(MensagemStatus.OPERACAO);
+			return mensagem;
 
 		}catch(SQLException e){
 			mensagem.setMensagem("Ocorreu um erro durante a operação. Tente novamente ou consulte a equipe de desenvolvimento.");

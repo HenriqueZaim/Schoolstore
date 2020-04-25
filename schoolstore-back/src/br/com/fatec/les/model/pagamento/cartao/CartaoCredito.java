@@ -1,6 +1,7 @@
 package br.com.fatec.les.model.pagamento.cartao;
 
 import br.com.fatec.les.model.assets.EntidadeDominio;
+import br.com.fatec.les.model.usuario.Cliente;
 
 public class CartaoCredito extends EntidadeDominio{
 
@@ -8,7 +9,14 @@ public class CartaoCredito extends EntidadeDominio{
 	private String codigo;
 	private String nomeImpresso;
 	private boolean favorito;
+	private Cliente cliente;
 	
+	public Cliente getCliente() {
+		return cliente;
+	}
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
 	public String getNumero() {
 		return numero;
 	}

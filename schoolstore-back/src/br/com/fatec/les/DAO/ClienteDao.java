@@ -14,6 +14,7 @@ import br.com.fatec.les.facade.MensagemStatus;
 import br.com.fatec.les.model.assets.EntidadeDominio;
 import br.com.fatec.les.model.assets.IDominio;
 import br.com.fatec.les.model.endereco.Endereco;
+import br.com.fatec.les.model.pagamento.cartao.CartaoCredito;
 import br.com.fatec.les.model.usuario.Cliente;
 import br.com.fatec.les.model.usuario.Usuario;
 
@@ -23,6 +24,7 @@ public class ClienteDao implements IDao{
 	private Mensagem mensagem;
 	EnderecoDao enderecoDao = new EnderecoDao();
 	UsuarioDao usuarioDao = new UsuarioDao();
+	CartaoCreditoDao cartaoCreditoDao = new CartaoCreditoDao();
 	
 	public ClienteDao() {
 		conexao = ConexaoFactory.getConnection();
@@ -31,6 +33,7 @@ public class ClienteDao implements IDao{
 	@Override
 	public Mensagem salvar(EntidadeDominio entidadeDominio) throws SQLException {
 		Cliente cliente = (Cliente) entidadeDominio;
+		Cliente aux = new Cliente();
 		mensagem = new Mensagem();
 		ResultSet rs;
 		
@@ -60,11 +63,15 @@ public class ClienteDao implements IDao{
 			rs = pstm.getGeneratedKeys();
 			if (rs.next()){
 				String idCliente = Integer.toString(rs.getInt(1));
+				aux = new Cliente();
+				aux.setId(Long.parseLong(idCliente));
 				for(Endereco e : cliente.getEnderecos()) {
-					cliente = new Cliente();
-					cliente.setId(Long.parseLong(idCliente));
-					e.setCliente(cliente);
+					e.setCliente(aux);
 					enderecoDao.salvar(e);
+				}
+				for(CartaoCredito c : cliente.getCartoesCredito()) {
+					c.setCliente(aux);
+					cartaoCreditoDao.salvar(c);
 				}
 			}
 			
@@ -85,7 +92,9 @@ public class ClienteDao implements IDao{
 		Cliente cliente  = (Cliente) entidadeDominio;
 		mensagem = new Mensagem();
 		Endereco endereco = new Endereco();
+		CartaoCredito cartaoCredito = new CartaoCredito();
 		endereco.setCliente(cliente);
+		cartaoCredito.setCliente(cliente);
 		
 		String sql = "UPDATE tb_cliente SET "
 				+ "cli_ativo = false"
@@ -96,11 +105,9 @@ public class ClienteDao implements IDao{
 		try {
 			pstm = conexao.prepareStatement(sql);
 
-			if(enderecoDao.deletar(endereco) == null)
-				return null;
-
-			if(usuarioDao.deletar(cliente.getUsuario()) == null)
-				return null;
+			enderecoDao.deletar(endereco);
+			cartaoCreditoDao.deletar(cartaoCredito);
+			usuarioDao.deletar(cliente.getUsuario());
 			
 			pstm.executeUpdate();
 			mensagem.setMensagem("Cliente deletado com sucesso!");
@@ -140,6 +147,38 @@ public class ClienteDao implements IDao{
 			mensagem = usuarioDao.atualizar(cliente.getUsuario());
 			if(mensagem.getMensagemStatus() == MensagemStatus.ERRO)
 				return mensagem;
+			
+			List<EntidadeDominio> cartoesBanco = new ArrayList<EntidadeDominio>();
+			CartaoCredito cartaoCredito = new CartaoCredito();
+			cartaoCredito.setCliente(cliente);
+			
+			cartoesBanco.addAll(cartaoCreditoDao.consultar(cartaoCredito));
+			
+			// Adiciona os novos endereços
+			for(CartaoCredito c : cliente.getCartoesCredito()) {
+				if(c.getId() == null) {
+					cartaoCreditoDao.salvar(c);
+				}
+			}
+
+			// Remove do banco os que não existem mais					
+			for(EntidadeDominio entidade : cartoesBanco) {
+				entidade = (CartaoCredito) entidade;
+				boolean flag = false;
+				for(CartaoCredito c : cliente.getCartoesCredito()) {
+					if(c.getId() != null) {
+						if(c.getId() == entidade.getId()) {
+							flag = true;
+							break;
+						}else {
+							continue;
+						}
+					}
+				}
+				if(!flag) {
+					enderecoDao.deletar(entidade);
+				}
+			}
 			
 			List<EntidadeDominio> enderecosBanco = new ArrayList<EntidadeDominio>();
 			Endereco endereco = new Endereco();
@@ -194,7 +233,10 @@ public class ClienteDao implements IDao{
 
 		List<EntidadeDominio> clientesEntidade = new ArrayList<EntidadeDominio>();
 		List<EntidadeDominio> enderecosEntidade = new ArrayList<EntidadeDominio>();
+		List<EntidadeDominio> cartoesEntidade = new ArrayList<EntidadeDominio>();
+
 		List<Endereco> enderecos = new ArrayList<Endereco>();
+		List<CartaoCredito> cartoes = new ArrayList<CartaoCredito>();
 		
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
@@ -217,30 +259,39 @@ public class ClienteDao implements IDao{
 			Usuario u = new Usuario();
 			Cliente c = new Cliente();
 			Endereco e = new Endereco();
+			CartaoCredito ccr = new CartaoCredito();
 
 			while(rs.next()) {
 				c = new Cliente();
 				u = new Usuario();
 				e = new Endereco();
+				ccr = new CartaoCredito();
 				
 				enderecosEntidade = new ArrayList<EntidadeDominio>();
+				cartoesEntidade = new ArrayList<EntidadeDominio>();
 				enderecos = new ArrayList<Endereco>();
+				cartoes = new ArrayList<CartaoCredito>();
 				
 				c.setId(Long.parseLong(rs.getString("cli_id")));
 				c.setNome(rs.getString("cli_nome"));
 				c.setNumeroTelefone(rs.getString("cli_numeroTelefone"));
 				c.setNumeroDocumento(rs.getString("cli_numeroDocumento"));
 				
-				u.setId(Long.parseLong(rs.getString("cli_usu_id")));
-				
 				e.setCliente(c);
 				enderecosEntidade.addAll(enderecoDao.consultar(e));
 				for(EntidadeDominio endereco : enderecosEntidade) {
 					enderecos.add((Endereco)endereco);
 				}
-
+				ccr.setCliente(c);
+				cartoesEntidade.addAll(cartaoCreditoDao.consultar(ccr));
+				for(EntidadeDominio cartao : cartoesEntidade) {
+					cartoes.add((CartaoCredito)cartao);
+				}
+				
+				u.setId(Long.parseLong(rs.getString("cli_usu_id")));
 				c.setUsuario((Usuario)usuarioDao.consultar(u).get(0));
 				c.setEnderecos(enderecos);
+				c.setCartoesCredito(cartoes);
 
 				clientesEntidade.add(c);
 			}
