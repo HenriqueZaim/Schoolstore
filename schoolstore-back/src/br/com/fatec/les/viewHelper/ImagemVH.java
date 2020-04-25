@@ -36,7 +36,7 @@ public class ImagemVH implements IViewHelper{
 				case "data:image/png;base64":
 	              extension = "png";
 	              break;
-				case "data:image/svg;base64":
+				case "data:image/svg+xml;base64":
 					extension = "svg";
 		            break;
 				default:

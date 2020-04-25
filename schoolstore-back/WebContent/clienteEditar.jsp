@@ -70,9 +70,19 @@
 			<hr>
 			<section>
 				<form id="clienteFormulario" method="post" action="app">
-					<input name="txtClienteId" type="hidden" value="${cliente.getId()}">
-					<input name="txtUsuarioId" type="hidden"
-						value="${cliente.getUsuario().getId()}">
+					<input name="txtClienteId" type="hidden" value="${cliente.getId()}"> 
+					<input name="txtUsuarioId" type="hidden" value="${cliente.getUsuario().getId()}"> 
+					<input
+						name="txtImagemId" type="hidden"
+						value="${cliente.getUsuario().getImagem().getId()}">
+
+					<div class="row justify-content-center">
+						<div class="col-md-4 mb-3 md-form">
+							 <img
+								src="${cliente.getUsuario().getImagem().getCaminho()}"
+								class="img-fluid rounded">
+						</div>
+					</div>
 
 					<div class="row justify-content-center">
 						<div class="col-md-10">
@@ -83,16 +93,12 @@
 										type="text" class="form-control" value="${cliente.getNome()}"
 										id="txtNome" name="txtNome" required maxlength="100"
 										minlength="3">
-									<div class="valid-feedback">Bonito nome!</div>
-									<div class="invalid-feedback">Campo inválido</div>
 								</div>
 								<div class="col mb-3 md-form">
 									<label for="txtEmail" class="active">E-mail*</label> <input
 										type="email" class="form-control" id="txtEmail"
 										value="${cliente.getUsuario().getEmail()}" name="txtEmail"
 										required maxlength="100">
-									<div class="valid-feedback">E-mail válido!</div>
-									<div class="invalid-feedback">Campo inválido</div>
 								</div>
 							</div>
 							<div class="form-row">
@@ -102,8 +108,6 @@
 										value="${cliente.getNumeroDocumento()}"
 										name="txtNumeroDocumento" id="txtNumeroDocumento" required
 										maxlength="14">
-									<div class="valid-feedback">Documento válido!</div>
-									<div class="invalid-feedback">Campo inválido</div>
 								</div>
 								<div class="col mb-3 md-form">
 									<label for="txtNumeroTelefone" class="active">Número de
@@ -111,28 +115,20 @@
 										value="${cliente.getNumeroTelefone()}"
 										name="txtNumeroTelefone" id="txtNumeroTelefone" required
 										maxlength="12">
-									<div class="valid-feedback">Número de telefone válido!</div>
-									<div class="invalid-feedback">Campo inválido</div>
 								</div>
 							</div>
-							<div class="form-row">
-								<div class="col mb-3 md-form">
-									<input name="txtImagemId" type="hidden"
-										value="${cliente.getUsuario().getImagem().getId()}"> <img
-										src="${cliente.getUsuario().getImagem().getCaminho()}"
-										class="img-fluid">
-								</div>
-							</div>
-							<div class="file-field md-form">
-								<div class="btn btn-primary btn-sm float-left">
-									<span>Procurar</span> <input type="file" id="file">
-								</div>
-								<div class="file-path-wrapper">
-									<input class="file-path validate" type="text"
-										placeholder="Escolha uma imagem de perfil"> <input
-										type="hidden" id="base64" name="txtFile">
-								</div>
-							</div>
+
+									<div class="file-field md-form">
+										<div class="btn btn-primary btn-sm float-left">
+											<span>Procurar</span> <input type="file" id="file">
+										</div>
+										<div class="file-path-wrapper">
+											<input class="file-path validate" type="text"
+												placeholder="Altere sua imagem de perfil"> <input
+												type="hidden" id="base64" name="txtFile">
+										</div>
+									</div>
+							
 						</div>
 					</div>
 

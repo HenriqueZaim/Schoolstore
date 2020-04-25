@@ -168,8 +168,8 @@ public class UsuarioDao implements IDao{
 			pstm = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			pstm.setString(1, usuario.getEmail());
 			pstm.setString(2, usuario.getSenha());
-			pstm.setBoolean(3, usuario.isAdmin());
-			pstm.setInt(4, Integer.parseInt(idImagem));
+			pstm.setInt(3, Integer.parseInt(idImagem));
+			pstm.setBoolean(4, usuario.isAdmin());
 			pstm.executeUpdate();
 			
 			rs = pstm.getGeneratedKeys();
