@@ -165,18 +165,20 @@
 	                        <i class="fa fa-table mr-3"></i>Meu Perfil</a>
 	                </div>
 	            </c:if>
-                <c:if test="${usuario.isAdmin()}">
+                 <c:if test="${usuario.isAdmin()}">
 	                <div class="list-group list-group-flush mt-5">
-		                <a href="cart.html" class="list-group-item active list-group-item-action waves-effect">
-		                    <i class="fas fa-cart-arrow-down mr-3"></i>Menu Principal</a>
-	                    <a href="productnew.html" class="list-group-item list-group-item-action waves-effect">
-	                        <i class="fas fa-cart-arrow-down mr-3"></i>Cadastrar Produto</a>
+		                <a href="clienteMenu.jsp" class="list-group-item active list-group-item-action waves-effect">
+		                    <i class="fas fa-th-list mr-3"></i>Menu Principal</a>
+	                    <a href="clienteLista.jsp" class="list-group-item  list-group-item-action waves-effect">
+	                        <i class="fas fa-users mr-3"></i>Lista de Clientes</a>
 	                    <a href="productslist.html" class="list-group-item list-group-item-action waves-effect">
-	                        <i class="fa fa-user mr-3"></i>Lista de Produtos</a>
+	                        <i class="fas fa-box-open mr-3"></i>Lista de Produtos</a>
 	                    <a href="requestlist.html" class="list-group-item list-group-item-action waves-effect">
-	                        <i class="fa fa-user mr-3"></i>Lista de Pedidos</a> 
+	                        <i class="fas fa-exchange-alt mr-3"></i>Lista de Pedidos</a> 
+	                    <a href="requestlist.html" class="list-group-item list-group-item-action waves-effect">
+	                        <i class="fas fa-ticket-alt mr-3"></i>Lista de Cupons</a> 
 	                    <a href="relatorios.html" class="list-group-item list-group-item-action waves-effect">
-	                        <i class="fa fa-table mr-3"></i>Relatórios</a>   
+	                        <i class="fas fa-chart-line mr-3"></i>Relatórios</a>   
 	                </div>
 	            </c:if>
             </div>

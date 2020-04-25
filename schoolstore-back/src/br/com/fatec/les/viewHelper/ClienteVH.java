@@ -106,7 +106,7 @@ public class ClienteVH implements IViewHelper{
 					forward(request, response);
 				}
 			}else {
-				request.getRequestDispatcher("clienteMenu.jsp").
+				request.getRequestDispatcher("usuarioLogin.jsp").
 				forward(request, response);
 			}
 		}

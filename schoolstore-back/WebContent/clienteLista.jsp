@@ -125,19 +125,20 @@
 						<ul
 							class="navbar-nav ml-auto nav-flex-icons align-items-center flex-row-reverse flex-md-row justify-content-between">
 
-							<li class="nav-item avatar dropdown"><a
-								class="nav-link dropdown-toggle waves-effect waves-light"
-								id="navbarDropdownMenuLink-5" data-toggle="dropdown"
-								aria-haspopup="true" aria-expanded="false"> <img
-									src="https://mdbootstrap.com/img/Photos/Avatars/avatar-2.jpg"
-									class="rounded-circle z-depth-0" height="35px"
-									alt="avatar image">
-							</a>
-								<div
-									class="dropdown-menu dropdown-menu-lg-right py-0 dropdown-secondary"
-									aria-labelledby="navbarDropdownMenuLink-5">
-									<a class="dropdown-item waves-effect waves-light" href="#">Sair</a>
-								</div></li>
+							<li class="nav-item avatar dropdown">
+                                <a class="nav-link dropdown-toggle waves-effect waves-light"
+                                    id="navbarDropdownMenuLink-5" data-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false">
+                                    <img src="${usuario.getImagem().getCaminho() }"
+                                        class="rounded-circle z-depth-0" height="35px" alt="avatar image">
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-lg-right py-0 dropdown-default"
+                                    aria-labelledby="navbarDropdownMenuLink-5">
+                                    <form action="logout" method="POST">
+                                    	<button type="submit" class="dropdown-item waves-effect waves-light">Sair</button>
+                                    </form>
+                                </div>
+                            </li>
 						</ul>
 
 					</div>
@@ -150,37 +151,34 @@
 					class="blue-text h1 m-2">SchoolStore</strong>
 				</a>
 
-				<div class="list-group list-group-flush mt-5">
-					<a href="cart.html"
-						class="list-group-item  list-group-item-action waves-effect">
-
-						<i class="fas fa-cart-arrow-down mr-3"></i>Meu Carrinho
-					</a> <a href="request.html"
-						class="list-group-item  list-group-item-action waves-effect">
-						<i class="fa fa-user mr-3"></i>Meu Pedidos
-					</a> <a href="profile.html"
-						class="list-group-item list-group-item-action waves-effect"> <i
-						class="fa fa-table mr-3"></i>Meu Perfil
-					</a>
-				</div>
-				<div class="list-group list-group-flush mt-5 pt-5">
-					<a href="productnew.html"
-						class="list-group-item list-group-item-action waves-effect"> <i
-						class="fas fa-cart-arrow-down mr-3"></i>Cadastrar Produto
-					</a> <a href="productslist.html"
-						class="list-group-item list-group-item-action waves-effect"> <i
-						class="fa fa-user mr-3"></i>Lista de Produtos
-					</a> <a href="productslist.html"
-						class="list-group-item active list-group-item-action waves-effect">
-						<i class="fa fa-user mr-3"></i>Lista de Clientes
-					</a> <a href="requestlist.html"
-						class="list-group-item  list-group-item-action waves-effect">
-						<i class="fa fa-user mr-3"></i>Lista de Pedidos
-					</a> <a href="relatorios.html"
-						class="list-group-item list-group-item-action waves-effect"> <i
-						class="fa fa-table mr-3"></i>Relatórios
-					</a>
-				</div>
+				<c:if test="${!usuario.isAdmin()}">
+	                <div class="list-group list-group-flush mt-5">
+	                    <a href="cart.html" class="list-group-item active list-group-item-action waves-effect">
+	                      <i class="fas fa-cart-arrow-down mr-3"></i>Menu Principal</a>
+	                    <a href="cart.html" class="list-group-item  list-group-item-action waves-effect">
+	                        <i class="fas fa-cart-arrow-down mr-3"></i>Meu Carrinho</a>
+	                    <a href="request.html" class="list-group-item  list-group-item-action waves-effect">
+	                        <i class="fa fa-user mr-3"></i>Meu Pedidos</a>
+	                    <a href="profile.html" class="list-group-item list-group-item-action waves-effect">
+	                        <i class="fa fa-table mr-3"></i>Meu Perfil</a>
+	                </div>
+	            </c:if>
+                <c:if test="${usuario.isAdmin()}">
+	                <div class="list-group list-group-flush mt-5">
+		                <a href="clienteMenu.jsp" class="list-group-item list-group-item-action waves-effect">
+		                    <i class="fas fa-th-list mr-3"></i>Menu Principal</a>
+	                    <a href="clienteLista.jsp" class="list-group-item active list-group-item-action waves-effect">
+	                        <i class="fas fa-users mr-3"></i>Lista de Clientes</a>
+	                    <a href="productslist.html" class="list-group-item list-group-item-action waves-effect">
+	                        <i class="fas fa-box-open mr-3"></i>Lista de Produtos</a>
+	                    <a href="requestlist.html" class="list-group-item list-group-item-action waves-effect">
+	                        <i class="fas fa-exchange-alt mr-3"></i>Lista de Pedidos</a> 
+	                    <a href="requestlist.html" class="list-group-item list-group-item-action waves-effect">
+	                        <i class="fas fa-ticket-alt mr-3"></i>Lista de Cupons</a> 
+	                    <a href="relatorios.html" class="list-group-item list-group-item-action waves-effect">
+	                        <i class="fas fa-chart-line mr-3"></i>Relatórios</a>   
+	                </div>
+	            </c:if>
 
 
 			</div>
@@ -222,6 +220,7 @@
 										<th>Nome</th>
 										<th>Telefone</th>
 										<th>Endereços</th>
+										<th>Cartões</th>
 										<th colspan="2">Ação</th>
 									</tr>
 								</thead>
@@ -236,8 +235,14 @@
 				</div>
 				<div class="col-lg-4">
 					<div class="card mb-4 wow fadeIn px-2 py-3">
-						<h3>Endereço</h3>
+						<h3 class="text-center">Endereço</h3>
 						<section class="dark-grey-text px-3 py-2" id="painelEndereco">
+
+						</section>
+					</div>
+					<div class="card mb-4 wow fadeIn px-2 py-3">
+						<h3 class="text-center">Cartão de Crédito</h3>
+						<section class="dark-grey-text px-3 py-2" id="painelCartao">
 
 						</section>
 					</div>

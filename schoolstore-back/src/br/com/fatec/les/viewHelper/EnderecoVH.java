@@ -18,7 +18,6 @@ public class EnderecoVH implements IViewHelper{
 		CidadeVH cidadeVH = new CidadeVH();
 		Endereco endereco = new Endereco();
 		String tarefa = request.getParameter("tarefa");
-		
 		if(request.getParameterValues("txtEndereco") == null) {
 			return enderecos;
 		}else {

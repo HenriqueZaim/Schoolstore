@@ -51,7 +51,11 @@ public class ClienteDao implements IDao{
 		PreparedStatement pstm = null;
 		
 		try {
-			String idUsuario = usuarioDao.salvar(cliente.getUsuario()).getMensagem();
+			mensagem = usuarioDao.salvar(cliente.getUsuario());
+			if(mensagem.getMensagemStatus() == MensagemStatus.ERRO) {
+				throw new SQLException();
+			}
+			String idUsuario = mensagem.getMensagem();
 			
 			pstm = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			pstm.setString(1, cliente.getNome());
@@ -67,14 +71,21 @@ public class ClienteDao implements IDao{
 				aux.setId(Long.parseLong(idCliente));
 				for(Endereco e : cliente.getEnderecos()) {
 					e.setCliente(aux);
-					enderecoDao.salvar(e);
+					if(enderecoDao.salvar(e).getMensagemStatus() == MensagemStatus.ERRO) {
+						throw new SQLException();
+					}
 				}
-				for(CartaoCredito c : cliente.getCartoesCredito()) {
-					c.setCliente(aux);
-					cartaoCreditoDao.salvar(c);
+				if(!cliente.getCartoesCredito().isEmpty()) {
+					for(CartaoCredito c : cliente.getCartoesCredito()) {
+						c.setCliente(aux);
+						if(cartaoCreditoDao.salvar(c).getMensagemStatus() == MensagemStatus.ERRO) {
+							throw new SQLException();
+						}
+					}
 				}
 			}
 			
+			mensagem = new Mensagem();
 			mensagem.setMensagem("Cliente cadastrado com sucesso!");
 			mensagem.setMensagemStatus(MensagemStatus.SUCESSO);
 		}catch(SQLException e){
@@ -105,10 +116,12 @@ public class ClienteDao implements IDao{
 		try {
 			pstm = conexao.prepareStatement(sql);
 
-			enderecoDao.deletar(endereco);
-			cartaoCreditoDao.deletar(cartaoCredito);
-			usuarioDao.deletar(cliente.getUsuario());
-			
+			if(enderecoDao.deletar(endereco).getMensagemStatus() == MensagemStatus.ERRO || 
+					cartaoCreditoDao.deletar(cartaoCredito).getMensagemStatus() == MensagemStatus.ERRO ||
+					usuarioDao.deletar(cliente.getUsuario()).getMensagemStatus() == MensagemStatus.ERRO) {
+				throw new SQLException();
+			}
+
 			pstm.executeUpdate();
 			mensagem.setMensagem("Cliente deletado com sucesso!");
 			mensagem.setMensagemStatus(MensagemStatus.SUCESSO);
@@ -144,9 +157,8 @@ public class ClienteDao implements IDao{
 			pstm.setString(3, cliente.getNumeroDocumento());
 			pstm.setLong(4, cliente.getId());
 			
-			mensagem = usuarioDao.atualizar(cliente.getUsuario());
-			if(mensagem.getMensagemStatus() == MensagemStatus.ERRO)
-				return mensagem;
+			if(usuarioDao.atualizar(cliente.getUsuario()).getMensagemStatus() == MensagemStatus.ERRO)
+				throw new SQLException();
 			
 			List<EntidadeDominio> cartoesBanco = new ArrayList<EntidadeDominio>();
 			CartaoCredito cartaoCredito = new CartaoCredito();
@@ -155,28 +167,35 @@ public class ClienteDao implements IDao{
 			cartoesBanco.addAll(cartaoCreditoDao.consultar(cartaoCredito));
 			
 			// Adiciona os novos endereços
-			for(CartaoCredito c : cliente.getCartoesCredito()) {
-				if(c.getId() == null) {
-					cartaoCreditoDao.salvar(c);
+			if(!cliente.getCartoesCredito().isEmpty()) {
+				for(CartaoCredito c : cliente.getCartoesCredito()) {
+					if(c.getId() == null) {
+						if(cartaoCreditoDao.salvar(c).getMensagemStatus() == MensagemStatus.ERRO)
+							throw new SQLException();
+					}
 				}
 			}
 
-			// Remove do banco os que não existem mais					
-			for(EntidadeDominio entidade : cartoesBanco) {
-				entidade = (CartaoCredito) entidade;
-				boolean flag = false;
-				for(CartaoCredito c : cliente.getCartoesCredito()) {
-					if(c.getId() != null) {
-						if(c.getId() == entidade.getId()) {
-							flag = true;
-							break;
-						}else {
-							continue;
+			if(!cartoesBanco.isEmpty()) {
+				for(EntidadeDominio entidade : cartoesBanco) {
+					entidade = (CartaoCredito) entidade;
+					boolean flag = false;
+					if(!cliente.getCartoesCredito().isEmpty()) {
+						for(CartaoCredito c : cliente.getCartoesCredito()) {
+							if(c.getId() != null) {
+								if(c.getId() == entidade.getId()) {
+									flag = true;
+									break;
+								}else {
+									continue;
+								}
+							}
 						}
 					}
-				}
-				if(!flag) {
-					enderecoDao.deletar(entidade);
+					if(!flag) {
+						if(enderecoDao.deletar(entidade).getMensagemStatus() == MensagemStatus.ERRO)
+							throw new SQLException();
+					}
 				}
 			}
 			
@@ -189,7 +208,8 @@ public class ClienteDao implements IDao{
 			// Adiciona os novos endereços
 			for(Endereco e : cliente.getEnderecos()) {
 				if(e.getId() == null) {
-					enderecoDao.salvar(e);
+					if(enderecoDao.salvar(e).getMensagemStatus() == MensagemStatus.ERRO)
+						throw new SQLException();
 				}
 			}
 			
@@ -208,7 +228,8 @@ public class ClienteDao implements IDao{
 					}
 				}
 				if(!flag) {
-					enderecoDao.deletar(entidade);
+					if(enderecoDao.deletar(entidade).getMensagemStatus() == MensagemStatus.ERRO)
+						throw new SQLException();
 				}
 			}
 			
@@ -284,8 +305,10 @@ public class ClienteDao implements IDao{
 				}
 				ccr.setCliente(c);
 				cartoesEntidade.addAll(cartaoCreditoDao.consultar(ccr));
-				for(EntidadeDominio cartao : cartoesEntidade) {
-					cartoes.add((CartaoCredito)cartao);
+				if(!cartoesEntidade.isEmpty()) {
+					for(EntidadeDominio cartao : cartoesEntidade) {
+						cartoes.add((CartaoCredito)cartao);
+					}
 				}
 				
 				u.setId(Long.parseLong(rs.getString("cli_usu_id")));

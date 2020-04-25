@@ -32,12 +32,13 @@ public class CartaoCreditoDao implements IDao{
 				+ "("
 				+ "ccr_numero, "
 				+ "ccr_nomeImpresso, "
-				+ "ccr_favorito,"
-				+ "ccr_cli_id,"
-				+ "ccr_ativo,"
+				+ "ccr_favorito, "
+				+ "ccr_cli_id, "
+				+ "ccr_codigo, "
+				+ "ccr_ativo, "
 				+ "ccr_dataHoraCriacao "
 				+ ") "
-				+ " VALUES ( ?, ?, ?, ?, true, NOW())";
+				+ " VALUES ( ?, ?, ?, ?, ?, true, NOW())";
 		
 		PreparedStatement pstm = null;
 		
@@ -47,6 +48,7 @@ public class CartaoCreditoDao implements IDao{
 			pstm.setString(2, cartaoCredito.getNomeImpresso());
 			pstm.setBoolean(3, cartaoCredito.isFavorito());
 			pstm.setLong(4, cartaoCredito.getCliente().getId());
+			pstm.setString(5, cartaoCredito.getCodigo());
 			pstm.executeUpdate();
 
 			mensagem.setMensagem("Operação realizada com sucesso!");
@@ -70,9 +72,9 @@ public class CartaoCreditoDao implements IDao{
 				+ "ccr_ativo = false"
 				+ " WHERE ";
 		if(cartaoCredito.getId() != null ) {
-			sql += "end_id = " + cartaoCredito.getId() + "";
+			sql += "ccr_id = " + cartaoCredito.getId() + "";
 		}else {
-			sql += "end_cli_id = " + cartaoCredito.getCliente().getId() + "";
+			sql += "ccr_cli_id = " + cartaoCredito.getCliente().getId() + "";
 		}
 		
 		PreparedStatement pstm = null;
@@ -131,13 +133,11 @@ public class CartaoCreditoDao implements IDao{
 				cartaoCredito = new CartaoCredito();
 				cliente = new Cliente();
 
-				
-				
 				cartaoCredito.setId(Long.parseLong(rs.getString("ccr_id")));
 				cartaoCredito.setCodigo(rs.getString("ccr_codigo"));
 				cartaoCredito.setNomeImpresso(rs.getString("ccr_nomeImpresso"));
 				cartaoCredito.setNumero(rs.getString("ccr_numero"));
-				cartaoCredito.setFavorito(rs.getString("end_favorito").equals("1") ? true : false);
+				cartaoCredito.setFavorito(rs.getString("ccr_favorito").equals("1") ? true : false);
 				cliente.setId(Long.parseLong(rs.getString("ccr_cli_id")));
 				cartaoCredito.setCliente(cliente);
 				
