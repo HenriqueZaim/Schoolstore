@@ -51,7 +51,7 @@
 				</ul>
 
 				<c:choose>
-					<c:when test="${!usuario.isAdmin()}">
+					<c:when test="${usuario == null}">
 						<ul
 							class="navbar-nav ml-auto nav-flex-icons align-items-center flex-row-reverse flex-md-row justify-content-between">
 							<li class="nav-item pr-0 pr-lg-3"><a href="usuarioLogin.jsp"
@@ -77,6 +77,17 @@
 								<div
 									class="dropdown-menu dropdown-menu-lg-right py-0 dropdown-default"
 									aria-labelledby="navbarDropdownMenuLink-5">
+									<c:if test="${cliente != null}">
+										<form action="app" method="POST">
+											<input type="hidden" name="txtUsuarioId" value="${usuario.getId()}"> 
+											<input type="hidden" name="txtClienteId" value="${cliente.getId()}"> 
+											<input type="hidden" name="txtImagemId" value="${usuario.getImagem().getId()}"> 
+											<input type="hidden" name="tarefa" value="editaCliente">
+											
+											<button type="submit" class="dropdown-item waves-effect waves-light">Meu Perfil</button>
+
+										</form>
+                                    </c:if>
 									<form action="logout" method="POST">
 										<button type="submit"
 											class="dropdown-item waves-effect waves-light">Sair</button>

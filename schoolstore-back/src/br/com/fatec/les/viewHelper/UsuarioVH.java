@@ -1,6 +1,7 @@
 package br.com.fatec.les.viewHelper;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 
+import br.com.fatec.les.DAO.ClienteDao;
 import br.com.fatec.les.facade.Mensagem;
 import br.com.fatec.les.facade.MensagemStatus;
 import br.com.fatec.les.facade.Resultado;
@@ -70,6 +72,18 @@ public class UsuarioVH implements IViewHelper{
 	            session.invalidate();
 	            session = request.getSession();
 	            session.setMaxInactiveInterval(15*60);
+	            
+	            if(!usuario.isAdmin()) {
+	            	try{
+	            		ClienteDao clienteDao = new ClienteDao();
+			            Cliente cliente = new Cliente();
+			            cliente.setUsuario(usuario);
+			            cliente = (Cliente) clienteDao.consultar(cliente).get(0);
+			            session.setAttribute("cliente", cliente);
+	            	}catch(SQLException e) {
+	            		
+	            	}
+	            }
 	            
 	            session.setAttribute("status", "on");
 	            session.setAttribute("usuario", usuario);

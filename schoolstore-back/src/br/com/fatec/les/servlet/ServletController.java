@@ -66,7 +66,6 @@ public class ServletController extends HttpServlet{
         
         try {
         	tarefa = request.getParameter("tarefa");
-
         	Resultado resultado;           
             vhCorrespondente = vhMap.get(tarefa);
             IDominio entidadeCorrespondente = vhCorrespondente.getEntidade(request);

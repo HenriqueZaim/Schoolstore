@@ -1,9 +1,6 @@
 package br.com.fatec.les.DAO;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +14,6 @@ import br.com.fatec.les.model.endereco.Estado;
 public class CidadeDao implements IDao{
 	
 	private Connection conexao = null;
-	
 	
 	public CidadeDao() {
 		conexao = ConexaoFactory.getConnection();
@@ -41,6 +37,7 @@ public class CidadeDao implements IDao{
 	@Override
 	public List<EntidadeDominio> consultar(IDominio entidade) throws SQLException {
 		Cidade cidade = (Cidade) entidade;
+		conexao = ConexaoFactory.getConnection();
 		List<EntidadeDominio> cidades = new ArrayList<EntidadeDominio>();
 		EstadoDao estadoDao = new EstadoDao();
 
@@ -89,9 +86,9 @@ public class CidadeDao implements IDao{
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}
-//		finally {
-//			ConexaoFactory.closeConnection(conexao, pstm, rs);
-//		}
+		finally {
+			ConexaoFactory.closeConnection(conexao, pstm, rs);
+		}
 		
 		return cidades;
 	}

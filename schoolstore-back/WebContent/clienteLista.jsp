@@ -93,9 +93,13 @@
 	<%
         String login = "";
         login = (String) session.getAttribute("status");
+        Usuario usuario = new Usuario();
+        usuario = (Usuario) session.getAttribute("usuario");
         
         if(login == null || login == "off"){
             response.sendRedirect("usuarioLogin.jsp");
+        }else if (!usuario.isAdmin()){
+	        response.sendRedirect("index.jsp");
         }
     %>
 
@@ -116,10 +120,6 @@
 						<ul class="navbar-nav mr-auto">
 							<li class="nav-item"><a class="nav-link waves-effect"
 								href="index.html">Início </a></li>
-							<li class="nav-item"><a class="nav-link waves-effect"
-								href="about.html"> Sobre</a></li>
-							<li class="nav-item"><a class="nav-link waves-effect"
-								href="products.html">Produtos</a></li>
 						</ul>
 
 						<ul
@@ -151,19 +151,6 @@
 					class="blue-text h1 m-2">SchoolStore</strong>
 				</a>
 
-				<c:if test="${!usuario.isAdmin()}">
-	                <div class="list-group list-group-flush mt-5">
-	                    <a href="cart.html" class="list-group-item active list-group-item-action waves-effect">
-	                      <i class="fas fa-cart-arrow-down mr-3"></i>Menu Principal</a>
-	                    <a href="cart.html" class="list-group-item  list-group-item-action waves-effect">
-	                        <i class="fas fa-cart-arrow-down mr-3"></i>Meu Carrinho</a>
-	                    <a href="request.html" class="list-group-item  list-group-item-action waves-effect">
-	                        <i class="fa fa-user mr-3"></i>Meu Pedidos</a>
-	                    <a href="profile.html" class="list-group-item list-group-item-action waves-effect">
-	                        <i class="fa fa-table mr-3"></i>Meu Perfil</a>
-	                </div>
-	            </c:if>
-                <c:if test="${usuario.isAdmin()}">
 	                <div class="list-group list-group-flush mt-5">
 		                <a href="clienteMenu.jsp" class="list-group-item list-group-item-action waves-effect">
 		                    <i class="fas fa-th-list mr-3"></i>Menu Principal</a>
@@ -178,7 +165,6 @@
 	                    <a href="relatorios.html" class="list-group-item list-group-item-action waves-effect">
 	                        <i class="fas fa-chart-line mr-3"></i>Relatórios</a>   
 	                </div>
-	            </c:if>
 
 
 			</div>

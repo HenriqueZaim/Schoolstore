@@ -41,8 +41,8 @@ CREATE TABLE tb_precificacao
 CREATE TABLE tb_carrinho
 (
   car_id INT NOT NULL AUTO_INCREMENT,
-  car_subTotal DECIMAL(6,2) NOT NULL,
-  car_validade DATETIME NOT NULL,
+  car_subTotal DECIMAL(6,2) DEFAULT NULL,
+  car_validade DATETIME DEFAULT NULL,
   car_ativo BOOLEAN NOT NULL,
   car_dataHoraCriacao DATETIME NOT NULL,
   PRIMARY KEY (car_id)
@@ -140,8 +140,8 @@ CREATE TABLE tb_produto
   pro_descricao VARCHAR(400) NOT NULL,
   pro_ativo BOOLEAN NOT NULL,
   pro_dataHoraCriacao DATETIME NOT NULL,
-  pro_ima_id INT NOT NULL,
-  pro_pre_id INT NOT NULL, 
+  pro_ima_id INT DEFAULT NULL,
+  pro_pre_id INT DEFAULT NULL, 
   PRIMARY KEY (pro_id),
   FOREIGN KEY(pro_ima_id) REFERENCES tb_imagem(ima_id),
   FOREIGN KEY(pro_pre_id) REFERENCES tb_precificacao(pre_id)

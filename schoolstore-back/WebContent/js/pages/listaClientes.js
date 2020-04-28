@@ -52,6 +52,7 @@ $(document).ready(function () {
 			                          <input type="hidden" name="txtUsuarioId" value="${data.usuario.id}">
 			                          <input type="hidden" name="txtClienteId" value="${data.id}">
 			                          <input type="hidden" name="txtImagemId" value="${data.usuario.imagem.id}">
+			                          <input type="hidden" name="txtCarrinhoId" value="${data.carrinho.id}">
 			    
 			                          <input type="hidden" name="tarefa" value="deletarCliente">
 			                          <button type="submit"

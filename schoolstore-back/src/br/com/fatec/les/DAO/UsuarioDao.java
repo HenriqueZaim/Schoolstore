@@ -1,10 +1,6 @@
 package br.com.fatec.les.DAO;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +25,7 @@ public class UsuarioDao implements IDao{
 	@Override
 	public Mensagem atualizar(EntidadeDominio entidadeDominio) throws SQLException {
 		Usuario usuario  = (Usuario) entidadeDominio;
+		conexao = ConexaoFactory.getConnection();
 		mensagem = new Mensagem();
 		String sql = "UPDATE tb_usuario SET "
 				+ "usu_email = ? "
@@ -54,9 +51,9 @@ public class UsuarioDao implements IDao{
 			mensagem.setMensagem("Ocorreu um erro durante a operação. Tente novamente ou consulte a equipe de desenvolvimento.");
 			mensagem.setMensagemStatus(MensagemStatus.ERRO);
 		}
-//		finally {
-//			ConexaoFactory.closeConnection(conexao, pstm);
-//		}
+		finally {
+			ConexaoFactory.closeConnection(conexao, pstm);
+		}
 		
 		return mensagem;
 	}
@@ -64,6 +61,7 @@ public class UsuarioDao implements IDao{
 	@Override
 	public List<EntidadeDominio> consultar(IDominio entidade) throws SQLException {
 		Usuario usuario = (Usuario) entidade;
+		conexao = ConexaoFactory.getConnection();
 		List<EntidadeDominio> usuarios = new ArrayList<EntidadeDominio>();
 		
 		PreparedStatement pstm = null;
@@ -108,9 +106,9 @@ public class UsuarioDao implements IDao{
 		}catch(SQLException e) {
 			System.err.println(e.getMessage());
 		}
-//		finally {
-//			ConexaoFactory.closeConnection(conexao, pstm, rs);
-//		}
+		finally {
+			ConexaoFactory.closeConnection(conexao, pstm, rs);
+		}
 		
 		return usuarios;
 	}
@@ -118,6 +116,7 @@ public class UsuarioDao implements IDao{
 	@Override
 	public Mensagem deletar(EntidadeDominio entidadeDominio) throws SQLException {
 		Usuario usuario = (Usuario) entidadeDominio;
+		conexao = ConexaoFactory.getConnection();
 		mensagem = new Mensagem();
 		String sql = "UPDATE tb_usuario SET "
 				+ "usu_ativo = false"
@@ -137,9 +136,9 @@ public class UsuarioDao implements IDao{
 			mensagem.setMensagem("Ocorreu um erro durante a operação. Tente novamente ou consulte a equipe de desenvolvimento.");
 			mensagem.setMensagemStatus(MensagemStatus.ERRO);
 		}
-//		finally {
-//			ConexaoFactory.closeConnection(conexao, pstm);
-//		}
+		finally {
+			ConexaoFactory.closeConnection(conexao, pstm);
+		}
 		
 		return mensagem;
 	}
@@ -147,6 +146,7 @@ public class UsuarioDao implements IDao{
 	@Override
 	public Mensagem salvar(EntidadeDominio entidadeDominio) throws SQLException {
 		Usuario usuario = (Usuario) entidadeDominio;
+		conexao = ConexaoFactory.getConnection();
 		mensagem = new Mensagem();
 		ResultSet rs;
 		String sql = "INSERT INTO tb_usuario "
@@ -183,9 +183,9 @@ public class UsuarioDao implements IDao{
 			mensagem.setMensagem("Ocorreu um erro durante a operação. Tente novamente ou consulte a equipe de desenvolvimento.");
 			mensagem.setMensagemStatus(MensagemStatus.ERRO);
 		}
-//		finally {
-//			ConexaoFactory.closeConnection(conexao, pstm);
-//		}
+		finally {
+			ConexaoFactory.closeConnection(conexao, pstm);
+		}
 		return mensagem;
 	}
 }

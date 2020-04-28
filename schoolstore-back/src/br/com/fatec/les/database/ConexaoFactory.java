@@ -8,8 +8,6 @@ import java.sql.SQLException;
 
 public class ConexaoFactory {
 	
-	private static Connection conexao;
-	
 	public static Connection getConnection() {
 		String driverName = "com.mysql.jdbc.Driver";
 		String url = "jdbc:mysql://localhost/lesProject";
@@ -18,13 +16,11 @@ public class ConexaoFactory {
 			
 		try {
 			Class.forName(driverName);
-			conexao = DriverManager.getConnection(url, username, password);
-		}catch(SQLException e) {
-			System.err.println(e.getMessage());
-		}catch(ClassNotFoundException c) {
-			System.err.println(c.getMessage());
-		}
-		return conexao;
+			java.sql.Connection conexao = DriverManager.getConnection(url, username, password);
+			return conexao;
+		}catch (SQLException | ClassNotFoundException e) {
+            return null;
+        } 
 	}
 	
 	public static boolean closeConnection(Connection con){
@@ -59,6 +55,6 @@ public class ConexaoFactory {
             }
         }
         closeConnection(con, stmt);
-    }    
+    }
 
 }

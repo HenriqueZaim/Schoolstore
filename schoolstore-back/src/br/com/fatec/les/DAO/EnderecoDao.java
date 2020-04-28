@@ -1,10 +1,6 @@
 package br.com.fatec.les.DAO;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,8 +26,8 @@ public class EnderecoDao implements IDao{
 	@Override
 	public Mensagem salvar(EntidadeDominio entidadeDominio) throws SQLException {
 		Endereco endereco = (Endereco) entidadeDominio;
+		conexao = ConexaoFactory.getConnection();
 		mensagem = new Mensagem();
-		ResultSet rs;
 		String sql = "INSERT INTO tb_endereco "
 				+ "("
 				+ "end_logradouro, "
@@ -73,15 +69,16 @@ public class EnderecoDao implements IDao{
 			mensagem.setMensagem("Ocorreu um erro durante a operação. Tente novamente ou consulte a equipe de desenvolvimento.");
 			mensagem.setMensagemStatus(MensagemStatus.ERRO);
 		}
-//		finally {
-//			ConexaoFactory.closeConnection(conexao, pstm);
-//		}
+		finally {
+			ConexaoFactory.closeConnection(conexao, pstm);
+		}
 		return mensagem;
 	}
 
 	@Override
 	public Mensagem deletar(EntidadeDominio entidadeDominio) throws SQLException {
 		Endereco endereco = (Endereco) entidadeDominio;
+		conexao = ConexaoFactory.getConnection();
 		mensagem = new Mensagem();
 		String sql = "UPDATE tb_endereco SET "
 				+ "end_ativo = false"
@@ -103,9 +100,9 @@ public class EnderecoDao implements IDao{
 			mensagem.setMensagem("Ocorreu um erro durante a operação. Tente novamente ou consulte a equipe de desenvolvimento.");
 			mensagem.setMensagemStatus(MensagemStatus.ERRO);
 		}
-//		finally {
-//			ConexaoFactory.closeConnection(conexao, pstm);
-//		}
+		finally {
+			ConexaoFactory.closeConnection(conexao, pstm);
+		}
 		
 		return mensagem;
 	}
@@ -118,6 +115,7 @@ public class EnderecoDao implements IDao{
 	@Override
 	public List<EntidadeDominio> consultar(IDominio entidade) throws SQLException {
 		Endereco enderecoEntidade = (Endereco) entidade;
+		conexao = ConexaoFactory.getConnection();
 		Endereco endereco = new Endereco();
 		Cidade cidade = new Cidade();
 		Cliente cliente = new Cliente();
@@ -176,9 +174,9 @@ public class EnderecoDao implements IDao{
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}
-//		finally {
-//			ConexaoFactory.closeConnection(conexao, pstm, rs);
-//		}
+		finally {
+			ConexaoFactory.closeConnection(conexao, pstm, rs);
+		}
 		
 		return enderecos;
 	}

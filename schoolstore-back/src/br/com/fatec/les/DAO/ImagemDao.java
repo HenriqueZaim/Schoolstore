@@ -1,10 +1,6 @@
 package br.com.fatec.les.DAO;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +23,7 @@ public class ImagemDao implements IDao{
 	@Override
 	public Mensagem salvar(EntidadeDominio entidadeDominio) throws SQLException {
 		Imagem imagem = (Imagem) entidadeDominio;
+		conexao = ConexaoFactory.getConnection();
 		ResultSet rs;
 		mensagem = new Mensagem();
 		
@@ -53,22 +50,21 @@ public class ImagemDao implements IDao{
 			if (rs.next()){
 				mensagem.setMensagem(Integer.toString(rs.getInt(1)));
 				mensagem.setMensagemStatus(MensagemStatus.OPERACAO);
-				return mensagem;
-			}
-						
+			}				
 		}catch(SQLException e){
 			mensagem.setMensagem("Ocorreu um erro durante a operação. Tente novamente ou consulte a equipe de desenvolvimento.");
 			mensagem.setMensagemStatus(MensagemStatus.ERRO);
 		}
-//		finally {
-//			ConexaoFactory.closeConnection(conexao, pstm);
-//		}
+		finally {
+			ConexaoFactory.closeConnection(conexao, pstm);
+		}
 		return mensagem;
 	}
 
 	@Override
 	public Mensagem deletar(EntidadeDominio entidadeDominio) throws SQLException {
 		Imagem imagem = (Imagem) entidadeDominio;
+		conexao = ConexaoFactory.getConnection();
 		mensagem = new Mensagem();
 		String sql = "UPDATE tb_imagem SET "
 				+ "ima_ativo = false"
@@ -85,9 +81,9 @@ public class ImagemDao implements IDao{
 			mensagem.setMensagem("Ocorreu um erro durante a operação. Tente novamente ou consulte a equipe de desenvolvimento.");
 			mensagem.setMensagemStatus(MensagemStatus.ERRO);
 		}
-//		finally {
-//			ConexaoFactory.closeConnection(conexao, pstm);
-//		}
+		finally {
+			ConexaoFactory.closeConnection(conexao, pstm);
+		}
 		
 		return mensagem;
 	}
@@ -96,6 +92,7 @@ public class ImagemDao implements IDao{
 	public Mensagem atualizar(EntidadeDominio entidadeDominio) throws SQLException {
 		Imagem imagem = (Imagem) entidadeDominio;
 		mensagem = new Mensagem();
+		conexao = ConexaoFactory.getConnection();
 		String sql = "UPDATE tb_imagem SET "
 				+ "ima_nome = ?, "
 				+ "ima_descricao = ?,"
@@ -118,9 +115,9 @@ public class ImagemDao implements IDao{
 			mensagem.setMensagem("Ocorreu um erro durante a operação. Tente novamente ou consulte a equipe de desenvolvimento.");
 			mensagem.setMensagemStatus(MensagemStatus.ERRO);
 		}
-//		finally {
-//			ConexaoFactory.closeConnection(conexao, pstm);
-//		}
+		finally {
+			ConexaoFactory.closeConnection(conexao, pstm);
+		}
 		
 		return mensagem;
 	}
@@ -128,6 +125,7 @@ public class ImagemDao implements IDao{
 	@Override
 	public List<EntidadeDominio> consultar(IDominio entidade) throws SQLException {
 		Imagem imagem = (Imagem) entidade;
+		conexao = ConexaoFactory.getConnection();
 		List<EntidadeDominio> imagens = new ArrayList<EntidadeDominio>();
 				
 		PreparedStatement pstm = null;
@@ -161,9 +159,9 @@ public class ImagemDao implements IDao{
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}
-//		finally {
-//			ConexaoFactory.closeConnection(conexao, pstm, rs);
-//		}
+		finally {
+			ConexaoFactory.closeConnection(conexao, pstm, rs);
+		}
 		
 		return imagens;
 	}

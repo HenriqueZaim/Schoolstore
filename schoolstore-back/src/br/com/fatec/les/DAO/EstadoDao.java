@@ -1,9 +1,6 @@
 package br.com.fatec.les.DAO;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,6 +38,7 @@ public class EstadoDao implements IDao{
 	public List<EntidadeDominio> consultar(IDominio entidade) throws SQLException {
 		Estado estado = (Estado) entidade;
 		CidadeDao cidadeDao = new CidadeDao();
+		conexao = ConexaoFactory.getConnection();
 		
 		List<EntidadeDominio> entidadeEstados = new ArrayList<EntidadeDominio>();
 		List<EntidadeDominio> entidadeCidades = new ArrayList<EntidadeDominio>();
@@ -98,9 +96,9 @@ public class EstadoDao implements IDao{
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}
-//		finally {
-//			ConexaoFactory.closeConnection(conexao, pstm, rs);
-//		}
+		finally {
+			ConexaoFactory.closeConnection(conexao, pstm, rs);
+		}
 		
 		return entidadeEstados;
 	}

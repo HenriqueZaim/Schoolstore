@@ -1,10 +1,6 @@
 package br.com.fatec.les.DAO;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +11,7 @@ import br.com.fatec.les.model.assets.EntidadeDominio;
 import br.com.fatec.les.model.assets.IDominio;
 import br.com.fatec.les.model.endereco.Endereco;
 import br.com.fatec.les.model.pagamento.cartao.CartaoCredito;
+import br.com.fatec.les.model.usuario.Carrinho;
 import br.com.fatec.les.model.usuario.Cliente;
 import br.com.fatec.les.model.usuario.Usuario;
 
@@ -25,6 +22,7 @@ public class ClienteDao implements IDao{
 	EnderecoDao enderecoDao = new EnderecoDao();
 	UsuarioDao usuarioDao = new UsuarioDao();
 	CartaoCreditoDao cartaoCreditoDao = new CartaoCreditoDao();
+	CarrinhoDao carrinhoDao = new CarrinhoDao();
 	
 	public ClienteDao() {
 		conexao = ConexaoFactory.getConnection();
@@ -33,6 +31,7 @@ public class ClienteDao implements IDao{
 	@Override
 	public Mensagem salvar(EntidadeDominio entidadeDominio) throws SQLException {
 		Cliente cliente = (Cliente) entidadeDominio;
+		conexao = ConexaoFactory.getConnection();
 		Cliente aux = new Cliente();
 		mensagem = new Mensagem();
 		ResultSet rs;
@@ -43,10 +42,11 @@ public class ClienteDao implements IDao{
 				+ "cli_numeroTelefone, "
 				+ "cli_numeroDocumento, "
 				+ "cli_usu_id, "
+				+ "cli_car_id, "
 				+ "cli_ativo, "
 				+ "cli_dataHoraCriacao "
 				+ ")"
-				+ " VALUES ( ?, ?, ?, ?, true, NOW())";
+				+ " VALUES ( ?, ?, ?, ?, ?, true, NOW())";
 		
 		PreparedStatement pstm = null;
 		
@@ -56,12 +56,18 @@ public class ClienteDao implements IDao{
 				throw new SQLException();
 			}
 			String idUsuario = mensagem.getMensagem();
+			mensagem = carrinhoDao.salvar(cliente.getCarrinho());
+			if(mensagem.getMensagemStatus() == MensagemStatus.ERRO) {
+				throw new SQLException();
+			}
+			String idCarrinho = mensagem.getMensagem();
 			
 			pstm = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			pstm.setString(1, cliente.getNome());
 			pstm.setString(2, cliente.getNumeroTelefone());
 			pstm.setString(3, cliente.getNumeroDocumento());
 			pstm.setInt(4, Integer.parseInt(idUsuario));
+			pstm.setInt(5, Integer.parseInt(idCarrinho));
 			pstm.executeUpdate();
 			
 			rs = pstm.getGeneratedKeys();
@@ -92,15 +98,16 @@ public class ClienteDao implements IDao{
 			mensagem.setMensagem("Ocorreu um erro durante a operação. Tente novamente ou consulte a equipe de desenvolvimento.");
 			mensagem.setMensagemStatus(MensagemStatus.ERRO);
 		}
-//		finally {
-//			ConexaoFactory.closeConnection(conexao, pstm);
-//		}
+		finally {
+			ConexaoFactory.closeConnection(conexao, pstm);
+		}
 		return mensagem;
 	}
 
 	@Override
 	public Mensagem deletar(EntidadeDominio entidadeDominio) throws SQLException {
 		Cliente cliente  = (Cliente) entidadeDominio;
+		conexao = ConexaoFactory.getConnection();
 		mensagem = new Mensagem();
 		Endereco endereco = new Endereco();
 		CartaoCredito cartaoCredito = new CartaoCredito();
@@ -118,7 +125,8 @@ public class ClienteDao implements IDao{
 
 			if(enderecoDao.deletar(endereco).getMensagemStatus() == MensagemStatus.ERRO || 
 					cartaoCreditoDao.deletar(cartaoCredito).getMensagemStatus() == MensagemStatus.ERRO ||
-					usuarioDao.deletar(cliente.getUsuario()).getMensagemStatus() == MensagemStatus.ERRO) {
+					usuarioDao.deletar(cliente.getUsuario()).getMensagemStatus() == MensagemStatus.ERRO || 
+					carrinhoDao.deletar(cliente.getCarrinho()).getMensagemStatus() == MensagemStatus.ERRO) {
 				throw new SQLException();
 			}
 
@@ -129,9 +137,9 @@ public class ClienteDao implements IDao{
 			mensagem.setMensagem("Ocorreu um erro durante a operação. Tente novamente ou consulte a equipe de desenvolvimento.");
 			mensagem.setMensagemStatus(MensagemStatus.ERRO);
 		}
-//		finally {
-//			ConexaoFactory.closeConnection(conexao, pstm);
-//		}
+		finally {
+			ConexaoFactory.closeConnection(conexao, pstm);
+		}
 		
 		return mensagem;
 	}
@@ -139,6 +147,7 @@ public class ClienteDao implements IDao{
 	@Override
 	public Mensagem atualizar(EntidadeDominio entidadeDominio) throws SQLException {
 		Cliente cliente  = (Cliente) entidadeDominio;
+		conexao = ConexaoFactory.getConnection();
 		mensagem = new Mensagem();
 		
 		String sql = "UPDATE tb_cliente SET "
@@ -241,9 +250,9 @@ public class ClienteDao implements IDao{
 			mensagem.setMensagem("Ocorreu um erro durante a operação. Tente novamente ou consulte a equipe de desenvolvimento.");
 			mensagem.setMensagemStatus(MensagemStatus.ERRO);
 		}
-//		finally {
-//			ConexaoFactory.closeConnection(conexao, pstm);
-//		}
+		finally {
+			ConexaoFactory.closeConnection(conexao, pstm);
+		}
 		
 		return mensagem;
 	}
@@ -251,6 +260,7 @@ public class ClienteDao implements IDao{
 	@Override
 	public List<EntidadeDominio> consultar(IDominio entidade) throws SQLException {
 		Cliente cliente = (Cliente) entidade;
+		conexao = ConexaoFactory.getConnection();
 
 		List<EntidadeDominio> clientesEntidade = new ArrayList<EntidadeDominio>();
 		List<EntidadeDominio> enderecosEntidade = new ArrayList<EntidadeDominio>();
@@ -267,10 +277,14 @@ public class ClienteDao implements IDao{
 				+ "cli_nome, "
 				+ "cli_numeroTelefone, "
 				+ "cli_numeroDocumento, "
-				+ "cli_usu_id "
+				+ "cli_usu_id,"
+				+ "cli_car_id "
 				+ " FROM tb_cliente WHERE cli_ativo = 1 ";
 		if(cliente.getId() != null) {
-			sql += "AND cli_id = " + cliente.getId();
+			sql += "AND cli_id = " + cliente.getId() + "";
+		}
+		if(cliente.getUsuario().getId() != null) {
+			sql += "AND cli_usu_id = " + cliente.getUsuario().getId() + "";
 		}
 				
 		try {
@@ -281,12 +295,14 @@ public class ClienteDao implements IDao{
 			Cliente c = new Cliente();
 			Endereco e = new Endereco();
 			CartaoCredito ccr = new CartaoCredito();
+			Carrinho car = new Carrinho();
 
 			while(rs.next()) {
 				c = new Cliente();
 				u = new Usuario();
 				e = new Endereco();
 				ccr = new CartaoCredito();
+				car = new Carrinho();
 				
 				enderecosEntidade = new ArrayList<EntidadeDominio>();
 				cartoesEntidade = new ArrayList<EntidadeDominio>();
@@ -311,6 +327,9 @@ public class ClienteDao implements IDao{
 					}
 				}
 				
+				car.setId(rs.getLong("cli_car_id"));
+				c.setCarrinho(car);
+				
 				u.setId(Long.parseLong(rs.getString("cli_usu_id")));
 				c.setUsuario((Usuario)usuarioDao.consultar(u).get(0));
 				c.setEnderecos(enderecos);
@@ -321,9 +340,9 @@ public class ClienteDao implements IDao{
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}
-//		finally {
-//			ConexaoFactory.closeConnection(conexao, pstm, rs);
-//		}
+		finally {
+			ConexaoFactory.closeConnection(conexao, pstm, rs);
+		}
 		
 		return clientesEntidade;
 	}

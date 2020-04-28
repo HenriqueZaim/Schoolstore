@@ -1,9 +1,6 @@
 package br.com.fatec.les.DAO;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +24,9 @@ public class CartaoCreditoDao implements IDao{
 	@Override
 	public Mensagem salvar(EntidadeDominio entidadeDominio) throws SQLException {
 		CartaoCredito cartaoCredito = (CartaoCredito) entidadeDominio;
+		conexao = ConexaoFactory.getConnection();
 		mensagem = new Mensagem();
+		
 		String sql = "INSERT INTO tb_cartaoCredito "
 				+ "("
 				+ "ccr_numero, "
@@ -58,16 +57,18 @@ public class CartaoCreditoDao implements IDao{
 			mensagem.setMensagem("Ocorreu um erro durante a operação. Tente novamente ou consulte a equipe de desenvolvimento.");
 			mensagem.setMensagemStatus(MensagemStatus.ERRO);
 		}
-//		finally {
-//			ConexaoFactory.closeConnection(conexao, pstm);
-//		}
+		finally {
+			ConexaoFactory.closeConnection(conexao, pstm);
+		}
 		return mensagem;
 	}
 
 	@Override
 	public Mensagem deletar(EntidadeDominio entidadeDominio) throws SQLException {
 		CartaoCredito cartaoCredito = (CartaoCredito) entidadeDominio;
+		conexao = ConexaoFactory.getConnection();
 		mensagem = new Mensagem();
+		
 		String sql = "UPDATE tb_cartaoCredito SET "
 				+ "ccr_ativo = false"
 				+ " WHERE ";
@@ -88,9 +89,9 @@ public class CartaoCreditoDao implements IDao{
 			mensagem.setMensagem("Ocorreu um erro durante a operação. Tente novamente ou consulte a equipe de desenvolvimento.");
 			mensagem.setMensagemStatus(MensagemStatus.ERRO);
 		}
-//		finally {
-//			ConexaoFactory.closeConnection(conexao, pstm);
-//		}
+		finally {
+			ConexaoFactory.closeConnection(conexao, pstm);
+		}
 		
 		return mensagem;
 	}
@@ -105,6 +106,7 @@ public class CartaoCreditoDao implements IDao{
 		CartaoCredito cartaoEntidade = (CartaoCredito) entidade;
 		CartaoCredito cartaoCredito = new CartaoCredito();
 		Cliente cliente = new Cliente();
+		conexao = ConexaoFactory.getConnection();
 		
 		List<EntidadeDominio> cartoes = new ArrayList<EntidadeDominio>();
 		
@@ -146,9 +148,9 @@ public class CartaoCreditoDao implements IDao{
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}
-//		finally {
-//			ConexaoFactory.closeConnection(conexao, pstm, rs);
-//		}
+		finally {
+			ConexaoFactory.closeConnection(conexao, pstm, rs);
+		}
 		
 		return cartoes;
 	}
