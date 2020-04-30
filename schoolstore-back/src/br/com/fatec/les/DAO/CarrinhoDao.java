@@ -106,7 +106,7 @@ public class CarrinhoDao implements IDao{
 		
 		String sql = "UPDATE tb_carrinho SET "
 				+ "car_subTotal = ?, "
-				+ "car_validade = "+ carrinho.getValidade() +" "				
+				+ "car_validade = NOW() "				
 				+ " WHERE car_id = ?";
 		
 		PreparedStatement pstm = null;

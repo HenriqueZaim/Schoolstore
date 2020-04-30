@@ -52,6 +52,9 @@ public class CarrinhoVH implements IViewHelper{
 		if(tarefa.equals("consultarCarrinho")) {
 			request.getRequestDispatcher("clienteCarrinho.jsp").
 			forward(request, response);
+		}else {
+			request.getRequestDispatcher("clienteMenu.jsp").
+			forward(request, response);
 		}
 	}
 

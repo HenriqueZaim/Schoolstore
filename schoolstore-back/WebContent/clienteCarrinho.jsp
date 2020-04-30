@@ -241,17 +241,21 @@
 					                                                <strong>${item.getProduto().getNome() }</strong>
 					                                            </h5>
 					                                        </td>
-					                                        <td >R$ ${item.getProduto().getPreco() }</td>
+					                                        <td class="preco">R$${ (Math.round((
+					                                        	item.getProduto().getPreco() * item.getProduto().getPrecificacao().getPercentual() + item.getProduto().getPreco())) * 100) / 100}</td>
 					                                        <td>
-					                                            <input type="number" name="txtQuantidade" value="${item.getQuantidade()}" min="1" max="${item.getProduto().getEstoque().getQuantidadeTotal()}" aria-label="Search" class="form-control"
+					                                            <input type="number" class="quantidade" name="txtQuantidade" value="${item.getQuantidade()}" min="1" max="${item.getProduto().getEstoque().getQuantidadeTotal()}" aria-label="Search" class="form-control"
 					                                                style="width: 100px">
 					                                        </td>
 					                                        <td>
-					                                            <button type="button" class="btn btn-sm btn-danger" data-toggle="tooltip" data-placement="top" title="Remove item">
+					                                            <button type="button"  class="btn btn-sm btn-danger excluir" data-toggle="tooltip" data-placement="top" title="Remove item">
 					                                            	X
 					                                            </button>
 					                                        </td>
+					                                        <input type="hidden" class="precificacao" value="${ item.getProduto().getPrecificacao().getPercentual()}">
 					                                        <input type="hidden" class="valor" value="${item.getProduto().getPreco()}">
+					                                        <input type="hidden" class="valorSomado" value="${ (Math.round((
+					                                        	item.getProduto().getPreco() * item.getProduto().getPrecificacao().getPercentual() + item.getProduto().getPreco())) * 100) / 100}">
 					                                        <input type="hidden" name="txtProdutoId" value="${item.getProduto().getId() }">
 					                                    </tr>
 													</c:forEach>
@@ -264,12 +268,13 @@
 				                                        </td>
 				                                        <td class="text-right">
 				                                        	<input type="hidden" name="txtValorTotal" id="subTotal" value="${carrinho.getSubTotal() }">
-				                                            <h4 class="mt-2">
-				                                                <strong>R$ ${carrinho.getSubTotal() }</strong>
+				                                            <h4 class="mt-2" id="valorTotalCompra">
+				                                                R$ ${carrinho.getSubTotal() }
 				                                            </h4>
 				                                        </td>
 				                                        <td colspan="3" class="text-right">
 				                                        	<input type="hidden" name="tarefa" value="atualizarCarrinho">
+				                                         	<input type="hidden" name="txtCarrinhoId" value="${cliente.getCarrinho().getId()}">
 				                                            <button type="submit" class="btn btn-primary btn-rounded">Completar compra
 				                                                <i class="fas fa-angle-right right"></i>
 				                                            </button>
@@ -301,6 +306,7 @@
     <script type="text/javascript" src="./js/popper.min.js"></script>
     <script type="text/javascript" src="./js/bootstrap.min.js"></script>
     <script type="text/javascript" src="./js/mdb.min.js"></script>
+    <script type="text/javascript" src="./js/pages/carrinho.js"></script>
 
 </body>
 

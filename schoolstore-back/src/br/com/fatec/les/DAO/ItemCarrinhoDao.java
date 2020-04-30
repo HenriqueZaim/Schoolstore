@@ -22,6 +22,7 @@ public class ItemCarrinhoDao implements IDao{
 	@Override
 	public Mensagem salvar(EntidadeDominio entidadeDominio) throws SQLException {
 		Carrinho carrinho = (Carrinho) entidadeDominio;
+		conexao = ConexaoFactory.getConnection();
 		mensagem = new Mensagem();
 		ResultSet rs;
 		
