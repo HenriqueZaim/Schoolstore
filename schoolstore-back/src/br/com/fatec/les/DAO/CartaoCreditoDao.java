@@ -17,10 +17,6 @@ public class CartaoCreditoDao implements IDao{
 	private Connection conexao = null;
 	private Mensagem mensagem;
 	
-	public CartaoCreditoDao() {
-		conexao = ConexaoFactory.getConnection();
-	}
-
 	@Override
 	public Mensagem salvar(EntidadeDominio entidadeDominio) throws SQLException {
 		CartaoCredito cartaoCredito = (CartaoCredito) entidadeDominio;

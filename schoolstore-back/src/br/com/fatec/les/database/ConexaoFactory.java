@@ -16,7 +16,7 @@ public class ConexaoFactory {
 			
 		try {
 			Class.forName(driverName);
-			java.sql.Connection conexao = DriverManager.getConnection(url, username, password);
+			Connection conexao = DriverManager.getConnection(url, username, password);
 			return conexao;
 		}catch (SQLException | ClassNotFoundException e) {
             return null;

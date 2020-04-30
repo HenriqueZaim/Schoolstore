@@ -24,10 +24,6 @@ public class ClienteDao implements IDao{
 	CartaoCreditoDao cartaoCreditoDao = new CartaoCreditoDao();
 	CarrinhoDao carrinhoDao = new CarrinhoDao();
 	
-	public ClienteDao() {
-		conexao = ConexaoFactory.getConnection();
-	}
-
 	@Override
 	public Mensagem salvar(EntidadeDominio entidadeDominio) throws SQLException {
 		Cliente cliente = (Cliente) entidadeDominio;
@@ -281,10 +277,10 @@ public class ClienteDao implements IDao{
 				+ "cli_car_id "
 				+ " FROM tb_cliente WHERE cli_ativo = 1 ";
 		if(cliente.getId() != null) {
-			sql += "AND cli_id = " + cliente.getId() + "";
+			sql += " AND cli_id = " + cliente.getId() + "";
 		}
 		if(cliente.getUsuario().getId() != null) {
-			sql += "AND cli_usu_id = " + cliente.getUsuario().getId() + "";
+			sql += " AND cli_usu_id = " + cliente.getUsuario().getId() + "";
 		}
 				
 		try {

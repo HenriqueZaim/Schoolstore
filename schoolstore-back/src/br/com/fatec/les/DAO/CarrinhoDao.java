@@ -21,10 +21,6 @@ public class CarrinhoDao implements IDao{
     private Mensagem mensagem;
     ItemCarrinhoDao itemCarrinhoDao = new ItemCarrinhoDao();
 
-    public CarrinhoDao() {
-        conexao = ConexaoFactory.getConnection();
-    }
-
 	@Override
 	public Mensagem salvar(EntidadeDominio entidadeDominio) throws SQLException {
 		conexao = ConexaoFactory.getConnection();
@@ -45,7 +41,7 @@ public class CarrinhoDao implements IDao{
 		try {
 		
 			pstm = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-			pstm.setString(1, null);
+			pstm.setFloat(1, 0);
 			pstm.setString(2, null);
 			pstm.executeUpdate();
 			
@@ -104,7 +100,7 @@ public class CarrinhoDao implements IDao{
 	public Mensagem atualizar(EntidadeDominio entidadeDominio) throws SQLException {
 		Carrinho carrinho  = (Carrinho) entidadeDominio;
 		Carrinho aux = new Carrinho();
-		List<ItemCarrinho> itensCarrinho = new ArrayList<ItemCarrinho>();
+		List<ItemCarrinho> itens = new ArrayList<ItemCarrinho>();
 		conexao = ConexaoFactory.getConnection();
 		mensagem = new Mensagem();
 		
@@ -120,39 +116,18 @@ public class CarrinhoDao implements IDao{
 			pstm.setFloat(1, carrinho.getSubTotal());
 			pstm.setLong(2, carrinho.getId());
 			
-//			preciso pegar todos os itens desse carrinho no banco
-			List<EntidadeDominio> itemsBanco = new ArrayList<EntidadeDominio>();
-			itemsBanco.addAll(itemCarrinhoDao.consultar(entidadeDominio)); // Consultar os itens pelo id do carrinho: retorna 1 carrinho apenas
-			aux = (Carrinho) itemsBanco.get(0);
-		
-			for(ItemCarrinho i : aux.getItensCarrinho()) { // items do banco
-				boolean flag = false;
-				for(ItemCarrinho j : carrinho.getItensCarrinho() ) { // items do front
-					if(i.getProduto().getId() == j.getProduto().getId()) {
-						flag = true;
-						if(i.getQuantidade() != j.getQuantidade()) {
-							Carrinho c = new Carrinho();
-							itensCarrinho = new ArrayList<ItemCarrinho>();
-							itensCarrinho.add(j);
-							c.setId(carrinho.getId());
-							c.setItensCarrinho(itensCarrinho);
-							itemCarrinhoDao.atualizar(c);
-						}
-					}else {
-						// não é este item
-						
-					}
-				}
-				if(!flag) { // não achei esse item no front
-					Carrinho c = new Carrinho();
-					itensCarrinho = new ArrayList<ItemCarrinho>();
-					itensCarrinho.add(i);
-					c.setId(carrinho.getId());
-					c.setItensCarrinho(itensCarrinho);
-					itemCarrinhoDao.deletar(c);
+			itemCarrinhoDao.deletar(carrinho);
+			
+			if(!carrinho.getItensCarrinho().isEmpty() && carrinho.getItensCarrinho() != null) {
+				for(ItemCarrinho item : carrinho.getItensCarrinho()) {
+					itens = new ArrayList<ItemCarrinho>();
+					itens.add(item);
+					aux.setItensCarrinho(itens);
+					aux.setId(carrinho.getId());
+					itemCarrinhoDao.salvar(aux);
 				}
 			}
-						
+			
 			pstm.executeUpdate();
 			mensagem.setMensagem("Carrinho atualizado com sucesso!");
 			mensagem.setMensagemStatus(MensagemStatus.SUCESSO);
@@ -193,8 +168,8 @@ public class CarrinhoDao implements IDao{
 				Carrinho c = new Carrinho();
 				Carrinho aux = new Carrinho();
 				
-				c.setId(Long.parseLong(rs.getString("car_id")));
-				c.setSubTotal(Float.parseFloat(rs.getString("car_subTotal")));
+				c.setId(rs.getLong("car_id"));
+				c.setSubTotal(rs.getFloat("car_subTotal"));
 //				c.setValidade(LocalDateTime.parse(rs.getString("car_validade")));
 				
 				List<EntidadeDominio> itemsBanco = new ArrayList<EntidadeDominio>();

@@ -46,12 +46,6 @@ VALUES ("prod3", 25, "descricao4", b'1', NOW());
 INSERT INTO tb_produto (pro_nome, pro_preco, pro_descricao, pro_ativo, pro_dataHoraCriacao)
 VALUES ("prod4", 25, "descricao5", b'1', NOW());
 
-INSERT INTO tb_imagem (ima_nome, ima_descricao, ima_caminho, ima_ativo, ima_dataHoraCriacao) VALUES
-("admin","admin","./img/admin.jpg", b'1', NOW());
-
-INSERT INTO tb_usuario (usu_email, usu_senha, usu_admin, usu_ima_id, usu_ativo, usu_dataHoraCriacao) VALUES
-("admin@admin.com", "qwer1234", b'1', 1, b'1', NOW());
-
 INSERT INTO tb_usuario (usu_email, usu_senha, usu_admin, usu_ima_id, usu_ativo, usu_dataHoraCriacao) VALUES
 ("henrique@admin.com", "qwer1234", b'0', 1, b'1', NOW());
 
@@ -62,4 +56,4 @@ INSERT INTO tb_cliente (cli_nome, cli_numeroTelefone, cli_numeroDocumento, cli_u
 ("Henrique", "1234123", "23057010806", 2, 1, b'1', NOW());
 
 INSERT INTO tb_itemCarrinho (icar_quantidade, icar_car_id, icar_pro_id)
-VALUES (1, 1, 1),(2, 1, 2), (1,1,3), (1,1,4);
+VALUES (1, 2, 1),(2, 2, 2), (1,2,3), (1,2,4);

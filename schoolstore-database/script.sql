@@ -25,7 +25,7 @@ CREATE TABLE tb_estado
 CREATE TABLE tb_pagamentoCupom
 (
   pcu_id INT NOT NULL AUTO_INCREMENT,
-  pcu_valorTotalCupom DECIMAL(4,2) NOT NULL,
+  pcu_valorTotalCupom DECIMAL(6,2) NOT NULL,
   PRIMARY KEY (pcu_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -92,7 +92,7 @@ CREATE TABLE tb_cliente
  cli_ativo BOOLEAN NOT NULL,
  cli_dataHoraCriacao DATETIME NOT NULL,
  cli_usu_id INT NOT NULL,
- cli_car_id INT DEFAULT NULL,
+ cli_car_id INT NOT NULL,
  PRIMARY KEY (cli_id),
  FOREIGN KEY(cli_usu_id) REFERENCES tb_usuario(usu_id),
  FOREIGN KEY(cli_car_id) REFERENCES tb_carrinho(car_id)
@@ -140,8 +140,8 @@ CREATE TABLE tb_produto
   pro_descricao VARCHAR(400) NOT NULL,
   pro_ativo BOOLEAN NOT NULL,
   pro_dataHoraCriacao DATETIME NOT NULL,
-  pro_ima_id INT DEFAULT NULL,
-  pro_pre_id INT DEFAULT NULL, 
+  pro_ima_id INT NOT NULL,
+  pro_pre_id INT NOT NULL, 
   PRIMARY KEY (pro_id),
   FOREIGN KEY(pro_ima_id) REFERENCES tb_imagem(ima_id),
   FOREIGN KEY(pro_pre_id) REFERENCES tb_precificacao(pre_id)
@@ -263,7 +263,7 @@ CREATE TABLE tb_itemEstoque
   isto_id INT NOT NULL AUTO_INCREMENT,
   isto_quantidade INT(5) DEFAULT NULL,
   isto_dataEntrada DATE NOT NULL,
-  isto_valor DECIMAL(4,2) NOT NULL,
+  isto_valor DECIMAL(6,2) NOT NULL,
   isto_for_id INT NOT NULL,
   isto_sto_id INT NOT NULL,
   PRIMARY KEY (isto_id),

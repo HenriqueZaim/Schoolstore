@@ -19,14 +19,40 @@ public class ItemCarrinhoDao implements IDao{
     private Mensagem mensagem;
     ProdutoDao produtoDao = new ProdutoDao();
 
-    public ItemCarrinhoDao() {
-        conexao = ConexaoFactory.getConnection();
-    }
-
 	@Override
 	public Mensagem salvar(EntidadeDominio entidadeDominio) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		Carrinho carrinho = (Carrinho) entidadeDominio;
+		mensagem = new Mensagem();
+		ResultSet rs;
+		
+		String sql = "INSERT INTO tb_itemCarrinho "
+				+ "("
+				+ "icar_quantidade, "
+				+ "icar_car_id, "
+				+ "icar_pro_id "
+				+ ")"
+				+ " VALUES ( ?, ?, ?)";
+		
+		PreparedStatement pstm = null;
+		
+		try {
+		
+			pstm = conexao.prepareStatement(sql);
+			pstm.setFloat(1, carrinho.getItensCarrinho().get(0).getQuantidade());
+			pstm.setLong(2, carrinho.getId());
+			pstm.setLong(3, carrinho.getItensCarrinho().get(0).getProduto().getId());
+			pstm.executeUpdate();
+
+			mensagem.setMensagem("Deu bom");
+			mensagem.setMensagemStatus(MensagemStatus.SUCESSO);
+		}catch(SQLException e){
+			mensagem.setMensagem("Ocorreu um erro durante a operação. Tente novamente ou consulte a equipe de desenvolvimento.");
+			mensagem.setMensagemStatus(MensagemStatus.ERRO);
+		}
+		finally {
+			ConexaoFactory.closeConnection(conexao, pstm);
+		}
+		return mensagem;
 	}
 
 	@Override
@@ -37,11 +63,6 @@ public class ItemCarrinhoDao implements IDao{
 
 		String sql = "DELETE FROM tb_itemCarrinho "
 				+ " WHERE icar_car_id = " + carrinho.getId() + "";
-//		if(!carrinho.getItensCarrinho().isEmpty() && carrinho.getItensCarrinho() != null) {
-//			if(carrinho.getItensCarrinho().get(0).getProduto().getId() != null) {
-//				sql += " AND icar_pro_id = " + carrinho.getItensCarrinho().get(0).getProduto().getId() + "";
-//			}
-//		}
 		
 		PreparedStatement pstm = null;
 		

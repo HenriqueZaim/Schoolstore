@@ -1,7 +1,6 @@
 package br.com.fatec.les.DAO;
 
 import java.sql.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,34 +8,32 @@ import br.com.fatec.les.database.ConexaoFactory;
 import br.com.fatec.les.facade.Mensagem;
 import br.com.fatec.les.model.assets.EntidadeDominio;
 import br.com.fatec.les.model.assets.IDominio;
+import br.com.fatec.les.model.assets.Imagem;
+import br.com.fatec.les.model.produto.Categoria;
+import br.com.fatec.les.model.produto.Precificacao;
 import br.com.fatec.les.model.produto.Produto;
-import br.com.fatec.les.model.usuario.Carrinho;
 
 public class ProdutoDao implements IDao{
 	
     private Connection conexao = null;
-    private Mensagem mensagem;
-
-    public ProdutoDao() {
-        conexao = ConexaoFactory.getConnection();
-    }
+    ImagemDao imagemDao = new ImagemDao();
+    PrecificacaoDao precificacaoDao = new PrecificacaoDao();
+    CategoriaDao categoriaDao = new CategoriaDao();
+    EstoqueDao estoqueDao = new EstoqueDao();
 
 	@Override
 	public Mensagem salvar(EntidadeDominio entidadeDominio) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+        throw new UnsupportedOperationException("Operação não suportada.");
 	}
 
 	@Override
 	public Mensagem deletar(EntidadeDominio entidadeDominio) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+        throw new UnsupportedOperationException("Operação não suportada.");
 	}
 
 	@Override
 	public Mensagem atualizar(EntidadeDominio entidadeDominio) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+        throw new UnsupportedOperationException("Operação não suportada.");
 	}
 
 	@Override
@@ -44,7 +41,10 @@ public class ProdutoDao implements IDao{
 		Produto produto = (Produto) entidade;
 		conexao = ConexaoFactory.getConnection();
 		List<EntidadeDominio> produtos = new ArrayList<EntidadeDominio>();
+		List<EntidadeDominio> categoriasEntidade = new ArrayList<EntidadeDominio>();
+		List<Categoria> categorias = new ArrayList<Categoria>();
 
+		
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		
@@ -52,7 +52,9 @@ public class ProdutoDao implements IDao{
 				+ "pro_id, "
 				+ "pro_nome, "
 				+ "pro_preco, "
-				+ "pro_descricao "
+				+ "pro_descricao,"
+				+ "pro_ima_id, "
+				+ "pro_pre_id "
 				+ " FROM tb_produto "
 				+ " WHERE pro_ativo = 1 ";
 		if(produto.getId() != null) {
@@ -64,15 +66,37 @@ public class ProdutoDao implements IDao{
 			rs = pstm.executeQuery();
 			
 			Produto p = new Produto();
+			Produto aux = new Produto();
+			Imagem i = new Imagem();
+			Precificacao pr = new Precificacao();
 
 			while(rs.next()) {
 				p = new Produto();
+				aux = new Produto();
+				i = new Imagem();
+				pr = new Precificacao();
+				categoriasEntidade = new ArrayList<EntidadeDominio>();
+				categorias = new ArrayList<Categoria>();
+				
 				p.setNome(rs.getString("pro_nome"));
 				p.setDescricao(rs.getString("pro_descricao"));
 				p.setPreco(rs.getFloat("pro_preco"));
 				p.setId(rs.getLong("pro_id"));
 				
-				// TODO: Falta mais coisa
+				i.setId(rs.getLong("pro_ima_id"));
+				p.setImagem((Imagem)imagemDao.consultar(i).get(0));
+				
+				pr.setId(rs.getLong("pro_pre_id"));
+				p.setPrecificacao((Precificacao)precificacaoDao.consultar(pr).get(0));
+				
+				categoriasEntidade.addAll(categoriaDao.consultar(entidade));
+				for(EntidadeDominio cat : categoriasEntidade) {
+					categorias.add((Categoria)cat);
+				}
+				p.setCategoria(categorias);
+				
+				aux = (Produto) estoqueDao.consultar(entidade).get(0);
+				p.setEstoque(aux.getEstoque());
 
 				produtos.add(p);
 			}

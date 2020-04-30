@@ -19,10 +19,6 @@ public class EnderecoDao implements IDao{
 	private Mensagem mensagem;
 	CidadeDao cidadeDao = new CidadeDao();
 	
-	public EnderecoDao() {
-		conexao = ConexaoFactory.getConnection();
-	}
-
 	@Override
 	public Mensagem salvar(EntidadeDominio entidadeDominio) throws SQLException {
 		Endereco endereco = (Endereco) entidadeDominio;

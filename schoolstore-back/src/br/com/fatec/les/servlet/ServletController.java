@@ -18,6 +18,7 @@ import br.com.fatec.les.command.ICommand;
 import br.com.fatec.les.command.SalvarCommand;
 import br.com.fatec.les.facade.Resultado;
 import br.com.fatec.les.model.assets.IDominio;
+import br.com.fatec.les.viewHelper.CarrinhoVH;
 import br.com.fatec.les.viewHelper.ClienteVH;
 import br.com.fatec.les.viewHelper.EstadoVH;
 import br.com.fatec.les.viewHelper.IViewHelper;
@@ -53,11 +54,18 @@ public class ServletController extends HttpServlet{
     	commandMap.put("cadastroCliente", new ConsultarCommand());
     	
     	// Login de usuário
-    	// Vai consultar com um e-mail e senha, e vai trazer o usuário todo
+    	// Vai consultar com um e-mail e senha, e vai trazer o usuário todo + cliente
     	vhMap.put("loginUsuario", new UsuarioVH());
     	vhMap.put("logoutUsuario", new UsuarioVH());
     	commandMap.put("loginUsuario", new ConsultarCommand());
     	commandMap.put("logoutUsuario", new ConsultarCommand());
+    	
+    	// Carrinho
+    	vhMap.put("consultarCarrinho", new CarrinhoVH());
+    	vhMap.put("atualizarCarrinho", new CarrinhoVH());
+    	commandMap.put("consultarCarrinho", new ConsultarCommand());
+    	commandMap.put("atualizarCarrinho", new AtualizarCommand());
+
 	}
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)

@@ -83,14 +83,17 @@
 </head>
 
 <body>
-
 	<%
-        String login = "";
-        login = (String) session.getAttribute("status");
-        
-        if(login == null || login == "off"){
-            response.sendRedirect("usuarioLogin.jsp");
-        }
+    String login = "";
+    login = (String) session.getAttribute("status");
+    Usuario usuario = new Usuario();
+    usuario = (Usuario) session.getAttribute("usuario");
+    
+    if(login == null || login == "off"){
+        response.sendRedirect("usuarioLogin.jsp");
+    }else if (usuario.isAdmin()){
+        response.sendRedirect("index.jsp");
+    }
     %>
     <div class="container-for-admin">
         <header>
@@ -107,7 +110,7 @@
                         <ul class="navbar-nav mr-auto">
                             <li class="nav-item">
                                 <a class="nav-link waves-effect" href="index.jsp"
-                                    >Iní­cio
+                                    >Início
                                 </a>
                             </li>
                         </ul>
@@ -151,193 +154,143 @@
                 <a class="navbar-brand waves-effect" href="index.html">
                     <strong class="blue-text h1 m-2">SchoolStore</strong>
                 </a>
-				
-				<c:if test="${!usuario.isAdmin()}">
-	                <div class="list-group list-group-flush mt-5">
-	                    <a href="clienteMenu.jsp" class="list-group-item active list-group-item-action waves-effect">
+
+                <div class="list-group list-group-flush mt-5">
+	                    <a href="clienteMenu.jsp" class="list-group-item  list-group-item-action waves-effect">
 	                      <i class="fas fa-cart-arrow-down mr-3"></i>Menu Principal</a>
 	                    
 	                    <form action="app" method="POST">
 							<input type="hidden" name="tarefa" value="consultarCarrinho">
 			                <input type="hidden" name="txtCarrinhoId" value="${cliente.getCarrinho().getId()}">
-							<button type="submit" class="list-group-item  list-group-item-action waves-effect">Meu Carrinho</button>
+							<button type="submit" class="list-group-item active list-group-item-action waves-effect">Meu Carrinho</button>
 						</form>
 	                    <a href="request.html" class="list-group-item  list-group-item-action waves-effect">
 	                        <i class="fa fa-user mr-3"></i>Meu Pedidos</a>
 	                    <a href="profile.html" class="list-group-item list-group-item-action waves-effect">
 	                        <i class="fa fa-table mr-3"></i>Meu Perfil</a>
 	                </div>
-	            </c:if>
-                 <c:if test="${usuario.isAdmin()}">
-	                <div class="list-group list-group-flush mt-5">
-		                <a href="clienteMenu.jsp" class="list-group-item active list-group-item-action waves-effect">
-		                    <i class="fas fa-th-list mr-3"></i>Menu Principal</a>
-	                    <a href="clienteLista.jsp" class="list-group-item  list-group-item-action waves-effect">
-	                        <i class="fas fa-users mr-3"></i>Lista de Clientes</a>
-	                    <a href="productslist.html" class="list-group-item list-group-item-action waves-effect">
-	                        <i class="fas fa-box-open mr-3"></i>Lista de Produtos</a>
-	                    <a href="requestlist.html" class="list-group-item list-group-item-action waves-effect">
-	                        <i class="fas fa-exchange-alt mr-3"></i>Lista de Pedidos</a> 
-	                    <a href="requestlist.html" class="list-group-item list-group-item-action waves-effect">
-	                        <i class="fas fa-ticket-alt mr-3"></i>Lista de Cupons</a> 
-	                    <a href="relatorios.html" class="list-group-item list-group-item-action waves-effect">
-	                        <i class="fas fa-chart-line mr-3"></i>Relatórios</a>   
-	                </div>
-	            </c:if>
+
             </div>
         </header>
 
         <main class="pt-5 mx-lg-5">
             <div class="container-fluid mt-5">
-			<c:forEach var="mensagem" items="${resultado.getMensagens()}">
-				<c:choose>
-					<c:when test="${mensagem.getMensagemStatus() == 'ERRO'}">
-						<div class="alert alert-danger p-0 border-0" role="alert">
-							<span class="d-block px-3 py-2"><i
-								class="fas fa-exclamation-circle p-0 px-2"></i>${mensagem.getMensagem()}</span>
-						</div>
-					</c:when>
-					<c:otherwise>
-						<div class="alert alert-success p-0 border-0" role="alert">
-							<span class="d-block px-3 py-2"><i
-								class="fas fa-exclamation-circle p-0 px-2"></i>${mensagem.getMensagem()}</span>
-						</div>
-					</c:otherwise>
-				</c:choose>
-			</c:forEach>
-			<div class="card mb-4 wow fadeIn">
-                    <div class="card-body">
+                <div class="card mb-4 wow fadeIn">
+                    <div class="card-body d-sm-flex justify-content-between">
                         <h1 class="mb-2 mb-sm-0 pt-1">
-                            Menu Principal
+                            Carrinho
                         </h1>
                     </div>
                 </div>
-                <div class="card mb-4 wow fadeIn">
-                    <section class="dark-grey-text p-4">
-                    	<c:choose>
-	                    	<c:when test="${!usuario.isAdmin()}">
-								<div class="row mt-5">
-									<div class="col-md-4">
-										<div class="card">
-											<div class="card-header teal darken-3 text-white">
-												<h3 class="card-header-title mb-0">Meu Carrinho</h3>
-											</div>
-											<div class="card-body">
-												<p>Lorem ipsum dolor sit amet.</p>
-											</div>
-											<div class="card-footer text-right teal darken-1">
-												<form action="app" method="POST">
-			                                    	<input type="hidden" name="tarefa" value="consultarCarrinho">
-			                                    	<input type="hidden" name="txtCarrinhoId" value="${cliente.getCarrinho().getId()}">
-			                                    	<button type="submit" class="btn btn-link p-0 text-white font-weight-bold">Visualizar Carrinho</button>
-		                                    	</form>
-											</div>
-										</div>
-									</div>
-									<div class="col-md-4">
-										<div class="card">
-											<div class="card-header teal darken-3 text-white">
-												<h3 class="card-header-title mb-0">Meu Cupons</h3>
-											</div>
-											<div class="card-body">
-												<p>Lorem ipsum dolor sit amet.</p>
-											</div>
-											<div class="card-footer text-right teal darken-1">
-												<form action="" method="">
-													<!-- inputs aqui -->
-													<button type="submit"
-														class="btn btn-link p-0 text-white font-weight-bold">Visualizar
-														Cupons</button>
-												</form>
-											</div>
-										</div>
-									</div>
-									<div class="col-md-4">
-										<div class="card">
-											<div class="card-header teal darken-3 text-white">
-												<h3 class="card-header-title mb-0">Meus pedidos</h3>
-											</div>
-											<div class="card-body">
-												<p>Lorem ipsum dolor sit amet.</p>
-											</div>
-											<div class="card-footer text-right teal darken-1">
-												<form action="" method="">
-													<!-- inputs aqui -->
-													<button type="submit"
-														class="btn btn-link p-0 text-white font-weight-bold">Visualizar
-														Pedidos</button>
-												</form>
-											</div>
-										</div>
-									</div>
-								</div>
-							</c:when>
-							<c:otherwise>
-								<h3 class="h2">Olá, Admin!</h3>
-								<hr class="mb-4">
-								<div class="row">
-									<div class="col-md-4">
-										<div class="card">
-											<div class="card-header green darken-3 text-white">
-												<h3 class="card-header-title mb-0">Lista de Clientes</h3>
-											</div>
-											<div class="card-body">
-												<p>Lorem ipsum dolor sit amet.</p>
-											</div>
-											<div class="card-footer text-right green darken-1">
-												<a href="clienteLista.jsp"
-													class="btn btn-link p-0 text-white font-weight-bold">Visualizar
-													Clientes</a>
-											</div>
-										</div>
-									</div>
-									<div class="col-md-4">
-										<div class="card">
-											<div class="card-header green darken-3 text-white">
-												<h3 class="card-header-title mb-0">Lista de Produtos</h3>
-											</div>
-											<div class="card-body">
-												<p>Lorem ipsum dolor sit amet.</p>
-											</div>
-											<div class="card-footer text-right green darken-1">
-												<form action="" method="">
-													<!-- inputs aqui -->
-													<button type="submit"
-														class="btn btn-link p-0 text-white font-weight-bold">Visualizar
-														Produtos</button>
-												</form>
-											</div>
-										</div>
-									</div>
-									<div class="col-md-4">
-										<div class="card">
-											<div class="card-header green darken-3 text-white">
-												<h3 class="card-header-title mb-0">Lista de Pedidos</h3>
-											</div>
-											<div class="card-body">
-												<p>Lorem ipsum dolor sit amet.</p>
-											</div>
-											<div class="card-footer text-right green darken-1">
-												<form action="" method="">
-													<!-- inputs aqui -->
-													<button type="submit"
-														class="btn btn-link p-0 text-white font-weight-bold">Visualizar
-														Pedidos</button>
-												</form>
-											</div>
-										</div>
-									</div>
-								</div>
-							</c:otherwise>
-						</c:choose>
-					</section>
-                </div>
+                <c:forEach var="mensagem" items="${resultado.getMensagens()}">
+					<c:choose>
+						<c:when test="${mensagem.getMensagemStatus() == 'ERRO'}">
+							<div class="alert alert-danger p-0 border-0" role="alert">
+								<span class="d-block px-3 py-2"><i
+									class="fas fa-exclamation-circle p-0 px-2"></i>${mensagem.getMensagem()}</span>
+							</div>
+						</c:when>
+						<c:otherwise>
+							<div class="alert alert-success p-0 border-0" role="alert">
+								<span class="d-block px-3 py-2"><i
+									class="fas fa-exclamation-circle p-0 px-2"></i>${mensagem.getMensagem()}</span>
+							</div>
+						</c:otherwise>
+					</c:choose>
+				</c:forEach>
+				<c:forEach var="carrinho" items="${resultado.getEntidades()}">
+					<c:choose>
+						<c:when test="${carrinho.getItensCarrinho().size() == 0}">
+							<div class="alert alert-primary text-center p-0 border-0" role="alert">
+								<span class="d-block px-3 py-2 font-weight-bold"><i
+									class="fas fa-exclamation-circle p-0 px-2"></i>Seu carrinho está vazio!</span>
+							</div>
+						</c:when>
+						<c:otherwise>
+							<div class="card mb-4 wow fadeIn">
+								<form action="app" method="post">
+				                    <section class="dark-grey-text">
+				                        <div class="table-responsive">
+				                            <table class="table product-table mb-0">
+				                                <thead class="blue-gradient text-white ">
+				                                    <tr>
+				                                        <th>
+				                                        </th>
+				                                        <th class="font-weight-bold">
+				                                            <strong>Nome</strong>
+				                                        </th>
+				                                        <th class="font-weight-bold">
+				                                            <strong>Preço</strong>
+				                                        </th>
+				                                        <th class="font-weight-bold">
+				                                            <strong>Quantidade</strong>
+				                                        </th>
+				                                        <th class="font-weight-bold">
+				                                            <strong>Excluir</strong>
+				                                        </th>
+				                                    </tr>
+				                                </thead>
+				                                <tbody>
+				                                	<c:forEach var="item" items="${carrinho.getItensCarrinho()}">
+					                                    <tr>
+					                                        <td >
+					                                            <img src="${item.getProduto().getImagem().getCaminho() }" width="70%"  alt="${item.getProduto().getImagem().getDescricao() }" class="img-fluid z-depth-0">
+					                                        </td>
+					                                        <td>
+					                                            <h5 class="mt-3">
+					                                                <strong>${item.getProduto().getNome() }</strong>
+					                                            </h5>
+					                                        </td>
+					                                        <td >R$ ${item.getProduto().getPreco() }</td>
+					                                        <td>
+					                                            <input type="number" name="txtQuantidade" value="${item.getQuantidade()}" min="1" max="${item.getProduto().getEstoque().getQuantidadeTotal()}" aria-label="Search" class="form-control"
+					                                                style="width: 100px">
+					                                        </td>
+					                                        <td>
+					                                            <button type="button" class="btn btn-sm btn-danger" data-toggle="tooltip" data-placement="top" title="Remove item">
+					                                            	X
+					                                            </button>
+					                                        </td>
+					                                        <input type="hidden" class="valor" value="${item.getProduto().getPreco()}">
+					                                        <input type="hidden" name="txtProdutoId" value="${item.getProduto().getId() }">
+					                                    </tr>
+													</c:forEach>
+				                                    
+				                                    <tr>
+				                                        <td>
+				                                            <h4 class="mt-2">
+				                                                <strong>Total</strong>
+				                                            </h4>
+				                                        </td>
+				                                        <td class="text-right">
+				                                        	<input type="hidden" name="txtValorTotal" id="subTotal" value="${carrinho.getSubTotal() }">
+				                                            <h4 class="mt-2">
+				                                                <strong>R$ ${carrinho.getSubTotal() }</strong>
+				                                            </h4>
+				                                        </td>
+				                                        <td colspan="3" class="text-right">
+				                                        	<input type="hidden" name="tarefa" value="atualizarCarrinho">
+				                                            <button type="submit" class="btn btn-primary btn-rounded">Completar compra
+				                                                <i class="fas fa-angle-right right"></i>
+				                                            </button>
+				                                        </td>
+				                                    </tr>
+				                                </tbody>
+				                            </table>
+				                        </div>
+				                    </section>
+				                 </form>
+			                </div>
+						</c:otherwise>
+					</c:choose>
+				</c:forEach>
+                
             </div>
         </main>
 
         <footer class="page-footer text-center font-small primary-color-dark darken-2 mt-4 wow fadeIn">
             <div class="footer-copyright py-3">
-                Â© 2020 Copyright:
+                © 2020 Copyright:
                 <a href="https://mdbootstrap.com/education/bootstrap/" target="_blank"> foxdevlabs.com </a>
             </div>
         </footer>

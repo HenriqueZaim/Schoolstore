@@ -16,10 +16,6 @@ public class ImagemDao implements IDao{
 	private Connection conexao = null;
 	private Mensagem mensagem;
 	
-	public ImagemDao() {
-		conexao = ConexaoFactory.getConnection();
-	}
-	
 	@Override
 	public Mensagem salvar(EntidadeDominio entidadeDominio) throws SQLException {
 		Imagem imagem = (Imagem) entidadeDominio;

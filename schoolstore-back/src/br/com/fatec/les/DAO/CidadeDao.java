@@ -15,10 +15,6 @@ public class CidadeDao implements IDao{
 	
 	private Connection conexao = null;
 	
-	public CidadeDao() {
-		conexao = ConexaoFactory.getConnection();
-	}
-
 	@Override
 	public Mensagem salvar(EntidadeDominio entidadeDominio) throws SQLException {
         throw new UnsupportedOperationException("Operação não suportada.");

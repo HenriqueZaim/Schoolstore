@@ -18,10 +18,6 @@ public class UsuarioDao implements IDao{
 	private Mensagem mensagem;
 	ImagemDao imagemDao = new ImagemDao();
 	
-	public UsuarioDao() {
-		conexao = ConexaoFactory.getConnection();
-	}
-
 	@Override
 	public Mensagem atualizar(EntidadeDominio entidadeDominio) throws SQLException {
 		Usuario usuario  = (Usuario) entidadeDominio;
@@ -97,8 +93,8 @@ public class UsuarioDao implements IDao{
 				u.setId(Long.parseLong(rs.getString("usu_id")));
 				u.setEmail(rs.getString("usu_email"));
 				u.setSenha(rs.getString("usu_senha"));
-				u.setAdmin(rs.getString("usu_admin").equals("1") ? true : false);
-				i.setId(Long.parseLong(rs.getString("usu_ima_id")));
+				u.setAdmin(rs.getBoolean("usu_admin"));
+				i.setId(rs.getLong("usu_ima_id"));
 				u.setImagem((Imagem)imagemDao.consultar(i).get(0));
 				
 				usuarios.add(u);

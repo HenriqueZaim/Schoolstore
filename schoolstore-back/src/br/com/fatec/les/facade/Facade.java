@@ -6,12 +6,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import br.com.fatec.les.DAO.CarrinhoDao;
 import br.com.fatec.les.DAO.ClienteDao;
 import br.com.fatec.les.DAO.EstadoDao;
 import br.com.fatec.les.DAO.IDao;
 import br.com.fatec.les.DAO.UsuarioDao;
 import br.com.fatec.les.model.assets.EntidadeDominio;
 import br.com.fatec.les.model.endereco.Estado;
+import br.com.fatec.les.model.usuario.Carrinho;
 import br.com.fatec.les.model.usuario.Cliente;
 import br.com.fatec.les.model.usuario.Usuario;
 import br.com.fatec.les.strategy.ClienteDocumentoStrategy;
@@ -38,10 +40,12 @@ public class Facade implements IFacade{
 		ClienteDao clienteDao = new ClienteDao();
 		EstadoDao estadoDao = new EstadoDao();
 		UsuarioDao usuarioDao = new UsuarioDao();
+		CarrinhoDao carrinhoDao = new CarrinhoDao();
 		
 		daoMap.put(Cliente.class.getName(), clienteDao);
 		daoMap.put(Estado.class.getName(), estadoDao);
 		daoMap.put(Usuario.class.getName(), usuarioDao);
+		daoMap.put(Carrinho.class.getName(), carrinhoDao);
 
 		IStrategy clienteDocumentoStrategy = new ClienteDocumentoStrategy();
 		IStrategy clienteNomeStrategy = new ClienteNomeStrategy();
