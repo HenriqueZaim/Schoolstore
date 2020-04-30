@@ -113,6 +113,11 @@
                                     >Início
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link waves-effect" href="produtoLista.jsp"
+                                    >Produtos
+                                </a>
+                            </li>
                         </ul>
 
                         <ul
@@ -254,8 +259,7 @@
 					                                        </td>
 					                                        <input type="hidden" class="precificacao" value="${ item.getProduto().getPrecificacao().getPercentual()}">
 					                                        <input type="hidden" class="valor" value="${item.getProduto().getPreco()}">
-					                                        <input type="hidden" class="valorSomado" value="${ (Math.round((
-					                                        	item.getProduto().getPreco() * item.getProduto().getPrecificacao().getPercentual() + item.getProduto().getPreco())) * 100) / 100}">
+					                                        <input type="hidden" class="valorSomado" value="${ (Math.round((item.getProduto().getPreco() * item.getProduto().getPrecificacao().getPercentual() + item.getProduto().getPreco())) * 100) / 100}">
 					                                        <input type="hidden" name="txtProdutoId" value="${item.getProduto().getId() }">
 					                                    </tr>
 													</c:forEach>

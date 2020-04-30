@@ -89,13 +89,13 @@ public class ProdutoDao implements IDao{
 				pr.setId(rs.getLong("pro_pre_id"));
 				p.setPrecificacao((Precificacao)precificacaoDao.consultar(pr).get(0));
 				
-				categoriasEntidade.addAll(categoriaDao.consultar(entidade));
+				categoriasEntidade.addAll(categoriaDao.consultar(p));
 				for(EntidadeDominio cat : categoriasEntidade) {
 					categorias.add((Categoria)cat);
 				}
 				p.setCategoria(categorias);
 				
-				aux = (Produto) estoqueDao.consultar(entidade).get(0);
+				aux = (Produto) estoqueDao.consultar(p).get(0);
 				p.setEstoque(aux.getEstoque());
 
 				produtos.add(p);

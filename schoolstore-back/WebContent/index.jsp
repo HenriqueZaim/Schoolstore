@@ -41,12 +41,9 @@
 			<div class="collapse navbar-collapse" id="navbarSupportedContent-5">
 				<ul class="navbar-nav mr-auto">
 					<li class="nav-item active"><a
-						class="nav-link waves-effect waves-light" href="#">Inicial </a></li>
+						class="nav-link waves-effect waves-light" href="index.jsp">Inicial </a></li>
 					<li class="nav-item"><a
-						class="nav-link waves-effect waves-light" href="about.html">Sobre</a>
-					</li>
-					<li class="nav-item"><a
-						class="nav-link waves-effect waves-light" href="products.html">Produtos</a>
+						class="nav-link waves-effect waves-light" href="produtoLista.jsp">Produtos</a>
 					</li>
 				</ul>
 

@@ -22,6 +22,7 @@ import br.com.fatec.les.viewHelper.CarrinhoVH;
 import br.com.fatec.les.viewHelper.ClienteVH;
 import br.com.fatec.les.viewHelper.EstadoVH;
 import br.com.fatec.les.viewHelper.IViewHelper;
+import br.com.fatec.les.viewHelper.ProdutoVH;
 import br.com.fatec.les.viewHelper.UsuarioVH;
 
 @WebServlet(name = "servletController", urlPatterns = "/app")
@@ -65,7 +66,14 @@ public class ServletController extends HttpServlet{
     	vhMap.put("atualizarCarrinho", new CarrinhoVH());
     	commandMap.put("consultarCarrinho", new ConsultarCommand());
     	commandMap.put("atualizarCarrinho", new AtualizarCommand());
-
+    	
+    	// produto
+    	vhMap.put("consultarProdutos", new ProdutoVH());
+    	commandMap.put("consultarProdutos", new ConsultarCommand());
+    	
+    	// Adicionar produto no carrinho
+    	vhMap.put("adicionarProduto", new ProdutoVH());
+    	commandMap.put("adicionarProduto", new SalvarCommand());
 	}
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)

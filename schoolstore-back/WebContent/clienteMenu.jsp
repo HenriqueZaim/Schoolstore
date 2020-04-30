@@ -110,6 +110,11 @@
                                     >Iní­cio
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link waves-effect" href="produtoLista.jsp"
+                                    >Produtos
+                                </a>
+                            </li>
                         </ul>
 
                         <ul

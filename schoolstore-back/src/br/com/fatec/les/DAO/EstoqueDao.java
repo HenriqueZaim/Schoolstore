@@ -60,7 +60,7 @@ public class EstoqueDao implements IDao{
 				Estoque estoque = new Estoque();
 				Produto aux  = new Produto();
 				estoque.setQuantidadeTotal(rs.getInt("sto_quantidadeTotal"));
-				estoque.setProduto(produto);
+//				estoque.setProduto(produto);
 				long idSto = rs.getLong("sto_id");
 				
 				Produto aux2 = new Produto();

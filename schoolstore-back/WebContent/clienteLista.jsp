@@ -120,6 +120,11 @@
 						<ul class="navbar-nav mr-auto">
 							<li class="nav-item"><a class="nav-link waves-effect"
 								href="index.html">Início </a></li>
+								<li class="nav-item">
+                                <a class="nav-link waves-effect" href="produtoLista.jsp"
+                                    >Produtos
+                                </a>
+                            </li>
 						</ul>
 
 						<ul
