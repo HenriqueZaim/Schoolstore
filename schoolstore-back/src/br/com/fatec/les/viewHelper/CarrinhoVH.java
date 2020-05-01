@@ -12,8 +12,10 @@ import javax.servlet.http.HttpServletResponse;
 import br.com.fatec.les.facade.Resultado;
 import br.com.fatec.les.model.assets.EntidadeDominio;
 import br.com.fatec.les.model.assets.IDominio;
+import br.com.fatec.les.model.produto.Produto;
 import br.com.fatec.les.model.usuario.Carrinho;
 import br.com.fatec.les.model.usuario.Cliente;
+import br.com.fatec.les.model.usuario.ItemCarrinho;
 
 public class CarrinhoVH implements IViewHelper{
 
@@ -36,6 +38,19 @@ public class CarrinhoVH implements IViewHelper{
 				validade.plusDays(10);
 				carrinho.setValidade(validade);
 			}
+		}else if(tarefa.equals("adicionarProduto")) {
+			ItemCarrinho itemCarrinho = new ItemCarrinho();
+			List<ItemCarrinho> itensCarrinho = new ArrayList<ItemCarrinho>();
+			Produto produto = new Produto();
+			produto.setId(Long.parseLong(request.getParameter("txtProdutoId")));
+			
+			itemCarrinho.setProduto(produto);
+			itemCarrinho.setQuantidade(1);
+			itensCarrinho.add(itemCarrinho);
+			carrinho.setItensCarrinho(itensCarrinho);
+			carrinho.setId(Long.parseLong(request.getParameter("txtCarrinhoId")));
+			carrinho.setSubTotal(Float.parseFloat(request.getParameter("txtSubTotal")));
+
 		}
 		else {
 			return carrinho;

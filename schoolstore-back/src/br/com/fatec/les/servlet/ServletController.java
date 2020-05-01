@@ -67,13 +67,17 @@ public class ServletController extends HttpServlet{
     	commandMap.put("consultarCarrinho", new ConsultarCommand());
     	commandMap.put("atualizarCarrinho", new AtualizarCommand());
     	
-    	// produto
+    	// produtos
     	vhMap.put("consultarProdutos", new ProdutoVH());
     	commandMap.put("consultarProdutos", new ConsultarCommand());
     	
+    	// Visualziar produto
+    	vhMap.put("consultarProduto", new ProdutoVH());
+    	commandMap.put("consultarProduto", new ConsultarCommand());
+    	
     	// Adicionar produto no carrinho
-    	vhMap.put("adicionarProduto", new ProdutoVH());
-    	commandMap.put("adicionarProduto", new SalvarCommand());
+    	vhMap.put("adicionarProduto", new CarrinhoVH());
+    	commandMap.put("adicionarProduto", new AtualizarCommand());
 	}
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)

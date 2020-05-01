@@ -113,10 +113,18 @@ public class CarrinhoDao implements IDao{
 		
 		try {
 			pstm = conexao.prepareStatement(sql);
-			pstm.setFloat(1, carrinho.getSubTotal());
-			pstm.setLong(2, carrinho.getId());
 			
-			itemCarrinhoDao.deletar(carrinho);
+			if(carrinho.getValidade() != null) {
+				itemCarrinhoDao.deletar(carrinho);
+				pstm.setFloat(1, carrinho.getSubTotal());
+			}else {
+				Carrinho carrinhoAux = new Carrinho();
+				carrinhoAux = (Carrinho)consultar(carrinho).get(0);
+				Float valorFinal = carrinhoAux.getSubTotal() + carrinho.getSubTotal();
+				pstm.setFloat(1, valorFinal);
+			}
+			
+			pstm.setLong(2, carrinho.getId());
 			
 			if(!carrinho.getItensCarrinho().isEmpty() && carrinho.getItensCarrinho() != null) {
 				for(ItemCarrinho item : carrinho.getItensCarrinho()) {

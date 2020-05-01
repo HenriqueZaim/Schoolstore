@@ -24,6 +24,7 @@ public class ItemCarrinhoVH implements IViewHelper{
 			String[] produtos = request.getParameterValues("txtProdutoId");
 			for(int i = 0 ; i < produtos.length ; i++) {
 				itemCarrinho = new ItemCarrinho();
+				produto = new Produto();
 				itemCarrinho.setQuantidade(Integer.parseInt(request.getParameterValues("txtQuantidade")[i]));
 				produto.setId(Long.parseLong(request.getParameterValues("txtProdutoId")[i]));
 				itemCarrinho.setProduto(produto);

@@ -16,6 +16,7 @@ import br.com.fatec.les.model.assets.IDominio;
 import br.com.fatec.les.model.estoque.ItemEstoque;
 import br.com.fatec.les.model.produto.Produto;
 import br.com.fatec.les.model.usuario.Carrinho;
+import br.com.fatec.les.model.usuario.Cliente;
 import br.com.fatec.les.model.usuario.ItemCarrinho;
 
 public class ProdutoVH implements IViewHelper{
@@ -23,12 +24,6 @@ public class ProdutoVH implements IViewHelper{
 	@Override
 	public IDominio getEntidade(HttpServletRequest request) {
 		Produto produto = new Produto();
-		String tarefa = request.getParameter("tarefa");
-
-		if(tarefa.equals("adicionarProduto")) {
-			Carrinho carrinho = new Carrinho();
-
-		}
 		
 		if(request.getParameter("txtProdutoId") != null) {
 			produto.setId(Long.parseLong(request.getParameter("txtProdutoId")));
@@ -55,11 +50,29 @@ public class ProdutoVH implements IViewHelper{
 				produtos.add(produto);
 			}
 			
+			
 			String json = new Gson().toJson(produtos);
 			
 			response.setContentType("application/json");
 			response.setCharacterEncoding("UTF-8");
 			response.getWriter().write(json);
+		}
+		if(tarefa.equals("consultarProduto")) {
+			List<Produto> produtos = new ArrayList<Produto>();
+			Resultado result = new Resultado();
+			
+			result = (Resultado)request.getAttribute("resultado");
+			
+			for(EntidadeDominio p : result.getEntidades()) {
+				Produto produto = (Produto) p;
+				produtos.add(produto);
+			}
+			
+			Produto prod = produtos.get(0);
+
+			request.setAttribute("produto", prod);
+			request.getRequestDispatcher("produtoVisualizar.jsp").
+			forward(request, response);
 		}
 		
 	}

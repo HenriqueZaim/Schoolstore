@@ -30,7 +30,7 @@ $(document).ready(function () {
 
 									                	<button type="submit" class="btn btn-link btn-sm p-0 pb-2 disabled">+ Carrinho</button>
 									                	<form action="app" method="post">
-									                		<input type="hidden" name="txtProdutoId" value="${data.id}>
+									                		<input type="hidden" name="txtProdutoId" value="${data.id}">
 									                		<input type="hidden" name="tarefa" value="consultarProduto">
 									                		<button type="submit" class="btn btn-link btn-sm p-0 pb-2">Ver</button>
 									                	</form>
@@ -60,13 +60,14 @@ $(document).ready(function () {
 									                </div>
 									                <div class="col-12 text-right">
 									                	<form action="app" method="post">
-									                		<input type="hidden" name="txtCarrinhoId" value="${carrinho}">
-									                		<input type="hidden" name="txtProdutoId" value="${data.id}>
+																			<input type="hidden" name="txtCarrinhoId" value="${carrinho}">
+																			<input type="hidden" name="txtSubTotal" value="${preco}">
+									                		<input type="hidden" name="txtProdutoId" value="${data.id}">
 									                		<input type="hidden" name="tarefa" value="adicionarProduto">
 									                		<button type="submit" class="btn btn-link btn-sm p-0 pb-2">+ Carrinho</button>
 									                	</form>
 									                	<form action="app" method="post">
-									                		<input type="hidden" name="txtProdutoId" value="${data.id}>
+									                		<input type="hidden" name="txtProdutoId" value="${data.id}">
 									                		<input type="hidden" name="tarefa" value="consultarProduto">
 									                		<button type="submit" class="btn btn-link btn-sm p-0 pb-2">Ver</button>
 									                	</form>
@@ -126,7 +127,7 @@ $(".filtro").change(function(){
 
 											                	<button type="submit" class="btn btn-link btn-sm p-0 pb-2 disabled">+ Carrinho</button>
 											                	<form action="app" method="post">
-											                		<input type="hidden" name="txtProdutoId" value="${data.id}>
+											                		<input type="hidden" name="txtProdutoId" value="${data.id}">
 											                		<input type="hidden" name="tarefa" value="consultarProduto">
 											                		<button type="submit" class="btn btn-link btn-sm p-0 pb-2">Ver</button>
 											                	</form>
@@ -156,13 +157,14 @@ $(".filtro").change(function(){
 											                </div>
 											                <div class="col-12 text-right">
 											                	<form action="app" method="post">
-											                		<input type="hidden" name="txtCarrinhoId" value="${carrinho}">
-											                		<input type="hidden" name="txtProdutoId" value="${data.id}>
+																					<input type="hidden" name="txtCarrinhoId" value="${carrinho}">
+																					<input type="hidden" name="txtSubTotal" value="${preco}">
+											                		<input type="hidden" name="txtProdutoId" value="${data.id}">
 											                		<input type="hidden" name="tarefa" value="adicionarProduto">
 											                		<button type="submit" class="btn btn-link btn-sm p-0 pb-2">+ Carrinho</button>
 											                	</form>
 											                	<form action="app" method="post">
-											                		<input type="hidden" name="txtProdutoId" value="${data.id}>
+											                		<input type="hidden" name="txtProdutoId" value="${data.id}">
 											                		<input type="hidden" name="tarefa" value="consultarProduto">
 											                		<button type="submit" class="btn btn-link btn-sm p-0 pb-2">Ver</button>
 											                	</form>
@@ -213,7 +215,7 @@ $(".filtro").change(function(){
 
 										                	<button type="submit" class="btn btn-link btn-sm p-0 pb-2 disabled">+ Carrinho</button>
 										                	<form action="app" method="post">
-										                		<input type="hidden" name="txtProdutoId" value="${data.id}>
+										                		<input type="hidden" name="txtProdutoId" value="${data.id}">
 										                		<input type="hidden" name="tarefa" value="consultarProduto">
 										                		<button type="submit" class="btn btn-link btn-sm p-0 pb-2">Ver</button>
 										                	</form>
@@ -243,13 +245,14 @@ $(".filtro").change(function(){
 										                </div>
 										                <div class="col-12 text-right">
 										                	<form action="app" method="post">
-										                		<input type="hidden" name="txtCarrinhoId" value="${carrinho}">
-										                		<input type="hidden" name="txtProdutoId" value="${data.id}>
+																				<input type="hidden" name="txtCarrinhoId" value="${carrinho}">
+																				<input type="hidden" name="txtSubTotal" value="${preco}">
+										                		<input type="hidden" name="txtProdutoId" value="${data.id}">
 										                		<input type="hidden" name="tarefa" value="adicionarProduto">
 										                		<button type="submit" class="btn btn-link btn-sm p-0 pb-2">+ Carrinho</button>
 										                	</form>
 										                	<form action="app" method="post">
-										                		<input type="hidden" name="txtProdutoId" value="${data.id}>
+										                		<input type="hidden" name="txtProdutoId" value="${data.id}">
 										                		<input type="hidden" name="tarefa" value="consultarProduto">
 										                		<button type="submit" class="btn btn-link btn-sm p-0 pb-2">Ver</button>
 										                	</form>
@@ -296,7 +299,7 @@ $(".filtro").change(function(){
 
 										                	<button type="submit" class="btn btn-link btn-sm p-0 pb-2 disabled">+ Carrinho</button>
 										                	<form action="app" method="post">
-										                		<input type="hidden" name="txtProdutoId" value="${data.id}>
+										                		<input type="hidden" name="txtProdutoId" value="${data.id}">
 										                		<input type="hidden" name="tarefa" value="consultarProduto">
 										                		<button type="submit" class="btn btn-link btn-sm p-0 pb-2">Ver</button>
 										                	</form>
@@ -326,13 +329,14 @@ $(".filtro").change(function(){
 										                </div>
 										                <div class="col-12 text-right">
 										                	<form action="app" method="post">
-										                		<input type="hidden" name="txtCarrinhoId" value="${carrinho}">
-										                		<input type="hidden" name="txtProdutoId" value="${data.id}>
+																				<input type="hidden" name="txtCarrinhoId" value="${carrinho}">
+																				<input type="hidden" name="txtSubTotal" value="${preco}">
+										                		<input type="hidden" name="txtProdutoId" value="${data.id}">
 										                		<input type="hidden" name="tarefa" value="adicionarProduto">
 										                		<button type="submit" class="btn btn-link btn-sm p-0 pb-2">+ Carrinho</button>
 										                	</form>
 										                	<form action="app" method="post">
-										                		<input type="hidden" name="txtProdutoId" value="${data.id}>
+										                		<input type="hidden" name="txtProdutoId" value="${data.id}">
 										                		<input type="hidden" name="tarefa" value="consultarProduto">
 										                		<button type="submit" class="btn btn-link btn-sm p-0 pb-2">Ver</button>
 										                	</form>
@@ -385,7 +389,7 @@ $(".filtro").change(function(){
 
 											                	<button type="submit" class="btn btn-link btn-sm p-0 pb-2 disabled">+ Carrinho</button>
 											                	<form action="app" method="post">
-											                		<input type="hidden" name="txtProdutoId" value="${data.id}>
+											                		<input type="hidden" name="txtProdutoId" value="${data.id}">
 											                		<input type="hidden" name="tarefa" value="consultarProduto">
 											                		<button type="submit" class="btn btn-link btn-sm p-0 pb-2">Ver</button>
 											                	</form>
@@ -415,13 +419,14 @@ $(".filtro").change(function(){
 											                </div>
 											                <div class="col-12 text-right">
 											                	<form action="app" method="post">
-											                		<input type="hidden" name="txtCarrinhoId" value="${carrinho}">
-											                		<input type="hidden" name="txtProdutoId" value="${data.id}>
+																					<input type="hidden" name="txtCarrinhoId" value="${carrinho}">
+																					<input type="hidden" name="txtSubTotal" value="${preco}">
+											                		<input type="hidden" name="txtProdutoId" value="${data.id}">
 											                		<input type="hidden" name="tarefa" value="adicionarProduto">
 											                		<button type="submit" class="btn btn-link btn-sm p-0 pb-2">+ Carrinho</button>
 											                	</form>
 											                	<form action="app" method="post">
-											                		<input type="hidden" name="txtProdutoId" value="${data.id}>
+											                		<input type="hidden" name="txtProdutoId" value="${data.id}">
 											                		<input type="hidden" name="tarefa" value="consultarProduto">
 											                		<button type="submit" class="btn btn-link btn-sm p-0 pb-2">Ver</button>
 											                	</form>
@@ -472,7 +477,7 @@ $(".filtro").change(function(){
 
 										                	<button type="submit" class="btn btn-link btn-sm p-0 pb-2 disabled">+ Carrinho</button>
 										                	<form action="app" method="post">
-										                		<input type="hidden" name="txtProdutoId" value="${data.id}>
+										                		<input type="hidden" name="txtProdutoId" value="${data.id}">
 										                		<input type="hidden" name="tarefa" value="consultarProduto">
 										                		<button type="submit" class="btn btn-link btn-sm p-0 pb-2">Ver</button>
 										                	</form>
@@ -502,13 +507,14 @@ $(".filtro").change(function(){
 										                </div>
 										                <div class="col-12 text-right">
 										                	<form action="app" method="post">
-										                		<input type="hidden" name="txtCarrinhoId" value="${carrinho}">
-										                		<input type="hidden" name="txtProdutoId" value="${data.id}>
+																				<input type="hidden" name="txtCarrinhoId" value="${carrinho}">
+																				<input type="hidden" name="txtSubTotal" value="${preco}">
+										                		<input type="hidden" name="txtProdutoId" value="${data.id}">
 										                		<input type="hidden" name="tarefa" value="adicionarProduto">
 										                		<button type="submit" class="btn btn-link btn-sm p-0 pb-2">+ Carrinho</button>
 										                	</form>
 										                	<form action="app" method="post">
-										                		<input type="hidden" name="txtProdutoId" value="${data.id}>
+										                		<input type="hidden" name="txtProdutoId" value="${data.id}">
 										                		<input type="hidden" name="tarefa" value="consultarProduto">
 										                		<button type="submit" class="btn btn-link btn-sm p-0 pb-2">Ver</button>
 										                	</form>
@@ -555,7 +561,7 @@ $(".filtro").change(function(){
 
 										                	<button type="submit" class="btn btn-link btn-sm p-0 pb-2 disabled">+ Carrinho</button>
 										                	<form action="app" method="post">
-										                		<input type="hidden" name="txtProdutoId" value="${data.id}>
+										                		<input type="hidden" name="txtProdutoId" value="${data.id}">
 										                		<input type="hidden" name="tarefa" value="consultarProduto">
 										                		<button type="submit" class="btn btn-link btn-sm p-0 pb-2">Ver</button>
 										                	</form>
@@ -585,13 +591,14 @@ $(".filtro").change(function(){
 										                </div>
 										                <div class="col-12 text-right">
 										                	<form action="app" method="post">
-										                		<input type="hidden" name="txtCarrinhoId" value="${carrinho}">
-										                		<input type="hidden" name="txtProdutoId" value="${data.id}>
+																				<input type="hidden" name="txtCarrinhoId" value="${carrinho}">
+																				<input type="hidden" name="txtSubTotal" value="${preco}">
+										                		<input type="hidden" name="txtProdutoId" value="${data.id}">
 										                		<input type="hidden" name="tarefa" value="adicionarProduto">
 										                		<button type="submit" class="btn btn-link btn-sm p-0 pb-2">+ Carrinho</button>
 										                	</form>
 										                	<form action="app" method="post">
-										                		<input type="hidden" name="txtProdutoId" value="${data.id}>
+										                		<input type="hidden" name="txtProdutoId" value="${data.id}">
 										                		<input type="hidden" name="tarefa" value="consultarProduto">
 										                		<button type="submit" class="btn btn-link btn-sm p-0 pb-2">Ver</button>
 										                	</form>
@@ -644,7 +651,7 @@ $(".filtro").change(function(){
 
 											                	<button type="submit" class="btn btn-link btn-sm p-0 pb-2 disabled">+ Carrinho</button>
 											                	<form action="app" method="post">
-											                		<input type="hidden" name="txtProdutoId" value="${data.id}>
+											                		<input type="hidden" name="txtProdutoId" value="${data.id}">
 											                		<input type="hidden" name="tarefa" value="consultarProduto">
 											                		<button type="submit" class="btn btn-link btn-sm p-0 pb-2">Ver</button>
 											                	</form>
@@ -674,13 +681,14 @@ $(".filtro").change(function(){
 											                </div>
 											                <div class="col-12 text-right">
 											                	<form action="app" method="post">
-											                		<input type="hidden" name="txtCarrinhoId" value="${carrinho}">
-											                		<input type="hidden" name="txtProdutoId" value="${data.id}>
+																					<input type="hidden" name="txtCarrinhoId" value="${carrinho}">
+																					<input type="hidden" name="txtSubTotal" value="${preco}">
+											                		<input type="hidden" name="txtProdutoId" value="${data.id}">
 											                		<input type="hidden" name="tarefa" value="adicionarProduto">
 											                		<button type="submit" class="btn btn-link btn-sm p-0 pb-2">+ Carrinho</button>
 											                	</form>
 											                	<form action="app" method="post">
-											                		<input type="hidden" name="txtProdutoId" value="${data.id}>
+											                		<input type="hidden" name="txtProdutoId" value="${data.id}">
 											                		<input type="hidden" name="tarefa" value="consultarProduto">
 											                		<button type="submit" class="btn btn-link btn-sm p-0 pb-2">Ver</button>
 											                	</form>
@@ -731,7 +739,7 @@ $(".filtro").change(function(){
 
 										                	<button type="submit" class="btn btn-link btn-sm p-0 pb-2 disabled">+ Carrinho</button>
 										                	<form action="app" method="post">
-										                		<input type="hidden" name="txtProdutoId" value="${data.id}>
+										                		<input type="hidden" name="txtProdutoId" value="${data.id}">
 										                		<input type="hidden" name="tarefa" value="consultarProduto">
 										                		<button type="submit" class="btn btn-link btn-sm p-0 pb-2">Ver</button>
 										                	</form>
@@ -761,13 +769,14 @@ $(".filtro").change(function(){
 										                </div>
 										                <div class="col-12 text-right">
 										                	<form action="app" method="post">
-										                		<input type="hidden" name="txtCarrinhoId" value="${carrinho}">
-										                		<input type="hidden" name="txtProdutoId" value="${data.id}>
+																				<input type="hidden" name="txtCarrinhoId" value="${carrinho}">
+																				<input type="hidden" name="txtSubTotal" value="${preco}">
+																				<input type="hidden" name="txtProdutoId" value="${data.id}">
 										                		<input type="hidden" name="tarefa" value="adicionarProduto">
 										                		<button type="submit" class="btn btn-link btn-sm p-0 pb-2">+ Carrinho</button>
 										                	</form>
 										                	<form action="app" method="post">
-										                		<input type="hidden" name="txtProdutoId" value="${data.id}>
+										                		<input type="hidden" name="txtProdutoId" value="${data.id}">
 										                		<input type="hidden" name="tarefa" value="consultarProduto">
 										                		<button type="submit" class="btn btn-link btn-sm p-0 pb-2">Ver</button>
 										                	</form>
@@ -814,7 +823,7 @@ $(".filtro").change(function(){
 
 										                	<button type="submit" class="btn btn-link btn-sm p-0 pb-2 disabled">+ Carrinho</button>
 										                	<form action="app" method="post">
-										                		<input type="hidden" name="txtProdutoId" value="${data.id}>
+										                		<input type="hidden" name="txtProdutoId" value="${data.id}">
 										                		<input type="hidden" name="tarefa" value="consultarProduto">
 										                		<button type="submit" class="btn btn-link btn-sm p-0 pb-2">Ver</button>
 										                	</form>
@@ -844,13 +853,14 @@ $(".filtro").change(function(){
 										                </div>
 										                <div class="col-12 text-right">
 										                	<form action="app" method="post">
-										                		<input type="hidden" name="txtCarrinhoId" value="${carrinho}">
-										                		<input type="hidden" name="txtProdutoId" value="${data.id}>
+																				<input type="hidden" name="txtCarrinhoId" value="${carrinho}">
+																				<input type="hidden" name="txtSubTotal" value="${preco}">
+										                		<input type="hidden" name="txtProdutoId" value="${data.id}">
 										                		<input type="hidden" name="tarefa" value="adicionarProduto">
 										                		<button type="submit" class="btn btn-link btn-sm p-0 pb-2">+ Carrinho</button>
 										                	</form>
 										                	<form action="app" method="post">
-										                		<input type="hidden" name="txtProdutoId" value="${data.id}>
+										                		<input type="hidden" name="txtProdutoId" value="${data.id}">
 										                		<input type="hidden" name="tarefa" value="consultarProduto">
 										                		<button type="submit" class="btn btn-link btn-sm p-0 pb-2">Ver</button>
 										                	</form>
@@ -892,7 +902,7 @@ $(".filtro").change(function(){
 
 											                	<button type="submit" class="btn btn-link btn-sm p-0 pb-2 disabled">+ Carrinho</button>
 											                	<form action="app" method="post">
-											                		<input type="hidden" name="txtProdutoId" value="${data.id}>
+											                		<input type="hidden" name="txtProdutoId" value="${data.id}">
 											                		<input type="hidden" name="tarefa" value="consultarProduto">
 											                		<button type="submit" class="btn btn-link btn-sm p-0 pb-2">Ver</button>
 											                	</form>
@@ -922,13 +932,14 @@ $(".filtro").change(function(){
 											                </div>
 											                <div class="col-12 text-right">
 											                	<form action="app" method="post">
-											                		<input type="hidden" name="txtCarrinhoId" value="${carrinho}">
-											                		<input type="hidden" name="txtProdutoId" value="${data.id}>
+																					<input type="hidden" name="txtCarrinhoId" value="${carrinho}">
+																					<input type="hidden" name="txtSubTotal" value="${preco}">
+											                		<input type="hidden" name="txtProdutoId" value="${data.id}">
 											                		<input type="hidden" name="tarefa" value="adicionarProduto">
 											                		<button type="submit" class="btn btn-link btn-sm p-0 pb-2">+ Carrinho</button>
 											                	</form>
 											                	<form action="app" method="post">
-											                		<input type="hidden" name="txtProdutoId" value="${data.id}>
+											                		<input type="hidden" name="txtProdutoId" value="${data.id}">
 											                		<input type="hidden" name="tarefa" value="consultarProduto">
 											                		<button type="submit" class="btn btn-link btn-sm p-0 pb-2">Ver</button>
 											                	</form>

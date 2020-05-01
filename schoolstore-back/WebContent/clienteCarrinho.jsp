@@ -246,8 +246,8 @@
 					                                                <strong>${item.getProduto().getNome() }</strong>
 					                                            </h5>
 					                                        </td>
-					                                        <td class="preco">R$${ (Math.round((
-					                                        	item.getProduto().getPreco() * item.getProduto().getPrecificacao().getPercentual() + item.getProduto().getPreco())) * 100) / 100}</td>
+					                                        <td class="preco">R$${ (Math.round(
+					                                        (	(item.getProduto().getPreco() * item.getProduto().getPrecificacao().getPercentual()) * item.getQuantidade() + item.getProduto().getPreco())) * 100) / 100}</td>
 					                                        <td>
 					                                            <input type="number" class="quantidade" name="txtQuantidade" value="${item.getQuantidade()}" min="1" max="${item.getProduto().getEstoque().getQuantidadeTotal()}" aria-label="Search" class="form-control"
 					                                                style="width: 100px">
