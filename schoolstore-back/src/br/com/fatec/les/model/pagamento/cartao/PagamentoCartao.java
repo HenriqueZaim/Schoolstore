@@ -1,9 +1,11 @@
 package br.com.fatec.les.model.pagamento.cartao;
 
+import java.util.List;
+
 public class PagamentoCartao {
 
 	private float valorTotalCartao;
-	private CartaoCredito cartaoCredito;
+	private List<CartaoCredito> cartoesCredito;
 	
 	public float getValorTotalCartao() {
 		return valorTotalCartao;
@@ -11,10 +13,11 @@ public class PagamentoCartao {
 	public void setValorTotalCartao(float valorTotalCartao) {
 		this.valorTotalCartao = valorTotalCartao;
 	}
-	public CartaoCredito getCartaoCredito() {
-		return cartaoCredito;
+	public List<CartaoCredito> getCartoesCredito() {
+		return cartoesCredito;
 	}
-	public void setCartaoCredito(CartaoCredito cartaoCredito) {
-		this.cartaoCredito = cartaoCredito;
+	public void setCartoesCredito(List<CartaoCredito> cartoesCredito) {
+		this.cartoesCredito = cartoesCredito;
 	}
+
 }

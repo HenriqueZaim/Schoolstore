@@ -16,26 +16,43 @@ public class CartaoCreditoVH implements IViewHelper{
 		ArrayList<CartaoCredito> cartoes = new ArrayList<CartaoCredito>();
 		CartaoCredito cartaoCredito = new CartaoCredito();
 		String tarefa = request.getParameter("tarefa");
+		
+		if(tarefa.equals("efetuarPedido")) {
+			if(request.getParameterValues("txtCartaoCreditoId") == null) {
+				return cartoes;
+			}else {
+				String[] cartoesForm = request.getParameterValues("txtCartaoCreditoId");
+				for(int i = 0 ; i < cartoesForm.length ; i++) {
+					cartaoCredito = new CartaoCredito();
 
-		if(request.getParameterValues("txtCartaoCredito") == null) {
-			return cartoes;
-		}else {
-			String[] cartoesForm = request.getParameterValues("txtCartaoCredito");
-			for(int i = 0 ; i < cartoesForm.length ; i++) {
-				cartaoCredito = new CartaoCredito();
-				
-				if(tarefa.equals("atualizarCliente")) {
-					cartaoCredito.setId(request.getParameterValues("txtCartaoCreditoId")[i] != "" ? Long.parseLong(request.getParameterValues("txtCartaoCreditoId")[i]) : null);
+					cartaoCredito.setId(Long.parseLong(request.getParameterValues("txtCartaoCreditoId")[i]));
+					
+					cartoes.add(cartaoCredito);
 				}
-				
-				cartaoCredito.setCodigo(request.getParameterValues("txtCodigoCartao")[i]);
-				cartaoCredito.setNomeImpresso(request.getParameterValues("txtNomeImpressoCartao")[i]);
-				cartaoCredito.setNumero(request.getParameterValues("txtNumeroCartao")[i]);
-				cartaoCredito.setFavorito(Boolean.parseBoolean(request.getParameterValues("txtFavoritoCartao")[i]));
-				
-				cartoes.add(cartaoCredito);
+			}
+		}else {
+			if(request.getParameterValues("txtCartaoCredito") == null) {
+				return cartoes;
+			}else {
+				String[] cartoesForm = request.getParameterValues("txtCartaoCredito");
+				for(int i = 0 ; i < cartoesForm.length ; i++) {
+					cartaoCredito = new CartaoCredito();
+					
+					if(tarefa.equals("atualizarCliente")) {
+						cartaoCredito.setId(request.getParameterValues("txtCartaoCreditoId")[i] != "" ? Long.parseLong(request.getParameterValues("txtCartaoCreditoId")[i]) : null);
+					}
+					
+					cartaoCredito.setCodigo(request.getParameterValues("txtCodigoCartao")[i]);
+					cartaoCredito.setNomeImpresso(request.getParameterValues("txtNomeImpressoCartao")[i]);
+					cartaoCredito.setNumero(request.getParameterValues("txtNumeroCartao")[i]);
+					cartaoCredito.setFavorito(Boolean.parseBoolean(request.getParameterValues("txtFavoritoCartao")[i]));
+					
+					cartoes.add(cartaoCredito);
+				}
 			}
 		}
+
+		
 		return cartoes;
 	}
 

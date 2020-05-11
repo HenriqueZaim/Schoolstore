@@ -4,6 +4,7 @@ import java.util.List;
 
 import br.com.fatec.les.model.assets.EntidadeDominio;
 import br.com.fatec.les.model.pagamento.FormaPagamento;
+import br.com.fatec.les.model.usuario.Cliente;
 
 public class Pedido extends EntidadeDominio{
 
@@ -12,7 +13,14 @@ public class Pedido extends EntidadeDominio{
 	private Frete frete;
 	private List<ItemPedido> itensPedido;
 	private FormaPagamento formaPagamento;
+	private Cliente cliente;
 	
+	public Cliente getCliente() {
+		return cliente;
+	}
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
 	public FormaPagamento getFormaPagamento() {
 		return formaPagamento;
 	}

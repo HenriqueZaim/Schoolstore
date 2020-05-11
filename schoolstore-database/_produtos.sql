@@ -36,9 +36,9 @@ VALUES
 INSERT INTO tb_produto (pro_nome, pro_preco, pro_descricao, pro_ima_id, pro_pre_id, pro_ativo, pro_dataHoraCriacao)
 VALUES 
 ("Cadeira escolar", 25.99, "Cadeira ajustada e desenvolvida para fins escolares ", 2, 2, b'1', NOW()),
-("Mesa para escritório", 230.99, "Descrição sobre um produto", 3, 5, b'1', NOW()),
-("Mesa escolar", 89.90, "Descrição sobre um produto", 4, 4, b'1', NOW()),
-("Cadeira para escritório", 85.99, "Descrição sobre um produto", 5, 4, b'1', NOW()),
+("Mesa para escritório", 230.99, "Mesa para escritório feita sob medida", 3, 5, b'1', NOW()),
+("Mesa escolar", 89.90, "Mesa para fins escolares", 4, 4, b'1', NOW()),
+("Cadeira para escritório", 85.99, "Cadeira simples para seu escritório", 5, 4, b'1', NOW()),
 ("Quadro-negro", 45.99, "Descrição sobre um produto", 6, 3, b'1', NOW()),
 ("Abajur", 8.99, "Descrição sobre um produto", 7, 1, b'1', NOW()),
 ("Fichário", 15.99, "Descrição sobre um produto", 8, 2, b'1', NOW()),

@@ -9,9 +9,12 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+
 import br.com.fatec.les.facade.Resultado;
 import br.com.fatec.les.model.assets.EntidadeDominio;
 import br.com.fatec.les.model.assets.IDominio;
+import br.com.fatec.les.model.endereco.Estado;
 import br.com.fatec.les.model.produto.Produto;
 import br.com.fatec.les.model.usuario.Carrinho;
 import br.com.fatec.les.model.usuario.Cliente;
@@ -24,7 +27,7 @@ public class CarrinhoVH implements IViewHelper{
 		Carrinho carrinho = new Carrinho();
 		ItemCarrinhoVH itemCarrinhoVH = new ItemCarrinhoVH();
 		String tarefa = request.getParameter("tarefa");
-		if(tarefa.equals("deletarCliente") || tarefa.equals("consultarCarrinho")) {
+		if(tarefa.equals("deletarCliente") || tarefa.equals("consultarCarrinho") || tarefa.equals("listarItensCarrinho")) {
 			carrinho.setId(Long.parseLong(request.getParameter("txtCarrinhoId")));
 		}else if(tarefa.equals("atualizarCarrinho")) {
 			carrinho.setId(Long.parseLong(request.getParameter("txtCarrinhoId")));
@@ -67,6 +70,22 @@ public class CarrinhoVH implements IViewHelper{
 		if(tarefa.equals("consultarCarrinho")) {
 			request.getRequestDispatcher("clienteCarrinho.jsp").
 			forward(request, response);
+		}else if(tarefa.equals("atualizarCarrinho")) {
+			response.sendRedirect("pagamento.jsp");
+		}else if(tarefa.equals("listarItensCarrinho")) {
+			Carrinho carrinho = new Carrinho();
+			
+			Resultado result = new Resultado();
+			
+			result = (Resultado)request.getAttribute("resultado");
+			
+			carrinho = (Carrinho) result.getEntidades().get(0);
+			
+			String json = new Gson().toJson(carrinho);
+			
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			response.getWriter().write(json);
 		}else {
 			request.getRequestDispatcher("clienteMenu.jsp").
 			forward(request, response);

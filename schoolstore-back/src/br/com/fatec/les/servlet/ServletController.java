@@ -22,6 +22,7 @@ import br.com.fatec.les.viewHelper.CarrinhoVH;
 import br.com.fatec.les.viewHelper.ClienteVH;
 import br.com.fatec.les.viewHelper.EstadoVH;
 import br.com.fatec.les.viewHelper.IViewHelper;
+import br.com.fatec.les.viewHelper.PedidoVH;
 import br.com.fatec.les.viewHelper.ProdutoVH;
 import br.com.fatec.les.viewHelper.UsuarioVH;
 
@@ -54,6 +55,10 @@ public class ServletController extends HttpServlet{
     	vhMap.put("cadastroCliente", new EstadoVH());
     	commandMap.put("cadastroCliente", new ConsultarCommand());
     	
+    	// Pedido
+    	vhMap.put("efetuarPedido", new PedidoVH());
+    	commandMap.put("efetuarPedido", new SalvarCommand());
+    	
     	// Login de usuário
     	// Vai consultar com um e-mail e senha, e vai trazer o usuário todo + cliente
     	vhMap.put("loginUsuario", new UsuarioVH());
@@ -64,8 +69,10 @@ public class ServletController extends HttpServlet{
     	// Carrinho
     	vhMap.put("consultarCarrinho", new CarrinhoVH());
     	vhMap.put("atualizarCarrinho", new CarrinhoVH());
+    	vhMap.put("listarItensCarrinho", new CarrinhoVH());
     	commandMap.put("consultarCarrinho", new ConsultarCommand());
     	commandMap.put("atualizarCarrinho", new AtualizarCommand());
+    	commandMap.put("listarItensCarrinho", new ConsultarCommand());
     	
     	// produtos
     	vhMap.put("consultarProdutos", new ProdutoVH());

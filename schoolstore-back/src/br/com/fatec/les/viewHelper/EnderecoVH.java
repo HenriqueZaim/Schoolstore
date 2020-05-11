@@ -50,7 +50,11 @@ public class EnderecoVH implements IViewHelper{
 
 	@Override
 	public IDominio getEntidade(HttpServletRequest request) {
-        throw new UnsupportedOperationException("Operação não suportada.");
+		Endereco endereco = new Endereco();
+
+		endereco.setId(Long.parseLong(request.getParameter("txtEnderecoId")));
+		
+		return endereco;
 	}
 
 	@Override
