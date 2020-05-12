@@ -14,9 +14,12 @@ public class PagamentoCartaoVH implements IViewHelper{
 	public PagamentoCartao getEntidadeSimples(HttpServletRequest request) {
 		PagamentoCartao pagamentoCartao = new PagamentoCartao();
 		CartaoCreditoVH cartaoCreditoVH = new CartaoCreditoVH();
-		
-//		pagamentoCartao.setValorTotalCartao(Float.parseFloat(request.getParameter("txtValorTotalCartao")));
-		pagamentoCartao.setCartoesCredito(cartaoCreditoVH.getEntidades(request)); 
+
+		pagamentoCartao.setCartoesCredito(cartaoCreditoVH.getEntidades(request));
+		int qtddCartoes = pagamentoCartao.getCartoesCredito().size();
+		float valorPorCartao = Float.parseFloat(request.getParameter("txtSubTotal"));
+		valorPorCartao /= qtddCartoes;
+		pagamentoCartao.setValorTotalCartao(valorPorCartao);
 		
 		return pagamentoCartao;
 	}
