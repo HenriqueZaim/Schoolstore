@@ -2,17 +2,10 @@ package br.com.fatec.les.model.assets;
 
 import java.time.LocalDateTime;
 
-public class EntidadeDominio implements IDominio{
-	protected Long id;
+public class EntidadeDominio extends ADominio{
 	private boolean ativo;
 	private LocalDateTime dataHoraCriacao;
 	
-	public Long getId() {
-		return id;
-	}
-	public void setId(Long id) {
-		this.id = id;
-	}
 	public boolean isAtivo() {
 		return ativo;
 	}

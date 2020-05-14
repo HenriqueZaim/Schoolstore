@@ -3,12 +3,12 @@ package br.com.fatec.les.facade;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.fatec.les.model.assets.EntidadeDominio;
+import br.com.fatec.les.model.assets.ADominio;
 
 public class Resultado {
 
 	private ArrayList<Mensagem> mensagens;
-	private List<EntidadeDominio> entidades;
+	private List<ADominio> entidades;
 	
 
 	public ArrayList<Mensagem> getMensagens() {
@@ -17,10 +17,10 @@ public class Resultado {
 	public void setMensagens(ArrayList<Mensagem> mensagens) {
 		this.mensagens = mensagens;
 	}
-	public List<EntidadeDominio> getEntidades() {
+	public List<ADominio> getEntidades() {
 		return entidades;
 	}
-	public void setEntidades(List<EntidadeDominio> entidades) {
+	public void setEntidades(List<ADominio> entidades) {
 		this.entidades = entidades;
 	}
 }

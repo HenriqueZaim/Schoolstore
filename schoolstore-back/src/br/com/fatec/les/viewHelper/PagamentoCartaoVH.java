@@ -1,31 +1,45 @@
 package br.com.fatec.les.viewHelper;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import br.com.fatec.les.model.assets.IDominio;
+import br.com.fatec.les.model.assets.ADominio;
+import br.com.fatec.les.model.pagamento.cartao.CartaoCredito;
 import br.com.fatec.les.model.pagamento.cartao.PagamentoCartao;
 
 public class PagamentoCartaoVH implements IViewHelper{
 	
-	public PagamentoCartao getEntidadeSimples(HttpServletRequest request) {
+	public ArrayList<PagamentoCartao> getEntidades(HttpServletRequest request){
 		PagamentoCartao pagamentoCartao = new PagamentoCartao();
-		CartaoCreditoVH cartaoCreditoVH = new CartaoCreditoVH();
-
-		pagamentoCartao.setCartoesCredito(cartaoCreditoVH.getEntidades(request));
-		int qtddCartoes = pagamentoCartao.getCartoesCredito().size();
-		float valorPorCartao = Float.parseFloat(request.getParameter("txtSubTotal"));
-		valorPorCartao /= qtddCartoes;
-		pagamentoCartao.setValorTotalCartao(valorPorCartao);
+		CartaoCredito cartaoCredito = new CartaoCredito();
+		ArrayList<PagamentoCartao> pagamentosCartao = new ArrayList<PagamentoCartao>();
+		String tarefa = request.getParameter("tarefa");
 		
-		return pagamentoCartao;
+		if(request.getParameterValues("txtCartaoCreditoId") == null) {
+			return pagamentosCartao;
+		}else {
+			String[] cartoesForm = request.getParameterValues("txtCartaoCreditoId");
+			float valorTotalCartao = Float.parseFloat(request.getParameter("txtValorCartao"));// TODO: Adicionar valor do cartao/cupom no front
+			valorTotalCartao /= cartoesForm.length;
+			for(int i = 0 ; i < cartoesForm.length ; i++) {
+				pagamentoCartao = new PagamentoCartao();
+				cartaoCredito = new CartaoCredito();
+				cartaoCredito.setId(Long.parseLong(request.getParameterValues("txtCartaoCreditoId")[i]));
+				pagamentoCartao.setCartaoCredito(cartaoCredito);
+				pagamentoCartao.setValorTotalCartao(valorTotalCartao);
+				
+				pagamentosCartao.add(pagamentoCartao);
+			}
+		}
+		return pagamentosCartao;
 	}
-	
+		
 	@Override
-	public IDominio getEntidade(HttpServletRequest request) {
+	public ADominio getEntidade(HttpServletRequest request) {
 		return null;
 	}
 

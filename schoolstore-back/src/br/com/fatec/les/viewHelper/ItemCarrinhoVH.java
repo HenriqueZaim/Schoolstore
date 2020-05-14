@@ -7,7 +7,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import br.com.fatec.les.model.assets.IDominio;
+import br.com.fatec.les.model.assets.ADominio;
 import br.com.fatec.les.model.produto.Produto;
 import br.com.fatec.les.model.usuario.ItemCarrinho;
 
@@ -36,7 +36,7 @@ public class ItemCarrinhoVH implements IViewHelper{
 	}
 
 	@Override
-	public IDominio getEntidade(HttpServletRequest request) {
+	public ADominio getEntidade(HttpServletRequest request) {
 		// TODO Auto-generated method stub
 		return null;
 	}

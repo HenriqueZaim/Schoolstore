@@ -5,13 +5,12 @@ import java.util.List;
 
 
 import java.sql.*;
-import java.time.LocalDateTime;
 
 import br.com.fatec.les.database.ConexaoFactory;
 import br.com.fatec.les.facade.Mensagem;
 import br.com.fatec.les.facade.MensagemStatus;
+import br.com.fatec.les.model.assets.ADominio;
 import br.com.fatec.les.model.assets.EntidadeDominio;
-import br.com.fatec.les.model.assets.IDominio;
 import br.com.fatec.les.model.usuario.Carrinho;
 import br.com.fatec.les.model.usuario.ItemCarrinho;
 
@@ -22,7 +21,7 @@ public class CarrinhoDao implements IDao{
     ItemCarrinhoDao itemCarrinhoDao = new ItemCarrinhoDao();
 
 	@Override
-	public Mensagem salvar(EntidadeDominio entidadeDominio) throws SQLException {
+	public Mensagem salvar(ADominio entidade) throws SQLException {
 		conexao = ConexaoFactory.getConnection();
 		mensagem = new Mensagem();
 		ResultSet rs;
@@ -61,8 +60,9 @@ public class CarrinhoDao implements IDao{
 	}
 
 	@Override
-	public Mensagem deletar(EntidadeDominio entidadeDominio) throws SQLException {
-		Carrinho carrinho  = (Carrinho) entidadeDominio;
+	public Mensagem deletar(ADominio entidade) throws SQLException {
+		Carrinho carrinho  = (Carrinho) entidade;
+		ItemCarrinho itemCarrinho = new ItemCarrinho();
 		conexao = ConexaoFactory.getConnection();
 		mensagem = new Mensagem();
 
@@ -75,10 +75,9 @@ public class CarrinhoDao implements IDao{
 		try {
 			pstm = conexao.prepareStatement(sql);
 			
-			Carrinho aux = new Carrinho();
-			aux.setId(carrinho.getId());
-			// pra excluir tudo, só vou mandar o id do carrinho
-			if(itemCarrinhoDao.deletar(aux).getMensagemStatus() == MensagemStatus.ERRO) {
+			itemCarrinho.setCarrinho(carrinho);
+
+			if(itemCarrinhoDao.deletar(itemCarrinho).getMensagemStatus() == MensagemStatus.ERRO) {
 				throw new SQLException();
 			}
 
@@ -97,8 +96,10 @@ public class CarrinhoDao implements IDao{
 	}
 	
 	@Override
-	public Mensagem atualizar(EntidadeDominio entidadeDominio) throws SQLException {
-		Carrinho carrinho  = (Carrinho) entidadeDominio;
+	public Mensagem atualizar(ADominio entidade) throws SQLException {
+		Carrinho carrinho  = (Carrinho) entidade;
+		ItemCarrinho itemCarrinho = new ItemCarrinho();
+		itemCarrinho.setCarrinho(carrinho);
 		Carrinho aux = new Carrinho();
 		List<ItemCarrinho> itens = new ArrayList<ItemCarrinho>();
 		conexao = ConexaoFactory.getConnection();
@@ -106,7 +107,7 @@ public class CarrinhoDao implements IDao{
 		
 		String sql = "UPDATE tb_carrinho SET "
 				+ "car_subTotal = ?, "
-				+ "car_validade = NOW() "				
+				+ "car_validade = NOW() "	// TODO: Arrumar datas			
 				+ " WHERE car_id = ?";
 		
 		PreparedStatement pstm = null;
@@ -115,7 +116,7 @@ public class CarrinhoDao implements IDao{
 			pstm = conexao.prepareStatement(sql);
 			
 			if(carrinho.getValidade() != null) {
-				itemCarrinhoDao.deletar(carrinho);
+				itemCarrinhoDao.deletar(itemCarrinho);
 				pstm.setFloat(1, carrinho.getSubTotal());
 			}else {
 				Carrinho carrinhoAux = new Carrinho();
@@ -128,11 +129,8 @@ public class CarrinhoDao implements IDao{
 			
 			if(!carrinho.getItensCarrinho().isEmpty() && carrinho.getItensCarrinho() != null) {
 				for(ItemCarrinho item : carrinho.getItensCarrinho()) {
-					itens = new ArrayList<ItemCarrinho>();
-					itens.add(item);
-					aux.setItensCarrinho(itens);
-					aux.setId(carrinho.getId());
-					itemCarrinhoDao.salvar(aux);
+					item.setCarrinho(carrinho);
+					itemCarrinhoDao.salvar(item);
 				}
 			}
 			
@@ -151,11 +149,12 @@ public class CarrinhoDao implements IDao{
 	}
 
 	@Override
-	public List<EntidadeDominio> consultar(IDominio entidade) throws SQLException {
-		// Devo ter sempre o id do carrinho aqui
+	public List<ADominio> consultar(ADominio entidade) throws SQLException {
 		Carrinho carrinho = (Carrinho) entidade;
+		ItemCarrinho itemCarrinho = new ItemCarrinho();
+		itemCarrinho.setCarrinho(carrinho);
 		conexao = ConexaoFactory.getConnection();
-		List<EntidadeDominio> carrinhos = new ArrayList<EntidadeDominio>();
+		List<ADominio> carrinhos = new ArrayList<ADominio>();
 
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
@@ -174,17 +173,18 @@ public class CarrinhoDao implements IDao{
 
 			if(rs.next()) {
 				Carrinho c = new Carrinho();
-				Carrinho aux = new Carrinho();
 				
 				c.setId(rs.getLong("car_id"));
 				c.setSubTotal(rs.getFloat("car_subTotal"));
 //				c.setValidade(LocalDateTime.parse(rs.getString("car_validade")));
 				
-				List<EntidadeDominio> itemsBanco = new ArrayList<EntidadeDominio>();
-				itemsBanco.addAll(itemCarrinhoDao.consultar(c)); 
-				aux = (Carrinho) itemsBanco.get(0);
+				List<ADominio> itemsBanco = new ArrayList<ADominio>();
+				List<ItemCarrinho> itemsCarrinho = new ArrayList<ItemCarrinho>();
+				itemsBanco.addAll(itemCarrinhoDao.consultar(itemCarrinho)); 
+				for(ADominio item : itemsBanco)
+					itemsCarrinho.add((ItemCarrinho)item);
 				
-				c.setItensCarrinho(aux.getItensCarrinho());
+				c.setItensCarrinho(itemsCarrinho);
 
 				carrinhos.add(c);
 			}

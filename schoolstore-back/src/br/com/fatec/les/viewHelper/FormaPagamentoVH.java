@@ -6,25 +6,21 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import br.com.fatec.les.model.assets.IDominio;
+import br.com.fatec.les.model.assets.ADominio;
 import br.com.fatec.les.model.pagamento.FormaPagamento;
 
 public class FormaPagamentoVH implements IViewHelper{
 	
-	public FormaPagamento getEntidadeSimples(HttpServletRequest request) {
+	@Override
+	public ADominio getEntidade(HttpServletRequest request) {
 		FormaPagamento formaPagamento = new FormaPagamento();
 		PagamentoCartaoVH pagamentoCartaoVH = new PagamentoCartaoVH();
 		
-		formaPagamento.setPagamentoCartao(pagamentoCartaoVH.getEntidadeSimples(request));
+		formaPagamento.setPagamentosCartao(pagamentoCartaoVH.getEntidades(request));
 //		formaPagamento.setPagamentoCupom(pagamentoCupom);
 //		formaPagamento.setValorTotal(valorTotal);
 		
 		return formaPagamento;
-	}
-	
-	@Override
-	public IDominio getEntidade(HttpServletRequest request) {
-		return null;
 	}
 
 	@Override

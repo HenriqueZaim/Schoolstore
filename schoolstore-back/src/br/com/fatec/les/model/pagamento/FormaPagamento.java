@@ -1,13 +1,16 @@
 package br.com.fatec.les.model.pagamento;
 
+import java.util.List;
+
+import br.com.fatec.les.model.assets.ADominio;
 import br.com.fatec.les.model.pagamento.cartao.PagamentoCartao;
 import br.com.fatec.les.model.pagamento.cupom.PagamentoCupom;
 
-public class FormaPagamento {
+public class FormaPagamento extends ADominio{
 
 	private float valorTotal;
-	private PagamentoCartao pagamentoCartao;
-	private PagamentoCupom pagamentoCupom;
+	private List<PagamentoCartao> pagamentosCartao;
+	private List<PagamentoCupom> pagamentosCupom;
 	
 	public float getValorTotal() {
 		return valorTotal;
@@ -15,16 +18,17 @@ public class FormaPagamento {
 	public void setValorTotal(float valorTotal) {
 		this.valorTotal = valorTotal;
 	}
-	public PagamentoCartao getPagamentoCartao() {
-		return pagamentoCartao;
+	public List<PagamentoCartao> getPagamentosCartao() {
+		return pagamentosCartao;
 	}
-	public void setPagamentoCartao(PagamentoCartao pagamentoCartao) {
-		this.pagamentoCartao = pagamentoCartao;
+	public void setPagamentosCartao(List<PagamentoCartao> pagamentosCartao) {
+		this.pagamentosCartao = pagamentosCartao;
 	}
-	public PagamentoCupom getPagamentoCupom() {
-		return pagamentoCupom;
+	public List<PagamentoCupom> getPagamentosCupom() {
+		return pagamentosCupom;
 	}
-	public void setPagamentoCupom(PagamentoCupom pagamentoCupom) {
-		this.pagamentoCupom = pagamentoCupom;
+	public void setPagamentosCupom(List<PagamentoCupom> pagamentosCupom) {
+		this.pagamentosCupom = pagamentosCupom;
 	}
+	
 }

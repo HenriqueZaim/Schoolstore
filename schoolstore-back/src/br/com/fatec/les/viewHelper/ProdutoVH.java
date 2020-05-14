@@ -11,18 +11,13 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 
 import br.com.fatec.les.facade.Resultado;
-import br.com.fatec.les.model.assets.EntidadeDominio;
-import br.com.fatec.les.model.assets.IDominio;
-import br.com.fatec.les.model.estoque.ItemEstoque;
+import br.com.fatec.les.model.assets.ADominio;
 import br.com.fatec.les.model.produto.Produto;
-import br.com.fatec.les.model.usuario.Carrinho;
-import br.com.fatec.les.model.usuario.Cliente;
-import br.com.fatec.les.model.usuario.ItemCarrinho;
 
 public class ProdutoVH implements IViewHelper{
 
 	@Override
-	public IDominio getEntidade(HttpServletRequest request) {
+	public ADominio getEntidade(HttpServletRequest request) {
 		Produto produto = new Produto();
 		
 		if(request.getParameter("txtProdutoId") != null) {
@@ -45,7 +40,7 @@ public class ProdutoVH implements IViewHelper{
 			
 			result = (Resultado)request.getAttribute("resultado");
 			
-			for(EntidadeDominio p : result.getEntidades()) {
+			for(ADominio p : result.getEntidades()) {
 				Produto produto = (Produto) p;
 				produtos.add(produto);
 			}
@@ -63,7 +58,7 @@ public class ProdutoVH implements IViewHelper{
 			
 			result = (Resultado)request.getAttribute("resultado");
 			
-			for(EntidadeDominio p : result.getEntidades()) {
+			for(ADominio p : result.getEntidades()) {
 				Produto produto = (Produto) p;
 				produtos.add(produto);
 			}

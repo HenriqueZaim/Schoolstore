@@ -7,8 +7,8 @@ import java.util.List;
 import br.com.fatec.les.database.ConexaoFactory;
 import br.com.fatec.les.facade.Mensagem;
 import br.com.fatec.les.facade.MensagemStatus;
+import br.com.fatec.les.model.assets.ADominio;
 import br.com.fatec.les.model.assets.EntidadeDominio;
-import br.com.fatec.les.model.assets.IDominio;
 import br.com.fatec.les.model.produto.Produto;
 import br.com.fatec.les.model.usuario.Carrinho;
 import br.com.fatec.les.model.usuario.ItemCarrinho;
@@ -20,11 +20,10 @@ public class ItemCarrinhoDao implements IDao{
     ProdutoDao produtoDao = new ProdutoDao();
 
 	@Override
-	public Mensagem salvar(EntidadeDominio entidadeDominio) throws SQLException {
-		Carrinho carrinho = (Carrinho) entidadeDominio;
+	public Mensagem salvar(ADominio entidade) throws SQLException {
+		ItemCarrinho itemCarrinho = (ItemCarrinho) entidade;
 		conexao = ConexaoFactory.getConnection();
 		mensagem = new Mensagem();
-		ResultSet rs;
 		
 		String sql = "INSERT INTO tb_itemCarrinho "
 				+ "("
@@ -39,9 +38,9 @@ public class ItemCarrinhoDao implements IDao{
 		try {
 		
 			pstm = conexao.prepareStatement(sql);
-			pstm.setFloat(1, carrinho.getItensCarrinho().get(0).getQuantidade());
-			pstm.setLong(2, carrinho.getId());
-			pstm.setLong(3, carrinho.getItensCarrinho().get(0).getProduto().getId());
+			pstm.setFloat(1, itemCarrinho.getQuantidade());
+			pstm.setLong(2, itemCarrinho.getCarrinho().getId());
+			pstm.setLong(3, itemCarrinho.getProduto().getId());
 			pstm.executeUpdate();
 
 			mensagem.setMensagem("Deu bom");
@@ -57,13 +56,13 @@ public class ItemCarrinhoDao implements IDao{
 	}
 
 	@Override
-	public Mensagem deletar(EntidadeDominio entidadeDominio) throws SQLException {
-		Carrinho carrinho  = (Carrinho) entidadeDominio;
+	public Mensagem deletar(ADominio entidade) throws SQLException {
+		ItemCarrinho itemCarrinho = (ItemCarrinho) entidade;
 		conexao = ConexaoFactory.getConnection();
 		mensagem = new Mensagem();
 
 		String sql = "DELETE FROM tb_itemCarrinho "
-				+ " WHERE icar_car_id = " + carrinho.getId() + "";
+				+ " WHERE icar_car_id = " + itemCarrinho.getCarrinho().getId() + "";
 		
 		PreparedStatement pstm = null;
 		
@@ -85,18 +84,17 @@ public class ItemCarrinhoDao implements IDao{
 	}
 
 	@Override
-	public Mensagem atualizar(EntidadeDominio entidadeDominio) throws SQLException {
+	public Mensagem atualizar(ADominio entidade) throws SQLException {
         throw new UnsupportedOperationException("Operação não suportada.");
 	}
 
 	@Override
-	public List<EntidadeDominio> consultar(IDominio entidade) throws SQLException {
-		Carrinho carrinho = (Carrinho) entidade;
+	public List<ADominio> consultar(ADominio entidade) throws SQLException {
+		ItemCarrinho itemCarrinho = (ItemCarrinho) entidade;
 		conexao = ConexaoFactory.getConnection();
 
-		List<ItemCarrinho> itensCarrinho = new ArrayList<ItemCarrinho>();
-		List<EntidadeDominio> produtoEntidade = new ArrayList<EntidadeDominio>();
-		List<EntidadeDominio> carrinhos = new ArrayList<EntidadeDominio>(); // apenas para retorno
+		List<ADominio> itensCarrinho = new ArrayList<ADominio>();
+		List<ADominio> produtoEntidade = new ArrayList<ADominio>();
 
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
@@ -104,7 +102,7 @@ public class ItemCarrinhoDao implements IDao{
 		String sql = "SELECT "
 				+ "icar_quantidade, "
 				+ "icar_pro_id "
-				+ " FROM tb_itemCarrinho WHERE icar_car_id = " + carrinho.getId() + "";
+				+ " FROM tb_itemCarrinho WHERE icar_car_id = " + itemCarrinho.getCarrinho().getId() + "";
 				
 		try {
 			pstm = conexao.prepareStatement(sql);
@@ -117,7 +115,7 @@ public class ItemCarrinhoDao implements IDao{
 				ic = new ItemCarrinho();
 				p = new Produto();
 				
-				produtoEntidade = new ArrayList<EntidadeDominio>();
+				produtoEntidade = new ArrayList<ADominio>();
 				
 				ic.setQuantidade(Integer.parseInt(rs.getString("icar_quantidade")));
 				p.setId(Long.parseLong(rs.getString("icar_pro_id")));
@@ -128,8 +126,6 @@ public class ItemCarrinhoDao implements IDao{
 				
 				itensCarrinho.add(ic);
 			}
-			carrinho.setItensCarrinho(itensCarrinho);
-			carrinhos.add(carrinho);
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}
@@ -137,7 +133,7 @@ public class ItemCarrinhoDao implements IDao{
 			ConexaoFactory.closeConnection(conexao, pstm, rs);
 		}
 		
-		return carrinhos; // Vai retornar o carrinho, com os itens e seus dados
+		return itensCarrinho; // Vai retornar o carrinho, com os itens e seus dados
 	}
 
 }

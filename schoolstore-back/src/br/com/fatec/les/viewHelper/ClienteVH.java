@@ -13,8 +13,7 @@ import com.google.gson.Gson;
 import br.com.fatec.les.facade.Mensagem;
 import br.com.fatec.les.facade.MensagemStatus;
 import br.com.fatec.les.facade.Resultado;
-import br.com.fatec.les.model.assets.EntidadeDominio;
-import br.com.fatec.les.model.assets.IDominio;
+import br.com.fatec.les.model.assets.ADominio;
 import br.com.fatec.les.model.endereco.Endereco;
 import br.com.fatec.les.model.pagamento.cartao.CartaoCredito;
 import br.com.fatec.les.model.usuario.Carrinho;
@@ -24,7 +23,7 @@ import br.com.fatec.les.model.usuario.Usuario;
 public class ClienteVH implements IViewHelper{
 
 	@Override
-	public IDominio getEntidade(HttpServletRequest request) {
+	public ADominio getEntidade(HttpServletRequest request) {
 		Cliente cliente = new Cliente();
 		EnderecoVH enderecoVH = new EnderecoVH();
 		UsuarioVH usuarioVH = new UsuarioVH();
@@ -84,7 +83,7 @@ public class ClienteVH implements IViewHelper{
 			
 			resultado = (Resultado)request.getAttribute("resultado");
 			
-			for(EntidadeDominio c : resultado.getEntidades()) {
+			for(ADominio c : resultado.getEntidades()) {
 				Cliente user = (Cliente) c;
 				clientes.add(user);
 			}

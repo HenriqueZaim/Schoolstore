@@ -7,7 +7,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import br.com.fatec.les.model.assets.IDominio;
+import br.com.fatec.les.model.assets.ADominio;
 import br.com.fatec.les.model.pedido.ItemPedido;
 import br.com.fatec.les.model.produto.Produto;
 
@@ -25,9 +25,10 @@ public class ItemPedidoVH implements IViewHelper{
 			for(int i = 0 ; i < produtos.length ; i++) {
 				itemPedido = new ItemPedido();
 				produto = new Produto();
-				itemPedido.setQuantidade(Integer.parseInt(request.getParameterValues("txtQuantidadeProduto")[i]));
+				
 				produto.setId(Long.parseLong(request.getParameterValues("txtProdutoId")[i]));
 				itemPedido.setProduto(produto);
+				itemPedido.setQuantidade(Integer.parseInt(request.getParameterValues("txtQuantidadeProduto")[i]));
 				
 				itensPedido.add(itemPedido);
 			}
@@ -36,7 +37,7 @@ public class ItemPedidoVH implements IViewHelper{
 	}
 
 	@Override
-	public IDominio getEntidade(HttpServletRequest request) {
+	public ADominio getEntidade(HttpServletRequest request) {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -9,13 +9,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.bind.DatatypeConverter;
 
-import br.com.fatec.les.model.assets.IDominio;
+import br.com.fatec.les.model.assets.ADominio;
 import br.com.fatec.les.model.assets.Imagem;
 
 public class ImagemVH implements IViewHelper{
 
 	@Override
-	public IDominio getEntidade(HttpServletRequest request) {
+	public ADominio getEntidade(HttpServletRequest request) {
 		Imagem imagem = new Imagem();
 		String tarefa = request.getParameter("tarefa");
 		String base64String = request.getParameter("txtFile");

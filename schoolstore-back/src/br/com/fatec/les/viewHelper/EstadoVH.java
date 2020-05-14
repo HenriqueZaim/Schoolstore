@@ -11,14 +11,13 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 
 import br.com.fatec.les.facade.Resultado;
-import br.com.fatec.les.model.assets.EntidadeDominio;
-import br.com.fatec.les.model.assets.IDominio;
+import br.com.fatec.les.model.assets.ADominio;
 import br.com.fatec.les.model.endereco.Estado;
 
 public class EstadoVH implements IViewHelper{
 
 	@Override
-	public IDominio getEntidade(HttpServletRequest request) {
+	public ADominio getEntidade(HttpServletRequest request) {
 		Estado estado = new Estado();
 		return estado;
 	}
@@ -32,7 +31,7 @@ public class EstadoVH implements IViewHelper{
 			
 			result = (Resultado)request.getAttribute("resultado");
 			
-			for(EntidadeDominio c : result.getEntidades()) {
+			for(ADominio c : result.getEntidades()) {
 				Estado estado = (Estado) c;
 				estados.add(estado);
 			}

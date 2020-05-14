@@ -6,8 +6,7 @@ import java.util.List;
 
 import br.com.fatec.les.database.ConexaoFactory;
 import br.com.fatec.les.facade.Mensagem;
-import br.com.fatec.les.model.assets.EntidadeDominio;
-import br.com.fatec.les.model.assets.IDominio;
+import br.com.fatec.les.model.assets.ADominio;
 import br.com.fatec.les.model.assets.Imagem;
 import br.com.fatec.les.model.produto.Categoria;
 import br.com.fatec.les.model.produto.Precificacao;
@@ -22,26 +21,26 @@ public class ProdutoDao implements IDao{
     EstoqueDao estoqueDao = new EstoqueDao();
 
 	@Override
-	public Mensagem salvar(EntidadeDominio entidadeDominio) throws SQLException {
+	public Mensagem salvar(ADominio entidade) throws SQLException {
         throw new UnsupportedOperationException("Operação não suportada.");
 	}
 
 	@Override
-	public Mensagem deletar(EntidadeDominio entidadeDominio) throws SQLException {
+	public Mensagem deletar(ADominio entidade) throws SQLException {
         throw new UnsupportedOperationException("Operação não suportada.");
 	}
 
 	@Override
-	public Mensagem atualizar(EntidadeDominio entidadeDominio) throws SQLException {
+	public Mensagem atualizar(ADominio entidade) throws SQLException {
         throw new UnsupportedOperationException("Operação não suportada.");
 	}
 
 	@Override
-	public List<EntidadeDominio> consultar(IDominio entidade) throws SQLException {
+	public List<ADominio> consultar(ADominio entidade) throws SQLException {
 		Produto produto = (Produto) entidade;
 		conexao = ConexaoFactory.getConnection();
-		List<EntidadeDominio> produtos = new ArrayList<EntidadeDominio>();
-		List<EntidadeDominio> categoriasEntidade = new ArrayList<EntidadeDominio>();
+		List<ADominio> produtos = new ArrayList<ADominio>();
+		List<ADominio> categoriasEntidade = new ArrayList<ADominio>();
 		List<Categoria> categorias = new ArrayList<Categoria>();
 
 		
@@ -75,7 +74,7 @@ public class ProdutoDao implements IDao{
 				aux = new Produto();
 				i = new Imagem();
 				pr = new Precificacao();
-				categoriasEntidade = new ArrayList<EntidadeDominio>();
+				categoriasEntidade = new ArrayList<ADominio>();
 				categorias = new ArrayList<Categoria>();
 				
 				p.setNome(rs.getString("pro_nome"));
@@ -90,7 +89,7 @@ public class ProdutoDao implements IDao{
 				p.setPrecificacao((Precificacao)precificacaoDao.consultar(pr).get(0));
 				
 				categoriasEntidade.addAll(categoriaDao.consultar(p));
-				for(EntidadeDominio cat : categoriasEntidade) {
+				for(ADominio cat : categoriasEntidade) {
 					categorias.add((Categoria)cat);
 				}
 				p.setCategoria(categorias);

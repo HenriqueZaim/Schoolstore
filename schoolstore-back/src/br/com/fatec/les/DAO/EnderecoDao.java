@@ -7,8 +7,7 @@ import java.util.List;
 import br.com.fatec.les.database.ConexaoFactory;
 import br.com.fatec.les.facade.Mensagem;
 import br.com.fatec.les.facade.MensagemStatus;
-import br.com.fatec.les.model.assets.EntidadeDominio;
-import br.com.fatec.les.model.assets.IDominio;
+import br.com.fatec.les.model.assets.ADominio;
 import br.com.fatec.les.model.endereco.Cidade;
 import br.com.fatec.les.model.endereco.Endereco;
 import br.com.fatec.les.model.usuario.Cliente;
@@ -20,8 +19,8 @@ public class EnderecoDao implements IDao{
 	CidadeDao cidadeDao = new CidadeDao();
 	
 	@Override
-	public Mensagem salvar(EntidadeDominio entidadeDominio) throws SQLException {
-		Endereco endereco = (Endereco) entidadeDominio;
+	public Mensagem salvar(ADominio entidade) throws SQLException {
+		Endereco endereco = (Endereco) entidade;
 		conexao = ConexaoFactory.getConnection();
 		mensagem = new Mensagem();
 		String sql = "INSERT INTO tb_endereco "
@@ -72,8 +71,8 @@ public class EnderecoDao implements IDao{
 	}
 
 	@Override
-	public Mensagem deletar(EntidadeDominio entidadeDominio) throws SQLException {
-		Endereco endereco = (Endereco) entidadeDominio;
+	public Mensagem deletar(ADominio entidade) throws SQLException {
+		Endereco endereco = (Endereco) entidade;
 		conexao = ConexaoFactory.getConnection();
 		mensagem = new Mensagem();
 		String sql = "UPDATE tb_endereco SET "
@@ -104,19 +103,19 @@ public class EnderecoDao implements IDao{
 	}
 
 	@Override
-	public Mensagem atualizar(EntidadeDominio entidadeDominio) throws SQLException {
+	public Mensagem atualizar(ADominio entidade) throws SQLException {
         throw new UnsupportedOperationException("Operação não suportada.");
 	}
 
 	@Override
-	public List<EntidadeDominio> consultar(IDominio entidade) throws SQLException {
+	public List<ADominio> consultar(ADominio entidade) throws SQLException {
 		Endereco enderecoEntidade = (Endereco) entidade;
 		conexao = ConexaoFactory.getConnection();
 		Endereco endereco = new Endereco();
 		Cidade cidade = new Cidade();
 		Cliente cliente = new Cliente();
 		
-		List<EntidadeDominio> enderecos = new ArrayList<EntidadeDominio>();
+		List<ADominio> enderecos = new ArrayList<ADominio>();
 		
 		PreparedStatement pstm = null;
 		ResultSet rs = null;

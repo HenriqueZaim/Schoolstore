@@ -6,9 +6,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import br.com.fatec.les.model.assets.IDominio;
+import br.com.fatec.les.model.assets.ADominio;
 
 public interface IViewHelper {
-	public IDominio getEntidade(HttpServletRequest request);
+	public ADominio getEntidade(HttpServletRequest request);
 	public void setEntidade(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException;
 }

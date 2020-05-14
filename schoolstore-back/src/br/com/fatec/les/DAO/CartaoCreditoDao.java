@@ -7,8 +7,7 @@ import java.util.List;
 import br.com.fatec.les.database.ConexaoFactory;
 import br.com.fatec.les.facade.Mensagem;
 import br.com.fatec.les.facade.MensagemStatus;
-import br.com.fatec.les.model.assets.EntidadeDominio;
-import br.com.fatec.les.model.assets.IDominio;
+import br.com.fatec.les.model.assets.ADominio;
 import br.com.fatec.les.model.pagamento.cartao.CartaoCredito;
 import br.com.fatec.les.model.usuario.Cliente;
 
@@ -18,8 +17,8 @@ public class CartaoCreditoDao implements IDao{
 	private Mensagem mensagem;
 	
 	@Override
-	public Mensagem salvar(EntidadeDominio entidadeDominio) throws SQLException {
-		CartaoCredito cartaoCredito = (CartaoCredito) entidadeDominio;
+	public Mensagem salvar(ADominio entidade) throws SQLException {
+		CartaoCredito cartaoCredito = (CartaoCredito) entidade;
 		conexao = ConexaoFactory.getConnection();
 		mensagem = new Mensagem();
 		
@@ -60,8 +59,8 @@ public class CartaoCreditoDao implements IDao{
 	}
 
 	@Override
-	public Mensagem deletar(EntidadeDominio entidadeDominio) throws SQLException {
-		CartaoCredito cartaoCredito = (CartaoCredito) entidadeDominio;
+	public Mensagem deletar(ADominio entidade) throws SQLException {
+		CartaoCredito cartaoCredito = (CartaoCredito) entidade;
 		conexao = ConexaoFactory.getConnection();
 		mensagem = new Mensagem();
 		
@@ -93,18 +92,18 @@ public class CartaoCreditoDao implements IDao{
 	}
 
 	@Override
-	public Mensagem atualizar(EntidadeDominio entidadeDominio) throws SQLException {
+	public Mensagem atualizar(ADominio  entidade) throws SQLException {
         throw new UnsupportedOperationException("Operação não suportada.");
 	}
 
 	@Override
-	public List<EntidadeDominio> consultar(IDominio entidade) throws SQLException {
+	public List<ADominio> consultar(ADominio  entidade) throws SQLException {
 		CartaoCredito cartaoEntidade = (CartaoCredito) entidade;
 		CartaoCredito cartaoCredito = new CartaoCredito();
 		Cliente cliente = new Cliente();
 		conexao = ConexaoFactory.getConnection();
 		
-		List<EntidadeDominio> cartoes = new ArrayList<EntidadeDominio>();
+		List<ADominio> cartoes = new ArrayList<ADominio>();
 		
 		PreparedStatement pstm = null;
 		ResultSet rs = null;

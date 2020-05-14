@@ -6,8 +6,7 @@ import java.util.List;
 
 import br.com.fatec.les.database.ConexaoFactory;
 import br.com.fatec.les.facade.Mensagem;
-import br.com.fatec.les.model.assets.EntidadeDominio;
-import br.com.fatec.les.model.assets.IDominio;
+import br.com.fatec.les.model.assets.ADominio;
 import br.com.fatec.les.model.endereco.Cidade;
 import br.com.fatec.les.model.endereco.Estado;
 
@@ -16,28 +15,28 @@ public class EstadoDao implements IDao{
 	private Connection conexao = null;
 	
 	@Override
-	public Mensagem salvar(EntidadeDominio entidadeDominio) throws SQLException {
+	public Mensagem salvar(ADominio entidade) throws SQLException {
         throw new UnsupportedOperationException("Operação não suportada.");
 	}
 
 	@Override
-	public Mensagem deletar(EntidadeDominio entidadeDominio) throws SQLException {
+	public Mensagem deletar(ADominio entidade) throws SQLException {
         throw new UnsupportedOperationException("Operação não suportada.");
 	}
 
 	@Override
-	public Mensagem atualizar(EntidadeDominio entidadeDominio) throws SQLException {
+	public Mensagem atualizar(ADominio entidade) throws SQLException {
         throw new UnsupportedOperationException("Operação não suportada.");
 	}
 
 	@Override
-	public List<EntidadeDominio> consultar(IDominio entidade) throws SQLException {
+	public List<ADominio> consultar(ADominio entidade) throws SQLException {
 		Estado estado = (Estado) entidade;
 		CidadeDao cidadeDao = new CidadeDao();
 		conexao = ConexaoFactory.getConnection();
 		
-		List<EntidadeDominio> entidadeEstados = new ArrayList<EntidadeDominio>();
-		List<EntidadeDominio> entidadeCidades = new ArrayList<EntidadeDominio>();
+		List<ADominio> entidadeEstados = new ArrayList<ADominio>();
+		List<ADominio> entidadeCidades = new ArrayList<ADominio>();
 		List<Cidade> cidades = new ArrayList<Cidade>();
 		List<Estado> estados = new ArrayList<Estado>();
 
@@ -70,14 +69,14 @@ public class EstadoDao implements IDao{
 				if(estado.getId() == null) {
 					c = new Cidade();
 					
-					entidadeCidades = new ArrayList<EntidadeDominio>();
+					entidadeCidades = new ArrayList<ADominio>();
 					cidades = new ArrayList<Cidade>();
 					
 					c.setEstado(e);
 					
 					entidadeCidades.addAll(cidadeDao.consultar(c));
 					
-					for(EntidadeDominio cidade : entidadeCidades) {
+					for(ADominio cidade : entidadeCidades) {
 						cidades.add((Cidade)cidade);
 					}
 					

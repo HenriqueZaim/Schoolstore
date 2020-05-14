@@ -1,8 +1,8 @@
 package br.com.fatec.les.command;
 
 import br.com.fatec.les.facade.Resultado;
-import br.com.fatec.les.model.assets.IDominio;
+import br.com.fatec.les.model.assets.ADominio;
 
 public interface ICommand {
-	public Resultado execute(IDominio iDominio); 
+	public Resultado execute(ADominio aDominio); 
 }

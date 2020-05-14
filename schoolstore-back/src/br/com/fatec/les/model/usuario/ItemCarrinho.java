@@ -1,12 +1,20 @@
 package br.com.fatec.les.model.usuario;
 
+import br.com.fatec.les.model.assets.ADominio;
 import br.com.fatec.les.model.produto.Produto;
 
-public class ItemCarrinho {
+public class ItemCarrinho extends ADominio{
 
 	private Produto produto;
 	private int quantidade;
+	private Carrinho carrinho;
 	
+	public Carrinho getCarrinho() {
+		return carrinho;
+	}
+	public void setCarrinho(Carrinho carrinho) {
+		this.carrinho = carrinho;
+	}
 	public Produto getProduto() {
 		return produto;
 	}

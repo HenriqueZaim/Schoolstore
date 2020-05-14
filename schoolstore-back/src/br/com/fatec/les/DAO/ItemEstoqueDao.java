@@ -9,8 +9,7 @@ import java.util.List;
 
 import br.com.fatec.les.database.ConexaoFactory;
 import br.com.fatec.les.facade.Mensagem;
-import br.com.fatec.les.model.assets.EntidadeDominio;
-import br.com.fatec.les.model.assets.IDominio;
+import br.com.fatec.les.model.assets.ADominio;
 import br.com.fatec.les.model.estoque.Estoque;
 import br.com.fatec.les.model.estoque.Fornecedor;
 import br.com.fatec.les.model.estoque.ItemEstoque;
@@ -22,28 +21,28 @@ public class ItemEstoqueDao implements IDao{
 	FornecedorDao fornecedorDao = new FornecedorDao();
 
 	@Override
-	public Mensagem salvar(EntidadeDominio entidadeDominio) throws SQLException {
+	public Mensagem salvar(ADominio entidade) throws SQLException {
         throw new UnsupportedOperationException("Operação não suportada.");
 	}
 
 	@Override
-	public Mensagem deletar(EntidadeDominio entidadeDominio) throws SQLException {
+	public Mensagem deletar(ADominio entidade) throws SQLException {
         throw new UnsupportedOperationException("Operação não suportada.");
 	}
 
 	@Override
-	public Mensagem atualizar(EntidadeDominio entidadeDominio) throws SQLException {
+	public Mensagem atualizar(ADominio entidade) throws SQLException {
         throw new UnsupportedOperationException("Operação não suportada.");
 	}
 
 	@Override
-	public List<EntidadeDominio> consultar(IDominio entidade) throws SQLException {
+	public List<ADominio> consultar(ADominio entidade) throws SQLException {
         throw new UnsupportedOperationException("Operação não suportada.");
 	}
 	
-	public List<EntidadeDominio> consultarItem(Long idSto) throws SQLException {
+	public List<ADominio> consultarItem(Long idSto) throws SQLException {
 		conexao = ConexaoFactory.getConnection();
-		List<EntidadeDominio> itens = new ArrayList<EntidadeDominio>();
+		List<ADominio> itens = new ArrayList<ADominio>();
 		List<ItemEstoque> itensEstoque = new ArrayList<ItemEstoque>();
 
 

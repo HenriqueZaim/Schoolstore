@@ -234,19 +234,17 @@ CREATE TABLE tb_pagamentoCartao
   pca_id INT NOT NULL AUTO_INCREMENT,
   pca_valorTotalCartao DECIMAL(6,2) NOT NULL,
   pca_ccr_id INT NOT NULL,
+  pca_fpag_id INT NOT NULL,
   PRIMARY KEY (pca_id),
-  FOREIGN KEY(pca_ccr_id) REFERENCES tb_cartaoCredito(ccr_id)
+  FOREIGN KEY(pca_ccr_id) REFERENCES tb_cartaoCredito(ccr_id),
+  FOREIGN KEY(pca_fpag_id) REFERENCES tb_formaPagamento(fpag_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE tb_formaPagamento
 (
   fpag_id INT NOT NULL AUTO_INCREMENT,
-  fpag_valorTotal DECIMAL(6,2) NOT NULL,
-  fpag_pcu_id INT DEFAULT NULL,
-  fpag_pca_id INT DEFAULT NULL,
-  PRIMARY KEY (fpag_id),
-  FOREIGN KEY(fpag_pcu_id) REFERENCES tb_pagamentoCupom(pcu_id),
-  FOREIGN KEY(fpag_pca_id) REFERENCES tb_pagamentoCartao(pca_id)
+  fpag_valorTotal DECIMAL(6,2) NOT NULL
+  PRIMARY KEY (fpag_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE tb_estoque
@@ -277,6 +275,8 @@ CREATE TABLE tb_frete
   fre_valor DECIMAL(6,2),
   fre_previsaoEmDias INT NOT NULL,
   fre_end_id INT NOT NULL,
+  fre_ativo BOOLEAN NOT NULL,
+  fre_dataHoraCriacao DATETIME NOT NULL,
   PRIMARY KEY (fre_id),
   FOREIGN KEY(fre_end_id) REFERENCES tb_endereco(end_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;

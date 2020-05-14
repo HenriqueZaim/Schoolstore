@@ -1,23 +1,32 @@
 package br.com.fatec.les.model.pagamento.cartao;
 
-import java.util.List;
+import br.com.fatec.les.model.assets.ADominio;
+import br.com.fatec.les.model.pagamento.FormaPagamento;
 
-public class PagamentoCartao {
+public class PagamentoCartao extends ADominio{
 
 	private float valorTotalCartao;
-	private List<CartaoCredito> cartoesCredito;
+	private CartaoCredito cartaoCredito;
+	private FormaPagamento formaPagamento;
 	
+	public FormaPagamento getFormaPagamento() {
+		return formaPagamento;
+	}
+	public void setFormaPagamento(FormaPagamento formaPagamento) {
+		this.formaPagamento = formaPagamento;
+	}
 	public float getValorTotalCartao() {
 		return valorTotalCartao;
 	}
 	public void setValorTotalCartao(float valorTotalCartao) {
 		this.valorTotalCartao = valorTotalCartao;
 	}
-	public List<CartaoCredito> getCartoesCredito() {
-		return cartoesCredito;
+	public CartaoCredito getCartaoCredito() {
+		return cartaoCredito;
 	}
-	public void setCartoesCredito(List<CartaoCredito> cartoesCredito) {
-		this.cartoesCredito = cartoesCredito;
+	public void setCartaoCredito(CartaoCredito cartaoCredito) {
+		this.cartaoCredito = cartaoCredito;
 	}
+
 
 }

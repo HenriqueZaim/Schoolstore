@@ -12,6 +12,7 @@ import br.com.fatec.les.DAO.EstadoDao;
 import br.com.fatec.les.DAO.IDao;
 import br.com.fatec.les.DAO.ProdutoDao;
 import br.com.fatec.les.DAO.UsuarioDao;
+import br.com.fatec.les.model.assets.ADominio;
 import br.com.fatec.les.model.assets.EntidadeDominio;
 import br.com.fatec.les.model.endereco.Estado;
 import br.com.fatec.les.model.produto.Produto;
@@ -152,9 +153,10 @@ public class Facade implements IFacade{
 		mensagens = new ArrayList<Mensagem>();
 		
 	    IDao daoEntidade = daoMap.get(entidadeDominio.getClass().getName());
+	    ADominio aDominio = (ADominio) entidadeDominio;
 		
 	    try {
-			List<EntidadeDominio> listaEntidades = daoEntidade.consultar(entidadeDominio);			
+			List<ADominio> listaEntidades = daoEntidade.consultar(aDominio);			
 	        resultado.setEntidades(listaEntidades);
 	    } catch(SQLException e) {
 	       	e.printStackTrace();

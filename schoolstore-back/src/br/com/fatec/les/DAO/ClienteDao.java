@@ -7,8 +7,7 @@ import java.util.List;
 import br.com.fatec.les.database.ConexaoFactory;
 import br.com.fatec.les.facade.Mensagem;
 import br.com.fatec.les.facade.MensagemStatus;
-import br.com.fatec.les.model.assets.EntidadeDominio;
-import br.com.fatec.les.model.assets.IDominio;
+import br.com.fatec.les.model.assets.ADominio;
 import br.com.fatec.les.model.endereco.Endereco;
 import br.com.fatec.les.model.pagamento.cartao.CartaoCredito;
 import br.com.fatec.les.model.usuario.Carrinho;
@@ -25,8 +24,8 @@ public class ClienteDao implements IDao{
 	CarrinhoDao carrinhoDao = new CarrinhoDao();
 	
 	@Override
-	public Mensagem salvar(EntidadeDominio entidadeDominio) throws SQLException {
-		Cliente cliente = (Cliente) entidadeDominio;
+	public Mensagem salvar(ADominio entidade) throws SQLException {
+		Cliente cliente = (Cliente) entidade;
 		conexao = ConexaoFactory.getConnection();
 		Cliente aux = new Cliente();
 		mensagem = new Mensagem();
@@ -101,8 +100,8 @@ public class ClienteDao implements IDao{
 	}
 
 	@Override
-	public Mensagem deletar(EntidadeDominio entidadeDominio) throws SQLException {
-		Cliente cliente  = (Cliente) entidadeDominio;
+	public Mensagem deletar(ADominio entidade) throws SQLException {
+		Cliente cliente  = (Cliente) entidade;
 		conexao = ConexaoFactory.getConnection();
 		mensagem = new Mensagem();
 		Endereco endereco = new Endereco();
@@ -141,8 +140,8 @@ public class ClienteDao implements IDao{
 	}
 
 	@Override
-	public Mensagem atualizar(EntidadeDominio entidadeDominio) throws SQLException {
-		Cliente cliente  = (Cliente) entidadeDominio;
+	public Mensagem atualizar(ADominio entidade) throws SQLException {
+		Cliente cliente  = (Cliente) entidade;
 		conexao = ConexaoFactory.getConnection();
 		mensagem = new Mensagem();
 		
@@ -165,7 +164,7 @@ public class ClienteDao implements IDao{
 			if(usuarioDao.atualizar(cliente.getUsuario()).getMensagemStatus() == MensagemStatus.ERRO)
 				throw new SQLException();
 			
-			List<EntidadeDominio> cartoesBanco = new ArrayList<EntidadeDominio>();
+			List<ADominio> cartoesBanco = new ArrayList<ADominio>();
 			CartaoCredito cartaoCredito = new CartaoCredito();
 			cartaoCredito.setCliente(cliente);
 			
@@ -182,13 +181,13 @@ public class ClienteDao implements IDao{
 			}
 
 			if(!cartoesBanco.isEmpty()) {
-				for(EntidadeDominio entidade : cartoesBanco) {
-					entidade = (CartaoCredito) entidade;
+				for(ADominio entidadeD : cartoesBanco) {
+					entidadeD = (CartaoCredito) entidadeD;
 					boolean flag = false;
 					if(!cliente.getCartoesCredito().isEmpty()) {
 						for(CartaoCredito c : cliente.getCartoesCredito()) {
 							if(c.getId() != null) {
-								if(c.getId() == entidade.getId()) {
+								if(c.getId() == entidadeD.getId()) {
 									flag = true;
 									break;
 								}else {
@@ -198,13 +197,13 @@ public class ClienteDao implements IDao{
 						}
 					}
 					if(!flag) {
-						if(enderecoDao.deletar(entidade).getMensagemStatus() == MensagemStatus.ERRO)
+						if(enderecoDao.deletar(entidadeD).getMensagemStatus() == MensagemStatus.ERRO)
 							throw new SQLException();
 					}
 				}
 			}
 			
-			List<EntidadeDominio> enderecosBanco = new ArrayList<EntidadeDominio>();
+			List<ADominio> enderecosBanco = new ArrayList<ADominio>();
 			Endereco endereco = new Endereco();
 			endereco.setCliente(cliente);
 			
@@ -219,12 +218,12 @@ public class ClienteDao implements IDao{
 			}
 			
 			// Remove do banco os que não existem mais					
-			for(EntidadeDominio entidade : enderecosBanco) {
-				entidade = (Endereco) entidade;
+			for(ADominio entidadeE : enderecosBanco) {
+				entidadeE = (Endereco) entidadeE;
 				boolean flag = false;
 				for(Endereco e : cliente.getEnderecos()) {
 					if(e.getId() != null) {
-						if(e.getId() == entidade.getId()) {
+						if(e.getId() == entidadeE.getId()) {
 							flag = true;
 							break;
 						}else {
@@ -233,7 +232,7 @@ public class ClienteDao implements IDao{
 					}
 				}
 				if(!flag) {
-					if(enderecoDao.deletar(entidade).getMensagemStatus() == MensagemStatus.ERRO)
+					if(enderecoDao.deletar(entidadeE).getMensagemStatus() == MensagemStatus.ERRO)
 						throw new SQLException();
 				}
 			}
@@ -254,13 +253,13 @@ public class ClienteDao implements IDao{
 	}
 
 	@Override
-	public List<EntidadeDominio> consultar(IDominio entidade) throws SQLException {
+	public List<ADominio> consultar(ADominio entidade) throws SQLException {
 		Cliente cliente = (Cliente) entidade;
 		conexao = ConexaoFactory.getConnection();
 
-		List<EntidadeDominio> clientesEntidade = new ArrayList<EntidadeDominio>();
-		List<EntidadeDominio> enderecosEntidade = new ArrayList<EntidadeDominio>();
-		List<EntidadeDominio> cartoesEntidade = new ArrayList<EntidadeDominio>();
+		List<ADominio> clientesEntidade = new ArrayList<ADominio>();
+		List<ADominio> enderecosEntidade = new ArrayList<ADominio>();
+		List<ADominio> cartoesEntidade = new ArrayList<ADominio>();
 
 		List<Endereco> enderecos = new ArrayList<Endereco>();
 		List<CartaoCredito> cartoes = new ArrayList<CartaoCredito>();
@@ -300,8 +299,8 @@ public class ClienteDao implements IDao{
 				ccr = new CartaoCredito();
 				car = new Carrinho();
 				
-				enderecosEntidade = new ArrayList<EntidadeDominio>();
-				cartoesEntidade = new ArrayList<EntidadeDominio>();
+				enderecosEntidade = new ArrayList<ADominio>();
+				cartoesEntidade = new ArrayList<ADominio>();
 				enderecos = new ArrayList<Endereco>();
 				cartoes = new ArrayList<CartaoCredito>();
 				
@@ -312,13 +311,13 @@ public class ClienteDao implements IDao{
 				
 				e.setCliente(c);
 				enderecosEntidade.addAll(enderecoDao.consultar(e));
-				for(EntidadeDominio endereco : enderecosEntidade) {
+				for(ADominio endereco : enderecosEntidade) {
 					enderecos.add((Endereco)endereco);
 				}
 				ccr.setCliente(c);
 				cartoesEntidade.addAll(cartaoCreditoDao.consultar(ccr));
 				if(!cartoesEntidade.isEmpty()) {
-					for(EntidadeDominio cartao : cartoesEntidade) {
+					for(ADominio cartao : cartoesEntidade) {
 						cartoes.add((CartaoCredito)cartao);
 					}
 				}

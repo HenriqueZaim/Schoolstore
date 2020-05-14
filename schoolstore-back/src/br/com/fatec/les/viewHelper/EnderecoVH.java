@@ -7,7 +7,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import br.com.fatec.les.model.assets.IDominio;
+import br.com.fatec.les.model.assets.ADominio;
 import br.com.fatec.les.model.endereco.Cidade;
 import br.com.fatec.les.model.endereco.Endereco;
 
@@ -49,7 +49,7 @@ public class EnderecoVH implements IViewHelper{
 	}
 
 	@Override
-	public IDominio getEntidade(HttpServletRequest request) {
+	public ADominio getEntidade(HttpServletRequest request) {
 		Endereco endereco = new Endereco();
 
 		endereco.setId(Long.parseLong(request.getParameter("txtEnderecoId")));

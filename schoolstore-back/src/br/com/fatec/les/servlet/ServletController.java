@@ -17,7 +17,7 @@ import br.com.fatec.les.command.DeletarCommand;
 import br.com.fatec.les.command.ICommand;
 import br.com.fatec.les.command.SalvarCommand;
 import br.com.fatec.les.facade.Resultado;
-import br.com.fatec.les.model.assets.IDominio;
+import br.com.fatec.les.model.assets.ADominio;
 import br.com.fatec.les.viewHelper.CarrinhoVH;
 import br.com.fatec.les.viewHelper.ClienteVH;
 import br.com.fatec.les.viewHelper.EstadoVH;
@@ -95,7 +95,7 @@ public class ServletController extends HttpServlet{
         	tarefa = request.getParameter("tarefa");
         	Resultado resultado;           
             vhCorrespondente = vhMap.get(tarefa);
-            IDominio entidadeCorrespondente = vhCorrespondente.getEntidade(request);
+            ADominio entidadeCorrespondente = vhCorrespondente.getEntidade(request);
             ICommand commandCorrespondente = commandMap.get(tarefa);
             resultado = commandCorrespondente.execute(entidadeCorrespondente);
             

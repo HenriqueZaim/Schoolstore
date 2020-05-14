@@ -7,8 +7,7 @@ import java.util.List;
 import br.com.fatec.les.database.ConexaoFactory;
 import br.com.fatec.les.facade.Mensagem;
 import br.com.fatec.les.facade.MensagemStatus;
-import br.com.fatec.les.model.assets.EntidadeDominio;
-import br.com.fatec.les.model.assets.IDominio;
+import br.com.fatec.les.model.assets.ADominio;
 import br.com.fatec.les.model.assets.Imagem;
 import br.com.fatec.les.model.usuario.Usuario;
 
@@ -19,8 +18,8 @@ public class UsuarioDao implements IDao{
 	ImagemDao imagemDao = new ImagemDao();
 	
 	@Override
-	public Mensagem atualizar(EntidadeDominio entidadeDominio) throws SQLException {
-		Usuario usuario  = (Usuario) entidadeDominio;
+	public Mensagem atualizar(ADominio entidade) throws SQLException {
+		Usuario usuario  = (Usuario) entidade;
 		conexao = ConexaoFactory.getConnection();
 		mensagem = new Mensagem();
 		String sql = "UPDATE tb_usuario SET "
@@ -55,10 +54,10 @@ public class UsuarioDao implements IDao{
 	}
 
 	@Override
-	public List<EntidadeDominio> consultar(IDominio entidade) throws SQLException {
+	public List<ADominio> consultar(ADominio entidade) throws SQLException {
 		Usuario usuario = (Usuario) entidade;
 		conexao = ConexaoFactory.getConnection();
-		List<EntidadeDominio> usuarios = new ArrayList<EntidadeDominio>();
+		List<ADominio> usuarios = new ArrayList<ADominio>();
 		
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
@@ -110,8 +109,8 @@ public class UsuarioDao implements IDao{
 	}
 	
 	@Override
-	public Mensagem deletar(EntidadeDominio entidadeDominio) throws SQLException {
-		Usuario usuario = (Usuario) entidadeDominio;
+	public Mensagem deletar(ADominio entidade) throws SQLException {
+		Usuario usuario = (Usuario) entidade;
 		conexao = ConexaoFactory.getConnection();
 		mensagem = new Mensagem();
 		String sql = "UPDATE tb_usuario SET "
@@ -140,8 +139,8 @@ public class UsuarioDao implements IDao{
 	}
 	
 	@Override
-	public Mensagem salvar(EntidadeDominio entidadeDominio) throws SQLException {
-		Usuario usuario = (Usuario) entidadeDominio;
+	public Mensagem salvar(ADominio entidade) throws SQLException {
+		Usuario usuario = (Usuario) entidade;
 		conexao = ConexaoFactory.getConnection();
 		mensagem = new Mensagem();
 		ResultSet rs;

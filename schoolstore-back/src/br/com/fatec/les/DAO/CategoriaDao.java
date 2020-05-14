@@ -9,8 +9,7 @@ import java.util.List;
 
 import br.com.fatec.les.database.ConexaoFactory;
 import br.com.fatec.les.facade.Mensagem;
-import br.com.fatec.les.model.assets.EntidadeDominio;
-import br.com.fatec.les.model.assets.IDominio;
+import br.com.fatec.les.model.assets.ADominio;
 import br.com.fatec.les.model.produto.Categoria;
 import br.com.fatec.les.model.produto.Produto;
 
@@ -19,28 +18,28 @@ public class CategoriaDao implements IDao{
     private Connection conexao = null;
     
 	@Override
-	public Mensagem salvar(EntidadeDominio entidadeDominio) throws SQLException {
+	public Mensagem salvar(ADominio entidade) throws SQLException {
         throw new UnsupportedOperationException("Operação não suportada.");
 
 	}
 
 	@Override
-	public Mensagem deletar(EntidadeDominio entidadeDominio) throws SQLException {
+	public Mensagem deletar(ADominio entidade) throws SQLException {
         throw new UnsupportedOperationException("Operação não suportada.");
 
 	}
 
 	@Override
-	public Mensagem atualizar(EntidadeDominio entidadeDominio) throws SQLException {
+	public Mensagem atualizar(ADominio entidade) throws SQLException {
         throw new UnsupportedOperationException("Operação não suportada.");
 
 	}
 
 	@Override
-	public List<EntidadeDominio> consultar(IDominio entidade) throws SQLException {
+	public List<ADominio> consultar(ADominio entidade) throws SQLException {
 		Produto produto = (Produto) entidade;
 		conexao = ConexaoFactory.getConnection();
-		List<EntidadeDominio> categorias = new ArrayList<EntidadeDominio>();
+		List<ADominio> categorias = new ArrayList<ADominio>();
 
 		PreparedStatement pstm = null;
 		ResultSet rs = null;

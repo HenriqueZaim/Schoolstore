@@ -7,8 +7,7 @@ import java.util.List;
 import br.com.fatec.les.database.ConexaoFactory;
 import br.com.fatec.les.facade.Mensagem;
 import br.com.fatec.les.facade.MensagemStatus;
-import br.com.fatec.les.model.assets.EntidadeDominio;
-import br.com.fatec.les.model.assets.IDominio;
+import br.com.fatec.les.model.assets.ADominio;
 import br.com.fatec.les.model.assets.Imagem;
 
 public class ImagemDao implements IDao{
@@ -17,8 +16,8 @@ public class ImagemDao implements IDao{
 	private Mensagem mensagem;
 	
 	@Override
-	public Mensagem salvar(EntidadeDominio entidadeDominio) throws SQLException {
-		Imagem imagem = (Imagem) entidadeDominio;
+	public Mensagem salvar(ADominio entidade) throws SQLException {
+		Imagem imagem = (Imagem) entidade;
 		conexao = ConexaoFactory.getConnection();
 		ResultSet rs;
 		mensagem = new Mensagem();
@@ -58,8 +57,8 @@ public class ImagemDao implements IDao{
 	}
 
 	@Override
-	public Mensagem deletar(EntidadeDominio entidadeDominio) throws SQLException {
-		Imagem imagem = (Imagem) entidadeDominio;
+	public Mensagem deletar(ADominio entidade) throws SQLException {
+		Imagem imagem = (Imagem) entidade;
 		conexao = ConexaoFactory.getConnection();
 		mensagem = new Mensagem();
 		String sql = "UPDATE tb_imagem SET "
@@ -85,8 +84,8 @@ public class ImagemDao implements IDao{
 	}
 
 	@Override
-	public Mensagem atualizar(EntidadeDominio entidadeDominio) throws SQLException {
-		Imagem imagem = (Imagem) entidadeDominio;
+	public Mensagem atualizar(ADominio entidade) throws SQLException {
+		Imagem imagem = (Imagem) entidade;
 		mensagem = new Mensagem();
 		conexao = ConexaoFactory.getConnection();
 		String sql = "UPDATE tb_imagem SET "
@@ -119,10 +118,10 @@ public class ImagemDao implements IDao{
 	}
 
 	@Override
-	public List<EntidadeDominio> consultar(IDominio entidade) throws SQLException {
+	public List<ADominio> consultar(ADominio entidade) throws SQLException {
 		Imagem imagem = (Imagem) entidade;
 		conexao = ConexaoFactory.getConnection();
-		List<EntidadeDominio> imagens = new ArrayList<EntidadeDominio>();
+		List<ADominio> imagens = new ArrayList<ADominio>();
 				
 		PreparedStatement pstm = null;
 		ResultSet rs = null;

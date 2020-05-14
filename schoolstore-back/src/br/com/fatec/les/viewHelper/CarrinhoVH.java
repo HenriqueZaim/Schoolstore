@@ -12,21 +12,20 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 
 import br.com.fatec.les.facade.Resultado;
-import br.com.fatec.les.model.assets.EntidadeDominio;
-import br.com.fatec.les.model.assets.IDominio;
-import br.com.fatec.les.model.endereco.Estado;
+import br.com.fatec.les.model.assets.ADominio;
 import br.com.fatec.les.model.produto.Produto;
 import br.com.fatec.les.model.usuario.Carrinho;
-import br.com.fatec.les.model.usuario.Cliente;
 import br.com.fatec.les.model.usuario.ItemCarrinho;
 
 public class CarrinhoVH implements IViewHelper{
 
 	@Override
-	public IDominio getEntidade(HttpServletRequest request) {
+	public ADominio getEntidade(HttpServletRequest request) {
 		Carrinho carrinho = new Carrinho();
 		ItemCarrinhoVH itemCarrinhoVH = new ItemCarrinhoVH();
+		
 		String tarefa = request.getParameter("tarefa");
+		
 		if(tarefa.equals("deletarCliente") || tarefa.equals("consultarCarrinho") || tarefa.equals("listarItensCarrinho")) {
 			carrinho.setId(Long.parseLong(request.getParameter("txtCarrinhoId")));
 		}else if(tarefa.equals("atualizarCarrinho")) {
@@ -45,11 +44,13 @@ public class CarrinhoVH implements IViewHelper{
 			ItemCarrinho itemCarrinho = new ItemCarrinho();
 			List<ItemCarrinho> itensCarrinho = new ArrayList<ItemCarrinho>();
 			Produto produto = new Produto();
+			
 			produto.setId(Long.parseLong(request.getParameter("txtProdutoId")));
 			
 			itemCarrinho.setProduto(produto);
 			itemCarrinho.setQuantidade(1);
 			itensCarrinho.add(itemCarrinho);
+			
 			carrinho.setItensCarrinho(itensCarrinho);
 			carrinho.setId(Long.parseLong(request.getParameter("txtCarrinhoId")));
 			carrinho.setSubTotal(Float.parseFloat(request.getParameter("txtSubTotal")));

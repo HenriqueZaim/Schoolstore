@@ -6,14 +6,14 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import br.com.fatec.les.model.assets.IDominio;
+import br.com.fatec.les.model.assets.ADominio;
 import br.com.fatec.les.model.endereco.Endereco;
 import br.com.fatec.les.model.pedido.Frete;
 
 public class FreteVH implements IViewHelper{
 
 	@Override
-	public IDominio getEntidade(HttpServletRequest request) {
+	public ADominio getEntidade(HttpServletRequest request) {
 		String tarefa = request.getParameter("tarefa");
 		Frete frete = new Frete();
 		EnderecoVH enderecoVH = new EnderecoVH();
