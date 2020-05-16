@@ -139,7 +139,7 @@
                               <label class="form-check-label" for="cartaoInput${cartao.getId() }"></label>
                             </div>
                             <h5 class="mb-0 flex-grow-1">
-                              Final ${cartao.getNumero().substring(12,16)}
+                              Cartão - Final ${cartao.getNumero().substring(12,16)}
                             </h5>
                             <div>
 

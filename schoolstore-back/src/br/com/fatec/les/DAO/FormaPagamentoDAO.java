@@ -5,14 +5,17 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 import br.com.fatec.les.database.ConexaoFactory;
 import br.com.fatec.les.facade.Mensagem;
 import br.com.fatec.les.facade.MensagemStatus;
 import br.com.fatec.les.model.assets.ADominio;
+import br.com.fatec.les.model.endereco.Endereco;
 import br.com.fatec.les.model.pagamento.FormaPagamento;
 import br.com.fatec.les.model.pagamento.cartao.PagamentoCartao;
+import br.com.fatec.les.model.pedido.Frete;
 
 public class FormaPagamentoDAO implements IDao{
 	
@@ -76,8 +79,54 @@ public class FormaPagamentoDAO implements IDao{
 
 	@Override
 	public List<ADominio> consultar(ADominio entidade) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		FormaPagamento formaPagamento = (FormaPagamento) entidade;
+		conexao = ConexaoFactory.getConnection();
+		mensagem = new Mensagem();
+		
+		List<ADominio> formasPagamento = new ArrayList<ADominio>();
+		List<ADominio> pagamentosCartaoEntidade = new ArrayList<ADominio>();
+		List<PagamentoCartao> pagamentosCartao = new ArrayList<PagamentoCartao>(); 
+		
+		ResultSet rs = null;
+		PreparedStatement pstm = null;
+
+		String sql = "SELECT "
+				+ "fpag_id,"
+				+ "fpag_valorTotal "
+				+ " FROM tb_formaPagamento "
+				+ " WHERE fpag_id = " + formaPagamento.getId() + "";
+
+		try {
+			pstm = conexao.prepareStatement(sql);
+			rs = pstm.executeQuery();
+
+			FormaPagamento f = new FormaPagamento();
+			PagamentoCartao pc = new PagamentoCartao();
+
+			if(rs.next()) {
+				f.setId(rs.getLong("fpag_id"));
+				f.setValorTotal(rs.getFloat("fpag_valorTotal"));
+				
+				pc.setFormaPagamento(f);
+				
+				pagamentosCartaoEntidade.addAll(pagamentoCartaoDao.consultar(pc));
+				if(!pagamentosCartaoEntidade.isEmpty()) {
+					for(ADominio item : pagamentosCartaoEntidade) {
+						pagamentosCartao.add((PagamentoCartao)item);
+					}
+				}
+				f.setPagamentosCartao(pagamentosCartao);
+				
+
+				formasPagamento.add(f);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		finally {
+			ConexaoFactory.closeConnection(conexao, pstm, rs);
+		}
+		return formasPagamento;
 	}
 
 }

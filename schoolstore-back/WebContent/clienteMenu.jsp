@@ -167,10 +167,15 @@
 			                <input type="hidden" name="txtCarrinhoId" value="${cliente.getCarrinho().getId()}">
 							<button type="submit" class="list-group-item  list-group-item-action waves-effect">Meu Carrinho</button>
 						</form>
-	                    <a href="request.html" class="list-group-item  list-group-item-action waves-effect">
+	                    <a href="pedidoLista.jsp" class="list-group-item  list-group-item-action waves-effect">
 	                        <i class="fa fa-user mr-3"></i>Meu Pedidos</a>
-	                    <a href="profile.html" class="list-group-item list-group-item-action waves-effect">
-	                        <i class="fa fa-table mr-3"></i>Meu Perfil</a>
+	                    <form action="app" method="POST">
+								<input type="hidden" name="txtUsuarioId" value="${usuario.getId()}"> 
+								<input type="hidden" name="txtClienteId" value="${cliente.getId()}"> 
+								<input type="hidden" name="txtImagemId" value="${usuario.getImagem().getId()}"> 
+								<input type="hidden" name="tarefa" value="editaCliente">
+								<button type="submit" class="list-group-item list-group-item-action waves-effect"><i class="fa fa-table mr-3"></i> Meu Perfil</button>
+							</form>
 	                </div>
 	            </c:if>
                  <c:if test="${usuario.isAdmin()}">
@@ -181,7 +186,7 @@
 	                        <i class="fas fa-users mr-3"></i>Lista de Clientes</a>
 	                    <a href="productslist.html" class="list-group-item list-group-item-action waves-effect">
 	                        <i class="fas fa-box-open mr-3"></i>Lista de Produtos</a>
-	                    <a href="requestlist.html" class="list-group-item list-group-item-action waves-effect">
+	                    <a href="pedidoLista.jsp" class="list-group-item list-group-item-action waves-effect">
 	                        <i class="fas fa-exchange-alt mr-3"></i>Lista de Pedidos</a> 
 	                    <a href="requestlist.html" class="list-group-item list-group-item-action waves-effect">
 	                        <i class="fas fa-ticket-alt mr-3"></i>Lista de Cupons</a> 
@@ -266,12 +271,10 @@
 												<p>Lorem ipsum dolor sit amet.</p>
 											</div>
 											<div class="card-footer text-right teal darken-1">
-												<form action="" method="">
-													<!-- inputs aqui -->
-													<button type="submit"
+
+													<a href="pedidoLista.jsp"
 														class="btn btn-link p-0 text-white font-weight-bold">Visualizar
-														Pedidos</button>
-												</form>
+														Pedidos</a>
 											</div>
 										</div>
 									</div>
@@ -323,12 +326,9 @@
 												<p>Lorem ipsum dolor sit amet.</p>
 											</div>
 											<div class="card-footer text-right green darken-1">
-												<form action="" method="">
-													<!-- inputs aqui -->
-													<button type="submit"
+												<a href="pedidoLista.jsp"
 														class="btn btn-link p-0 text-white font-weight-bold">Visualizar
-														Pedidos</button>
-												</form>
+														Pedidos</a>
 											</div>
 										</div>
 									</div>

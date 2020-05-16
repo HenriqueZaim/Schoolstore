@@ -17,14 +17,14 @@ public class PagamentoCartaoVH implements IViewHelper{
 		PagamentoCartao pagamentoCartao = new PagamentoCartao();
 		CartaoCredito cartaoCredito = new CartaoCredito();
 		ArrayList<PagamentoCartao> pagamentosCartao = new ArrayList<PagamentoCartao>();
-		String tarefa = request.getParameter("tarefa");
+//		String tarefa = request.getParameter("tarefa");
 		
 		if(request.getParameterValues("txtCartaoCreditoId") == null) {
 			return pagamentosCartao;
 		}else {
 			String[] cartoesForm = request.getParameterValues("txtCartaoCreditoId");
-			float valorTotalCartao = Float.parseFloat(request.getParameter("txtValorCartao"));// TODO: Adicionar valor do cartao/cupom no front
-			valorTotalCartao /= cartoesForm.length;
+			float valorTotalCartao = Float.parseFloat(request.getParameter("txtSubTotal"));// TODO: Adicionar valor do cartao/cupom no front
+			valorTotalCartao /= cartoesForm.length;  // TODO: N ESTA PEGANDO O FRETE
 			for(int i = 0 ; i < cartoesForm.length ; i++) {
 				pagamentoCartao = new PagamentoCartao();
 				cartaoCredito = new CartaoCredito();

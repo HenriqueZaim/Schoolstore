@@ -98,8 +98,6 @@
         
         if(login == null || login == "off"){
             response.sendRedirect("usuarioLogin.jsp");
-        }else if (!usuario.isAdmin()){
-	        response.sendRedirect("index.jsp");
         }
     %>
 
@@ -139,6 +137,17 @@
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-lg-right py-0 dropdown-default"
                                     aria-labelledby="navbarDropdownMenuLink-5">
+                                    <c:if test="${cliente != null}">
+										<form action="app" method="POST">
+											<input type="hidden" name="txtUsuarioId" value="${usuario.getId()}"> 
+											<input type="hidden" name="txtClienteId" value="${cliente.getId()}"> 
+											<input type="hidden" name="txtImagemId" value="${usuario.getImagem().getId()}"> 
+											<input type="hidden" name="tarefa" value="editaCliente">
+											
+											<button type="submit" class="dropdown-item waves-effect waves-light">Meu Perfil</button>
+
+										</form>
+                                    </c:if>
                                     <form action="logout" method="POST">
                                     	<button type="submit" class="dropdown-item waves-effect waves-light">Sair</button>
                                     </form>
@@ -156,22 +165,45 @@
 					class="blue-text h1 m-2">SchoolStore</strong>
 				</a>
 
+	             <c:if test="${!usuario.isAdmin()}">
 	                <div class="list-group list-group-flush mt-5">
-		                <a href="clienteMenu.jsp" class="list-group-item list-group-item-action waves-effect">
+	                    <a href="clienteMenu.jsp" class="list-group-item  list-group-item-action waves-effect">
+	                      <i class="fas fa-cart-arrow-down mr-3"></i>Menu Principal</a>
+	                    <form action="app" method="POST">
+							<input type="hidden" name="tarefa" value="consultarCarrinho">
+			                <input type="hidden" name="txtCarrinhoId" value="${cliente.getCarrinho().getId()}">
+							<button type="submit" class="list-group-item  list-group-item-action waves-effect">Meu Carrinho</button>
+						</form>
+	                    <a href="pedidoLista.jsp" class="list-group-item active list-group-item-action waves-effect">
+	                        <i class="fa fa-user mr-3"></i>Meu Pedidos</a>
+	                    <c:if test="${cliente != null}">
+							<form action="app" method="POST">
+								<input type="hidden" name="txtUsuarioId" value="${usuario.getId()}"> 
+								<input type="hidden" name="txtClienteId" value="${cliente.getId()}"> 
+								<input type="hidden" name="txtImagemId" value="${usuario.getImagem().getId()}"> 
+								<input type="hidden" name="tarefa" value="editaCliente">
+								<button type="submit" class="list-group-item list-group-item-action waves-effect"><i class="fa fa-table mr-3"></i> Meu Perfil</button>
+							</form>
+                         </c:if>
+	                </div>
+	                	<input type="hidden" id="txtClienteId" value="${cliente.getId() }">
+	            </c:if>
+                 <c:if test="${usuario.isAdmin()}">
+	                <div class="list-group list-group-flush mt-5">
+		                <a href="clienteMenu.jsp" class="list-group-item  list-group-item-action waves-effect">
 		                    <i class="fas fa-th-list mr-3"></i>Menu Principal</a>
-	                    <a href="clienteLista.jsp" class="list-group-item active list-group-item-action waves-effect">
+	                    <a href="clienteLista.jsp" class="list-group-item  list-group-item-action waves-effect">
 	                        <i class="fas fa-users mr-3"></i>Lista de Clientes</a>
 	                    <a href="productslist.html" class="list-group-item list-group-item-action waves-effect">
 	                        <i class="fas fa-box-open mr-3"></i>Lista de Produtos</a>
-	                    <a href="pedidoLista.jsp" class="list-group-item list-group-item-action waves-effect">
+	                    <a href="requestlist.html" class="list-group-item active list-group-item-action waves-effect">
 	                        <i class="fas fa-exchange-alt mr-3"></i>Lista de Pedidos</a> 
-	                    <a href="requestlist.html" class="list-group-item list-group-item-action waves-effect">
+	                    <a href="pedidoLista.jsp" class="list-group-item list-group-item-action waves-effect">
 	                        <i class="fas fa-ticket-alt mr-3"></i>Lista de Cupons</a> 
 	                    <a href="relatorios.html" class="list-group-item list-group-item-action waves-effect">
 	                        <i class="fas fa-chart-line mr-3"></i>Relatórios</a>   
 	                </div>
-
-
+	            </c:if>
 			</div>
 		</header>
 
@@ -179,7 +211,7 @@
 		<div class="container-fluid mt-5">
 			<div class="card mb-4 wow fadeIn">
 				<div class="card-body d-sm-flex justify-content-between">
-					<h1 class="mb-2 mb-sm-0 pt-1">Lista de Clientes</h1>
+					<h1 class="mb-2 mb-sm-0 pt-1">Lista de Pedidos</h1>
 				</div>
 			</div>
 			<c:forEach var="mensagem" items="${resultado.getMensagens()}">
@@ -204,40 +236,41 @@
 					<div class="card mb-4 wow fadeIn mb-5">
 						<section class="dark-grey-text">
 							<table class="table table-striped table-responsive-md btn-table">
-
-								<thead>
-									<tr class="font-weight-bold text-center">
-										<th>#Id</th>
-										<th>Nome</th>
-										<th>Telefone</th>
-										<th>Endereços</th>
-										<th>Cartões</th>
-										<th colspan="2">Ação</th>
-									</tr>
-								</thead>
-
-								<tbody id="tableClientes">
-
-								</tbody>
+								 <c:if test="${usuario.isAdmin()}">
+									<thead>
+										<tr class="font-weight-bold text-center">
+											<th>#Id</th>
+											<th>Itens</th>
+											<th>Cliente</th>
+											<th>Status</th>
+											<th>Valor da compra</th>
+											<th>Valor Pago</th>
+											<th>Status</th>
+											<th colspan="2">Ação</th>
+										</tr>
+									</thead>
+								</c:if>
+								<c:if test="${!usuario.isAdmin()}">
+									<thead>
+										<tr class="font-weight-bold text-center">
+											<th>#Id</th>
+											<th>Itens</th>
+											<th>Status</th>
+											<th>Valor da compra</th>
+											<th>Valor Pago</th>
+											<th>Status</th>
+											<th colspan="2">Ação</th>
+										</tr>
+									</thead>
+								</c:if>
+	
+									<tbody id="tablePedidos">
+	
+									</tbody>
 
 							</table>
 						</section>
 					</div>
-				</div>
-				<div class="col-lg-4">
-					<div class="card mb-4 wow fadeIn px-2 py-3">
-						<h3 class="text-center">Endereço</h3>
-						<section class="dark-grey-text px-3 py-2" id="painelEndereco">
-
-						</section>
-					</div>
-					<div class="card mb-4 wow fadeIn px-2 py-3">
-						<h3 class="text-center">Cartão de Crédito</h3>
-						<section class="dark-grey-text px-3 py-2" id="painelCartao">
-
-						</section>
-					</div>
-
 				</div>
 			</div>
 		</div>
@@ -255,7 +288,7 @@
 	<script type="text/javascript" src="./js/popper.min.js"></script>
 	<script type="text/javascript" src="./js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="./js/mdb.min.js"></script>
-	<script type="text/javascript" src="./js/pages/listaClientes.js"></script>
+	<script type="text/javascript" src="./js/pages/listaPedidos.js"></script>
 
 </body>
 

@@ -5,12 +5,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 import br.com.fatec.les.database.ConexaoFactory;
 import br.com.fatec.les.facade.Mensagem;
 import br.com.fatec.les.facade.MensagemStatus;
 import br.com.fatec.les.model.assets.ADominio;
+import br.com.fatec.les.model.endereco.Endereco;
 import br.com.fatec.les.model.pedido.Frete;
 
 public class FreteDao implements IDao{
@@ -73,8 +75,53 @@ public class FreteDao implements IDao{
 
 	@Override
 	public List<ADominio> consultar(ADominio entidade) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
+		Frete frete = (Frete) entidade;
+		conexao = ConexaoFactory.getConnection();
+		mensagem = new Mensagem();
+		EnderecoDao enderecoDao = new EnderecoDao();
+		
+		List<ADominio> fretes = new ArrayList<ADominio>();
+		
+		ResultSet rs = null;
+		PreparedStatement pstm = null;
 
+		String sql = "SELECT "
+				+ "fre_id, "
+				+ "fre_valor, "
+				+ "fre_previsaoEmDias, "
+				+ "fre_end_id "
+				+ " FROM tb_frete "
+				+ " WHERE fre_ativo = 1 ";
+		if(frete.getId() != null) {
+			sql += " AND fre_id = " + frete.getId() + "";
+		}
+
+		try {
+			pstm = conexao.prepareStatement(sql);
+			rs = pstm.executeQuery();
+
+			Frete f = new Frete();
+			Endereco e = new Endereco();
+
+			if(rs.next()) {
+				f = new Frete();
+				e = new Endereco();
+				
+				f.setId(rs.getLong("fre_id"));
+				f.setValor(rs.getFloat("fre_valor"));
+				f.setPrevisaoEmDias(rs.getInt("fre_previsaoEmDias"));
+				
+				e.setId(rs.getLong("fre_end_id"));
+				f.setEndereco((Endereco)enderecoDao.consultar(e).get(0));
+
+				fretes.add(f);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		finally {
+			ConexaoFactory.closeConnection(conexao, pstm, rs);
+		}
+		return fretes;
+	}
 }

@@ -34,7 +34,7 @@ $(document).ready(function () {
         $("#listaItens").prepend(`
 					  	<li class="d-flex justify-content-between">
 					  		<p>${item.quantidade}x ${item.produto.nome}</p>
-					  		<p>R$ ${preco}</p>
+					  		<p>R$ ${preco*item.quantidade}</p>
 					  		<input type="hidden" name="txtProdutoId" value="${item.produto.id}">
 					  		<input type="hidden" name="txtQuantidadeProduto" value="${item.quantidade}">
 
@@ -77,7 +77,7 @@ $(document).ready(function () {
       valorFrete = parseFloat(valorFrete);
       valorTotal = parseFloat(valorTotal);
       valorTotal += valorFrete;
-      $("#txtFretePreco").val(valorTotal);
+      $("#txtSubTotal").val(valorTotal);
       $("#valorFinal").text(`R$ ${valorTotal}`);
 
       let endereco = $(".enderecoInput[checked]")

@@ -135,7 +135,7 @@ public class EnderecoDao implements IDao{
 		if(enderecoEntidade.getId() != null) {
 			sql += "AND end_id = " + enderecoEntidade.getId();
 		}
-		if(enderecoEntidade.getCliente().getId() != null) {
+		if(enderecoEntidade.getCliente() != null && enderecoEntidade.getCliente().getId() != null) {
 			sql += "AND end_cli_id = " + enderecoEntidade.getCliente().getId() ;
 		}
 				
