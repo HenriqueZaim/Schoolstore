@@ -9,6 +9,7 @@ import java.util.List;
 
 import br.com.fatec.les.database.ConexaoFactory;
 import br.com.fatec.les.facade.Mensagem;
+import br.com.fatec.les.facade.MensagemStatus;
 import br.com.fatec.les.model.assets.ADominio;
 import br.com.fatec.les.model.pedido.ItemPedido;
 import br.com.fatec.les.model.pedido.Pedido;
@@ -22,8 +23,40 @@ public class ItemPedidoDao implements IDao{
 
 	@Override
 	public Mensagem salvar(ADominio entidade) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		ItemPedido itemPedido = (ItemPedido) entidade;
+		
+		conexao = ConexaoFactory.getConnection();
+		mensagem = new Mensagem();
+		
+		String sql = "INSERT INTO tb_itemPedido "
+				+ "("
+				+ "iped_quantidade, "
+				+ "iped_pro_id, "
+				+ "iped_ped_id "
+				+ ") "
+				+ " VALUES ( ?, ?, ? )";
+		
+		PreparedStatement pstm = null;
+		
+		try {
+			pstm = conexao.prepareStatement(sql);
+			pstm.setInt(1, itemPedido.getQuantidade());
+			pstm.setLong(2, itemPedido.getProduto().getId());
+			pstm.setLong(3, itemPedido.getPedido().getId());
+			
+			pstm.executeUpdate();
+
+			mensagem.setMensagem("Operação bem sucedida!");
+			mensagem.setMensagemStatus(MensagemStatus.OPERACAO);
+		
+		}catch(SQLException e){
+			mensagem.setMensagem("Ocorreu um erro durante a operação. Tente novamente ou consulte a equipe de desenvolvimento.");
+			mensagem.setMensagemStatus(MensagemStatus.ERRO);
+		}
+		finally {
+			ConexaoFactory.closeConnection(conexao, pstm);
+		}
+		return mensagem;
 	}
 
 	@Override

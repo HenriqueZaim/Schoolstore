@@ -232,7 +232,7 @@
 			</c:forEach>
 
 			<div class="row">
-				<div class="col-lg-8">
+				<div class="col-lg-12">
 					<div class="card mb-4 wow fadeIn mb-5">
 						<section class="dark-grey-text">
 							<table class="table table-striped table-responsive-md btn-table">
@@ -245,8 +245,9 @@
 											<th>Status</th>
 											<th>Valor da compra</th>
 											<th>Valor Pago</th>
-											<th>Status</th>
-											<th colspan="2">Ação</th>
+											<th>Meios de pagamento</th>
+											<th>Endereço</th>
+											<th>Ação</th>
 										</tr>
 									</thead>
 								</c:if>
@@ -258,8 +259,8 @@
 											<th>Status</th>
 											<th>Valor da compra</th>
 											<th>Valor Pago</th>
-											<th>Status</th>
-											<th colspan="2">Ação</th>
+											<th>Previsão de chegada</th>
+											<th>Ação</th>
 										</tr>
 									</thead>
 								</c:if>

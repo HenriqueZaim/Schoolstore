@@ -12,10 +12,13 @@ import br.com.fatec.les.database.ConexaoFactory;
 import br.com.fatec.les.facade.Mensagem;
 import br.com.fatec.les.facade.MensagemStatus;
 import br.com.fatec.les.model.assets.ADominio;
+import br.com.fatec.les.model.endereco.Endereco;
 import br.com.fatec.les.model.pagamento.FormaPagamento;
+import br.com.fatec.les.model.pagamento.cartao.CartaoCredito;
 import br.com.fatec.les.model.pedido.Frete;
 import br.com.fatec.les.model.pedido.ItemPedido;
 import br.com.fatec.les.model.pedido.Pedido;
+import br.com.fatec.les.model.pedido.StatusPedido;
 import br.com.fatec.les.model.usuario.Cliente;
 
 public class PedidoDao implements IDao{
@@ -25,6 +28,7 @@ public class PedidoDao implements IDao{
 	FreteDao freteDao = new FreteDao();
 	FormaPagamentoDAO formaPagamentoDao = new FormaPagamentoDAO();
 	ItemPedidoDao itemPedidoDao = new ItemPedidoDao();
+	ClienteDao clienteDao = new ClienteDao();
 
 	@Override
 	public Mensagem salvar(ADominio entidade) throws SQLException {
@@ -72,7 +76,14 @@ public class PedidoDao implements IDao{
 			
 			rs = pstm.getGeneratedKeys();
 			if (rs.next()){
-				mensagem.setMensagem(Integer.toString(rs.getInt(1)));
+				id = Integer.toString(rs.getInt(1));
+				for(ItemPedido item : pedido.getItensPedido()) {
+					pedido.setId(Long.parseLong(id));
+					item.setPedido(pedido);
+					itemPedidoDao.salvar(item);
+				}
+				
+				mensagem.setMensagem("Pedido feito com sucesso! Acompanhe o status de seu pedido na página 'Meus Pedidos'");
 				mensagem.setMensagemStatus(MensagemStatus.OPERACAO);
 			}				
 		}catch(SQLException e){
@@ -93,7 +104,33 @@ public class PedidoDao implements IDao{
 
 	@Override
 	public Mensagem atualizar(ADominio entidade) throws SQLException {
-		return null;
+		Pedido pedido  = (Pedido) entidade;
+		conexao = ConexaoFactory.getConnection();
+		mensagem = new Mensagem();
+		
+		String sql = "UPDATE tb_pedido SET "
+				+ "ped_statusPedido = ? "			
+				+ " WHERE ped_id = ?";
+		
+		PreparedStatement pstm = null;
+		
+		try {
+			pstm = conexao.prepareStatement(sql);
+			pstm.setString(1, pedido.getStatusPedido().toString());
+			pstm.setLong(2, pedido.getId());
+
+			pstm.executeUpdate();
+			mensagem.setMensagem("Pedido atualizado com sucesso!");
+			mensagem.setMensagemStatus(MensagemStatus.SUCESSO);
+		}catch(SQLException e) {
+			mensagem.setMensagem("Ocorreu um erro durante a operação. Tente novamente ou consulte a equipe de desenvolvimento.");
+			mensagem.setMensagemStatus(MensagemStatus.ERRO);
+		}
+		finally {
+			ConexaoFactory.closeConnection(conexao, pstm);
+		}
+		
+		return mensagem;
 	}
 
 	@Override
@@ -109,7 +146,8 @@ public class PedidoDao implements IDao{
 		
 		String sql = "SELECT "
 				+ "ped_id, "
-				+ "ped_valor, "
+				+ "ped_valor,"
+				+ "ped_statusPedido, "
 				+ "ped_fpag_id, "
 				+ "ped_fre_id, "
 				+ "ped_cli_id "
@@ -144,7 +182,10 @@ public class PedidoDao implements IDao{
 				
 				p.setId(rs.getLong("ped_id"));
 				p.setValor(rs.getFloat("ped_valor"));
+				p.setStatusPedido(StatusPedido.valueOf(rs.getString("ped_statusPedido")));
+				
 				c.setId(rs.getLong("ped_cli_id"));
+				p.setCliente((Cliente)clienteDao.consultar(c).get(0));
 				
 				f.setId(rs.getLong("ped_fre_id"));
 				p.setFrete((Frete)freteDao.consultar(f).get(0));

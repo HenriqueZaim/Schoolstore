@@ -278,7 +278,7 @@ public class ClienteDao implements IDao{
 		if(cliente.getId() != null) {
 			sql += " AND cli_id = " + cliente.getId() + "";
 		}
-		if(cliente.getUsuario().getId() != null) {
+		if(cliente.getUsuario() != null && cliente.getUsuario().getId() != null) {
 			sql += " AND cli_usu_id = " + cliente.getUsuario().getId() + "";
 		}
 				

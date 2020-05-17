@@ -58,8 +58,10 @@ public class ServletController extends HttpServlet{
     	// Pedido
     	vhMap.put("efetuarPedido", new PedidoVH());
     	vhMap.put("consultarPedidos", new PedidoVH());
+    	vhMap.put("alterarStatusPedido", new PedidoVH());
     	commandMap.put("efetuarPedido", new SalvarCommand());
     	commandMap.put("consultarPedidos", new ConsultarCommand());
+    	commandMap.put("alterarStatusPedido", new AtualizarCommand());
     	
     	// Login de usuário
     	// Vai consultar com um e-mail e senha, e vai trazer o usuário todo + cliente
