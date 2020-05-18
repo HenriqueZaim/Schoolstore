@@ -17,7 +17,7 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
-  <title>Material Design for Bootstrap</title>
+  <title>Login</title>
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
   <link rel="stylesheet" href="./css/bootstrap.min.css">
@@ -26,7 +26,7 @@
   <style>
     body {
       background: linear-gradient(to bottom, #74747478, #000000),
-        url(../img/row-of-books-in-shelf-256541.jpg);
+        url(./img/row-of-books-in-shelf-256541.jpg);
       background-position: center;
       background-size: cover;
       background-attachment: fixed;
@@ -109,10 +109,10 @@
     </section>
   </main>
 
-  <script type="text/javascript" src="../js/jquery.min.js"></script>
-  <script type="text/javascript" src="../js/popper.min.js"></script>
-  <script type="text/javascript" src="../js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="../js/mdb.min.js"></script>
+  <script type="text/javascript" src="./js/jquery.min.js"></script>
+  <script type="text/javascript" src="./js/popper.min.js"></script>
+  <script type="text/javascript" src="./js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="./js/mdb.min.js"></script>
 
 </body>
 

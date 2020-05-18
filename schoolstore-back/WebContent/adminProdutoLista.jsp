@@ -13,7 +13,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta http-equiv="x-ua-compatible" content="ie=edge">
-<title>Lista de clientes</title>
+<title>Lista de produtos</title>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
 <link rel="stylesheet" href="./css/bootstrap.min.css">
@@ -86,17 +86,17 @@
 
 <body>
 	<%
-        String login = "";
-        login = (String) session.getAttribute("status");
-        Usuario usuario = new Usuario();
-        usuario = (Usuario) session.getAttribute("usuario");
-        
-        if(login == null || login == "off"){
-            response.sendRedirect("usuarioLogin.jsp");
-        }else if (!usuario.isAdmin()){
+		String login = "";
+		login = (String) session.getAttribute("status");
+		Usuario usuario = new Usuario();
+		usuario = (Usuario) session.getAttribute("usuario");
+
+		if (login == null || login == "off") {
+			response.sendRedirect("usuarioLogin.jsp");
+		}else if (!usuario.isAdmin()){
 	        response.sendRedirect("index.jsp");
         }
-    %>
+	%>
 
 	<div class="container-for-admin">
 		<header>
@@ -130,20 +130,19 @@
 			</nav>
 			<div class="sidebar-fixed position-fixed">
 
-				<a class="navbar-brand waves-effect" href="index.jsp"> <strong class="blue-text h1 m-2">SchoolStore</strong>
+				<a class="navbar-brand waves-effect" href="index.html"> <strong class="blue-text h1 m-2">SchoolStore</strong>
 				</a>
 
 				<div class="list-group list-group-flush mt-5">
 					<a href="clienteMenu.jsp" class="list-group-item  list-group-item-action waves-effect"> <i class="fas fa-th-list mr-3"></i>Menu Principal
-					</a> <a href="clienteLista.jsp" class="list-group-item active list-group-item-action waves-effect"> <i class="fas fa-users mr-3"></i>Lista de Clientes
-					</a> <a href="adminProdutoLista.jsp" class="list-group-item list-group-item-action waves-effect"> <i class="fas fa-box-open mr-3"></i>Lista de Produtos
+					</a> <a href="clienteLista.jsp" class="list-group-item  list-group-item-action waves-effect"> <i class="fas fa-users mr-3"></i>Lista de Clientes
+					</a> <a href="adminProdutoLista.jsp" class="list-group-item active list-group-item-action waves-effect"> <i class="fas fa-box-open mr-3"></i>Lista de Produtos
 					</a> <a href="pedidoLista.jsp" class="list-group-item list-group-item-action waves-effect"> <i class="fas fa-exchange-alt mr-3"></i>Lista de Pedidos
 					</a> <a href="trocaLista.jsp" class="list-group-item list-group-item-action waves-effect"> <i class="fas fa-exchange-alt mr-3"></i>Lista de Trocas
 					</a> <a href="cuponsLista.jsp" class="list-group-item list-group-item-action waves-effect"> <i class="fas fa-ticket-alt mr-3"></i>Lista de Cupons
 					</a> <a href="relatorio.jsp" class="list-group-item list-group-item-action waves-effect"> <i class="fas fa-chart-line mr-3"></i>Relatórios
 					</a>
 				</div>
-
 
 			</div>
 		</header>
@@ -152,7 +151,7 @@
 		<div class="container-fluid mt-5">
 			<div class="card mb-4 wow fadeIn">
 				<div class="card-body d-sm-flex justify-content-between">
-					<h1 class="mb-2 mb-sm-0 pt-1">Lista de Clientes</h1>
+					<h1 class="mb-2 mb-sm-0 pt-1">Lista de Produtos</h1>
 				</div>
 			</div>
 			<c:forEach var="mensagem" items="${resultado.getMensagens()}">
@@ -171,40 +170,31 @@
 			</c:forEach>
 
 			<div class="row">
-				<div class="col-lg-8">
+				<div class="col-lg-12">
 					<div class="card mb-4 wow fadeIn mb-5">
 						<section class="dark-grey-text">
 							<table class="table table-striped table-responsive-md btn-table">
-
 								<thead>
 									<tr class="font-weight-bold text-center">
 										<th>#Id</th>
 										<th>Nome</th>
-										<th>Telefone</th>
-										<th>Endereços</th>
-										<th>Cartões</th>
-										<th colspan="2">Ação</th>
+										<th>Preço</th>
+										<th>Descrição</th>
+										<th>Categoria(s)</th>
+										<th>Qtdd em estoque</th>
+										<th>Fornecedor</th>
+										<th>Precificação</th>
+										<th>Ação</th>
 									</tr>
 								</thead>
 
-								<tbody id="tableClientes">
+								<tbody id="tableProdutos">
 
 								</tbody>
 
 							</table>
 						</section>
 					</div>
-				</div>
-				<div class="col-lg-4">
-					<div class="card mb-4 wow fadeIn px-2 py-3">
-						<h3 class="text-center">Endereço</h3>
-						<section class="dark-grey-text px-3 py-2" id="painelEndereco"></section>
-					</div>
-					<div class="card mb-4 wow fadeIn px-2 py-3">
-						<h3 class="text-center">Cartão de Crédito</h3>
-						<section class="dark-grey-text px-3 py-2" id="painelCartao"></section>
-					</div>
-
 				</div>
 			</div>
 		</div>
@@ -221,7 +211,7 @@
 	<script type="text/javascript" src="./js/popper.min.js"></script>
 	<script type="text/javascript" src="./js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="./js/mdb.min.js"></script>
-	<script type="text/javascript" src="./js/pages/listaClientes.js"></script>
+	<script type="text/javascript" src="./js/pages/adminprodutolista.js"></script>
 
 </body>
 
