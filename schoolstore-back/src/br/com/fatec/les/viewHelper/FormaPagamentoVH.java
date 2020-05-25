@@ -15,10 +15,13 @@ public class FormaPagamentoVH implements IViewHelper{
 	public ADominio getEntidade(HttpServletRequest request) {
 		FormaPagamento formaPagamento = new FormaPagamento();
 		PagamentoCartaoVH pagamentoCartaoVH = new PagamentoCartaoVH();
-		
+		PagamentoCupomVH pagamentoCupomVH = new PagamentoCupomVH();
+
+		formaPagamento.setValorTotal(Float.parseFloat(request.getParameter("txtValorTotalPago"))); // subtrair com o valor do pedido
 		formaPagamento.setPagamentosCartao(pagamentoCartaoVH.getEntidades(request));
-//		formaPagamento.setPagamentoCupom(pagamentoCupom);
-//		formaPagamento.setValorTotal(valorTotal);
+		formaPagamento.setPagamentosCupom(pagamentoCupomVH.getEntidades(request));
+		
+		
 		
 		return formaPagamento;
 	}

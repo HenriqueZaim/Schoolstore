@@ -32,9 +32,12 @@ public class ClienteVH implements IViewHelper{
 		
 		String tarefa = request.getParameter("tarefa");
 		
-		if(tarefa.equals("efetuarPedido") || tarefa.equals("consultarPedidos")) {
+		if(tarefa.equals("efetuarPedido") || tarefa.equals("consultarPedidos") || tarefa.equals("consultarCliente")) {
 			if(request.getParameter("txtClienteId") != null)
 				cliente.setId(Long.parseLong(request.getParameter("txtClienteId")));
+			
+			if(request.getParameter("txtUsuarioId") != null)
+				cliente.setUsuario((Usuario)usuarioVH.getEntidade(request));
 			
 			return cliente;
 		}
@@ -71,13 +74,13 @@ public class ClienteVH implements IViewHelper{
 
 		if(tarefa.equals("consultarCliente")) {
 			Resultado resultado = new Resultado();
-			
 			resultado = (Resultado)request.getAttribute("resultado");
 			
 			String json = new Gson().toJson(resultado);
 			response.setContentType("application/json");
 			response.setCharacterEncoding("UTF-8");
 			response.getWriter().write(json);
+			
 			
 		}else if(tarefa.equals("editaCliente")) {
 			List<Cliente> clientes = new ArrayList<Cliente>();

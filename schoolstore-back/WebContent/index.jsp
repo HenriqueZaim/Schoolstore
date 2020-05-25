@@ -16,7 +16,7 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta http-equiv="x-ua-compatible" content="ie=edge">
-<title>Material Design for Bootstrap</title>
+<title>SchoolStore</title>
 <link rel="stylesheet"
 	href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
 <link rel="stylesheet"
@@ -85,6 +85,7 @@
 
 										</form>
                                     </c:if>
+                                    <a href="clienteMenu.jsp" class="dropdown-item waves-effect waves-light">Menu</a>
 									<form action="logout" method="POST">
 										<button type="submit"
 											class="dropdown-item waves-effect waves-light">Sair</button>

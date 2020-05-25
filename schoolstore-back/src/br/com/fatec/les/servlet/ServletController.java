@@ -20,6 +20,7 @@ import br.com.fatec.les.facade.Resultado;
 import br.com.fatec.les.model.assets.ADominio;
 import br.com.fatec.les.viewHelper.CarrinhoVH;
 import br.com.fatec.les.viewHelper.ClienteVH;
+import br.com.fatec.les.viewHelper.CupomVH;
 import br.com.fatec.les.viewHelper.EstadoVH;
 import br.com.fatec.les.viewHelper.IViewHelper;
 import br.com.fatec.les.viewHelper.PedidoVH;
@@ -89,6 +90,10 @@ public class ServletController extends HttpServlet{
     	// Adicionar produto no carrinho
     	vhMap.put("adicionarProduto", new CarrinhoVH());
     	commandMap.put("adicionarProduto", new AtualizarCommand());
+    	
+    	// Cupons
+    	vhMap.put("consultarCupons", new CupomVH());
+    	commandMap.put("consultarCupons", new ConsultarCommand());
 	}
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)

@@ -12,16 +12,16 @@ import br.com.fatec.les.database.ConexaoFactory;
 import br.com.fatec.les.facade.Mensagem;
 import br.com.fatec.les.facade.MensagemStatus;
 import br.com.fatec.les.model.assets.ADominio;
-import br.com.fatec.les.model.endereco.Endereco;
 import br.com.fatec.les.model.pagamento.FormaPagamento;
 import br.com.fatec.les.model.pagamento.cartao.PagamentoCartao;
-import br.com.fatec.les.model.pedido.Frete;
+import br.com.fatec.les.model.pagamento.cupom.PagamentoCupom;
 
 public class FormaPagamentoDAO implements IDao{
 	
 	private Connection conexao = null;
 	private Mensagem mensagem;
 	PagamentoCartaoDao pagamentoCartaoDao = new PagamentoCartaoDao();
+	PagamentoCupomDao pagamentoCupomDao = new PagamentoCupomDao();
 
 	@Override
 	public Mensagem salvar(ADominio entidade) throws SQLException {
@@ -52,6 +52,11 @@ public class FormaPagamentoDAO implements IDao{
 				for(PagamentoCartao pagamentoCartao : formaPagamento.getPagamentosCartao()) {
 					pagamentoCartao.setFormaPagamento(formaPagamento);
 					pagamentoCartaoDao.salvar(pagamentoCartao);
+				}
+				
+				for(PagamentoCupom  pagamentoCupom : formaPagamento.getPagamentosCupom()) {
+					pagamentoCupom.setFormaPagamento(formaPagamento);
+					pagamentoCupomDao.salvar(pagamentoCupom);
 				}
 				
 			}				
@@ -85,7 +90,9 @@ public class FormaPagamentoDAO implements IDao{
 		
 		List<ADominio> formasPagamento = new ArrayList<ADominio>();
 		List<ADominio> pagamentosCartaoEntidade = new ArrayList<ADominio>();
+		List<ADominio> pagamentosCupomEntidade = new ArrayList<ADominio>();
 		List<PagamentoCartao> pagamentosCartao = new ArrayList<PagamentoCartao>(); 
+		List<PagamentoCupom> pagamentosCupom = new ArrayList<PagamentoCupom>(); 
 		
 		ResultSet rs = null;
 		PreparedStatement pstm = null;
@@ -102,12 +109,14 @@ public class FormaPagamentoDAO implements IDao{
 
 			FormaPagamento f = new FormaPagamento();
 			PagamentoCartao pc = new PagamentoCartao();
+			PagamentoCupom p = new PagamentoCupom();
 
 			if(rs.next()) {
 				f.setId(rs.getLong("fpag_id"));
 				f.setValorTotal(rs.getFloat("fpag_valorTotal"));
 				
 				pc.setFormaPagamento(f);
+				p.setFormaPagamento(f);
 				
 				pagamentosCartaoEntidade.addAll(pagamentoCartaoDao.consultar(pc));
 				if(!pagamentosCartaoEntidade.isEmpty()) {
@@ -116,6 +125,14 @@ public class FormaPagamentoDAO implements IDao{
 					}
 				}
 				f.setPagamentosCartao(pagamentosCartao);
+				
+				pagamentosCupomEntidade.addAll(pagamentoCupomDao.consultar(p));
+				if(!pagamentosCupomEntidade.isEmpty()) {
+					for(ADominio item : pagamentosCupomEntidade) {
+						pagamentosCupom.add((PagamentoCupom)item);
+					}
+				}
+				f.setPagamentosCupom(pagamentosCupom);
 				
 
 				formasPagamento.add(f);

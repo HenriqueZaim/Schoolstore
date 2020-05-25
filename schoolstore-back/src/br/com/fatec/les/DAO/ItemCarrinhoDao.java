@@ -61,8 +61,17 @@ public class ItemCarrinhoDao implements IDao{
 		conexao = ConexaoFactory.getConnection();
 		mensagem = new Mensagem();
 
-		String sql = "DELETE FROM tb_itemCarrinho "
-				+ " WHERE icar_car_id = " + itemCarrinho.getCarrinho().getId() + "";
+		String sql = "DELETE FROM tb_itemCarrinho ";
+		
+		if(itemCarrinho.getCarrinho() != null && itemCarrinho.getCarrinho().getId() != null) {
+			sql += " WHERE icar_car_id = " + itemCarrinho.getCarrinho().getId() + "";
+		}else if(itemCarrinho.getProduto() != null && itemCarrinho.getProduto().getId() != null) {
+			sql += " WHERE icar_pro_id = " + itemCarrinho.getProduto().getId() + "";
+		}else {
+			mensagem.setMensagem("Operação proibida");
+			mensagem.setMensagemStatus(MensagemStatus.ERRO);
+			return mensagem;
+		}
 		
 		PreparedStatement pstm = null;
 		

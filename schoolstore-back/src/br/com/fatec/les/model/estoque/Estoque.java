@@ -2,9 +2,10 @@ package br.com.fatec.les.model.estoque;
 
 import java.util.List;
 
+import br.com.fatec.les.model.assets.ADominio;
 import br.com.fatec.les.model.produto.Produto;
 
-public class Estoque {
+public class Estoque extends ADominio{
 	private Produto produto;
 	private int quantidadeTotal;
 	private List<ItemEstoque> itensEstoque;

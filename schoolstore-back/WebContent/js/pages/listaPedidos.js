@@ -13,7 +13,7 @@ $(document).ready(function () {
 	  success: response => {
 		  console.log(response)
 		  response.entidades.forEach(function(data){
-			  
+			  console.log(data)
 			  if(cliente === "" || cliente === null || cliente === undefined){
 				  $("#tablePedidos").append(`
 				  			<tr class="text-center">
@@ -50,9 +50,9 @@ $(document).ready(function () {
 								</div>
 						  	  </td>  
 		                      <td id="status-${data.id}"></td>
-		                      <td>${data.valor}</td>
-						  	  <td>${data.formaPagamento.valorTotal}</td>
-						  	  <td>formasPagamento</td>
+		                      <td>R$ ${data.valor}</td>
+						  	  <td>R$ ${data.formaPagamento.valorTotal}</td>
+						  	  <td id="formasPagamento-${data.id}"></td>
 						  	  <td>
 						  	  	<button type="button" class="btn btn-sm btn-link text-info p-0 font-weight-bold" data-toggle="modal" data-target="#modal-endereco-${data.id}">
 								  ${data.frete.endereco.nome}
@@ -204,6 +204,21 @@ $(document).ready(function () {
 				  `)
 			  }
 			  
+			  if(data.formaPagamento.pagamentosCartao.length !== 0){
+				  data.formaPagamento.pagamentosCartao.forEach(function(cartao){
+					  $(`#formasPagamento-${data.id}`).append(`
+					     <span>Cartão: ${cartao.valorTotalCartao}</span><br>
+					  `)
+				  })
+			  }
+			  
+			  if(data.formaPagamento.pagamentosCupom.length !== 0){
+				  data.formaPagamento.pagamentosCupom.forEach(function(cupom){
+					  $(`#formasPagamento-${data.id}`).append(`
+					     <span>Cupom: R$ ${cupom.valorTotalCupom}</span><br>
+					  `)
+				  })
+			  }
 			  
 			  data.itensPedido.forEach(function(item){
 				  $(`#itens-${data.id}`).append(

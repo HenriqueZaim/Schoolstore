@@ -13,13 +13,16 @@ import br.com.fatec.les.facade.Mensagem;
 import br.com.fatec.les.facade.MensagemStatus;
 import br.com.fatec.les.model.assets.ADominio;
 import br.com.fatec.les.model.endereco.Endereco;
+import br.com.fatec.les.model.estoque.Estoque;
 import br.com.fatec.les.model.pagamento.FormaPagamento;
 import br.com.fatec.les.model.pagamento.cartao.CartaoCredito;
+import br.com.fatec.les.model.pagamento.cupom.Cupom;
 import br.com.fatec.les.model.pedido.Frete;
 import br.com.fatec.les.model.pedido.ItemPedido;
 import br.com.fatec.les.model.pedido.Pedido;
 import br.com.fatec.les.model.pedido.StatusPedido;
 import br.com.fatec.les.model.usuario.Cliente;
+import br.com.fatec.les.model.usuario.ItemCarrinho;
 
 public class PedidoDao implements IDao{
 	
@@ -29,6 +32,9 @@ public class PedidoDao implements IDao{
 	FormaPagamentoDAO formaPagamentoDao = new FormaPagamentoDAO();
 	ItemPedidoDao itemPedidoDao = new ItemPedidoDao();
 	ClienteDao clienteDao = new ClienteDao();
+	CupomDao cupomDao = new CupomDao();
+	EstoqueDao estoqueDao = new EstoqueDao();
+	ItemCarrinhoDao itemCarrinhoDao = new ItemCarrinhoDao();
 
 	@Override
 	public Mensagem salvar(ADominio entidade) throws SQLException {
@@ -74,13 +80,33 @@ public class PedidoDao implements IDao{
 			pstm.setLong(5, Long.parseLong(id));
 			pstm.executeUpdate();
 			
+			if(pedido.getFormaPagamento().getPagamentosCartao().isEmpty()) {
+				if(pedido.getFormaPagamento().getValorTotal() > pedido.getValor()) {
+					Cupom cupom = new Cupom();
+					cupom.setValor(pedido.getFormaPagamento().getValorTotal() - pedido.getValor());
+					cupom.setUsuario(pedido.getCliente().getUsuario());
+					cupomDao.salvar(cupom);
+				}
+			}
+			
 			rs = pstm.getGeneratedKeys();
 			if (rs.next()){
 				id = Integer.toString(rs.getInt(1));
+				ItemCarrinho itemCarrinho = new ItemCarrinho();
+				Estoque estoque = new Estoque();
 				for(ItemPedido item : pedido.getItensPedido()) {
 					pedido.setId(Long.parseLong(id));
 					item.setPedido(pedido);
 					itemPedidoDao.salvar(item);
+					
+					itemCarrinho = new ItemCarrinho();
+					itemCarrinho.setProduto(item.getProduto());
+					itemCarrinhoDao.deletar(itemCarrinho);
+					
+					estoque.setQuantidadeTotal(item.getQuantidade());
+					estoque.setProduto(item.getProduto());
+					estoqueDao.atualizar(estoque);
+
 				}
 				
 				mensagem.setMensagem("Pedido feito com sucesso! Acompanhe o status de seu pedido na página 'Meus Pedidos'");

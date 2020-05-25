@@ -9,6 +9,7 @@ import br.com.fatec.les.facade.Mensagem;
 import br.com.fatec.les.facade.MensagemStatus;
 import br.com.fatec.les.model.assets.ADominio;
 import br.com.fatec.les.model.assets.Imagem;
+import br.com.fatec.les.model.pagamento.cupom.Cupom;
 import br.com.fatec.les.model.usuario.Usuario;
 
 public class UsuarioDao implements IDao{
@@ -16,6 +17,7 @@ public class UsuarioDao implements IDao{
 	private Connection conexao = null;
 	private Mensagem mensagem;
 	ImagemDao imagemDao = new ImagemDao();
+	CupomDao cupomDao = new CupomDao();
 	
 	@Override
 	public Mensagem atualizar(ADominio entidade) throws SQLException {
@@ -84,10 +86,16 @@ public class UsuarioDao implements IDao{
 			
 			Usuario u = new Usuario();
 			Imagem i = new Imagem();
+			Cupom ct = new Cupom();
+			List<ADominio> cuponsEntidade = new ArrayList<ADominio>();
+			List<Cupom> cupons = new ArrayList<Cupom>();
 			
 			while(rs.next()) {
 				u = new Usuario();
 				i = new Imagem();
+				ct = new Cupom();
+				cuponsEntidade = new ArrayList<ADominio>();
+				cupons = new ArrayList<Cupom>();
 				
 				u.setId(Long.parseLong(rs.getString("usu_id")));
 				u.setEmail(rs.getString("usu_email"));
@@ -95,6 +103,13 @@ public class UsuarioDao implements IDao{
 				u.setAdmin(rs.getBoolean("usu_admin"));
 				i.setId(rs.getLong("usu_ima_id"));
 				u.setImagem((Imagem)imagemDao.consultar(i).get(0));
+				
+				ct.setUsuario(u);
+				cuponsEntidade.addAll(cupomDao.consultar(ct));
+				for(ADominio item : cuponsEntidade) {
+					cupons.add((Cupom)item);
+				}
+				u.setCupons(cupons);
 				
 				usuarios.add(u);
 			}

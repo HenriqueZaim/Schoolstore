@@ -2,6 +2,13 @@ CREATE DATABASE lesProject;
 
 use lesProject;
 
+CREATE TABLE tb_formaPagamento
+(
+  fpag_id INT NOT NULL AUTO_INCREMENT,
+  fpag_valorTotal DECIMAL(6,2) NOT NULL,
+  PRIMARY KEY (fpag_id)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 CREATE TABLE tb_fornecedor
 (
   for_id INT NOT NULL AUTO_INCREMENT,
@@ -20,13 +27,6 @@ CREATE TABLE tb_estado
  est_ativo BOOLEAN NOT NULL,
  est_dataHoraCriacao DATETIME NOT NULL,
  PRIMARY KEY (est_id)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-CREATE TABLE tb_pagamentoCupom
-(
-  pcu_id INT NOT NULL AUTO_INCREMENT,
-  pcu_valorTotalCupom DECIMAL(6,2) NOT NULL,
-  PRIMARY KEY (pcu_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE tb_precificacao
@@ -199,42 +199,26 @@ CREATE TABLE tb_cupom
   cup_valor DECIMAL(6,2) NOT NULL,
   cup_ativo BOOLEAN NOT NULL,
   cup_dataHoraCriacao DATETIME NOT NULL,
-  cup_pcu_id INT NOT NULL,
+  cup_usu_id INT NOT NULL,
   PRIMARY KEY (cup_id),
-  FOREIGN KEY(cup_pcu_id) REFERENCES tb_pagamentoCupom(pcu_id)
+  FOREIGN KEY(cup_usu_id) REFERENCES tb_usuario(usu_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE tb_formaPagamento
+
+
+CREATE TABLE tb_pagamentoCupom
 (
-  fpag_id INT NOT NULL AUTO_INCREMENT,
-  fpag_valorTotal DECIMAL(6,2) NOT NULL,
-  PRIMARY KEY (fpag_id)
+  pcu_id INT NOT NULL AUTO_INCREMENT,
+  pcu_valorTotalCupom DECIMAL(6,2) NOT NULL,
+  pcu_cup_id INT NOT NULL,
+  pcu_fpag_id INT NOT NULL,
+  FOREIGN KEY(pcu_cup_id) REFERENCES tb_cupom(cup_id),
+  FOREIGN KEY(pcu_fpag_id) REFERENCES tb_formaPagamento(fpag_id),
+  PRIMARY KEY (pcu_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE tb_cupomPromocional
-(
-  cpr_id INT NOT NULL AUTO_INCREMENT,
-  cpr_valor DECIMAL(6,2) NOT NULL,
-  cpr_validade DATETIME NOT NULL,
-  cpr_ativo BOOLEAN NOT NULL,
-  cpr_dataHoraCriacao DATETIME NOT NULL,
-  cpr_pcu_id INT NOT NULL,
-  PRIMARY KEY (cpr_id),
-  FOREIGN KEY(cpr_pcu_id) REFERENCES tb_pagamentoCupom(pcu_id)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE tb_cupomTroca
-(
-  ctr_id INT NOT NULL AUTO_INCREMENT,
-  ctr_valor DECIMAL(6,2) NOT NULL,
-  ctr_ativo BOOLEAN NOT NULL,
-  ctr_dataHoraCriacao DATETIME NOT NULL,
-  ctr_pcu_id INT NOT NULL,
-  ctr_usu_id INT NOT NULL,
-  PRIMARY KEY (ctr_id),
-  FOREIGN KEY(ctr_pcu_id) REFERENCES tb_pagamentoCupom(pcu_id),
-  FOREIGN KEY(ctr_usu_id) REFERENCES tb_usuario(usu_id)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 CREATE TABLE tb_pagamentoCartao
 (
@@ -246,8 +230,6 @@ CREATE TABLE tb_pagamentoCartao
   FOREIGN KEY(pca_ccr_id) REFERENCES tb_cartaoCredito(ccr_id),
   FOREIGN KEY(pca_fpag_id) REFERENCES tb_formaPagamento(fpag_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
 
 CREATE TABLE tb_estoque
 (

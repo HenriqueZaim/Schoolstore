@@ -1,7 +1,10 @@
 package br.com.fatec.les.model.usuario;
 
+import java.util.List;
+
 import br.com.fatec.les.model.assets.EntidadeDominio;
 import br.com.fatec.les.model.assets.Imagem;
+import br.com.fatec.les.model.pagamento.cupom.Cupom;
 
 public class Usuario extends EntidadeDominio{
 
@@ -9,7 +12,15 @@ public class Usuario extends EntidadeDominio{
 	private String senha;
 	private Imagem imagem;
 	private boolean admin;
+	private List<Cupom> cupons;
 	
+
+	public List<Cupom> getCupons() {
+		return cupons;
+	}
+	public void setCupons(List<Cupom> cupons) {
+		this.cupons = cupons;
+	}
 	public String getEmail() {
 		return email;
 	}

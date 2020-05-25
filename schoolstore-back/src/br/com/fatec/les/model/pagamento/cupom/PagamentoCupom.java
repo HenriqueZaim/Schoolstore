@@ -1,22 +1,31 @@
 package br.com.fatec.les.model.pagamento.cupom;
 
-import java.util.List;
+import br.com.fatec.les.model.assets.ADominio;
+import br.com.fatec.les.model.pagamento.FormaPagamento;
 
-public class PagamentoCupom {
+public class PagamentoCupom extends ADominio{
 
 	private float valorTotalCupom;
-	private List<Cupom> cupons;
+	private Cupom cupom;
+	private FormaPagamento formaPagamento;
 	
+	public FormaPagamento getFormaPagamento() {
+		return formaPagamento;
+	}
+	public void setFormaPagamento(FormaPagamento formaPagamento) {
+		this.formaPagamento = formaPagamento;
+	}
+	public Cupom getCupom() {
+		return cupom;
+	}
+	public void setCupom(Cupom cupom) {
+		this.cupom = cupom;
+	}
 	public float getValorTotalCupom() {
 		return valorTotalCupom;
 	}
 	public void setValorTotalCupom(float valorTotalCupom) {
 		this.valorTotalCupom = valorTotalCupom;
 	}
-	public List<Cupom> getCupons() {
-		return cupons;
-	}
-	public void setCupons(List<Cupom> cupons) {
-		this.cupons = cupons;
-	}
+
 }

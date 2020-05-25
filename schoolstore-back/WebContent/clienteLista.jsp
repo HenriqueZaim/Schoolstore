@@ -117,7 +117,10 @@
 
 							<li class="nav-item avatar dropdown"><a class="nav-link dropdown-toggle waves-effect waves-light" id="navbarDropdownMenuLink-5" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <img src="${usuario.getImagem().getCaminho() }" class="rounded-circle z-depth-0" height="35px" alt="avatar image">
 							</a>
+							
 								<div class="dropdown-menu dropdown-menu-lg-right py-0 dropdown-default" aria-labelledby="navbarDropdownMenuLink-5">
+																		<a href="clienteMenu.jsp" class="dropdown-item waves-effect waves-light">Menu</a>
+									
 									<form action="logout" method="POST">
 										<button type="submit" class="dropdown-item waves-effect waves-light">Sair</button>
 									</form>

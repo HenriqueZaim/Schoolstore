@@ -79,6 +79,7 @@
 
 										</form>
                                     </c:if>
+                                    <a href="clienteMenu.jsp" class="dropdown-item waves-effect waves-light">Menu</a>
 									<form action="logout" method="POST">
 										<button type="submit"
 											class="dropdown-item waves-effect waves-light">Sair</button>
