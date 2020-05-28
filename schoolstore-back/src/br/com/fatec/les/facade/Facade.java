@@ -13,6 +13,7 @@ import br.com.fatec.les.DAO.EstadoDao;
 import br.com.fatec.les.DAO.IDao;
 import br.com.fatec.les.DAO.PedidoDao;
 import br.com.fatec.les.DAO.ProdutoDao;
+import br.com.fatec.les.DAO.TrocaDao;
 import br.com.fatec.les.DAO.UsuarioDao;
 import br.com.fatec.les.model.assets.ADominio;
 import br.com.fatec.les.model.assets.EntidadeDominio;
@@ -20,6 +21,7 @@ import br.com.fatec.les.model.endereco.Estado;
 import br.com.fatec.les.model.pagamento.cupom.Cupom;
 import br.com.fatec.les.model.pedido.Pedido;
 import br.com.fatec.les.model.produto.Produto;
+import br.com.fatec.les.model.troca.Troca;
 import br.com.fatec.les.model.usuario.Carrinho;
 import br.com.fatec.les.model.usuario.Cliente;
 import br.com.fatec.les.model.usuario.Usuario;
@@ -51,6 +53,8 @@ public class Facade implements IFacade{
 		ProdutoDao produtoDao = new ProdutoDao();
 		PedidoDao pedidoDao = new PedidoDao();
 		CupomDao cupomDao = new CupomDao();
+		TrocaDao trocaDao = new TrocaDao();
+		
 		
 		daoMap.put(Cliente.class.getName(), clienteDao);
 		daoMap.put(Estado.class.getName(), estadoDao);
@@ -59,6 +63,7 @@ public class Facade implements IFacade{
 		daoMap.put(Produto.class.getName(), produtoDao);
 		daoMap.put(Pedido.class.getName(), pedidoDao);
 		daoMap.put(Cupom.class.getName(), cupomDao);
+		daoMap.put(Troca.class.getName(), trocaDao);
 
 
 		IStrategy clienteDocumentoStrategy = new ClienteDocumentoStrategy();

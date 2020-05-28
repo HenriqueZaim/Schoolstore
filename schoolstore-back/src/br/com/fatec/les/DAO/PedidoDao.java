@@ -17,6 +17,7 @@ import br.com.fatec.les.model.estoque.Estoque;
 import br.com.fatec.les.model.pagamento.FormaPagamento;
 import br.com.fatec.les.model.pagamento.cartao.CartaoCredito;
 import br.com.fatec.les.model.pagamento.cupom.Cupom;
+import br.com.fatec.les.model.pagamento.cupom.PagamentoCupom;
 import br.com.fatec.les.model.pedido.Frete;
 import br.com.fatec.les.model.pedido.ItemPedido;
 import br.com.fatec.les.model.pedido.Pedido;
@@ -105,7 +106,7 @@ public class PedidoDao implements IDao{
 					
 					estoque.setQuantidadeTotal(item.getQuantidade());
 					estoque.setProduto(item.getProduto());
-					estoqueDao.atualizar(estoque);
+					estoqueDao.deletar(estoque); // dando baixa no estoque
 
 				}
 				
@@ -124,8 +125,37 @@ public class PedidoDao implements IDao{
 
 	@Override
 	public Mensagem deletar(ADominio entidade) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		Pedido pedido  = (Pedido) entidade;
+		conexao = ConexaoFactory.getConnection();
+		mensagem = new Mensagem();
+		
+		String sql = "UPDATE tb_pedido SET "
+					+ "ped_ativo = false "			
+					+ " WHERE ped_id = ?";
+		
+		PreparedStatement pstm = null;
+		
+		try {
+			pstm = conexao.prepareStatement(sql);
+			pstm.setLong(1, pedido.getId());
+			for(ItemPedido item : pedido.getItensPedido()) {
+				itemPedidoDao.deletar(item);
+			}
+			for(PagamentoCupom item : pedido.getFormaPagamento().getPagamentosCupom()) {
+				cupomDao.atualizar(item.getCupom());
+			}
+			pstm.executeUpdate();
+			mensagem.setMensagem("Pedido cancelado com sucesso!");
+			mensagem.setMensagemStatus(MensagemStatus.SUCESSO);
+		}catch(SQLException e) {
+			mensagem.setMensagem("Ocorreu um erro durante a operação. Tente novamente ou consulte a equipe de desenvolvimento.");
+			mensagem.setMensagemStatus(MensagemStatus.ERRO);
+		}
+		finally {
+			ConexaoFactory.closeConnection(conexao, pstm);
+		}
+		
+		return mensagem;
 	}
 
 	@Override
@@ -135,8 +165,9 @@ public class PedidoDao implements IDao{
 		mensagem = new Mensagem();
 		
 		String sql = "UPDATE tb_pedido SET "
-				+ "ped_statusPedido = ? "			
-				+ " WHERE ped_id = ?";
+					+ "ped_statusPedido = ? "			
+					+ " WHERE ped_id = ?";
+		
 		
 		PreparedStatement pstm = null;
 		
@@ -179,8 +210,11 @@ public class PedidoDao implements IDao{
 				+ "ped_cli_id "
 				+ " FROM tb_pedido "
 				+ " WHERE ped_ativo = 1 ";
-		if(pedido.getCliente().getId() != null) {
+		if(pedido.getCliente() != null && pedido.getCliente().getId() != null) {
 			sql += " AND ped_cli_id = " + pedido.getCliente().getId() + "";
+		}
+		if(pedido.getId() != null) {
+			sql += " AND ped_id = " + pedido.getId() + "";
 		}
 		
 		try {

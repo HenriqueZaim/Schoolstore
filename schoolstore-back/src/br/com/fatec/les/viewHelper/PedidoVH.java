@@ -30,7 +30,7 @@ public class PedidoVH implements IViewHelper{
 		FormaPagamentoVH formaPagamentoVH = new FormaPagamentoVH();
 		
 		if(tarefa.equals("efetuarPedido")) {
-			pedido.setStatusPedido(StatusPedido.EMPROCESSAMENTO);
+			pedido.setStatusPedido(StatusPedido.APROVADO);
 			pedido.setValor(Float.parseFloat(request.getParameter("txtSubTotal")));
 			pedido.setFrete((Frete)freteVH.getEntidade(request));
 			pedido.setCliente((Cliente) clienteVH.getEntidade(request));
@@ -41,6 +41,12 @@ public class PedidoVH implements IViewHelper{
 		}else if(tarefa.equals("alterarStatusPedido")) {
 			pedido.setId(Long.parseLong(request.getParameter("txtPedidoId")));
 			pedido.setStatusPedido(StatusPedido.valueOf(request.getParameter("txtStatusPedido")));
+		}else if(tarefa.equals("cancelarPedido")) {
+			pedido.setId(Long.parseLong(request.getParameter("txtPedidoId")));
+			pedido.setItensPedido(itemPedidoVH.getEntidades(request));
+			pedido.setFormaPagamento((FormaPagamento)formaPagamentoVH.getEntidade(request));
+		}else if(tarefa.equals("consultarPedido") || tarefa.equals("efetuarTroca")) {
+			pedido.setId(Long.parseLong(request.getParameter("txtPedidoId")));
 		}
 		return pedido;
 	}
@@ -63,8 +69,11 @@ public class PedidoVH implements IViewHelper{
 		}else if(tarefa.equals("efetuarPedido")) {
 			request.getRequestDispatcher("clienteMenu.jsp").
 			forward(request, response);
-		}else if(tarefa.equals("alterarStatusPedido")) {
+		}else if(tarefa.equals("alterarStatusPedido") || tarefa.equals("cancelarPedido")) {
 			request.getRequestDispatcher("pedidoLista.jsp").
+			forward(request, response);
+		}else if(tarefa.equals("consultarPedido")) {
+			request.getRequestDispatcher("clienteTroca.jsp").
 			forward(request, response);
 		}
 		

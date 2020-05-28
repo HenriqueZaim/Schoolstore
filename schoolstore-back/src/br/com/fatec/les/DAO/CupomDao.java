@@ -58,12 +58,6 @@ public class CupomDao implements IDao{
 
 	@Override
 	public Mensagem deletar(ADominio entidade) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Mensagem atualizar(ADominio entidade) throws SQLException {
 		Cupom cupom = (Cupom) entidade;
 		conexao = ConexaoFactory.getConnection();
 		mensagem = new Mensagem();
@@ -80,6 +74,36 @@ public class CupomDao implements IDao{
 
 			pstm.executeUpdate();
 			mensagem.setMensagem("Cupom utilizado com sucesso!");
+			mensagem.setMensagemStatus(MensagemStatus.SUCESSO);
+		}catch(SQLException e) {
+			mensagem.setMensagem("Ocorreu um erro durante a operação. Tente novamente ou consulte a equipe de desenvolvimento.");
+			mensagem.setMensagemStatus(MensagemStatus.ERRO);
+		}
+		finally {
+			ConexaoFactory.closeConnection(conexao, pstm);
+		}
+		
+		return mensagem;
+	}
+
+	@Override
+	public Mensagem atualizar(ADominio entidade) throws SQLException {
+		Cupom cupom = (Cupom) entidade;
+		conexao = ConexaoFactory.getConnection();
+		mensagem = new Mensagem();
+		
+		String sql = "UPDATE tb_cupom SET "
+				+ "cup_ativo = true "			
+				+ " WHERE cup_id = ?";
+		
+		PreparedStatement pstm = null;
+		
+		try {
+			pstm = conexao.prepareStatement(sql);
+			pstm.setLong(1, cupom.getId());
+
+			pstm.executeUpdate();
+			mensagem.setMensagem("Cupom restaurado com sucesso!");
 			mensagem.setMensagemStatus(MensagemStatus.SUCESSO);
 		}catch(SQLException e) {
 			mensagem.setMensagem("Ocorreu um erro durante a operação. Tente novamente ou consulte a equipe de desenvolvimento.");

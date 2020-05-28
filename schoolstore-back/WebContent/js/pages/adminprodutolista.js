@@ -10,13 +10,13 @@ $(document).ready(function () {
 				  			<tr class="text-center">
 		                      <th scope="row">${data.id}</th>
 		                      <td>${data.nome}</td>
-		                      <td>${data.preco}</td>
+		                      <td>R$ ${data.preco}</td>
 		                      <td>${data.descricao}</td>
 		                      <td>${data.nome}</td>
-		                      <td>${data.estoque.quantidadeTotal}</td>
+		                      <td>${data.estoque.quantidadeTotal}uni.</td>
 		                      <td>${data.estoque.itensEstoque[0].fornecedor.nome}</td>
 		                      <td>${data.precificacao.percentual}</td>
-		                      <td>Inativar</td>
+		                      <td class="text-danger">Inativar</td>
 		                    </tr>
 				  `)
 			  })

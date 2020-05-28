@@ -23,16 +23,29 @@ public class PagamentoCupomVH implements IViewHelper{
 		if(request.getParameterValues("txtCupomId") == null) {
 			return pagamentosCupom;
 		}else {
+			String tarefa = request.getParameter("tarefa");
 			String[] cuponsForm = request.getParameterValues("txtCupomId");
-			for(int i = 0 ; i < cuponsForm.length ; i++) {
-				pagamentoCupom = new PagamentoCupom();
-				cupom = new Cupom();
-				cupom.setId(Long.parseLong(request.getParameterValues("txtCupomId")[i]));
-				cupom.setValor(Float.parseFloat(request.getParameterValues("txtValorCupom")[i]));
-				pagamentoCupom.setValorTotalCupom(Float.parseFloat(request.getParameterValues("txtValorCupom")[i]));
-				pagamentoCupom.setCupom(cupom);
-				pagamentosCupom.add(pagamentoCupom);
+
+			if(tarefa.equals("cancelarPedido")) {
+				for(int i = 0 ; i < cuponsForm.length ; i++) {
+					pagamentoCupom = new PagamentoCupom();
+					cupom = new Cupom();
+					cupom.setId(Long.parseLong(request.getParameterValues("txtCupomId")[i]));
+					pagamentoCupom.setCupom(cupom);
+					pagamentosCupom.add(pagamentoCupom);
+				}
+			}else {
+				for(int i = 0 ; i < cuponsForm.length ; i++) {
+					pagamentoCupom = new PagamentoCupom();
+					cupom = new Cupom();
+					cupom.setId(Long.parseLong(request.getParameterValues("txtCupomId")[i]));
+					cupom.setValor(Float.parseFloat(request.getParameterValues("txtValorCupom")[i]));
+					pagamentoCupom.setValorTotalCupom(Float.parseFloat(request.getParameterValues("txtValorCupom")[i]));
+					pagamentoCupom.setCupom(cupom);
+					pagamentosCupom.add(pagamentoCupom);
+				}
 			}
+			
 		}
 		return pagamentosCupom;
 	}

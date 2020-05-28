@@ -29,7 +29,33 @@ public class EstoqueDao implements IDao{
 
 	@Override
 	public Mensagem deletar(ADominio entidade) throws SQLException {
-        throw new UnsupportedOperationException("Operação não suportada.");
+		Estoque estoque = (Estoque) entidade;
+		conexao = ConexaoFactory.getConnection();
+		mensagem = new Mensagem();
+		
+		String sql = "UPDATE tb_estoque SET "
+				+ "sto_quantidadeTotal = sto_quantidadeTotal - ? "			
+				+ " WHERE sto_pro_id = ?";
+		
+		PreparedStatement pstm = null;
+		
+		try {
+			pstm = conexao.prepareStatement(sql);
+			pstm.setInt(1, estoque.getQuantidadeTotal());
+			pstm.setLong(2, estoque.getProduto().getId());
+
+			pstm.executeUpdate();
+			mensagem.setMensagem("Estoque atualizado com sucesso!");
+			mensagem.setMensagemStatus(MensagemStatus.SUCESSO);
+		}catch(SQLException e) {
+			mensagem.setMensagem("Ocorreu um erro durante a operação. Tente novamente ou consulte a equipe de desenvolvimento.");
+			mensagem.setMensagemStatus(MensagemStatus.ERRO);
+		}
+		finally {
+			ConexaoFactory.closeConnection(conexao, pstm);
+		}
+		
+		return mensagem;
 
 	}
 
@@ -40,7 +66,7 @@ public class EstoqueDao implements IDao{
 		mensagem = new Mensagem();
 		
 		String sql = "UPDATE tb_estoque SET "
-				+ "sto_quantidadeTotal = sto_quantidadeTotal - ? "			
+				+ "sto_quantidadeTotal = sto_quantidadeTotal + ? "			
 				+ " WHERE sto_pro_id = ?";
 		
 		PreparedStatement pstm = null;

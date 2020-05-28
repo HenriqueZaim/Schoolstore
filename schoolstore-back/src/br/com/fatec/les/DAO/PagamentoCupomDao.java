@@ -44,12 +44,10 @@ public class PagamentoCupomDao implements IDao{
 			pstm.setLong(3, pagamentoCupom.getFormaPagamento().getId());
 			pstm.executeUpdate();
 			
-			cupomDao.atualizar(pagamentoCupom.getCupom());
+			cupomDao.deletar(pagamentoCupom.getCupom());
 
-			mensagem.setMensagem("Tudo certo por aqui");
+			mensagem.setMensagem("Pagamento realizado com sucesso!");
 			mensagem.setMensagemStatus(MensagemStatus.OPERACAO);
-
-		
 		}catch(SQLException e){
 			mensagem.setMensagem("Ocorreu um erro durante a operação. Tente novamente ou consulte a equipe de desenvolvimento.");
 			mensagem.setMensagemStatus(MensagemStatus.ERRO);

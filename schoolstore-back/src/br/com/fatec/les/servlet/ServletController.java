@@ -1,7 +1,6 @@
 package br.com.fatec.les.servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,6 +24,7 @@ import br.com.fatec.les.viewHelper.EstadoVH;
 import br.com.fatec.les.viewHelper.IViewHelper;
 import br.com.fatec.les.viewHelper.PedidoVH;
 import br.com.fatec.les.viewHelper.ProdutoVH;
+import br.com.fatec.les.viewHelper.TrocaVH;
 import br.com.fatec.les.viewHelper.UsuarioVH;
 
 @WebServlet(name = "servletController", urlPatterns = "/app")
@@ -60,9 +60,17 @@ public class ServletController extends HttpServlet{
     	vhMap.put("efetuarPedido", new PedidoVH());
     	vhMap.put("consultarPedidos", new PedidoVH());
     	vhMap.put("alterarStatusPedido", new PedidoVH());
+    	vhMap.put("cancelarPedido", new PedidoVH());
+    	vhMap.put("consultarPedido", new PedidoVH());
     	commandMap.put("efetuarPedido", new SalvarCommand());
     	commandMap.put("consultarPedidos", new ConsultarCommand());
     	commandMap.put("alterarStatusPedido", new AtualizarCommand());
+    	commandMap.put("cancelarPedido", new DeletarCommand());
+    	commandMap.put("consultarPedido", new ConsultarCommand());
+    	
+    	// Troca
+    	vhMap.put("efetuarTroca", new TrocaVH());
+    	commandMap.put("efetuarTroca", new SalvarCommand());
     	
     	// Login de usuário
     	// Vai consultar com um e-mail e senha, e vai trazer o usuário todo + cliente

@@ -17,20 +17,35 @@ public class ItemPedidoVH implements IViewHelper{
 		ArrayList<ItemPedido> itensPedido = new ArrayList<ItemPedido>();
 		ItemPedido itemPedido = new ItemPedido();
 		Produto produto = new Produto();
-		
+		String tarefa = request.getParameter("tarefa");
+
 		if(request.getParameterValues("txtProdutoId") == null) {
 			return itensPedido;
 		}else {
 			String[] produtos = request.getParameterValues("txtProdutoId");
-			for(int i = 0 ; i < produtos.length ; i++) {
-				itemPedido = new ItemPedido();
-				produto = new Produto();
-				
-				produto.setId(Long.parseLong(request.getParameterValues("txtProdutoId")[i]));
-				itemPedido.setProduto(produto);
-				itemPedido.setQuantidade(Integer.parseInt(request.getParameterValues("txtQuantidadeProduto")[i]));
-				
-				itensPedido.add(itemPedido);
+			if(tarefa.equals("efetuarPedido")) {
+				for(int i = 0 ; i < produtos.length ; i++) {
+					itemPedido = new ItemPedido();
+					produto = new Produto();
+					
+					produto.setId(Long.parseLong(request.getParameterValues("txtProdutoId")[i]));			
+					itemPedido.setProduto(produto);
+					itemPedido.setQuantidade(Integer.parseInt(request.getParameterValues("txtQuantidadeProduto")[i]));
+					
+					itensPedido.add(itemPedido);
+				}
+			}else {
+				for(int i = 0 ; i < produtos.length ; i++) {
+					itemPedido = new ItemPedido();
+					produto = new Produto();
+					
+					produto.setId(Long.parseLong(request.getParameterValues("txtProdutoId")[i]));
+					itemPedido.setId(Long.parseLong(request.getParameterValues("txtItemPedidoId")[i]));
+					itemPedido.setProduto(produto);
+					itemPedido.setQuantidade(Integer.parseInt(request.getParameterValues("txtQuantidadeProduto")[i]));
+
+					itensPedido.add(itemPedido);
+				}
 			}
 		}
 		return itensPedido;

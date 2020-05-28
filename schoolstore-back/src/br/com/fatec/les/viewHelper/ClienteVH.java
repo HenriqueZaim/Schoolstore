@@ -32,7 +32,7 @@ public class ClienteVH implements IViewHelper{
 		
 		String tarefa = request.getParameter("tarefa");
 		
-		if(tarefa.equals("efetuarPedido") || tarefa.equals("consultarPedidos") || tarefa.equals("consultarCliente")) {
+		if(tarefa.equals("efetuarPedido") || tarefa.equals("consultarPedidos") || tarefa.equals("consultarCliente") || tarefa.equals("efetuarTroca") )  {
 			if(request.getParameter("txtClienteId") != null)
 				cliente.setId(Long.parseLong(request.getParameter("txtClienteId")));
 			

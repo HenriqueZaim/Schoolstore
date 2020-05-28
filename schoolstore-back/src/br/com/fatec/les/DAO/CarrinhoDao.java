@@ -67,7 +67,8 @@ public class CarrinhoDao implements IDao{
 		mensagem = new Mensagem();
 
 		String sql = "UPDATE tb_carrinho SET "
-				+ "car_ativo = false"
+				+ "car_ativo = false,"
+				+ "car_subTotal = 0"
 				+ " WHERE car_id = " + carrinho.getId() + "";
 		
 		PreparedStatement pstm = null;
@@ -100,8 +101,6 @@ public class CarrinhoDao implements IDao{
 		Carrinho carrinho  = (Carrinho) entidade;
 		ItemCarrinho itemCarrinho = new ItemCarrinho();
 		itemCarrinho.setCarrinho(carrinho);
-		Carrinho aux = new Carrinho();
-		List<ItemCarrinho> itens = new ArrayList<ItemCarrinho>();
 		conexao = ConexaoFactory.getConnection();
 		mensagem = new Mensagem();
 		
@@ -121,7 +120,13 @@ public class CarrinhoDao implements IDao{
 			}else {
 				Carrinho carrinhoAux = new Carrinho();
 				carrinhoAux = (Carrinho)consultar(carrinho).get(0);
-				Float valorFinal = carrinhoAux.getSubTotal() + carrinho.getSubTotal();
+				Float valorFinal;
+				if(!carrinhoAux.getItensCarrinho().isEmpty()) {
+					valorFinal = carrinhoAux.getSubTotal() + carrinho.getSubTotal();
+				}else {
+					valorFinal = carrinho.getSubTotal();
+				}
+				
 				pstm.setFloat(1, valorFinal);
 			}
 			

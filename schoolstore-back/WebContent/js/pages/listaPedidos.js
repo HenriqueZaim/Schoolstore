@@ -157,10 +157,10 @@ $(document).ready(function () {
 						  <span class="text-danger">Reprovado</span>
 				  `)
 				  $(`#troca-${data.id}`).append(`
-						  <form action="app" method="post">
-						  	  <input type="hidden" name="tarefa" value="excluirPedido">
+						  <form action="app" method="post" id="form-${data.id}">
+						  	  <input type="hidden" name="tarefa" value="cancelarPedido">
 						  	  <input type="hidden" name="txtPedidoId" value="${data.id}">
-							  <button type="submit" class="btn btn-link text-red btn-sm p-0 pb-2">Excluir</button>
+							  <button type="submit" class="btn btn-link text-danger btn-sm p-0 pb-2">Cancelar</button>
 						  </form>
 				  `)
 				  
@@ -169,8 +169,8 @@ $(document).ready(function () {
 						  <span class="text-success">Entregue</span>
 				  `)
 				  $(`#troca-${data.id}`).append(`
-						  <form action="app" method="post">
-						  	  <input type="hidden" name="tarefa" value="trocarPedido">
+						  <form action="app" method="post" id="form-${data.id}">
+						  	  <input type="hidden" name="tarefa" value="consultarPedido">
 						  	  <input type="hidden" name="txtPedidoId" value="${data.id}">
 							  <button type="submit" class="btn btn-link btn-sm p-0 pb-2">Efetuar Troca</button>
 						  </form>
@@ -190,8 +190,11 @@ $(document).ready(function () {
 						  <span class="text-info">Aprovado</span>
 				  `)
 				  $(`#troca-${data.id}`).append(`
-						  <button type="submit" class="btn btn-link disabled btn-sm p-0 pb-2">Efetuar Troca</button>
-
+						  <form action="app" method="post" id="form-${data.id}">
+						  	  <input type="hidden" name="tarefa" value="cancelarPedido">
+						  	  <input type="hidden" name="txtPedidoId" value="${data.id}">
+							  <button type="submit" class="btn btn-link text-danger btn-sm p-0 pb-2">Cancelar</button>
+						  </form>
 				  `)
 				  
 			  }else{
@@ -199,8 +202,11 @@ $(document).ready(function () {
 						  <span class="text-warning">Em processamento</span>
 				  `)
 				  $(`#troca-${data.id}`).append(`
-						  <button type="submit" class="btn btn-link disabled btn-sm p-0 pb-2">Efetuar Troca</button>
-
+						  <form action="app" method="post" id="form-${data.id}">
+						  	  <input type="hidden" name="tarefa" value="cancelarPedido">
+						  	  <input type="hidden" name="txtPedidoId" value="${data.id}">
+							  <button type="submit" class="btn btn-link text-danger btn-sm p-0 pb-2">Cancelar</button>
+						  </form>
 				  `)
 			  }
 			  
@@ -233,6 +239,17 @@ $(document).ready(function () {
 
 					`	
 				  )
+				  $(`#form-${data.id}`).prepend(`
+						  <input type="hidden" name="txtItemPedidoId" value="${item.id}">
+						  <input type="hidden" name="txtProdutoId" value="${item.produto.id}">
+						  <input type="hidden" name="txtQuantidadeProduto" value="${item.quantidade}">
+				  `)
+			})
+			
+			data.formaPagamento.pagamentosCupom.forEach(function(item){
+				$(`#form-${data.id}`).prepend(`
+						  <input type="hidden" name="txtCupomId" value="${item.cupom.id}">
+				  `)
 			})
 			
 		})	

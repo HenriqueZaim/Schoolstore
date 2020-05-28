@@ -13,7 +13,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta http-equiv="x-ua-compatible" content="ie=edge">
-<title>Meu carrinho</title>
+<title>Troca</title>
 <link rel="stylesheet" href="./css/bootstrap.min.css">
 <link rel="stylesheet" href="./css/mdb.min.css">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
@@ -146,7 +146,7 @@
 
 					<form action="app" method="POST">
 						<input type="hidden" name="tarefa" value="consultarCarrinho"> <input type="hidden" name="txtCarrinhoId" value="${cliente.getCarrinho().getId()}">
-						<button type="submit" class="list-group-item active list-group-item-action waves-effect">
+						<button type="submit" class="list-group-item list-group-item-action waves-effect">
 							<i class="fas fa-cart-arrow-down mr-3"></i>Meu Carrinho
 						</button>
 					</form>
@@ -166,7 +166,7 @@
 		<div class="container-fluid mt-5">
 			<div class="card mb-4 wow fadeIn">
 				<div class="card-body d-sm-flex justify-content-between">
-					<h1 class="mb-2 mb-sm-0 pt-1">Carrinho</h1>
+					<h1 class="mb-2 mb-sm-0 pt-1">Troca</h1>
 				</div>
 			</div>
 			<c:forEach var="mensagem" items="${resultado.getMensagens()}">
@@ -183,81 +183,70 @@
 					</c:otherwise>
 				</c:choose>
 			</c:forEach>
-			<c:forEach var="carrinho" items="${resultado.getEntidades()}">
-				<c:choose>
-					<c:when test="${carrinho.getItensCarrinho().size() == 0}">
-						<div class="alert alert-primary text-center p-0 border-0" role="alert">
-							<span class="d-block px-3 py-2 font-weight-bold"><i class="fas fa-exclamation-circle p-0 px-2"></i>Seu carrinho está vazio!</span>
-						</div>
-					</c:when>
-					<c:otherwise>
-						<div class="card mb-4 wow fadeIn">
-							<form action="app" method="post">
-								<section class="dark-grey-text">
-									<div class="table-responsive">
-										<table class="table product-table mb-0">
-											<thead class="blue-gradient text-white ">
-												<tr>
-													<th></th>
-													<th class="font-weight-bold"><strong>Nome</strong></th>
-													<th class="font-weight-bold"><strong>Preço</strong></th>
-													<th class="font-weight-bold"><strong>Quantidade</strong></th>
-													<th class="font-weight-bold"><strong>Excluir</strong></th>
-												</tr>
-											</thead>
-											<tbody>
-												<c:forEach var="item" items="${carrinho.getItensCarrinho()}">
-													<tr>
-														<td><img src="${item.getProduto().getImagem().getCaminho() }" width="70%" alt="${item.getProduto().getImagem().getDescricao() }" class="img-fluid z-depth-0"></td>
-														<td>
-															<h5 class="mt-3">
-																<strong>${item.getProduto().getNome() }</strong>
-															</h5>
-														</td>
-														<td class="preco">R$${ 
-															Math.round( 
-																(
-																	(
-																		item.getProduto().getPreco() * item.getProduto().getPrecificacao().getPercentual() + item.getProduto().getPreco()
-																	) 
-																	*
-																		item.getQuantidade()
-																	
-																) 
-																* 100
-															) / 100}</td>
-														<td><input type="number" class="quantidade" name="txtQuantidade" value="${item.getQuantidade()}" min="1" max="${item.getProduto().getEstoque().getQuantidadeTotal()}" aria-label="Search" class="form-control" style="width: 100px"></td>
-														<td>
-															<button type="button" class="btn btn-sm btn-danger excluir" data-toggle="tooltip" data-placement="top" title="Remove item">X</button>
-														</td>
-														<input type="hidden" class="precificacao" value="${ item.getProduto().getPrecificacao().getPercentual()}">
-														<input type="hidden" class="valor" value="${item.getProduto().getPreco()}">
-														<input type="hidden" class="valorSomado" value="${ (Math.round((item.getProduto().getPreco() * item.getProduto().getPrecificacao().getPercentual() + item.getProduto().getPreco())) * 100) / 100}">
-														<input type="hidden" name="txtProdutoId" value="${item.getProduto().getId() }">
-													</tr>
-												</c:forEach>
+			<c:forEach var="pedido" items="${resultado.getEntidades()}">
+				<div class="card mb-4 wow fadeIn">
+					<form action="app" method="post">
+						<section class="dark-grey-text">
+							<div class="table-responsive">
+								<table class="table product-table mb-0">
+									<thead class="blue-gradient text-white ">
+										<tr>
+											<th></th>
+											<th class="font-weight-bold"><strong>Nome</strong></th>
+											<th class="font-weight-bold"><strong>Preço</strong></th>
+											<th class="font-weight-bold"><strong>Quantidade</strong></th>
+											<th class="font-weight-bold"><strong>Excluir</strong></th>
+										</tr>
+									</thead>
+									<tbody>
+										<c:forEach var="item" items="${pedido.getItensPedido()}">
+											<tr>
+												<td>
+													<img src="${item.getProduto().getImagem().getCaminho() }" width="70%" alt="${item.getProduto().getImagem().getDescricao() }" class="img-fluid z-depth-0">
+												</td>
+												<td>
+													<h5 class="mt-3">
+														<strong>${item.getProduto().getNome() }</strong>
+													</h5>
+												</td>
+												<td class="preco">
+													R$${ Math.round( ( ( item.getProduto().getPreco() * item.getProduto().getPrecificacao().getPercentual() + item.getProduto().getPreco() ) * item.getQuantidade() ) * 100 ) / 100}
+												</td>
+												<td>
+													<input type="number" class="quantidade" name="txtQuantidade" value="${item.getQuantidade()}" min="1" max="${item.getQuantidade()}" aria-label="Search" class="form-control" style="width: 100px">
+												</td>
+												<td>
+													<button type="button" class="btn btn-sm btn-danger excluir" data-toggle="tooltip" data-placement="top" title="Remove item">X</button>
+												</td>
+												
+												<input type="hidden" name="txtProdutoId" value="${item.getProduto().getId() }">
+												<input type="hidden" name="txtQuantidadeProduto" value="${item.getProduto().getId() }">
+											</tr>
+										</c:forEach>
 
-												<tr>
-													<td>
-														<h4 class="mt-2">
-															<strong>Total</strong>
-														</h4>
-													</td>
-													<td class="text-right"><input type="hidden" name="txtValorTotal" id="subTotal" value="${carrinho.getSubTotal() }">
-														<h4 class="mt-2" id="valorTotalCompra">R$ ${carrinho.getSubTotal() }</h4></td>
-													<td colspan="3" class="text-right"><input type="hidden" name="tarefa" value="atualizarCarrinho"> <input type="hidden" name="txtCarrinhoId" value="${cliente.getCarrinho().getId()}">
-														<button type="submit" class="btn btn-primary btn-rounded">
-															Completar compra <i class="fas fa-angle-right right"></i>
-														</button></td>
-												</tr>
-											</tbody>
-										</table>
-									</div>
-								</section>
-							</form>
-						</div>
-					</c:otherwise>
-				</c:choose>
+										<tr>
+											<td>
+												<h4 class="mt-2">
+													<strong>Total de reembolso</strong>
+												</h4>
+											</td>
+											<td colspan="3" class="text-right">
+												<input type="hidden" name="tarefa" value="efetuarTroca">
+												<input type="hidden" name="txtPedidoId" value="${pedido.getId()}">
+												<input type="hidden" name="txtClienteId" value="${pedido.getCliente().getId()}">
+
+												<button type="submit" class="btn btn-primary btn-rounded">
+													Completar Troca <i class="fas fa-angle-right right"></i>
+												</button>
+											</td>
+										</tr>
+										
+									</tbody>
+								</table>
+							</div>
+						</section>
+					</form>
+				</div>
 			</c:forEach>
 
 		</div>

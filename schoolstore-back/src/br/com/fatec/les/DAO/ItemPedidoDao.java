@@ -11,6 +11,7 @@ import br.com.fatec.les.database.ConexaoFactory;
 import br.com.fatec.les.facade.Mensagem;
 import br.com.fatec.les.facade.MensagemStatus;
 import br.com.fatec.les.model.assets.ADominio;
+import br.com.fatec.les.model.estoque.Estoque;
 import br.com.fatec.les.model.pedido.ItemPedido;
 import br.com.fatec.les.model.pedido.Pedido;
 import br.com.fatec.les.model.produto.Produto;
@@ -20,6 +21,7 @@ public class ItemPedidoDao implements IDao{
 	private Connection conexao = null;
 	private Mensagem mensagem;
 	ProdutoDao produtoDao = new ProdutoDao();
+	EstoqueDao estoqueDao = new EstoqueDao();
 
 	@Override
 	public Mensagem salvar(ADominio entidade) throws SQLException {
@@ -61,8 +63,38 @@ public class ItemPedidoDao implements IDao{
 
 	@Override
 	public Mensagem deletar(ADominio entidade) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		ItemPedido itemPedido = (ItemPedido) entidade;
+		Estoque estoque = new Estoque();
+		Produto produto = new Produto();
+		conexao = ConexaoFactory.getConnection();
+		mensagem = new Mensagem();
+		
+		String sql = "DELETE FROM tb_itemPedido "
+					+ " WHERE iped_id = ?";
+		
+		PreparedStatement pstm = null;
+		
+		try {
+			pstm = conexao.prepareStatement(sql);
+			pstm.setLong(1, itemPedido.getId());
+			
+			produto.setId(itemPedido.getProduto().getId());
+			estoque.setProduto(produto);
+			estoque.setQuantidadeTotal(itemPedido.getQuantidade());
+			estoqueDao.atualizar(estoque);
+			
+			pstm.executeUpdate();
+			mensagem.setMensagem("Item do pedido excluído com sucesso!");
+			mensagem.setMensagemStatus(MensagemStatus.SUCESSO);
+		}catch(SQLException e) {
+			mensagem.setMensagem("Ocorreu um erro durante a operação. Tente novamente ou consulte a equipe de desenvolvimento.");
+			mensagem.setMensagemStatus(MensagemStatus.ERRO);
+		}
+		finally {
+			ConexaoFactory.closeConnection(conexao, pstm);
+		}
+		
+		return mensagem;
 	}
 
 	@Override
