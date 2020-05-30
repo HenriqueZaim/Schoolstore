@@ -38,7 +38,7 @@ public class PagamentoCartaoDao implements IDao{
 		
 		try {
 			pstm = conexao.prepareStatement(sql);
-			pstm.setFloat(1, pagamentoCartao.getValorTotalCartao());	// TODO: TROCAR A MERDA DO NOME
+			pstm.setFloat(1, pagamentoCartao.getValorTotalCartao());	
 			pstm.setLong(2, pagamentoCartao.getCartaoCredito().getId());
 			pstm.setLong(3, pagamentoCartao.getFormaPagamento().getId());
 			

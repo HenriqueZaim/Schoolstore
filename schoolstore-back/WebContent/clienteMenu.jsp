@@ -105,7 +105,6 @@
 					<div class="collapse navbar-collapse" id="navbarSupportedContent">
 						<ul class="navbar-nav mr-auto">
 							<li class="nav-item"><a class="nav-link waves-effect" href="index.jsp">Iní­cio </a></li>
-							<li class="nav-item"><a class="nav-link waves-effect" href="produtoLista.jsp">Produtos </a></li>
 						</ul>
 
 						<ul class="navbar-nav ml-auto nav-flex-icons align-items-center flex-row-reverse flex-md-row justify-content-between">

@@ -145,5 +145,10 @@ VALUES
 ("Acessório", 17, b'1', NOW()),
 ("Acessório", 18, b'1', NOW());
 
-
+INSERT INTO tb_cupom (cup_valor, cup_usu_id, cup_ativo, cup_dataHoraCriacao) VALUES
+(10, 1, b'1', NOW()),
+(20, 1, b'1', NOW()),
+(30, 1, b'1', NOW()),
+(50, 1, b'1', NOW()),
+(100, 1, b'1', NOW())
 

@@ -26,6 +26,7 @@ public class PagamentoCartaoVH implements IViewHelper{
 			return pagamentosCartao;
 		}else {
 			String[] cartoesForm = request.getParameterValues("txtCartaoCreditoId");
+
 			if(valorTotalCartao > 0) { // Está usando cartão de crédito
 				valorTotalCartao /= cartoesForm.length;
 			}

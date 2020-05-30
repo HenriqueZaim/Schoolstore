@@ -5,7 +5,7 @@ use lesProject;
 CREATE TABLE tb_formaPagamento
 (
   fpag_id INT NOT NULL AUTO_INCREMENT,
-  fpag_valorTotal DECIMAL(6,2) NOT NULL,
+  fpag_valorTotal DECIMAL(7,3) NOT NULL,
   PRIMARY KEY (fpag_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -41,7 +41,7 @@ CREATE TABLE tb_precificacao
 CREATE TABLE tb_carrinho
 (
   car_id INT NOT NULL AUTO_INCREMENT,
-  car_subTotal DECIMAL(6,2) DEFAULT NULL,
+  car_subTotal DECIMAL(7,3) DEFAULT NULL,
   car_validade DATETIME DEFAULT NULL,
   car_ativo BOOLEAN NOT NULL,
   car_dataHoraCriacao DATETIME NOT NULL,
@@ -136,7 +136,7 @@ CREATE TABLE tb_produto
 (
   pro_id INT NOT NULL AUTO_INCREMENT,
   pro_nome VARCHAR(100) NOT NULL,
-  pro_preco DECIMAL(6,2) NOT NULL,
+  pro_preco DECIMAL(7,3) NOT NULL,
   pro_descricao VARCHAR(400) NOT NULL,
   pro_ativo BOOLEAN NOT NULL,
   pro_dataHoraCriacao DATETIME NOT NULL,
@@ -196,7 +196,7 @@ CREATE TABLE tb_ativacao
 CREATE TABLE tb_cupom
 (
   cup_id INT NOT NULL AUTO_INCREMENT,
-  cup_valor DECIMAL(6,2) NOT NULL,
+  cup_valor DECIMAL(7,3) NOT NULL,
   cup_ativo BOOLEAN NOT NULL,
   cup_dataHoraCriacao DATETIME NOT NULL,
   cup_usu_id INT NOT NULL,
@@ -209,7 +209,7 @@ CREATE TABLE tb_cupom
 CREATE TABLE tb_pagamentoCupom
 (
   pcu_id INT NOT NULL AUTO_INCREMENT,
-  pcu_valorTotalCupom DECIMAL(6,2) NOT NULL,
+  pcu_valorTotalCupom DECIMAL(7,3) NOT NULL,
   pcu_cup_id INT NOT NULL,
   pcu_fpag_id INT NOT NULL,
   FOREIGN KEY(pcu_cup_id) REFERENCES tb_cupom(cup_id),
@@ -223,7 +223,7 @@ CREATE TABLE tb_pagamentoCupom
 CREATE TABLE tb_pagamentoCartao
 (
   pca_id INT NOT NULL AUTO_INCREMENT,
-  pca_valorTotalCartao DECIMAL(6,2) NOT NULL,
+  pca_valorTotalCartao DECIMAL(7,3) NOT NULL,
   pca_ccr_id INT NOT NULL,
   pca_fpag_id INT NOT NULL,
   PRIMARY KEY (pca_id),
@@ -245,7 +245,7 @@ CREATE TABLE tb_itemEstoque
   isto_id INT NOT NULL AUTO_INCREMENT,
   isto_quantidade INT(5) DEFAULT NULL,
   isto_dataEntrada DATE NOT NULL,
-  isto_valor DECIMAL(6,2) NOT NULL,
+  isto_valor DECIMAL(7,3) NOT NULL,
   isto_for_id INT NOT NULL,
   isto_sto_id INT NOT NULL,
   PRIMARY KEY (isto_id),
@@ -256,7 +256,7 @@ CREATE TABLE tb_itemEstoque
 CREATE TABLE tb_frete
 ( 
   fre_id INT NOT NULL AUTO_INCREMENT,
-  fre_valor DECIMAL(6,2),
+  fre_valor DECIMAL(7,3),
   fre_previsaoEmDias INT NOT NULL,
   fre_end_id INT NOT NULL,
   fre_ativo BOOLEAN NOT NULL,
@@ -268,7 +268,7 @@ CREATE TABLE tb_frete
 CREATE TABLE tb_pedido
 (
   ped_id INT NOT NULL AUTO_INCREMENT,
-  ped_valor DECIMAL(6,2) NOT NULL,
+  ped_valor DECIMAL(7,3) NOT NULL,
   ped_statusPedido VARCHAR(20) NOT NULL,
   ped_ativo BOOLEAN NOT NULL,
   ped_dataHoraCriacao DATETIME NOT NULL,

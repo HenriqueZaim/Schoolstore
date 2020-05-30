@@ -368,6 +368,8 @@ $(document).ready(function () {
 			var valorTotal = $("#txtSubTotal").val()
 			valorTotal = parseFloat(valorTotal)
 			
+			var cartoes = $(".cartaoInput[checked]");
+			
 			var valorTotalCupom = $("#txtValorTotalCupom").val()
 			valorTotalCupom = parseFloat(valorTotalCupom)
 			
@@ -409,13 +411,15 @@ $(document).ready(function () {
 									valorTotalCupom -= valorCupom1
 
 									$("#txtValorTotalCupom").val(valorTotalCupom1)
-									
-									let valorTotalPago1 = $("#txtValorTotalPago").val()
-									valorTotalPago1 = parseFloat(valorTotalPago1)
-									
-									valorTotalPago1 -= valorCupom1
-									
-									$("#txtValorTotalPago").val(valorTotalPago1)
+
+								    if(cartoes.length == 0){
+										let valorTotalPago1 = $("#txtValorTotalPago").val()
+										valorTotalPago1 = parseFloat(valorTotalPago1)
+										
+										valorTotalPago1 -= valorCupom1
+										
+										$("#txtValorTotalPago").val(valorTotalPago1)
+								    }
 									
 									$(cp).prop("checked",false);
 								    let val = $(cp).val();
@@ -437,13 +441,14 @@ $(document).ready(function () {
 				
 			$("#txtValorTotalCupom").val(valorTotalCupom)
 			
-			
-			let valorTotalPago = $("#txtValorTotalPago").val()
-			valorTotalPago = parseFloat(valorTotalPago)
-			
-			valorTotalPago += valorCupom
-			
-			$("#txtValorTotalPago").val(valorTotalPago)
+			if(cartoes.length == 0){
+				let valorTotalPago = $("#txtValorTotalPago").val()
+				valorTotalPago = parseFloat(valorTotalPago)
+				
+				valorTotalPago += valorCupom
+				
+				$("#txtValorTotalPago").val(valorTotalPago)
+			}
 			
 			$(this).prop("checked", "checked");
 		    let val = $(this).val();
@@ -455,7 +460,7 @@ $(document).ready(function () {
 			
 
 		}else{
-
+			var cartoes = $(".cartaoInput[checked]");
 			let valorTotalCupom = $("#txtValorTotalCupom").val()
 			valorTotalCupom = parseFloat(valorTotalCupom)
 			
@@ -466,13 +471,14 @@ $(document).ready(function () {
 			
 			$("#txtValorTotalCupom").val(valorTotalCupom)
 			
-			let valorTotalPago = $("#txtValorTotalPago").val()
-			valorTotalPago = parseFloat(valorTotalPago)
-			
-			valorTotalPago -= valorCupom
-			
-			$("#txtValorTotalPago").val(valorTotalPago)
-			
+			if(cartoes.length == 0){
+				let valorTotalPago = $("#txtValorTotalPago").val()
+				valorTotalPago = parseFloat(valorTotalPago)
+				
+				valorTotalPago -= valorCupom
+				$("#txtValorTotalPago").val(valorTotalPago)
+			}
+
 			$(this).removeAttr("checked");
 		    let val = $(this).val();
 		    $("#formularioCompra")

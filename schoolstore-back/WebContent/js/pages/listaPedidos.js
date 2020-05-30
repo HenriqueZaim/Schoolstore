@@ -213,7 +213,7 @@ $(document).ready(function () {
 			  if(data.formaPagamento.pagamentosCartao.length !== 0){
 				  data.formaPagamento.pagamentosCartao.forEach(function(cartao){
 					  $(`#formasPagamento-${data.id}`).append(`
-					     <span>Cartão: ${cartao.valorTotalCartao}</span><br>
+					     <span>Cartão: R$${cartao.valorTotalCartao}</span><br>
 					  `)
 				  })
 			  }
@@ -221,7 +221,7 @@ $(document).ready(function () {
 			  if(data.formaPagamento.pagamentosCupom.length !== 0){
 				  data.formaPagamento.pagamentosCupom.forEach(function(cupom){
 					  $(`#formasPagamento-${data.id}`).append(`
-					     <span>Cupom: R$ ${cupom.valorTotalCupom}</span><br>
+					     <span>Cupom: R$${cupom.valorTotalCupom}</span><br>
 					  `)
 				  })
 			  }
