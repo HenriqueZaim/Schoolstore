@@ -70,7 +70,11 @@ public class ServletController extends HttpServlet{
     	
     	// Troca
     	vhMap.put("efetuarTroca", new TrocaVH());
+    	vhMap.put("consultarTrocas", new TrocaVH());
+    	vhMap.put("alterarStatusTroca", new TrocaVH());
     	commandMap.put("efetuarTroca", new SalvarCommand());
+    	commandMap.put("alterarStatusTroca", new AtualizarCommand());
+    	commandMap.put("consultarTrocas", new ConsultarCommand());
     	
     	// Login de usuário
     	// Vai consultar com um e-mail e senha, e vai trazer o usuário todo + cliente

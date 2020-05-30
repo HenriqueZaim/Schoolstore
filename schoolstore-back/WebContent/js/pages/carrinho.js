@@ -14,6 +14,12 @@ $(".excluir").click(function(){
 	$("#valorTotalCompra").html(`R$ ${subTotal}`)
 })
 
+$().ready(function(){
+	let valorCupom = parseFloat($("#subTotal").val()).toFixed(2)
+	$("#subTotal").val(valorCupom)
+	$("#valorTotalCompra").text(`R$${valorCupom}`)
+})
+
 $(".quantidade").change(function(){
 	let qtdd = $(this).val()
 	qtdd = parseInt(qtdd, 10)
@@ -25,8 +31,8 @@ $(".quantidade").change(function(){
 	precificacao = (Math.round(((precoProduto * precificacao) + Number.EPSILON) * 100) / 100) 
 	let valorTotal = (precificacao + precoProduto) * qtdd
 	valorTotal = (Math.round(valorTotal * 100) / 100).toFixed(2)
-	$(this).parent().parent().find(".valorSomado").val(valorTotal)
 	
+	$(this).parent().parent().find(".valorSomado").val(valorTotal)
 	$(this).parent().parent().find(".preco").html(`R$ ${valorTotal}`)
 	
 	

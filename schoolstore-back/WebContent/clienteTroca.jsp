@@ -151,6 +151,8 @@
 						</button>
 					</form>
 					<a href="pedidoLista.jsp" class="list-group-item list-group-item-action waves-effect"><i class="fas fa-box-open mr-3"></i> Meu Pedidos </a>
+					<a href="trocaLista.jsp" class="list-group-item list-group-item-action waves-effect"> <i class="fas fa-exchange-alt mr-3"></i>Minhas Trocas
+						</a>
 					<form action="app" method="POST">
 						<input type="hidden" name="txtUsuarioId" value="${usuario.getId()}"> <input type="hidden" name="txtClienteId" value="${cliente.getId()}"> <input type="hidden" name="txtImagemId" value="${usuario.getImagem().getId()}"> <input type="hidden" name="tarefa" value="editaCliente">
 						<button type="submit" class="list-group-item list-group-item-action waves-effect">
@@ -213,14 +215,15 @@
 													R$${ Math.round( ( ( item.getProduto().getPreco() * item.getProduto().getPrecificacao().getPercentual() + item.getProduto().getPreco() ) * item.getQuantidade() ) * 100 ) / 100}
 												</td>
 												<td>
-													<input type="number" class="quantidade" name="txtQuantidade" value="${item.getQuantidade()}" min="1" max="${item.getQuantidade()}" aria-label="Search" class="form-control" style="width: 100px">
+													<input type="number" name="txtQuantidadeProduto" class="quantidade" value="${item.getQuantidade()}" min="1" max="${item.getQuantidade()}" aria-label="Search" class="form-control" style="width: 100px">
 												</td>
 												<td>
 													<button type="button" class="btn btn-sm btn-danger excluir" data-toggle="tooltip" data-placement="top" title="Remove item">X</button>
 												</td>
-												
+												<input type="hidden" class="precificacao" value="${ item.getProduto().getPrecificacao().getPercentual()}">
+														<input type="hidden" class="valor" value="${item.getProduto().getPreco()}">
+														<input type="hidden" class="valorSomado" value="${ (Math.round((item.getProduto().getPreco() * item.getProduto().getPrecificacao().getPercentual() + item.getProduto().getPreco())) * 100) / 100}">
 												<input type="hidden" name="txtProdutoId" value="${item.getProduto().getId() }">
-												<input type="hidden" name="txtQuantidadeProduto" value="${item.getProduto().getId() }">
 											</tr>
 										</c:forEach>
 
@@ -229,11 +232,16 @@
 												<h4 class="mt-2">
 													<strong>Total de reembolso</strong>
 												</h4>
+												
 											</td>
+											<td class="text-right">
+												<input type="hidden" name="txtValorTotal" id="subTotal" value="${pedido.getValor() - pedido.getFrete().getValor() }">
+												<h4 class="mt-2" id="valorTotalCompra"></h4></td>
 											<td colspan="3" class="text-right">
 												<input type="hidden" name="tarefa" value="efetuarTroca">
 												<input type="hidden" name="txtPedidoId" value="${pedido.getId()}">
 												<input type="hidden" name="txtClienteId" value="${pedido.getCliente().getId()}">
+												<input type="hidden" name="txtUsuarioId" value="${usuario.getId()}">
 
 												<button type="submit" class="btn btn-primary btn-rounded">
 													Completar Troca <i class="fas fa-angle-right right"></i>

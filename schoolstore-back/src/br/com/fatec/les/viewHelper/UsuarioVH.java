@@ -33,7 +33,7 @@ public class UsuarioVH implements IViewHelper{
 			usuario.setId(Long.parseLong(request.getParameter("txtUsuarioId")));
 		}
 		
-		if(tarefa.equals("efetuarPedido") || tarefa.equals("consultarCupons")) {
+		if(tarefa.equals("efetuarPedido") || tarefa.equals("consultarCupons") || tarefa.equals("efetuarTroca")) {
 			if(request.getParameter("txtUsuarioId") != null)
 				usuario.setId(Long.parseLong(request.getParameter("txtUsuarioId")));
 			

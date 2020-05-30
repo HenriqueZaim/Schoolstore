@@ -45,8 +45,12 @@ public class PedidoVH implements IViewHelper{
 			pedido.setId(Long.parseLong(request.getParameter("txtPedidoId")));
 			pedido.setItensPedido(itemPedidoVH.getEntidades(request));
 			pedido.setFormaPagamento((FormaPagamento)formaPagamentoVH.getEntidade(request));
-		}else if(tarefa.equals("consultarPedido") || tarefa.equals("efetuarTroca")) {
+		}else if(tarefa.equals("consultarPedido")) {
 			pedido.setId(Long.parseLong(request.getParameter("txtPedidoId")));
+		}else if(tarefa.equals("efetuarTroca")) {
+			pedido.setId(Long.parseLong(request.getParameter("txtPedidoId")));
+			pedido.setValor(Float.parseFloat(request.getParameter("txtValorTotal")));
+			
 		}
 		return pedido;
 	}

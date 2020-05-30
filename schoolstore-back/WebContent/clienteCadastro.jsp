@@ -17,7 +17,7 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
-  <title>Material Design for Bootstrap</title>
+  <title>Cadastro</title>
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
   <link rel="stylesheet" href="./css/bootstrap.min.css">
   <link rel="stylesheet" href="./css/mdb.min.css">

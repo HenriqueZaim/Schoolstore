@@ -13,7 +13,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta http-equiv="x-ua-compatible" content="ie=edge">
-<title>Lista de cupons</title>
+<title>Lista de Trocas</title>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
 <link rel="stylesheet" href="./css/bootstrap.min.css">
@@ -86,13 +86,15 @@
 
 <body>
 	<%
-		String login = "";
-		login = (String) session.getAttribute("status");
-
-		if (login == null || login == "off") {
-			response.sendRedirect("usuarioLogin.jsp");
-		}
-	%>
+        String login = "";
+        login = (String) session.getAttribute("status");
+        Usuario usuario = new Usuario();
+        usuario = (Usuario) session.getAttribute("usuario");
+        
+        if(login == null || login == "off"){
+            response.sendRedirect("usuarioLogin.jsp");
+        }
+    %>
 
 	<div class="container-for-admin">
 		<header>
@@ -114,6 +116,14 @@
 							<li class="nav-item avatar dropdown"><a class="nav-link dropdown-toggle waves-effect waves-light" id="navbarDropdownMenuLink-5" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <img src="${usuario.getImagem().getCaminho() }" class="rounded-circle z-depth-0" height="35px" alt="avatar image">
 							</a>
 								<div class="dropdown-menu dropdown-menu-lg-right py-0 dropdown-default" aria-labelledby="navbarDropdownMenuLink-5">
+									<c:if test="${cliente != null}">
+										<form action="app" method="POST">
+											<input type="hidden" name="txtUsuarioId" value="${usuario.getId()}"> <input type="hidden" name="txtClienteId" value="${cliente.getId()}"> <input type="hidden" name="txtImagemId" value="${usuario.getImagem().getId()}"> <input type="hidden" name="tarefa" value="editaCliente">
+
+											<button type="submit" class="dropdown-item waves-effect waves-light">Meu Perfil</button>
+
+										</form>
+									</c:if>
 									<a href="clienteMenu.jsp" class="dropdown-item waves-effect waves-light">Menu</a>
 									<form action="logout" method="POST">
 										<button type="submit" class="dropdown-item waves-effect waves-light">Sair</button>
@@ -127,7 +137,7 @@
 			</nav>
 			<div class="sidebar-fixed position-fixed">
 
-				<a class="navbar-brand waves-effect" href="index.html"> <strong class="blue-text h1 m-2">SchoolStore</strong>
+				<a class="navbar-brand waves-effect" href="index.jsp"> <strong class="blue-text h1 m-2">SchoolStore</strong>
 				</a>
 
 				<c:if test="${!usuario.isAdmin()}">
@@ -143,7 +153,7 @@
 						</form>
 						<a href="pedidoLista.jsp" class="list-group-item list-group-item-action waves-effect"><i class="fas fa-box-open mr-3"></i> Meu Pedidos
 						</a>
-						<a href="trocaLista.jsp" class="list-group-item list-group-item-action waves-effect"> <i class="fas fa-exchange-alt mr-3"></i>Minhas Trocas
+						<a href="trocaLista.jsp" class="list-group-item list-group-item-action active waves-effect"> <i class="fas fa-exchange-alt mr-3"></i>Minhas Trocas
 						</a>
 						<form action="app" method="POST">
 							<input type="hidden" name="txtUsuarioId" value="${usuario.getId()}"> <input type="hidden" name="txtClienteId" value="${cliente.getId()}"> <input type="hidden" name="txtImagemId" value="${usuario.getImagem().getId()}"> <input type="hidden" name="tarefa" value="editaCliente">
@@ -152,30 +162,28 @@
 							</button>
 						</form>
 					</div>
+					<input type="hidden" id="txtClienteId" value="${cliente.getId() }">
 				</c:if>
 				<c:if test="${usuario.isAdmin()}">
 					<div class="list-group list-group-flush mt-5">
-						<a href="clienteMenu.jsp" class="list-group-item list-group-item-action waves-effect"> <i class="fas fa-th-list mr-3"></i>Menu Principal
+						<a href="clienteMenu.jsp" class="list-group-item  list-group-item-action waves-effect"> <i class="fas fa-th-list mr-3"></i>Menu Principal
 					</a> <a href="clienteLista.jsp" class="list-group-item  list-group-item-action waves-effect"> <i class="fas fa-users mr-3"></i>Lista de Clientes
 					</a> <a href="adminProdutoLista.jsp" class="list-group-item list-group-item-action waves-effect"> <i class="fas fa-box-open mr-3"></i>Lista de Produtos
-					</a> <a href="pedidoLista.jsp" class="list-group-item list-group-item-action waves-effect"> <i class="fas fa-exchange-alt mr-3"></i>Lista de Pedidos
-					</a> <a href="trocaLista.jsp" class="list-group-item list-group-item-action waves-effect"> <i class="fas fa-exchange-alt mr-3"></i>Lista de Trocas
-					</a> <a href="cupomLista.jsp" class="list-group-item active list-group-item-action waves-effect"> <i class="fas fa-ticket-alt mr-3"></i>Lista de Cupons
+					</a> <a href="pedidoLista.jsp" class="list-group-item list-group-item-action  waves-effect"> <i class="fas fa-exchange-alt mr-3"></i>Lista de Pedidos
+					</a> <a href="trocaLista.jsp" class="list-group-item list-group-item-action active waves-effect"> <i class="fas fa-exchange-alt mr-3"></i>Lista de Trocas
+					</a> <a href="cuponsLista.jsp" class="list-group-item list-group-item-action waves-effect"> <i class="fas fa-ticket-alt mr-3"></i>Lista de Cupons
 					</a> <a href="relatorio.jsp" class="list-group-item list-group-item-action waves-effect"> <i class="fas fa-chart-line mr-3"></i>Relatórios
 					</a>
 					</div>
 				</c:if>
-
 			</div>
 		</header>
 
 		<main class="pt-5 mx-lg-5">
-		<input type="hidden" id="txtIsAdmin" value="${usuario.isAdmin() }">
-		<input type="hidden" id="txtUsuarioId" value="${usuario.getId() }">
 		<div class="container-fluid mt-5">
 			<div class="card mb-4 wow fadeIn">
 				<div class="card-body d-sm-flex justify-content-between">
-					<h1 class="mb-2 mb-sm-0 pt-1">Lista de Cupons</h1>
+					<h1 class="mb-2 mb-sm-0 pt-1">Lista de Trocas</h1>
 				</div>
 			</div>
 			<c:forEach var="mensagem" items="${resultado.getMensagens()}">
@@ -198,16 +206,30 @@
 					<div class="card mb-4 wow fadeIn mb-5">
 						<section class="dark-grey-text">
 							<table class="table table-striped table-responsive-md btn-table">
-								<thead>
-									<tr class="font-weight-bold text-center">
-										<th>#Id</th>
-										<th>Valor</th>
-										<th>Ação</th>
-									</tr>
-								</thead>
+								<c:if test="${usuario.isAdmin()}">
+									<thead>
+										<tr class="font-weight-bold text-center">
+											<th>#Id</th>
+											<th>Itens</th>
+											<th>Cliente</th>
+											<th>Status</th>
+											<th>Ação</th>
+										</tr>
+									</thead>
+								</c:if>
+								<c:if test="${!usuario.isAdmin()}">
+									<thead>
+										<tr class="font-weight-bold text-center">
+											<th>#Id</th>
+											<th>Itens</th>
+											<th>Status</th>
+											<th>Ação</th>
+										</tr>
+									</thead>
+								</c:if>
 
-								<tbody id="tableCupons">
-									
+								<tbody id="tableTrocas">
+
 								</tbody>
 
 							</table>
@@ -229,7 +251,8 @@
 	<script type="text/javascript" src="./js/popper.min.js"></script>
 	<script type="text/javascript" src="./js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="./js/mdb.min.js"></script>
-	<script type="text/javascript" src="./js/pages/listaCupons.js"></script>
+	<script type="text/javascript" src="./js/pages/listaTrocas.js"></script>
+
 </body>
 
 </html>
