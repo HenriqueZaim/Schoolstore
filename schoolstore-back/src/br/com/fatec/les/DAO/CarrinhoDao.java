@@ -106,20 +106,19 @@ public class CarrinhoDao implements IDao{
 		
 		String sql = "UPDATE tb_carrinho SET "
 				+ "car_subTotal = ?, "
-				+ "car_validade = NOW() "	// TODO: Arrumar datas			
+				+ "car_validade = NOW() "		
 				+ " WHERE car_id = ?";
 		
 		PreparedStatement pstm = null;
 		
 		try {
 			pstm = conexao.prepareStatement(sql);
-			
+			Carrinho carrinhoAux = new Carrinho();
+			carrinhoAux = (Carrinho)consultar(carrinho).get(0);
 			if(carrinho.getValidade() != null) {
 				itemCarrinhoDao.deletar(itemCarrinho);
 				pstm.setFloat(1, carrinho.getSubTotal());
 			}else {
-				Carrinho carrinhoAux = new Carrinho();
-				carrinhoAux = (Carrinho)consultar(carrinho).get(0);
 				Float valorFinal;
 				if(!carrinhoAux.getItensCarrinho().isEmpty()) {
 					valorFinal = carrinhoAux.getSubTotal() + carrinho.getSubTotal();
@@ -133,6 +132,15 @@ public class CarrinhoDao implements IDao{
 			pstm.setLong(2, carrinho.getId());
 			
 			if(!carrinho.getItensCarrinho().isEmpty() && carrinho.getItensCarrinho() != null) {
+				if(!carrinhoAux.getItensCarrinho().isEmpty() && carrinhoAux.getItensCarrinho() != null) {
+					for(ItemCarrinho itemBanco : carrinhoAux.getItensCarrinho()) {
+						for(ItemCarrinho item : carrinho.getItensCarrinho()) {
+							if(itemBanco.getProduto().getId() == item.getProduto().getId()) {
+								itemCarrinhoDao.atualizar(item);
+							}
+						}
+					}
+				}
 				for(ItemCarrinho item : carrinho.getItensCarrinho()) {
 					item.setCarrinho(carrinho);
 					itemCarrinhoDao.salvar(item);

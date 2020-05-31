@@ -77,7 +77,6 @@ public class ServletController extends HttpServlet{
     	commandMap.put("consultarTrocas", new ConsultarCommand());
     	
     	// Login de usuário
-    	// Vai consultar com um e-mail e senha, e vai trazer o usuário todo + cliente
     	vhMap.put("loginUsuario", new UsuarioVH());
     	vhMap.put("logoutUsuario", new UsuarioVH());
     	commandMap.put("loginUsuario", new ConsultarCommand());

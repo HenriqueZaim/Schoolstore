@@ -94,7 +94,32 @@ public class ItemCarrinhoDao implements IDao{
 
 	@Override
 	public Mensagem atualizar(ADominio entidade) throws SQLException {
-        throw new UnsupportedOperationException("Operação não suportada.");
+		ItemCarrinho itemCarrinho = (ItemCarrinho) entidade;
+		conexao = ConexaoFactory.getConnection();
+		mensagem = new Mensagem();
+		
+		String sql = "UPDATE tb_itemCarrinho SET "
+				+ "icar_quantidade = icar_quantidade + 1 "
+				+ " WHERE icar_pro_id = ?";
+		
+		PreparedStatement pstm = null;
+		
+		try {
+			pstm = conexao.prepareStatement(sql);			
+			pstm.setLong(1, itemCarrinho.getProduto().getId());
+
+			pstm.executeUpdate();
+			mensagem.setMensagem("Produto adicionado com sucesso!");
+			mensagem.setMensagemStatus(MensagemStatus.SUCESSO);
+		}catch(SQLException e) {
+			mensagem.setMensagem("Ocorreu um erro durante a operação. Tente novamente ou consulte a equipe de desenvolvimento.");
+			mensagem.setMensagemStatus(MensagemStatus.ERRO);
+		}
+		finally {
+			ConexaoFactory.closeConnection(conexao, pstm);
+		}
+		
+		return mensagem;
 	}
 
 	@Override
