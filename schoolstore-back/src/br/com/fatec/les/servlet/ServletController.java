@@ -18,8 +18,10 @@ import br.com.fatec.les.command.SalvarCommand;
 import br.com.fatec.les.facade.Resultado;
 import br.com.fatec.les.model.assets.ADominio;
 import br.com.fatec.les.viewHelper.CarrinhoVH;
+import br.com.fatec.les.viewHelper.CartaoCreditoVH;
 import br.com.fatec.les.viewHelper.ClienteVH;
 import br.com.fatec.les.viewHelper.CupomVH;
+import br.com.fatec.les.viewHelper.EnderecoVH;
 import br.com.fatec.les.viewHelper.EstadoVH;
 import br.com.fatec.les.viewHelper.IViewHelper;
 import br.com.fatec.les.viewHelper.PedidoVH;
@@ -53,7 +55,7 @@ public class ServletController extends HttpServlet{
     	commandMap.put("atualizarCliente", new AtualizarCommand());
     	
     	// Get nos estados e cidades
-    	vhMap.put("cadastroCliente", new EstadoVH());
+    	vhMap.put("cadastroCliente", new EstadoVH()); //TODO: Alterar nome da tarefa
     	commandMap.put("cadastroCliente", new ConsultarCommand());
     	
     	// Pedido
@@ -67,6 +69,18 @@ public class ServletController extends HttpServlet{
     	commandMap.put("alterarStatusPedido", new AtualizarCommand());
     	commandMap.put("cancelarPedido", new DeletarCommand());
     	commandMap.put("consultarPedido", new ConsultarCommand());
+    	
+    	// Endereços
+    	vhMap.put("adicionarEndereco", new EnderecoVH());
+    	vhMap.put("removerEndereco", new EnderecoVH());
+    	commandMap.put("adicionarEndereco", new SalvarCommand());
+    	commandMap.put("removerEndereco", new DeletarCommand());
+    	
+    	// Cartão
+    	vhMap.put("adicionarCartao", new CartaoCreditoVH());
+    	vhMap.put("removerCartao", new CartaoCreditoVH());
+    	commandMap.put("adicionarCartao", new SalvarCommand());
+    	commandMap.put("removerCartao", new DeletarCommand());
     	
     	// Troca
     	vhMap.put("efetuarTroca", new TrocaVH());

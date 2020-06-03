@@ -30,7 +30,7 @@ public class PedidoVH implements IViewHelper{
 		FormaPagamentoVH formaPagamentoVH = new FormaPagamentoVH();
 		
 		if(tarefa.equals("efetuarPedido")) {
-			pedido.setStatusPedido(StatusPedido.APROVADO);
+			pedido.setStatusPedido(StatusPedido.EMPROCESSAMENTO);
 			pedido.setValor(Float.parseFloat(request.getParameter("txtSubTotal")));
 			pedido.setFrete((Frete)freteVH.getEntidade(request));
 			pedido.setCliente((Cliente) clienteVH.getEntidade(request));
@@ -45,6 +45,8 @@ public class PedidoVH implements IViewHelper{
 			pedido.setId(Long.parseLong(request.getParameter("txtPedidoId")));
 			pedido.setItensPedido(itemPedidoVH.getEntidades(request));
 			pedido.setFormaPagamento((FormaPagamento)formaPagamentoVH.getEntidade(request));
+			pedido.setCliente((Cliente) clienteVH.getEntidade(request));
+			pedido.setValor(Float.parseFloat(request.getParameter("txtValor")));
 		}else if(tarefa.equals("consultarPedido")) {
 			pedido.setId(Long.parseLong(request.getParameter("txtPedidoId")));
 		}else if(tarefa.equals("efetuarTroca")) {

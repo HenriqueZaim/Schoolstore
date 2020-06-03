@@ -56,7 +56,7 @@ public class EnderecoDao implements IDao{
 			pstm.setString(10, endereco.getNome());
 			pstm.executeUpdate();
 
-			mensagem.setMensagem("Operação realizada com sucesso!");
+			mensagem.setMensagem("Endereço cadastrado com sucesso!");
 			mensagem.setMensagemStatus(MensagemStatus.OPERACAO);
 			return mensagem;
 

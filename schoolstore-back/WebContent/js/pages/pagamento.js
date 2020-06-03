@@ -1,4 +1,5 @@
 var itensCarrinho;
+var estados;
 
 $(document).ready(function () {
   var txtCarrinhoId = $("#txtCarrinhoId").val();
@@ -9,6 +10,7 @@ $(document).ready(function () {
 	  type: "GET",
 	  async: false,
 	  success: (response) => {
+		  console.log(response)
 		  response.entidades.forEach(function(data){
 			  data.enderecos.forEach(function(endereco) {
 				  $("#accordionEndereco").append(`
@@ -19,9 +21,14 @@ $(document).ready(function () {
 						  <label class="form-check-label" for="enderecoInput${endereco.id }"></label>
 						  </div>
 						  <h5 class="mb-0 flex-grow-1">${endereco.nome}</h5>
-						  <div>
-						  <a data-toggle="collapse" class="float-left" data-parent="#accordionEndereco" href="#endereco-${endereco.id}" aria-expanded="false" aria-controls="endereco-${endereco.id}"> <i class="fas fa-angle-down rotate-icon"></i>
+						  <div class="d-flex align-items-center">
+						  <a data-toggle="collapse" class="float-left pr-4" data-parent="#accordionEndereco" href="#endereco-${endereco.id}" aria-expanded="false" aria-controls="endereco-${endereco.id}"> <i class="fas fa-angle-down"></i>
 						  </a>
+						  <form action="app" method="post">
+						  	<input type="hidden" name="tarefa" value="removerEndereco">
+						  	<input type="hidden" name="txtEnderecoId" value="${endereco.id}">
+						  	<button type="submit" class="btn btn-link text-danger p-0"><i class="fa fa-times"></i></button>
+						  </form>
 
 						  </div>
 						  </div>
@@ -71,12 +78,15 @@ $(document).ready(function () {
 														<label class="form-check-label" for="cartaoInput${cartao.id }"></label>
 													</div>
 													<h5 class="mb-0 flex-grow-1">Cartão - Final ${cartao.numero.substring(12,16)}</h5>
-													<div>
+													<div class="d-flex align-items-center">
 
-														<a data-toggle="collapse" class="float-left" data-parent="#accordionCartao" href="#cartao-${cartao.id}" aria-expanded="false" aria-controls="cartao-${cartao.id}"> <i class="fas fa-angle-down rotate-icon"></i>
+														<a data-toggle="collapse" class="float-left pr-4" data-parent="#accordionCartao" href="#cartao-${cartao.id}" aria-expanded="false" aria-controls="cartao-${cartao.id}"> <i class="fas fa-angle-down"></i>
 														</a>
-
-
+														<form action="app" method="post">
+														  	<input type="hidden" name="tarefa" value="removerCartao">
+														  	<input type="hidden" name="txtCartaoCreditoId" value="${cartao.id}">
+														  	<button type="submit" class="btn btn-link text-danger p-0"><i class="fa fa-times"></i></button>
+														  </form>
 													</div>
 												</div>
 											</div>
@@ -142,6 +152,7 @@ $(document).ready(function () {
     type: "GET",
     async: false,
     success: (response) => {
+    	console.log(response)
       $("#confirmarCompra").append(`
 		  
 				  <form action="app" method="post" id="formularioCompra">
@@ -165,14 +176,15 @@ $(document).ready(function () {
 				  
 		  `);
       response.itensCarrinho.forEach(function (item) {
-        let preco =
-          item.produto.preco * item.produto.precificacao.percentual +
-          item.produto.preco;
-        preco = parseFloat(preco).toFixed(2);
+        let preco = parseFloat(item.produto.preco);
+        let precificacao = parseFloat(item.produto.precificacao.percentual)
+        let qtdd = parseInt(item.quantidade)
+        var valorTotal = ((preco*precificacao) + preco) * qtdd
+        preco = parseFloat(valorTotal).toFixed(2);
         $("#listaItens").prepend(`
 					  	<li class="d-flex justify-content-between">
 					  		<p>${item.quantidade}x ${item.produto.nome}</p>
-					  		<p>R$ ${preco*item.quantidade}</p>
+					  		<p id="valorPreco-${item.id}">R$ ${preco}</p>
 					  		<input type="hidden" name="txtProdutoId" value="${item.produto.id}">
 					  		<input type="hidden" name="txtQuantidadeProduto" value="${item.quantidade}">
 
@@ -236,6 +248,20 @@ $(document).ready(function () {
       }
     },
   });
+  
+  $.ajax({
+	  url: "http://localhost:8085/schoolstore/app?tarefa=cadastroCliente",
+	  type: "GET",
+	  async: false,
+	  success: response => {
+		  response.forEach(function(data){
+			  $("#txtEstadoModal").append(
+				`<option value="${data.id}">${data.nome}</option>`
+			  )
+		  })
+		  estados = response
+	  }
+  })
   $(".enderecoInput").change(function () {
 	  let endereco = $(this)
 	    .parent()
@@ -728,6 +754,35 @@ function disable(){
 	}
 }
 
+$("#txtEstadoModal").change(function(){
+	$("#txtCidadeModal").children(".cidade").remove()
+	let id = $("#txtEstadoModal").val()
+	estados.forEach(function(data){
+		if(id == data.id){
+			data.cidades.forEach(function(cidade){
+				$("#txtCidadeModal").append(
+					`<option value="${cidade.id}" class="cidade">${cidade.nome}</option>`
+				)
+			})
+		}
+	})
+})
+
+$("#txtFavoritoModal").click(() => {
+	  if($("#txtFavoritoModal").val() == "false"){
+	    $("#txtFavoritoModal").val("true")
+	  }else{
+	    $("#txtFavoritoModal").val("false")
+	  }
+	})
+
+	$("#txtFavoritoCartaoModal").click(() => {
+	  if($("#txtFavoritoCartaoModal").val() == "false"){
+	    $("#txtFavoritoCartaoModal").val("true")
+	  }else{
+	    $("#txtFavoritoCartaoModal").val("false")
+	  }
+	})
 
 
 

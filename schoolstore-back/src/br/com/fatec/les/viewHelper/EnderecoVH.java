@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import br.com.fatec.les.model.assets.ADominio;
 import br.com.fatec.les.model.endereco.Cidade;
 import br.com.fatec.les.model.endereco.Endereco;
+import br.com.fatec.les.model.usuario.Cliente;
 
 public class EnderecoVH implements IViewHelper{
 	
@@ -51,16 +52,36 @@ public class EnderecoVH implements IViewHelper{
 	@Override
 	public ADominio getEntidade(HttpServletRequest request) {
 		Endereco endereco = new Endereco();
+		String tarefa = request.getParameter("tarefa");
+		if(tarefa.equals("adicionarEndereco")) {
+			CidadeVH cidadeVH = new CidadeVH();
+			ClienteVH clienteVH = new ClienteVH();
+			endereco.setNome(request.getParameter("txtNomeEndereco"));
+			endereco.setBairro(request.getParameter("txtBairro"));
+			endereco.setCep(request.getParameter("txtCep"));
+			endereco.setComplemento(request.getParameter("txtComplemento") != "" ? request.getParameter("txtComplemento") : null);
+			endereco.setNumero(Integer.parseInt(request.getParameter("txtNumero")));
+			endereco.setReferencia(request.getParameter("txtReferencia") != "" ? request.getParameter("txtReferencia") : null);
+			endereco.setLogradouro(request.getParameter("txtLogradouro"));
+			endereco.setFavorito(Boolean.parseBoolean(request.getParameter("txtFavoritoEndereco")));
+			endereco.setCliente((Cliente) clienteVH.getEntidade(request));
+			
+			request.setAttribute("txtCidadeIdAtual", request.getParameter("txtCidadeId"));
 
-		endereco.setId(Long.parseLong(request.getParameter("txtEnderecoId")));
-		
+			endereco.setCidade((Cidade)cidadeVH.getEntidade(request));
+		}else {
+			endereco.setId(Long.parseLong(request.getParameter("txtEnderecoId")));
+		}
+
 		return endereco;
 	}
 
 	@Override
 	public void setEntidade(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-        throw new UnsupportedOperationException("Operação não suportada.");
+
+		response.sendRedirect("pagamento.jsp");
+		
 	}
 
 }

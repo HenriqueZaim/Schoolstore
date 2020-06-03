@@ -119,46 +119,46 @@ $("#btnSalvarEndereco").click(function () {
   let enderecos = $("#accordionEndereco");
 
   enderecos.append(`
-      <div class="card">
-          <div class="card-header" role="tab" id="${idHeading}">
-              <h5 class="mb-0">
-                  ${nome}
-                  <a data-toggle="collapse" data-parent="#accordionEndereco" href="#${idCollapse}" aria-expanded="false" aria-controls="${idCollapse}">
-                      <i class="fas fa-angle-down rotate-icon"></i>
-                  </a>
-                  <button onclick="$(this).parent().parent().parent().remove()" class="btn btn-link p-0 m-0 float-right mr-5">
-                      <i class="fas fa-times text-danger"></i>
-                  </button>
-              </h5>
-          </div>
-          <div id="${idCollapse}" class="collapse" role="tabpanel" aria-labelledby="${idHeading}" data-parent="#accordionEndereco">
-              <div class="card-body">
-                  <ul>
-                    <li><b>CEP: </b>${cep}</li>
-                    <li><b>Estado: </b>${estadoTexto}</li>
-                    <li><b>Cidade: </b>${cidadeTexto}</li>
-                    <li><b>Logradouro: </b>${logradouro}</li>
-                    <li><b>Número: </b>${numero}</li>
-                    <li><b>Bairro: </b>${ bairro = bairro != "" ? bairro : "Nenhum" }</li>
-                    <li><b>Complemento: </b>${complemento}</li>
-                    <li><b>Referência: </b>${referencia}</li>
-                    <li><b>Favorito: </b>${favorito}</li>
-                  </ul>
-              </div>
-          </div>
+		  <div class="card">
+		  <div class="card-header" role="tab" id="${idHeading}">
+		  <h5 class="mb-0">
+		  ${nome}
+		  <a data-toggle="collapse" data-parent="#accordionEndereco" href="#${idCollapse}" aria-expanded="false" aria-controls="${idCollapse}">
+		  <i class="fas fa-angle-down rotate-icon"></i>
+		  </a>
+		  <button onclick="$(this).parent().parent().parent().remove()" class="btn btn-link p-0 m-0 float-right mr-5">
+		  <i class="fas fa-times text-danger"></i>
+		  </button>
+		  </h5>
+		  </div>
+		  <div id="${idCollapse}" class="collapse" role="tabpanel" aria-labelledby="${idHeading}" data-parent="#accordionEndereco">
+		  <div class="card-body">
+		  <ul>
+		  <li><b>CEP: </b>${cep}</li>
+		  <li><b>Estado: </b>${estadoTexto}</li>
+		  <li><b>Cidade: </b>${cidadeTexto}</li>
+		  <li><b>Logradouro: </b>${logradouro}</li>
+		  <li><b>Número: </b>${numero}</li>
+		  <li><b>Bairro: </b>${ bairro = bairro != "" ? bairro : "Nenhum" }</li>
+		  <li><b>Complemento: </b>${complemento}</li>
+		  <li><b>Referência: </b>${referencia}</li>
+		  <li><b>Favorito: </b>${favorito}</li>
+		  </ul>
+		  </div>
+		  </div>
 
 		  <input type="hidden" name="txtEnderecoId" value="">
 		  <input type="hidden" name="txtNomeEndereco" value="${nome}">
-          <input type="hidden" name="txtCep" value="${cep}">
-          <input type="hidden" name="txtBairro" value="${bairro}">
-          <input type="hidden" name="txtLogradouro" value="${logradouro}">
-          <input type="hidden" name="txtCidadeId" value="${cidade}">
-          <input type="hidden" name="txtReferencia" value="${referencia}">
-          <input type="hidden" name="txtComplemento" value="${complemento}">
-          <input type="hidden" name="txtNumero" value="${numero}">
-          <input type="hidden" name="txtFavoritoEndereco" value="${favorito}">
-          <input type="hidden" name="txtEndereco" value="true">
-      </div>
+		  <input type="hidden" name="txtCep" value="${cep}">
+		  <input type="hidden" name="txtBairro" value="${bairro}">
+		  <input type="hidden" name="txtLogradouro" value="${logradouro}">
+		  <input type="hidden" name="txtCidadeId" value="${cidade}">
+		  <input type="hidden" name="txtReferencia" value="${referencia}">
+		  <input type="hidden" name="txtComplemento" value="${complemento}">
+		  <input type="hidden" name="txtNumero" value="${numero}">
+		  <input type="hidden" name="txtFavoritoEndereco" value="${favorito}">
+		  <input type="hidden" name="txtEndereco" value="true">
+		  </div>
   `)
 
   $("#modalEndereco").modal('toggle');

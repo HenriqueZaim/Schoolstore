@@ -153,6 +153,8 @@ $(document).ready(function () {
 			  }
 			  
 			  if(data.statusPedido === "REPROVADO"){
+				  let clienId = $("#txtClienteId").val()
+				  let usuaId = $("#txtUsuarioId").val()
 				  $(`#status-${data.id}`).append(`
 						  <span class="text-danger">Reprovado</span>
 				  `)
@@ -160,6 +162,9 @@ $(document).ready(function () {
 						  <form action="app" method="post" id="form-${data.id}">
 						  	  <input type="hidden" name="tarefa" value="cancelarPedido">
 						  	  <input type="hidden" name="txtPedidoId" value="${data.id}">
+						  	  <input type="hidden" name="txtClienteId" value="${clienId}">
+						  	  <input type="hidden" name="txtUsuarioId" value="${usuaId}">
+						  	  <input type="hidden" name="txtValor" value="0" id="valorPedidoCancelar-${data.id}"
 							  <button type="submit" class="btn btn-link text-danger btn-sm p-0 pb-2">Cancelar</button>
 						  </form>
 				  `)
@@ -172,7 +177,7 @@ $(document).ready(function () {
 						  <form action="app" method="post" id="form-${data.id}">
 						  	  <input type="hidden" name="tarefa" value="consultarPedido">
 						  	  <input type="hidden" name="txtPedidoId" value="${data.id}">
-							  <button type="submit" class="btn btn-link btn-sm p-0 pb-2">Efetuar Troca</button>
+							  <button type="submit" class="btn btn-link text-info btn-sm p-0 pb-2">Efetuar Troca</button>
 						  </form>
 				  `)
 				  
@@ -186,6 +191,8 @@ $(document).ready(function () {
 				  `)
 				  
 			  }else if(data.statusPedido === "APROVADO"){
+				  let clienId = $("#txtClienteId").val()
+				  let usuaId = $("#txtUsuarioId").val()
 				  $(`#status-${data.id}`).append(`
 						  <span class="text-info">Aprovado</span>
 				  `)
@@ -193,11 +200,16 @@ $(document).ready(function () {
 						  <form action="app" method="post" id="form-${data.id}">
 						  	  <input type="hidden" name="tarefa" value="cancelarPedido">
 						  	  <input type="hidden" name="txtPedidoId" value="${data.id}">
+						  	  <input type="hidden" name="txtValor" value="0" id="valorPedidoCancelar-${data.id}">
+						  	  <input type="hidden" name="txtClienteId" value="${clienId}">
+						  	  <input type="hidden" name="txtUsuarioId" value="${usuaId}">
 							  <button type="submit" class="btn btn-link text-danger btn-sm p-0 pb-2">Cancelar</button>
 						  </form>
 				  `)
 				  
 			  }else{
+				  let clienId = $("#txtClienteId").val()
+				  let usuaId = $("#txtUsuarioId").val()
 				  $(`#status-${data.id}`).append(`
 						  <span class="text-warning">Em processamento</span>
 				  `)
@@ -205,17 +217,23 @@ $(document).ready(function () {
 						  <form action="app" method="post" id="form-${data.id}">
 						  	  <input type="hidden" name="tarefa" value="cancelarPedido">
 						  	  <input type="hidden" name="txtPedidoId" value="${data.id}">
+						  	  <input type="hidden" name="txtValor" value="0" id="valorPedidoCancelar-${data.id}">
+						  	  <input type="hidden" name="txtClienteId" value="${clienId}">
+						  	  <input type="hidden" name="txtUsuarioId" value="${usuaId}">
 							  <button type="submit" class="btn btn-link text-danger btn-sm p-0 pb-2">Cancelar</button>
 						  </form>
 				  `)
 			  }
 			  
 			  if(data.formaPagamento.pagamentosCartao.length !== 0){
+				  var valor = 0
 				  data.formaPagamento.pagamentosCartao.forEach(function(cartao){
 					  $(`#formasPagamento-${data.id}`).append(`
 					     <span>Cartão: R$${cartao.valorTotalCartao}</span><br>
 					  `)
+					  valor += cartao.valorTotalCartao
 				  })
+				  $(`#valorPedidoCancelar-${data.id}`).val(valor)
 			  }
 			  
 			  if(data.formaPagamento.pagamentosCupom.length !== 0){

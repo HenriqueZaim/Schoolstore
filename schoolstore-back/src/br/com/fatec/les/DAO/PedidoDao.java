@@ -126,6 +126,7 @@ public class PedidoDao implements IDao{
 	@Override
 	public Mensagem deletar(ADominio entidade) throws SQLException {
 		Pedido pedido  = (Pedido) entidade;
+		Cupom cupom = new Cupom();
 		conexao = ConexaoFactory.getConnection();
 		mensagem = new Mensagem();
 		
@@ -143,7 +144,12 @@ public class PedidoDao implements IDao{
 			}
 			for(PagamentoCupom item : pedido.getFormaPagamento().getPagamentosCupom()) {
 				cupomDao.atualizar(item.getCupom());
+				
 			}
+			cupom.setUsuario(pedido.getCliente().getUsuario());
+			cupom.setValor(pedido.getValor());
+			cupomDao.salvar(cupom);
+			
 			pstm.executeUpdate();
 			mensagem.setMensagem("Pedido cancelado com sucesso!");
 			mensagem.setMensagemStatus(MensagemStatus.SUCESSO);

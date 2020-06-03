@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import br.com.fatec.les.model.assets.ADominio;
 import br.com.fatec.les.model.pagamento.cartao.CartaoCredito;
+import br.com.fatec.les.model.usuario.Cliente;
 
 public class CartaoCreditoVH implements IViewHelper{
 
@@ -44,13 +45,27 @@ public class CartaoCreditoVH implements IViewHelper{
 
 	@Override
 	public ADominio getEntidade(HttpServletRequest request) {
-		throw new UnsupportedOperationException("Operação não suportada.");
+		CartaoCredito cartaoCredito = new CartaoCredito();
+		ClienteVH clienteVH = new ClienteVH();
+		String tarefa = request.getParameter("tarefa");
+		
+		if(tarefa.equals("adicionarCartao")) {
+			cartaoCredito.setCodigo(request.getParameter("txtCodigoCartao"));
+			cartaoCredito.setNomeImpresso(request.getParameter("txtNomeImpressoCartao"));
+			cartaoCredito.setNumero(request.getParameter("txtNumeroCartao"));
+			cartaoCredito.setFavorito(Boolean.parseBoolean(request.getParameter("txtFavoritoCartao")));
+			cartaoCredito.setCliente((Cliente)clienteVH.getEntidade(request));
+		}else {
+			cartaoCredito.setId(Long.parseLong(request.getParameter("txtCartaoCreditoId")));
+		}
+
+		return cartaoCredito;
 	}
 
 	@Override
 	public void setEntidade(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		throw new UnsupportedOperationException("Operação não suportada.");
+		response.sendRedirect("pagamento.jsp");
 	}
 
 }

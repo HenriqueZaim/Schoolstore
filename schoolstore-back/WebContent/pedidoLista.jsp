@@ -162,6 +162,7 @@
 						</form>
 					</div>
 					<input type="hidden" id="txtClienteId" value="${cliente.getId() }">
+					<input type="hidden" id="txtUsuarioId" value="${usuario.getId() }">
 				</c:if>
 				<c:if test="${usuario.isAdmin()}">
 					<div class="list-group list-group-flush mt-5">

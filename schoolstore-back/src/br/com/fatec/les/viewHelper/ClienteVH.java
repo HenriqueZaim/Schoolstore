@@ -32,37 +32,31 @@ public class ClienteVH implements IViewHelper{
 		
 		String tarefa = request.getParameter("tarefa");
 		
-		if(tarefa.equals("efetuarPedido") || tarefa.equals("consultarPedidos") || tarefa.equals("consultarCliente") || tarefa.equals("efetuarTroca") || tarefa.equals("consultarTrocas"))  {
+		if(	tarefa.equals("cadastrarCliente"))  {
+			cliente.setNome(request.getParameter("txtNome"));
+			cliente.setNumeroDocumento(request.getParameter("txtNumeroDocumento"));
+			cliente.setNumeroTelefone(request.getParameter("txtNumeroTelefone"));
+			cliente.setUsuario((Usuario)usuarioVH.getEntidade(request));
+			cliente.setEnderecos(enderecoVH.getEntidades(request));
+			cliente.setCartoesCredito(cartaoCreditoVH.getEntidades(request));
+			cliente.setCarrinho((Carrinho)carrinhoVH.getEntidade(request));
+			
+			for(Endereco e : cliente.getEnderecos()) {
+				e.setCliente(cliente);
+			}
+			
+			for(CartaoCredito c : cliente.getCartoesCredito()) {
+				c.setCliente(cliente);
+			}
+
+		}else {
 			if(request.getParameter("txtClienteId") != null)
 				cliente.setId(Long.parseLong(request.getParameter("txtClienteId")));
 			
 			if(request.getParameter("txtUsuarioId") != null)
 				cliente.setUsuario((Usuario)usuarioVH.getEntidade(request));
-			
-			return cliente;
 		}
 		
-		if(tarefa.equals("atualizarCliente") ||
-				tarefa.equals("deletarCliente") || 
-				tarefa.equals("editaCliente")) {
-			cliente.setId(Long.parseLong(request.getParameter("txtClienteId")));
-		}
-		cliente.setNome(request.getParameter("txtNome"));
-		cliente.setNumeroDocumento(request.getParameter("txtNumeroDocumento"));
-		cliente.setNumeroTelefone(request.getParameter("txtNumeroTelefone"));
-		cliente.setUsuario((Usuario)usuarioVH.getEntidade(request));
-		cliente.setEnderecos(enderecoVH.getEntidades(request));
-		cliente.setCartoesCredito(cartaoCreditoVH.getEntidades(request));
-		cliente.setCarrinho((Carrinho)carrinhoVH.getEntidade(request));
-		
-		for(Endereco e : cliente.getEnderecos()) {
-			e.setCliente(cliente);
-		}
-		
-		for(CartaoCredito c : cliente.getCartoesCredito()) {
-			c.setCliente(cliente);
-		}
-
 		return cliente;	
 	}
 

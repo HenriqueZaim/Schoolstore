@@ -62,6 +62,9 @@
 								<div class="accordion md-accordion" id="accordionEndereco" role="tablist" aria-multiselectable="true">
 									
 								</div>
+								<a href="#" class="btn btn-link text-info p-2 mb-2" data-toggle="modal" id="modalEnderecoButton"
+			                    data-target="#modalEndereco"> <i class="fas fa-plus pr-2"> Novo endereço</i>
+			                  </a>
 							</div>
 							<div class="col-lg-12 mt-5">
 								<h2>2. Selecione um método de pagamento</h2>
@@ -70,6 +73,8 @@
 									<div class="accordion md-accordion" id="accordionCartao" role="tablist" aria-multiselectable="true">
 
 									</div>
+									<a href="#" class="btn btn-link text-info p-2 mb-2" data-toggle="modal" id="modalCartaoButton"
+			                   		 data-target="#modalCartao"> <i class="fas fa-plus pr-2"> Novo Cartão</i></a>
 								</div>
 								<div class="pt-3" id="cupons">
 									<h3>- Cupons</h3>
@@ -91,6 +96,126 @@
 		</div>
 	</section>
 	</main>
+
+	<div class="modal fade" id="modalEndereco" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<form action="app" method="POST"> 
+				<input type="hidden" name="tarefa" value="adicionarEndereco">
+				<input type="hidden" name="txtClienteId" value="${cliente.getId() }">
+				<div class="modal-content">
+					<div class="modal-header text-center">
+						<h4 class="modal-title w-100 font-weight-bold">Novo Endereço</h4>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body mx-3">
+						<div class="form-row">
+							<div class="col-md-4 mb-3 md-form">
+								<label for="txtCepModal">CEP*</label> 
+								<input type="text" class="form-control" id="txtCepModal" name="txtCep" required maxlength="8">
+							</div>
+							<div class="col-md-8 mb-3 md-form">
+								<label for="txtLogradouroModal">Logradouro*</label> 
+								<input type="text" class="form-control" id="txtLogradouroModal" name="txtLogradouro" required maxlength="100">
+							</div>
+						</div>
+						<div class="form-row">
+							<div class="col-md-6 mb-3 md-form">
+								<select style="width: 100%;" id="txtEstadoModal" required searchable="Selecione..">
+									<option value="" disabled selected>Selecione seu estado*</option>
+
+								</select>
+							</div>
+							<div class="col-md-6 mb-3 md-form">
+								<select style="width: 100%;" id="txtCidadeModal" name="txtCidadeId" required placeholder="Selecione..">
+									<option value="" disabled selected>Selecione sua cidade*</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-row">
+							<div class="col-md-4 mb-3 md-form">
+								<label for="txtNumeroModal">Número*</label> <input type="number" min="1" max="9999" maxlength="4" name="txtNumero" class="form-control" id="txtNumeroModal" required>
+							</div>
+							<div class="col-md-4 mb-3 md-form">
+								<label for="txtBairroModal">Bairro*</label> <input type="text" class="form-control" id="txtBairroModal" name="txtBairro" required maxlength="100">
+							</div>
+							<div class="col-md-4 mb-3 md-form">
+								<label for="txtComplementoModal">Complemento</label> <input type="text" maxlength="100" class="form-control" id="txtComplementoModal" name="txtComplemento" required>
+							</div>
+						</div>
+						<div class="form-row">
+							<div class="col mb-3 md-form">
+								<label for="txtReferenciaModal">Referência</label> <input type="text" class="form-control" id="txtReferenciaModal" name="txtReferencia" required maxlength="100">
+							</div>
+						</div>
+						<div class="form-row">
+							<div class="col mb-3 md-form">
+								<label for="txtNomeEnderecoModal">Identificação de Endereço*</label> <input type="text" class="form-control" id="txtNomeEnderecoModal" name="txtNomeEndereco" required maxlength="100">
+							</div>
+						</div>
+						<div class="form-row">
+							<div class="col mb-3 md-form">
+								<input class="form-check-input" type="checkbox" value="false" name="txtFavoritoEndereco" id="txtFavoritoModal"> <label class="form-check-label" for="txtFavoritoModal"> Marcar como favorito </label>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer d-flex justify-content-center">
+						<button class="btn btn-unique" type="submit" id="btnSalvarEndereco">
+							Adicionar <i class="fas fa-paper-plane-o ml-1"></i>
+						</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
+	<div class="modal fade" id="modalCartao" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<form action="app" method="POST">
+				<input type="hidden" name="tarefa" value="adicionarCartao"> 
+				<input type="hidden" name="txtClienteId" value="${cliente.getId() }">
+				<div class="modal-content">
+					<div class="modal-header text-center">
+						<h4 class="modal-title w-100 font-weight-bold">Novo cartão de crédito</h4>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body mx-3">
+						<div class="form-row">
+							<div class="col mb-3 md-form">
+								<label for="txtNomeImpressoModal">Nome Impresso*</label> 
+								<input type="text" class="form-control" id="txtNomeImpressoModal" name="txtNomeImpressoCartao" required maxlength="100">
+							</div>
+						</div>
+						<div class="form-row">
+							<div class="col-md-8 mb-3 md-form">
+								<label for="txtNumeroCartaoModal">Número*</label> 
+								<input type="text" maxlength="16" class="form-control" name="txtNumeroCartao" id="txtNumeroCartaoModal" required>
+							</div>
+							<div class="col-md-4 mb-3 md-form">
+								<label for="txtCodigoModal">Código*</label> 
+								<input type="text" class="form-control" id="txtCodigoModal" name="txtCodigoCartao" required maxlength="3">
+							</div>
+						</div>
+						<div class="form-row">
+							<div class="col mb-3 md-form">
+								<input class="form-check-input" type="checkbox" value="false" name="txtFavoritoCartao" id="txtFavoritoCartaoModal"> 
+								<label class="form-check-label" for="txtFavoritoCartaoModal"> Marcar como favorito </label>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer d-flex justify-content-center">
+						<button class="btn btn-unique" id="btnSalvarCartao" type="submit">
+							Adicionar <i class="fas fa-paper-plane-o ml-1"></i>
+						</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
 
 	<script type="text/javascript" src="./js/jquery.min.js"></script>
 	<script type="text/javascript" src="./js/popper.min.js"></script>

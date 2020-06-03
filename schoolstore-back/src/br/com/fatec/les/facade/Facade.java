@@ -7,8 +7,10 @@ import java.util.List;
 import java.util.Map;
 
 import br.com.fatec.les.DAO.CarrinhoDao;
+import br.com.fatec.les.DAO.CartaoCreditoDao;
 import br.com.fatec.les.DAO.ClienteDao;
 import br.com.fatec.les.DAO.CupomDao;
+import br.com.fatec.les.DAO.EnderecoDao;
 import br.com.fatec.les.DAO.EstadoDao;
 import br.com.fatec.les.DAO.IDao;
 import br.com.fatec.les.DAO.PedidoDao;
@@ -17,7 +19,9 @@ import br.com.fatec.les.DAO.TrocaDao;
 import br.com.fatec.les.DAO.UsuarioDao;
 import br.com.fatec.les.model.assets.ADominio;
 import br.com.fatec.les.model.assets.EntidadeDominio;
+import br.com.fatec.les.model.endereco.Endereco;
 import br.com.fatec.les.model.endereco.Estado;
+import br.com.fatec.les.model.pagamento.cartao.CartaoCredito;
 import br.com.fatec.les.model.pagamento.cupom.Cupom;
 import br.com.fatec.les.model.pedido.Pedido;
 import br.com.fatec.les.model.produto.Produto;
@@ -54,6 +58,8 @@ public class Facade implements IFacade{
 		PedidoDao pedidoDao = new PedidoDao();
 		CupomDao cupomDao = new CupomDao();
 		TrocaDao trocaDao = new TrocaDao();
+		EnderecoDao enderecoDao = new EnderecoDao();
+		CartaoCreditoDao cartaoCreditoDao = new CartaoCreditoDao();
 		
 		
 		daoMap.put(Cliente.class.getName(), clienteDao);
@@ -64,6 +70,8 @@ public class Facade implements IFacade{
 		daoMap.put(Pedido.class.getName(), pedidoDao);
 		daoMap.put(Cupom.class.getName(), cupomDao);
 		daoMap.put(Troca.class.getName(), trocaDao);
+		daoMap.put(Endereco.class.getName(), enderecoDao);
+		daoMap.put(CartaoCredito.class.getName(), cartaoCreditoDao);
 
 
 		IStrategy clienteDocumentoStrategy = new ClienteDocumentoStrategy();
