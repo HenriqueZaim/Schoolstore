@@ -41,13 +41,14 @@ public class PedidoVH implements IViewHelper{
 		}else if(tarefa.equals("alterarStatusPedido")) {
 			pedido.setId(Long.parseLong(request.getParameter("txtPedidoId")));
 			pedido.setStatusPedido(StatusPedido.valueOf(request.getParameter("txtStatusPedido")));
-		}else if(tarefa.equals("cancelarPedido")) {
+			pedido.setItensPedido(itemPedidoVH.getEntidades(request));
+		}else if(tarefa.equals("efetuarCancelamento")) {
 			pedido.setId(Long.parseLong(request.getParameter("txtPedidoId")));
 			pedido.setItensPedido(itemPedidoVH.getEntidades(request));
 			pedido.setFormaPagamento((FormaPagamento)formaPagamentoVH.getEntidade(request));
 			pedido.setCliente((Cliente) clienteVH.getEntidade(request));
 			pedido.setValor(Float.parseFloat(request.getParameter("txtValor")));
-		}else if(tarefa.equals("consultarPedido")) {
+		}else if(tarefa.equals("consultarPedido") || tarefa.equals("consultarPedidoCancelamento")) {
 			pedido.setId(Long.parseLong(request.getParameter("txtPedidoId")));
 		}else if(tarefa.equals("efetuarTroca")) {
 			pedido.setId(Long.parseLong(request.getParameter("txtPedidoId")));
@@ -75,11 +76,14 @@ public class PedidoVH implements IViewHelper{
 		}else if(tarefa.equals("efetuarPedido")) {
 			request.getRequestDispatcher("clienteMenu.jsp").
 			forward(request, response);
-		}else if(tarefa.equals("alterarStatusPedido") || tarefa.equals("cancelarPedido")) {
+		}else if(tarefa.equals("alterarStatusPedido") || tarefa.equals("efetuarCancelamento")) {
 			request.getRequestDispatcher("pedidoLista.jsp").
 			forward(request, response);
 		}else if(tarefa.equals("consultarPedido")) {
 			request.getRequestDispatcher("clienteTroca.jsp").
+			forward(request, response);
+		}else if(tarefa.equals("consultarPedidoCancelamento")) {
+			request.getRequestDispatcher("clienteCancelamento.jsp").
 			forward(request, response);
 		}
 		

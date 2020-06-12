@@ -24,12 +24,13 @@ $(document).ready(function () {
 						  <div class="d-flex align-items-center">
 						  <a data-toggle="collapse" class="float-left pr-4" data-parent="#accordionEndereco" href="#endereco-${endereco.id}" aria-expanded="false" aria-controls="endereco-${endereco.id}"> <i class="fas fa-angle-down"></i>
 						  </a>
+						  <!--
 						  <form action="app" method="post">
 						  	<input type="hidden" name="tarefa" value="removerEndereco">
 						  	<input type="hidden" name="txtEnderecoId" value="${endereco.id}">
 						  	<button type="submit" class="btn btn-link text-danger p-0"><i class="fa fa-times"></i></button>
 						  </form>
-
+						  -->
 						  </div>
 						  </div>
 						  </div>
@@ -82,11 +83,11 @@ $(document).ready(function () {
 
 														<a data-toggle="collapse" class="float-left pr-4" data-parent="#accordionCartao" href="#cartao-${cartao.id}" aria-expanded="false" aria-controls="cartao-${cartao.id}"> <i class="fas fa-angle-down"></i>
 														</a>
-														<form action="app" method="post">
+														<!--<form action="app" method="post">
 														  	<input type="hidden" name="tarefa" value="removerCartao">
 														  	<input type="hidden" name="txtCartaoCreditoId" value="${cartao.id}">
 														  	<button type="submit" class="btn btn-link text-danger p-0"><i class="fa fa-times"></i></button>
-														  </form>
+														  </form>-->
 													</div>
 												</div>
 											</div>

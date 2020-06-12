@@ -150,7 +150,7 @@ CREATE TABLE tb_produto
 CREATE TABLE tb_itemCarrinho
 (
   icar_id INT NOT NULL AUTO_INCREMENT,
-  icar_quantidade INT NOT NULL,
+  icar_quantidade INT unsigned NOT NULL,
   icar_car_id INT NOT NULL,
   icar_pro_id INT NOT NULL,
   PRIMARY KEY (icar_id),
@@ -234,7 +234,7 @@ CREATE TABLE tb_pagamentoCartao
 CREATE TABLE tb_estoque
 (
   sto_id INT NOT NULL AUTO_INCREMENT,
-  sto_quantidadeTotal INT(5) DEFAULT NULL,
+  sto_quantidadeTotal INT(5) unsigned DEFAULT NULL,
   sto_pro_id INT NOT NULL,
   PRIMARY KEY (sto_id),
   FOREIGN KEY(sto_pro_id) REFERENCES tb_produto(pro_id)
@@ -243,7 +243,7 @@ CREATE TABLE tb_estoque
 CREATE TABLE tb_itemEstoque
 (
   isto_id INT NOT NULL AUTO_INCREMENT,
-  isto_quantidade INT(5) DEFAULT NULL,
+  isto_quantidade INT(5) unsigned DEFAULT NULL,
   isto_dataEntrada DATE NOT NULL,
   isto_valor DECIMAL(7,3) NOT NULL,
   isto_for_id INT NOT NULL,
@@ -272,6 +272,7 @@ CREATE TABLE tb_pedido
   ped_statusPedido VARCHAR(20) NOT NULL,
   ped_ativo BOOLEAN NOT NULL,
   ped_dataHoraCriacao DATETIME NOT NULL,
+  ped_dataHoraAtualizacao DATETIME NOT NULL,
   ped_fpag_id INT NOT NULL,
   ped_fre_id INT NOT NULL,
   ped_cli_id INT NOT NULL,
@@ -284,7 +285,7 @@ CREATE TABLE tb_pedido
 CREATE TABLE tb_itemPedido
 (
   iped_id INT NOT NULL AUTO_INCREMENT, 
-  iped_quantidade INT NOT NULL,
+  iped_quantidade INT unsigned NOT NULL,
   iped_pro_id INT NOT NULL,
   iped_ped_id INT NOT NULL,
   PRIMARY KEY (iped_id),
@@ -308,7 +309,7 @@ CREATE TABLE tb_troca
 CREATE TABLE tb_itemTroca
 (
   itro_id INT NOT NULL AUTO_INCREMENT, 
-  itro_quantidade INT NOT NULL,
+  itro_quantidade INT unsigned NOT NULL,
   itro_pro_id INT NOT NULL,
   itro_tro_id INT NOT NULL,
   PRIMARY KEY (itro_id),

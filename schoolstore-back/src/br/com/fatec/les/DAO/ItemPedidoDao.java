@@ -99,8 +99,33 @@ public class ItemPedidoDao implements IDao{
 
 	@Override
 	public Mensagem atualizar(ADominio entidade) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		ItemPedido itemPedido = (ItemPedido) entidade;
+		conexao = ConexaoFactory.getConnection();
+		mensagem = new Mensagem();
+		
+		String sql = "UPDATE tb_itemPedido "
+					+ "SET iped_quantidade = iped_quantidade - ?"
+					+ " WHERE iped_id = ?";
+		
+		PreparedStatement pstm = null;
+		
+		try {
+			pstm = conexao.prepareStatement(sql);
+			pstm.setInt(1, itemPedido.getQuantidade());
+			pstm.setLong(2, itemPedido.getId());
+			
+			pstm.executeUpdate();
+			mensagem.setMensagem("Item do pedido atualizado com sucesso!");
+			mensagem.setMensagemStatus(MensagemStatus.SUCESSO);
+		}catch(SQLException e) {
+			mensagem.setMensagem("Ocorreu um erro durante a operação. Tente novamente ou consulte a equipe de desenvolvimento.");
+			mensagem.setMensagemStatus(MensagemStatus.ERRO);
+		}
+		finally {
+			ConexaoFactory.closeConnection(conexao, pstm);
+		}
+		
+		return mensagem;
 	}
 
 	@Override
@@ -119,8 +144,12 @@ public class ItemPedidoDao implements IDao{
 				+ "iped_quantidade,"
 				+ "iped_pro_id,"
 				+ "iped_ped_id "
-				+ " FROM tb_itemPedido "
-				+ " WHERE iped_ped_id = " + itemPedido.getPedido().getId() + "";
+				+ " FROM tb_itemPedido ";
+		if(itemPedido.getId() != null) {
+			sql += " WHERE iped_id = " + itemPedido.getId() + "";
+		}else {
+			sql += " WHERE iped_ped_id = " + itemPedido.getPedido().getId() + "";
+		}
 
 		try {
 			pstm = conexao.prepareStatement(sql);

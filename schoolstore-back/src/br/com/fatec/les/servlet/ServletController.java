@@ -62,13 +62,15 @@ public class ServletController extends HttpServlet{
     	vhMap.put("efetuarPedido", new PedidoVH());
     	vhMap.put("consultarPedidos", new PedidoVH());
     	vhMap.put("alterarStatusPedido", new PedidoVH());
-    	vhMap.put("cancelarPedido", new PedidoVH());
     	vhMap.put("consultarPedido", new PedidoVH());
+    	vhMap.put("consultarPedidoCancelamento", new PedidoVH());
+    	vhMap.put("efetuarCancelamento", new PedidoVH());
     	commandMap.put("efetuarPedido", new SalvarCommand());
     	commandMap.put("consultarPedidos", new ConsultarCommand());
     	commandMap.put("alterarStatusPedido", new AtualizarCommand());
-    	commandMap.put("cancelarPedido", new DeletarCommand());
+    	commandMap.put("efetuarCancelamento", new DeletarCommand());
     	commandMap.put("consultarPedido", new ConsultarCommand());
+    	commandMap.put("consultarPedidoCancelamento", new ConsultarCommand());
     	
     	// Endereços
     	vhMap.put("adicionarEndereco", new EnderecoVH());

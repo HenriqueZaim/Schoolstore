@@ -13,7 +13,6 @@ $(document).ready(function () {
 	  success: response => {
 		  console.log(response)
 		  response.entidades.forEach(function(data){
-			  console.log(data)
 			  if(cliente === "" || cliente === null || cliente === undefined){
 				  $("#tablePedidos").append(`
 				  			<tr class="text-center">
@@ -95,7 +94,7 @@ $(document).ready(function () {
 						  	  
 						  	  </td>
 						  	  <td>
-						  	  	<button type="button" class="btn btn-sm btn-link text-warning p-0 font-weight-bold" data-toggle="modal" data-target="#modal-status-${data.id}">
+						  	  	<button type="button" id="alterarBotaoStatus-${data.id}" class="btn btn-sm btn-link text-warning p-0 font-weight-bold" data-toggle="modal" data-target="#modal-status-${data.id}">
 								  Alterar Status
 								</button>
 								
@@ -110,20 +109,15 @@ $(document).ready(function () {
 										          <span aria-hidden="true">&times;</span>
 										        </button>
 										      </div>
-										      <div class="modal-body">
-										        <select name="txtStatusPedido">
-										        	<option selected value="">${data.statusPedido}</option>
-										        	<option value="EMPROCESSAMENTO">Em processamento</option>
-										        	<option value="REPROVADO">Reprovado</option>
-										        	<option value="EMTRANSITO">Em trânsito</option>
-										        	<option value="APROVADO">Aprovado</option>
-										        	<option value="ENTREGUE">Entregue</option>
+										      <div class="modal-body" id="statusEstoque-${data.id}">
+										        <select name="txtStatusPedido" id="modalSelect-${data.id}">
+
 										        </select>
 										        <input type="hidden" name="tarefa" value="alterarStatusPedido">
 										        <input type="hidden" name="txtPedidoId" value="${data.id}">
 										      </div>
 										      <div class="modal-footer">
-										       <button type="submit" class="btn btn-success text-right">Mudar status</button>
+										       <button type="submit" id="alterarStatusBotao-${data.id}" class="btn btn-success text-right">Mudar status</button>
 										        <button type="button" class="btn btn-link text-left" data-dismiss="modal">Cancelar</button>
 										      </div>
 									      	</form>
@@ -135,6 +129,42 @@ $(document).ready(function () {
 						  	  </td>
 		                    </tr>
 				  `)
+				  
+				  if(data.statusPedido === "REPROVADO"){
+					  $(`#modalSelect-${data.id}`).parent().prepend(`<span class="alert alert-warning">Não será possível realizar esta operação!</span>`)
+					  $(`#alterarStatusBotao-${data.id}`).prop("disabled", true)
+					  $(`#alterarBotaoStatus-${data.id}`).prop("disabled", true).removeClass("text-warning").add("text-grey")
+				  }else if(data.statusPedido === "EMPROCESSAMENTO"){
+					  $(`#modalSelect-${data.id}`).append(`
+							  <option class="text-capitalize" selected value="${data.statusPedido}" disabled>Em processamento</option>
+							  <option value="REPROVADO">Reprovado</option>
+							  <option value="APROVADO">Aprovado</option>
+					  `)
+				  }
+				  else if(data.statusPedido === "ATUALIZADO"){
+					  $(`#modalSelect-${data.id}`).append(`
+							  <option class="text-capitalize" selected value="${data.statusPedido}" disabled>Atualizado</option>
+							  <option value="REPROVADO">Reprovado</option>
+							  <option value="APROVADO">Aprovado</option>
+					  `)
+				  }
+				  else if(data.statusPedido === "APROVADO"){
+					  $(`#modalSelect-${data.id}`).append(`
+							  <option class="text-capitalize" selected value="${data.statusPedido}" disabled>Aprovado</option>
+			                  <option value="EMTRANSITO">Em trânsito</option>
+					  `)
+				  }
+				  else if(data.statusPedido === "EMTRANSITO"){
+					  $(`#modalSelect-${data.id}`).append(`
+							  <option class="text-capitalize" selected value="${data.statusPedido}" disabled>Em trânsito</option>
+							  <option value="ENTREGUE">Entregue</option>
+					  `)
+				  }
+				  else if(data.statusPedido === "ENTREGUE"){
+					  $(`#modalSelect-${data.id}`).parent().prepend(`<span class="alert alert-warning">Não será possível realizar esta operação!</span>`)
+					  $(`#alterarStatusBotao-${data.id}`).prop("disabled", true)
+					  $(`#alterarBotaoStatus-${data.id}`).prop("disabled", true).removeClass("text-warning").add("text-grey")
+				  }
 				  
 				  
 			  }
@@ -160,12 +190,9 @@ $(document).ready(function () {
 				  `)
 				  $(`#troca-${data.id}`).append(`
 						  <form action="app" method="post" id="form-${data.id}">
-						  	  <input type="hidden" name="tarefa" value="cancelarPedido">
+						  	  <input type="hidden" name="tarefa" value="consultarPedidoCancelamento">
 						  	  <input type="hidden" name="txtPedidoId" value="${data.id}">
-						  	  <input type="hidden" name="txtClienteId" value="${clienId}">
-						  	  <input type="hidden" name="txtUsuarioId" value="${usuaId}">
-						  	  <input type="hidden" name="txtValor" value="0" id="valorPedidoCancelar-${data.id}"
-							  <button type="submit" class="btn btn-link text-danger btn-sm p-0 pb-2">Cancelar</button>
+							  <button type="submit" class="btn btn-link text-danger btn-sm p-0 pb-2">Atualizar</button>
 						  </form>
 				  `)
 				  
@@ -186,7 +213,7 @@ $(document).ready(function () {
 						  <span class="text-warning">Em trânsito</span>
 				  `)
 				  $(`#troca-${data.id}`).append(`
-						  <button type="submit" class="btn btn-link disabled btn-sm p-0 pb-2">Efetuar Troca</button>
+						  <button type="submit" class="btn btn-link text-info disabled btn-sm p-0 pb-2">Efetuar Troca</button>
 
 				  `)
 				  
@@ -198,11 +225,22 @@ $(document).ready(function () {
 				  `)
 				  $(`#troca-${data.id}`).append(`
 						  <form action="app" method="post" id="form-${data.id}">
-						  	  <input type="hidden" name="tarefa" value="cancelarPedido">
+						  	  <input type="hidden" name="tarefa" value="consultarPedidoCancelamento">
 						  	  <input type="hidden" name="txtPedidoId" value="${data.id}">
-						  	  <input type="hidden" name="txtValor" value="0" id="valorPedidoCancelar-${data.id}">
-						  	  <input type="hidden" name="txtClienteId" value="${clienId}">
-						  	  <input type="hidden" name="txtUsuarioId" value="${usuaId}">
+							  <button type="submit" class="btn btn-link text-danger btn-sm p-0 pb-2">Cancelar</button>
+						  </form>
+				  `)
+				  
+			  }else if(data.statusPedido === "ATUALIZADO"){
+				  let clienId = $("#txtClienteId").val()
+				  let usuaId = $("#txtUsuarioId").val()
+				  $(`#status-${data.id}`).append(`
+						  <span class="text-info">Atualizado</span>
+				  `)
+				  $(`#troca-${data.id}`).append(`
+						  <form action="app" method="post" id="form-${data.id}">
+						  	  <input type="hidden" name="tarefa" value="consultarPedidoCancelamento">
+						  	  <input type="hidden" name="txtPedidoId" value="${data.id}">
 							  <button type="submit" class="btn btn-link text-danger btn-sm p-0 pb-2">Cancelar</button>
 						  </form>
 				  `)
@@ -215,11 +253,8 @@ $(document).ready(function () {
 				  `)
 				  $(`#troca-${data.id}`).append(`
 						  <form action="app" method="post" id="form-${data.id}">
-						  	  <input type="hidden" name="tarefa" value="cancelarPedido">
+						  	  <input type="hidden" name="tarefa" value="consultarPedidoCancelamento">
 						  	  <input type="hidden" name="txtPedidoId" value="${data.id}">
-						  	  <input type="hidden" name="txtValor" value="0" id="valorPedidoCancelar-${data.id}">
-						  	  <input type="hidden" name="txtClienteId" value="${clienId}">
-						  	  <input type="hidden" name="txtUsuarioId" value="${usuaId}">
 							  <button type="submit" class="btn btn-link text-danger btn-sm p-0 pb-2">Cancelar</button>
 						  </form>
 				  `)
@@ -233,7 +268,6 @@ $(document).ready(function () {
 					  `)
 					  valor += cartao.valorTotalCartao
 				  })
-				  $(`#valorPedidoCancelar-${data.id}`).val(valor)
 			  }
 			  
 			  if(data.formaPagamento.pagamentosCupom.length !== 0){
@@ -258,6 +292,12 @@ $(document).ready(function () {
 					`	
 				  )
 				  $(`#form-${data.id}`).prepend(`
+						  <input type="hidden" name="txtItemPedidoId" value="${item.id}">
+						  <input type="hidden" name="txtProdutoId" value="${item.produto.id}">
+						  <input type="hidden" name="txtQuantidadeProduto" value="${item.quantidade}">
+				  `)
+				  
+				  $(`#statusEstoque-${data.id}`).prepend(`
 						  <input type="hidden" name="txtItemPedidoId" value="${item.id}">
 						  <input type="hidden" name="txtProdutoId" value="${item.produto.id}">
 						  <input type="hidden" name="txtQuantidadeProduto" value="${item.quantidade}">

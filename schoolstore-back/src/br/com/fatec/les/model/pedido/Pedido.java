@@ -1,5 +1,6 @@
 package br.com.fatec.les.model.pedido;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import br.com.fatec.les.model.assets.EntidadeDominio;
@@ -14,7 +15,14 @@ public class Pedido extends EntidadeDominio{
 	private List<ItemPedido> itensPedido;
 	private FormaPagamento formaPagamento;
 	private Cliente cliente;
+	private LocalDateTime dataHoraAtualizacao;
 	
+	public LocalDateTime getDataHoraAtualizacao() {
+		return dataHoraAtualizacao;
+	}
+	public void setDataHoraAtualizacao(LocalDateTime dataHoraAtualizacao) {
+		this.dataHoraAtualizacao = dataHoraAtualizacao;
+	}
 	public Cliente getCliente() {
 		return cliente;
 	}

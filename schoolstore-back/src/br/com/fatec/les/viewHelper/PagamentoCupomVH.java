@@ -26,7 +26,7 @@ public class PagamentoCupomVH implements IViewHelper{
 			String tarefa = request.getParameter("tarefa");
 			String[] cuponsForm = request.getParameterValues("txtCupomId");
 
-			if(tarefa.equals("cancelarPedido")) {
+			if(tarefa.equals("efetuarCancelamento")) {
 				for(int i = 0 ; i < cuponsForm.length ; i++) {
 					pagamentoCupom = new PagamentoCupom();
 					cupom = new Cupom();

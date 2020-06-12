@@ -17,7 +17,7 @@ public class FormaPagamentoVH implements IViewHelper{
 		PagamentoCartaoVH pagamentoCartaoVH = new PagamentoCartaoVH();
 		PagamentoCupomVH pagamentoCupomVH = new PagamentoCupomVH();
 		String tarefa = request.getParameter("tarefa");
-		if(tarefa.equals("cancelarPedido")) {
+		if(tarefa.equals("efetuarCancelamento")) {
 			formaPagamento.setPagamentosCupom(pagamentoCupomVH.getEntidades(request));
 		}else {
 			formaPagamento.setValorTotal(Float.parseFloat(request.getParameter("txtValorTotalPago"))); // subtrair com o valor do pedido
