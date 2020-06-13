@@ -154,6 +154,8 @@
 						</a>
 						<a href="trocaLista.jsp" class="list-group-item list-group-item-action active waves-effect"> <i class="fas fa-exchange-alt mr-3"></i>Minhas Trocas
 						</a>
+						<a href="cuponsLista.jsp" class="list-group-item list-group-item-action waves-effect"> <i class="fas fa-ticket-alt mr-3"></i>Meus Cupons
+						</a>
 						<form action="app" method="POST">
 							<input type="hidden" name="txtUsuarioId" value="${usuario.getId()}"> <input type="hidden" name="txtClienteId" value="${cliente.getId()}"> <input type="hidden" name="txtImagemId" value="${usuario.getImagem().getId()}"> <input type="hidden" name="tarefa" value="editaCliente">
 							<button type="submit" class="list-group-item list-group-item-action waves-effect">

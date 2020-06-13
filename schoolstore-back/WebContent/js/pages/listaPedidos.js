@@ -115,6 +115,8 @@ $(document).ready(function () {
 										        </select>
 										        <input type="hidden" name="tarefa" value="alterarStatusPedido">
 										        <input type="hidden" name="txtPedidoId" value="${data.id}">
+										        <input type="hidden" name="txtValor" value="${data.valor}">
+										        <input type="hidden" name="txtUsuarioId" value="${data.cliente.usuario.id}">
 										      </div>
 										      <div class="modal-footer">
 										       <button type="submit" id="alterarStatusBotao-${data.id}" class="btn btn-success text-right">Mudar status</button>

@@ -199,7 +199,9 @@ CREATE TABLE tb_cupom
   cup_valor DECIMAL(7,3) NOT NULL,
   cup_ativo BOOLEAN NOT NULL,
   cup_dataHoraCriacao DATETIME NOT NULL,
-  cup_usu_id INT NOT NULL,
+  cup_dataHoraVencimento DATETIME DEFAULT NULL,
+  cup_cupomPromocional BOOLEAN DEFAULT false,
+  cup_usu_id INT DEFAULT NULL,
   PRIMARY KEY (cup_id),
   FOREIGN KEY(cup_usu_id) REFERENCES tb_usuario(usu_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;

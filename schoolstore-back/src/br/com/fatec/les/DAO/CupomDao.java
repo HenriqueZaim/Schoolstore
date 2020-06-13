@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,9 +32,11 @@ public class CupomDao implements IDao{
 				+ "cup_valor, "
 				+ "cup_usu_id, "
 				+ "cup_ativo, "
-				+ "cup_dataHoraCriacao "
+				+ "cup_dataHoraCriacao,"
+				+ "cup_dataHoraVencimento,"
+				+ "cup_cupomPromocional "
 				+ ") "
-				+ " VALUES ( ?, ?, true, NOW())";
+				+ " VALUES ( ?, ?, true, NOW(), NOW(), ?)";
 		
 		PreparedStatement pstm = null;
 		
@@ -41,6 +44,7 @@ public class CupomDao implements IDao{
 			pstm = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			pstm.setFloat(1, cupom.getValor());
 			pstm.setLong(2, cupom.getUsuario().getId());
+			pstm.setBoolean(3, cupom.isCupomPromocional());
 			pstm.executeUpdate();
 
 			mensagem.setMensagem("Novo cupom adicionado");
@@ -73,7 +77,7 @@ public class CupomDao implements IDao{
 			pstm.setLong(1, cupom.getId());
 
 			pstm.executeUpdate();
-			mensagem.setMensagem("Cupom utilizado com sucesso!");
+			mensagem.setMensagem("Cupom promocional excluído com sucesso!");
 			mensagem.setMensagemStatus(MensagemStatus.SUCESSO);
 		}catch(SQLException e) {
 			mensagem.setMensagem("Ocorreu um erro durante a operação. Tente novamente ou consulte a equipe de desenvolvimento.");
@@ -120,17 +124,23 @@ public class CupomDao implements IDao{
 	public List<ADominio> consultar(ADominio entidade) throws SQLException {
 		Cupom cupom = (Cupom) entidade;
 		conexao = ConexaoFactory.getConnection();
-		List<ADominio> cuponsTroca = new ArrayList<ADominio>();
+		List<ADominio> cupons = new ArrayList<ADominio>();
 		
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		String sql = "SELECT "
 				+ "cup_id, "
-				+ "cup_valor, "
+				+ "cup_valor,"
+				+ "cup_cupomPromocional,"
+				+ "cup_dataHoraVencimento, "
 				+ "cup_usu_id"
-				+ " FROM tb_cupom WHERE cup_ativo = 1 ";
+				+ " FROM tb_cupom WHERE cup_ativo = 1";
 		if(cupom.getUsuario() != null && cupom.getUsuario().getId() != null) {
 			sql += " AND cup_usu_id = " + cupom.getUsuario().getId();
+		}else if(cupom.getId() != null) {
+			sql += " AND cup_id = " + cupom.getId();
+		}else {
+			sql += " AND cup_cupomPromocional = true"; 
 		}
 				
 		try {
@@ -138,18 +148,21 @@ public class CupomDao implements IDao{
 			rs = pstm.executeQuery();
 			
 			Usuario u = new Usuario();
-			Cupom ct = new Cupom();
+			Cupom c = new Cupom();
 			
 			while(rs.next()) {
 				u = new Usuario();
-				ct = new Cupom();
+				c = new Cupom();
 				
-				ct.setId(rs.getLong("cup_id"));
-				ct.setValor(rs.getFloat("cup_valor"));
+				c.setId(rs.getLong("cup_id"));
+				c.setValor(rs.getFloat("cup_valor"));
+				c.setCupomPromocional(rs.getBoolean("cup_cupomPromocional"));
+				c.setDataHoraVencimento(rs.getObject("cup_dataHoraVencimento",LocalDateTime.class));
+				
 				u.setId(rs.getLong("cup_usu_id"));
-				ct.setUsuario(u);
+				c.setUsuario(u);
 				
-				cuponsTroca.add(ct);
+				cupons.add(c);
 			}
 		}catch(SQLException e) {
 			System.err.println(e.getMessage());
@@ -158,7 +171,7 @@ public class CupomDao implements IDao{
 			ConexaoFactory.closeConnection(conexao, pstm, rs);
 		}
 		
-		return cuponsTroca;
+		return cupons;
 	}
 
 	

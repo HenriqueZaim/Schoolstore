@@ -44,7 +44,11 @@ public class PagamentoCupomDao implements IDao{
 			pstm.setLong(3, pagamentoCupom.getFormaPagamento().getId());
 			pstm.executeUpdate();
 			
-			cupomDao.deletar(pagamentoCupom.getCupom());
+			Cupom cupom  = new Cupom();
+			cupom = (Cupom) cupomDao.consultar(pagamentoCupom.getCupom()).get(0);
+			if(!cupom.isCupomPromocional()) {
+				cupomDao.deletar(pagamentoCupom.getCupom());
+			}
 
 			mensagem.setMensagem("Pagamento realizado com sucesso!");
 			mensagem.setMensagemStatus(MensagemStatus.OPERACAO);

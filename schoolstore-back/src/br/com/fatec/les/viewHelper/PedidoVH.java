@@ -42,6 +42,8 @@ public class PedidoVH implements IViewHelper{
 			pedido.setId(Long.parseLong(request.getParameter("txtPedidoId")));
 			pedido.setStatusPedido(StatusPedido.valueOf(request.getParameter("txtStatusPedido")));
 			pedido.setItensPedido(itemPedidoVH.getEntidades(request));
+			pedido.setValor(Float.parseFloat(request.getParameter("txtValor")));
+			pedido.setCliente((Cliente) clienteVH.getEntidade(request));
 		}else if(tarefa.equals("efetuarCancelamento")) {
 			pedido.setId(Long.parseLong(request.getParameter("txtPedidoId")));
 			pedido.setItensPedido(itemPedidoVH.getEntidades(request));

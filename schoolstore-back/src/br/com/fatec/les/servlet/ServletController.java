@@ -120,7 +120,11 @@ public class ServletController extends HttpServlet{
     	
     	// Cupons
     	vhMap.put("consultarCupons", new CupomVH());
+    	vhMap.put("inativarCupom", new CupomVH());
+    	vhMap.put("consultarCuponsPromocionais", new CupomVH());
     	commandMap.put("consultarCupons", new ConsultarCommand());
+    	commandMap.put("consultarCuponsPromocionais", new ConsultarCommand());
+    	commandMap.put("inativarCupom", new DeletarCommand());
 	}
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)

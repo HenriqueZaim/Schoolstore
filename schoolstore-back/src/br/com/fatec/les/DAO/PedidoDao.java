@@ -142,7 +142,7 @@ public class PedidoDao implements IDao{
 			conexao = null;
 			conexao = ConexaoFactory.getConnection();
 			
-			if(!pedidoAux.getItensPedido().isEmpty() && pedido.getItensPedido() != null) {
+			if(!pedidoAux.getItensPedido().isEmpty() && pedidoAux.getItensPedido() != null) {
 				if(!pedido.getItensPedido().isEmpty() && pedido.getItensPedido() != null) {
 					for(ItemPedido item : pedido.getItensPedido()) {
 						boolean flag = false;
@@ -153,24 +153,30 @@ public class PedidoDao implements IDao{
 								if(itemPedi.getQuantidade() <= 0 ) {
 									itemPedidoDao.deletar(item);
 								}
-								estoque.setQuantidadeTotal(item.getQuantidade());	
-								estoque.setProduto(item.getProduto());
-								estoqueDao.atualizar(estoque);
+								if(pedidoAux.getStatusPedido() != StatusPedido.EMPROCESSAMENTO) {
+									estoque.setQuantidadeTotal(item.getQuantidade());	
+									estoque.setProduto(item.getProduto());
+									estoqueDao.atualizar(estoque);
+								}
 								flag = true;
 							}
 						}
 						if(!flag) {
-							estoque.setQuantidadeTotal(item.getQuantidade());	
-							estoque.setProduto(item.getProduto());
-							estoqueDao.atualizar(estoque);
+							if(pedidoAux.getStatusPedido() != StatusPedido.EMPROCESSAMENTO) {
+								estoque.setQuantidadeTotal(item.getQuantidade());	
+								estoque.setProduto(item.getProduto());
+								estoqueDao.atualizar(estoque);
+							}
 							itemPedidoDao.deletar(item);
 						}
 					}
 				}else {
 					for(ItemPedido item : pedidoAux.getItensPedido()) {
-						estoque.setQuantidadeTotal(item.getQuantidade());	
-						estoque.setProduto(item.getProduto());
-						estoqueDao.atualizar(estoque);
+						if(pedidoAux.getStatusPedido() != StatusPedido.EMPROCESSAMENTO) {
+							estoque.setQuantidadeTotal(item.getQuantidade());	
+							estoque.setProduto(item.getProduto());
+							estoqueDao.atualizar(estoque);
+						}
 						itemPedidoDao.deletar(item);
 					}
 				}

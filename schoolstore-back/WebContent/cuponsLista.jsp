@@ -144,6 +144,8 @@
 						</a>
 						<a href="trocaLista.jsp" class="list-group-item list-group-item-action waves-effect"> <i class="fas fa-exchange-alt mr-3"></i>Minhas Trocas
 						</a>
+						<a href="cupomLista.jsp" class="list-group-item active list-group-item-action waves-effect"> <i class="fas fa-ticket-alt mr-3"></i>Meus Cupons
+						</a>
 						<form action="app" method="POST">
 							<input type="hidden" name="txtUsuarioId" value="${usuario.getId()}"> <input type="hidden" name="txtClienteId" value="${cliente.getId()}"> <input type="hidden" name="txtImagemId" value="${usuario.getImagem().getId()}"> <input type="hidden" name="tarefa" value="editaCliente">
 							<button type="submit" class="list-group-item list-group-item-action waves-effect">
@@ -174,7 +176,12 @@
 		<div class="container-fluid mt-5">
 			<div class="card mb-4 wow fadeIn">
 				<div class="card-body d-sm-flex justify-content-between">
-					<h1 class="mb-2 mb-sm-0 pt-1">Lista de Cupons</h1>
+					<c:if test="${usuario.isAdmin() }">
+						<h1 class="mb-2 mb-sm-0 pt-1">Cupons Promocionais Ativos</h1>
+					</c:if>
+					<c:if test="${!usuario.isAdmin() }">
+						<h1 class="mb-2 mb-sm-0 pt-1">Cupons de Troca Disponíveis</h1>
+					</c:if>
 				</div>
 			</div>
 			<c:forEach var="mensagem" items="${resultado.getMensagens()}">
@@ -198,11 +205,20 @@
 						<section class="dark-grey-text">
 							<table class="table table-striped table-responsive-md btn-table">
 								<thead>
-									<tr class="font-weight-bold text-center">
-										<th>#Id</th>
-										<th>Valor</th>
-										<th>Ação</th>
-									</tr>
+									<c:if test="${usuario.isAdmin() }">
+										<tr class="font-weight-bold text-center">
+											<th>#Id</th>
+											<th>Valor</th>
+											<th>Data de Vencimento</th>
+											<th>Ação</th>
+										</tr>
+									</c:if>
+									<c:if test="${!usuario.isAdmin() }">
+										<tr class="font-weight-bold text-center">
+											<th>#Id</th>
+											<th>Valor</th>
+										</tr>
+									</c:if>
 								</thead>
 
 								<tbody id="tableCupons">

@@ -10,7 +10,6 @@ $(document).ready(function () {
 	  type: "GET",
 	  async: false,
 	  success: (response) => {
-		  console.log(response)
 		  response.entidades.forEach(function(data){
 			  data.enderecos.forEach(function(endereco) {
 				  $("#accordionEndereco").append(`
@@ -119,7 +118,7 @@ $(document).ready(function () {
 			  })
 			  
 			  if(data.usuario.cupons.length === 0){
-				  $("#cupons").append("Nenhum cupom vinculado a conta")
+				  $("#cupons").append("Nenhum cupom de troca vinculado a conta")
 			  }else{
 				  data.usuario.cupons.forEach(function(item){
 					  $("#cupons").append(`
@@ -132,7 +131,7 @@ $(document).ready(function () {
 							  					<input type="checkbox" class="form-check-input cupomInput" id="cupomInput${item.id }" name="cupomInput" value="${item.id }">
 							  					<label class="form-check-label" for="cupomInput${item.id }"></label>
 							  				</div>
-							  				<h5 class="mb-0 flex-grow-1">Cupom - R$ ${item.valor}</h5>
+							  				<h5 class="mb-0 flex-grow-1">Cupom de Troca - R$ ${item.valor}</h5>
 							  			</div>
 							  		</div>
 							  	</div>
@@ -153,7 +152,6 @@ $(document).ready(function () {
     type: "GET",
     async: false,
     success: (response) => {
-    	console.log(response)
       $("#confirmarCompra").append(`
 		  
 				  <form action="app" method="post" id="formularioCompra">
@@ -261,6 +259,32 @@ $(document).ready(function () {
 			  )
 		  })
 		  estados = response
+	  }
+  })
+  $.ajax({
+	  url: "http://localhost:8085/schoolstore/app?tarefa=consultarCuponsPromocionais",
+	  type: "GET",
+	  async: false,
+	  success: response => {
+		  response.entidades.forEach(function(item){
+			  $("#cupons").append(`
+					  <div class="accordion md-accordion" id="accordionCupomTroca" role="tablist" aria-multiselectable="true">
+					  	<div class="card">
+					  		<div class="card-header" role="tab" id="cupom${item.id}">
+					 			<div class="row">
+					  				<div class="form-check pl-0 mb-2">
+					  					<input type="hidden" class="cuponsValor" id="txtCupomValor" value="${item.valor}">
+					  					<input type="checkbox" class="form-check-input cupomInput" id="cupomInput${item.id }" name="cupomInput" value="${item.id }">
+					  					<label class="form-check-label" for="cupomInput${item.id }"></label>
+					  				</div>
+					  				<h5 class="mb-0 flex-grow-1">Cupom Promocional - R$ ${item.valor} - Válido até: ${item.dataHoraVencimento.date.day}/${item.dataHoraVencimento.date.month}/${item.dataHoraVencimento.date.year}</h5>
+					  			</div>
+					  		</div>
+					  	</div>
+					  </div>
+			  `)
+		  })
+
 	  }
   })
   $(".enderecoInput").change(function () {

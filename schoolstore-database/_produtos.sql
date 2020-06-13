@@ -164,12 +164,12 @@ INSERT INTO `tb_cartaoCredito` (`ccr_id`, `ccr_ativo`, `ccr_dataHoraCriacao`, `c
 INSERT INTO `tb_endereco` (`end_id`, `end_nome`, `end_logradouro`, `end_bairro`, `end_cep`, `end_numero`, `end_complemento`, `end_referencia`, `end_favorito`, `end_ativo`, `end_dataHoraCriacao`, `end_cid_id`, `end_cli_id`) VALUES
 (1, 'qwerqwer', 'qwerqwer', 'qweqwe', '12312-312', 123, 'qweqwe', 'qweqwerqw', 1, 1, '2020-01-01 09:33:43', 101, 1);
 
-INSERT INTO tb_cupom (cup_valor, cup_usu_id, cup_ativo, cup_dataHoraCriacao) VALUES
-(10, 2, b'1', NOW()),
-(20, 2, b'1', NOW()),
-(30, 2, b'1', NOW()),
-(50, 2, b'1', NOW()),
-(100, 2, b'1', NOW());
+INSERT INTO tb_cupom (cup_valor, cup_usu_id, cup_ativo, cup_dataHoraCriacao,cup_dataHoraVencimento, cup_cupomPromocional) VALUES
+(10, 2, b'1', NOW(), NULL, b'0'),
+(20, 2, b'1', NOW(), NULL, b'0'),
+(30, 2, b'1', NOW(), NULL, b'0'),
+(50, 2, b'1', NOW(), NULL, b'0'),
+(100, 2, b'1', NOW(), NULL, b'0');
 
 INSERT INTO tb_formaPagamento (fpag_id, fpag_valorTotal) VALUES
 (1, 48.070);
