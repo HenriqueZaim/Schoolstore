@@ -6,5 +6,6 @@ public enum StatusPedido {
 	ENTREGUE,
 	APROVADO,
 	REPROVADO,
-	ATUALIZADO
+	ATUALIZADO,
+	TROCADO
 }

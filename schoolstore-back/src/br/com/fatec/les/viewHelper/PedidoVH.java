@@ -52,10 +52,9 @@ public class PedidoVH implements IViewHelper{
 			pedido.setValor(Float.parseFloat(request.getParameter("txtValor")));
 		}else if(tarefa.equals("consultarPedido") || tarefa.equals("consultarPedidoCancelamento")) {
 			pedido.setId(Long.parseLong(request.getParameter("txtPedidoId")));
-		}else if(tarefa.equals("efetuarTroca")) {
+		}else if(tarefa.equals("efetuarTroca") || tarefa.equals("alterarStatusTroca")) {
 			pedido.setId(Long.parseLong(request.getParameter("txtPedidoId")));
 			pedido.setValor(Float.parseFloat(request.getParameter("txtValorTotal")));
-			
 		}
 		return pedido;
 	}

@@ -88,9 +88,11 @@ public class ServletController extends HttpServlet{
     	vhMap.put("efetuarTroca", new TrocaVH());
     	vhMap.put("consultarTrocas", new TrocaVH());
     	vhMap.put("alterarStatusTroca", new TrocaVH());
+    	vhMap.put("excluirTroca", new TrocaVH());
     	commandMap.put("efetuarTroca", new SalvarCommand());
     	commandMap.put("alterarStatusTroca", new AtualizarCommand());
     	commandMap.put("consultarTrocas", new ConsultarCommand());
+    	commandMap.put("excluirTroca", new DeletarCommand());
     	
     	// Login de usuário
     	vhMap.put("loginUsuario", new UsuarioVH());

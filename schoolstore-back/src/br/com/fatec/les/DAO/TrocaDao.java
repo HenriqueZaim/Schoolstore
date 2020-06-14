@@ -12,8 +12,11 @@ import br.com.fatec.les.database.ConexaoFactory;
 import br.com.fatec.les.facade.Mensagem;
 import br.com.fatec.les.facade.MensagemStatus;
 import br.com.fatec.les.model.assets.ADominio;
+import br.com.fatec.les.model.estoque.Estoque;
 import br.com.fatec.les.model.pagamento.cupom.Cupom;
+import br.com.fatec.les.model.pedido.ItemPedido;
 import br.com.fatec.les.model.pedido.Pedido;
+import br.com.fatec.les.model.pedido.StatusPedido;
 import br.com.fatec.les.model.troca.ItemTroca;
 import br.com.fatec.les.model.troca.StatusTroca;
 import br.com.fatec.les.model.troca.Troca;
@@ -27,11 +30,11 @@ public class TrocaDao implements IDao{
 	ClienteDao clienteDao = new ClienteDao();
 	PedidoDao pedidoDao = new PedidoDao();
 	CupomDao cupomDao = new CupomDao();
+	EstoqueDao estoqueDao = new EstoqueDao();
 
 	@Override
 	public Mensagem salvar(ADominio entidade) throws SQLException {
 		Troca troca = (Troca) entidade;
-		Cupom cupom = new Cupom();
 		conexao = ConexaoFactory.getConnection();
 		ResultSet rs;
 		mensagem = new Mensagem();
@@ -48,11 +51,7 @@ public class TrocaDao implements IDao{
 		
 		PreparedStatement pstm = null;
 		
-		try {
-			cupom.setValor(troca.getPedido().getValor());
-			cupom.setUsuario(troca.getCliente().getUsuario());
-			cupomDao.salvar(cupom);
-			
+		try {		
 			pstm = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			pstm.setLong(1, troca.getCliente().getId());
 			pstm.setLong(2, troca.getPedido().getId());
@@ -85,13 +84,49 @@ public class TrocaDao implements IDao{
 
 	@Override
 	public Mensagem deletar(ADominio entidade) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		Troca troca  = (Troca) entidade;
+		
+		conexao = ConexaoFactory.getConnection();
+		mensagem = new Mensagem();
+		
+		String sql = "UPDATE tb_troca SET "
+					+ "tro_statusTroca = ?,"
+					+ "tro_ativo = false "			
+					+ " WHERE tro_id = ?";
+		
+		
+		PreparedStatement pstm = null;
+		
+		try {
+			pstm = conexao.prepareStatement(sql);
+			pstm.setString(1, StatusTroca.CANCELADA.toString());
+			pstm.setLong(2, troca.getId());
+			pstm.executeUpdate();
+			
+			ItemTroca itemTroca = new ItemTroca();
+			itemTroca.setTroca(troca);
+			itemTrocaDao.deletar(itemTroca);
+
+			mensagem.setMensagem("Troca excluida com sucesso!");
+			mensagem.setMensagemStatus(MensagemStatus.SUCESSO);
+		}catch(SQLException e) {
+			mensagem.setMensagem("Ocorreu um erro durante a operação. Tente novamente ou consulte a equipe de desenvolvimento.");
+			mensagem.setMensagemStatus(MensagemStatus.ERRO);
+		}
+		finally {
+			ConexaoFactory.closeConnection(conexao, pstm);
+		}
+		
+		return mensagem;
 	}
 
 	@Override
 	public Mensagem atualizar(ADominio entidade) throws SQLException {
 		Troca troca  = (Troca) entidade;
+		Cupom cupom = new Cupom();
+		Estoque estoque = new Estoque();
+		Pedido pedido = new Pedido();
+		
 		conexao = ConexaoFactory.getConnection();
 		mensagem = new Mensagem();
 		
@@ -108,6 +143,23 @@ public class TrocaDao implements IDao{
 			pstm.setLong(2, troca.getId());
 
 			pstm.executeUpdate();
+			
+			if(troca.getStatusTroca() == StatusTroca.TROCADO) {
+				cupom.setValor(troca.getPedido().getValor());
+				cupom.setUsuario(troca.getCliente().getUsuario());
+				cupomDao.salvar(cupom);
+				
+				for(ItemTroca item : troca.getItensTroca()){
+					estoque = new Estoque();
+					estoque.setQuantidadeTotal(item.getQuantidade());	
+					estoque.setProduto(item.getProduto());
+					estoqueDao.deletar(estoque);
+				}
+				
+				pedido = troca.getPedido();
+				pedido.setStatusPedido(StatusPedido.TROCADO);
+				pedidoDao.atualizar(pedido);
+			}
 			mensagem.setMensagem("Troca atualizada com sucesso!");
 			mensagem.setMensagemStatus(MensagemStatus.SUCESSO);
 		}catch(SQLException e) {

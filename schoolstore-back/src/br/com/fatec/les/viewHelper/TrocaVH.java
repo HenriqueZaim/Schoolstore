@@ -35,6 +35,13 @@ public class TrocaVH implements IViewHelper{
 		}else if(tarefa.equals("alterarStatusTroca")) { 
 			troca.setId(Long.parseLong(request.getParameter("txtTrocaId")));
 			troca.setStatusTroca(StatusTroca.valueOf(request.getParameter("txtStatusTroca")));
+			if(troca.getStatusTroca() == StatusTroca.TROCADO) {
+				troca.setPedido((Pedido)pedidoVH.getEntidade(request));
+				troca.setCliente((Cliente)clienteVH.getEntidade(request));
+				troca.setItensTroca(itemTrocaVH.getEntidades(request));
+			}
+		}else if(tarefa.equals("excluirTroca")) {
+			troca.setId(Long.parseLong(request.getParameter("txtTrocaId")));
 		}
 		return troca;
 	}
@@ -56,7 +63,7 @@ public class TrocaVH implements IViewHelper{
 			response.setContentType("application/json");
 			response.setCharacterEncoding("UTF-8");
 			response.getWriter().write(json);
-		}else if(tarefa.equals("alterarStatusTroca")) { 
+		}else if(tarefa.equals("alterarStatusTroca") || tarefa.equals("excluirTroca")) { 
 			request.getRequestDispatcher("trocaLista.jsp").
 			forward(request, response);
 		}

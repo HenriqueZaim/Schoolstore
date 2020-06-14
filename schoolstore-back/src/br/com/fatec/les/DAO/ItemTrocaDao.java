@@ -11,6 +11,8 @@ import br.com.fatec.les.database.ConexaoFactory;
 import br.com.fatec.les.facade.Mensagem;
 import br.com.fatec.les.facade.MensagemStatus;
 import br.com.fatec.les.model.assets.ADominio;
+import br.com.fatec.les.model.estoque.Estoque;
+import br.com.fatec.les.model.pedido.ItemPedido;
 import br.com.fatec.les.model.produto.Produto;
 import br.com.fatec.les.model.troca.ItemTroca;
 import br.com.fatec.les.model.troca.Troca;
@@ -61,8 +63,31 @@ public class ItemTrocaDao implements IDao{
 
 	@Override
 	public Mensagem deletar(ADominio entidade) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		ItemTroca itemTroca = (ItemTroca) entidade;
+		conexao = ConexaoFactory.getConnection();
+		mensagem = new Mensagem();
+		
+		String sql = "DELETE FROM tb_itemTroca "
+					+ " WHERE itro_tro_id = ?";
+		
+		PreparedStatement pstm = null;
+		
+		try {
+			pstm = conexao.prepareStatement(sql);
+			pstm.setLong(1, itemTroca.getTroca().getId());
+			
+			pstm.executeUpdate();
+			mensagem.setMensagem("Item da troca excluída com sucesso!");
+			mensagem.setMensagemStatus(MensagemStatus.SUCESSO);
+		}catch(SQLException e) {
+			mensagem.setMensagem("Ocorreu um erro durante a operação. Tente novamente ou consulte a equipe de desenvolvimento.");
+			mensagem.setMensagemStatus(MensagemStatus.ERRO);
+		}
+		finally {
+			ConexaoFactory.closeConnection(conexao, pstm);
+		}
+		
+		return mensagem;
 	}
 
 	@Override

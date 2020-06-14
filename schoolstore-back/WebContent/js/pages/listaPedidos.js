@@ -166,6 +166,10 @@ $(document).ready(function () {
 					  $(`#modalSelect-${data.id}`).parent().prepend(`<span class="alert alert-warning">Não será possível realizar esta operação!</span>`)
 					  $(`#alterarStatusBotao-${data.id}`).prop("disabled", true)
 					  $(`#alterarBotaoStatus-${data.id}`).prop("disabled", true).removeClass("text-warning").add("text-grey")
+				  }else if(data.statusPedido === "TROCADO"){
+					  $(`#modalSelect-${data.id}`).parent().prepend(`<span class="alert alert-warning">Não será possível realizar esta operação!</span>`)
+					  $(`#alterarStatusBotao-${data.id}`).prop("disabled", true)
+					  $(`#alterarBotaoStatus-${data.id}`).prop("disabled", true).removeClass("text-warning").add("text-grey")
 				  }
 				  
 				  
@@ -247,6 +251,15 @@ $(document).ready(function () {
 						  </form>
 				  `)
 				  
+			  }else if(data.statusPedido === "TROCADO"){
+				  $(`#status-${data.id}`).append(`
+						  <span class="text-success">Trocado</span>
+				  `)
+				  $(`#troca-${data.id}`).append(`
+						  
+					  <button type="submit" class="btn btn-link disabled btn-sm p-0 pb-2">Efetuar Troca</button>
+						  
+				  `)
 			  }else{
 				  let clienId = $("#txtClienteId").val()
 				  let usuaId = $("#txtUsuarioId").val()
