@@ -106,13 +106,14 @@ public class CarrinhoDao implements IDao{
 		
 		String sql = "UPDATE tb_carrinho SET "
 				+ "car_subTotal = ?, "
-				+ "car_validade = NOW() "		
+				+ "car_validade = NOW() + INTERVAL 10 DAY "		
 				+ " WHERE car_id = ?";
 		
 		PreparedStatement pstm = null;
 		
 		try {
 			pstm = conexao.prepareStatement(sql);
+			
 			Carrinho carrinhoAux = new Carrinho();
 			carrinhoAux = (Carrinho)consultar(carrinho).get(0);
 			if(carrinho.getValidade() != null) {
@@ -120,7 +121,7 @@ public class CarrinhoDao implements IDao{
 				pstm.setFloat(1, carrinho.getSubTotal());
 			}else {
 				Float valorFinal;
-				if(!carrinhoAux.getItensCarrinho().isEmpty()) {
+				if(!carrinho.getItensCarrinho().isEmpty()) {
 					valorFinal = carrinhoAux.getSubTotal() + carrinho.getSubTotal();
 				}else {
 					valorFinal = carrinho.getSubTotal();
@@ -145,6 +146,10 @@ public class CarrinhoDao implements IDao{
 					item.setCarrinho(carrinho);
 					itemCarrinhoDao.salvar(item);
 				}
+			}else {
+				ItemCarrinho itemCa = new ItemCarrinho();
+				itemCa.setCarrinho(carrinho);
+				itemCarrinhoDao.deletar(itemCa);
 			}
 			
 			pstm.executeUpdate();

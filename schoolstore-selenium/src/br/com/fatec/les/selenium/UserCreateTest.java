@@ -44,11 +44,11 @@ public class UserCreateTest {
 	    driver.manage().window().setSize(new Dimension(1366, 699));
 	    driver.findElement(By.cssSelector(".btn-outline-success")).click();
 	    driver.findElement(By.id("txtNome")).click();
-	    driver.findElement(By.id("txtNome")).sendKeys("Henrique Zaim");
+	    driver.findElement(By.id("txtNome")).sendKeys("Carlos Joao");
 	    driver.findElement(By.id("txtEmail")).click();
-	    driver.findElement(By.id("txtEmail")).sendKeys("henrique@gmail.com");
+	    driver.findElement(By.id("txtEmail")).sendKeys("joao@gmail.com");
 	    driver.findElement(By.id("txtNumeroDocumento")).click();
-	    driver.findElement(By.id("txtNumeroDocumento")).sendKeys("012.345.678-90");
+	    driver.findElement(By.id("txtNumeroDocumento")).sendKeys("412342342");
 	    driver.findElement(By.id("txtNumeroTelefone")).click();
 	    driver.findElement(By.id("txtNumeroTelefone")).sendKeys("(11) 91919-1919");
 	    driver.findElement(By.id("txtSenha")).click();
@@ -81,7 +81,7 @@ public class UserCreateTest {
 	    Thread.sleep(2000);
 	    driver.findElement(By.id("modalCartaoButton")).click();
 	    driver.findElement(By.id("txtNomeImpressoModal")).click();
-	    driver.findElement(By.id("txtNomeImpressoModal")).sendKeys("HENRIQUE");
+	    driver.findElement(By.id("txtNomeImpressoModal")).sendKeys("JOAO");
 	    driver.findElement(By.id("txtNumeroCartaoModal")).click();
 	    driver.findElement(By.id("txtNumeroCartaoModal")).sendKeys("1234123412341234");
 	    driver.findElement(By.id("txtCodigoModal")).click();

@@ -28,7 +28,7 @@ public class CarrinhoVH implements IViewHelper{
 		
 		if(tarefa.equals("deletarCliente") || tarefa.equals("consultarCarrinho") || tarefa.equals("listarItensCarrinho")) {
 			carrinho.setId(Long.parseLong(request.getParameter("txtCarrinhoId")));
-		}else if(tarefa.equals("atualizarCarrinho")) {
+		}else if(tarefa.equals("atualizarCarrinho") || tarefa.equals("efetuarPagamento")) {
 			carrinho.setId(Long.parseLong(request.getParameter("txtCarrinhoId")));
 			carrinho.setSubTotal(request.getParameter("txtValorTotal") == null ?
 							null : Float.parseFloat(request.getParameter("txtValorTotal")));
@@ -71,7 +71,7 @@ public class CarrinhoVH implements IViewHelper{
 		if(tarefa.equals("consultarCarrinho")) {
 			request.getRequestDispatcher("clienteCarrinho.jsp").
 			forward(request, response);
-		}else if(tarefa.equals("atualizarCarrinho")) {
+		}else if(tarefa.equals("efetuarPagamento")) {
 			response.sendRedirect("pagamento.jsp");
 		}else if(tarefa.equals("listarItensCarrinho")) {
 			Carrinho carrinho = new Carrinho();

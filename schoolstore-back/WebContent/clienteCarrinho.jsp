@@ -248,8 +248,8 @@
 													</td>
 													<td class="text-right"><input type="hidden" name="txtValorTotal" id="subTotal" value="${carrinho.getSubTotal() }">
 														<h4 class="mt-2" id="valorTotalCompra">R$ ${carrinho.getSubTotal() }</h4></td>
-													<td colspan="3" class="text-right"><input type="hidden" name="tarefa" value="atualizarCarrinho"> <input type="hidden" name="txtCarrinhoId" value="${cliente.getCarrinho().getId()}">
-														<button type="submit" class="btn btn-primary btn-rounded">
+													<td colspan="3" class="text-right"><input type="hidden" name="tarefa" id="txtTarefa" value="efetuarPagamento"> <input type="hidden" name="txtCarrinhoId" value="${cliente.getCarrinho().getId()}">
+														<button type="submit" id="botaoSubmit" class="btn btn-primary btn-rounded">
 															Completar compra <i class="fas fa-angle-right right"></i>
 														</button></td>
 												</tr>

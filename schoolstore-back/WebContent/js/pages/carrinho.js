@@ -7,6 +7,11 @@ $(".excluir").click(function(){
 	for(let i = 0 ; i < v.length ; i++){
 		subTotal += parseFloat(v[i].value)
 	}
+	
+	if(v.length === 0){
+		$("#txtTarefa").val("atualizarCarrinho")
+		$("#botaoSubmit").html("Salvar Modificações").removeClass("btn-primary").addClass("btn-success")
+	}
 
 	subTotal = parseFloat(subTotal)
 	subTotal = (Math.round(subTotal * 100) / 100).toFixed(2)

@@ -72,7 +72,7 @@ $(document).ready(function () {
 											</select>
 											<input type="hidden" name="tarefa" value="alterarStatusTroca">
 											<input type="hidden" name="txtTrocaId" value="${data.id}">
-											<input type="hidden" name="txtValorTotal" value="${data.pedido.valor}">
+											<input type="hidden" name="txtValorTotal" id="txtValorTotal-${data.id}" value="${data.pedido.valor}">
 											<input type="hidden" name="txtPedidoId" value="${data.pedido.id}">
 											<input type="hidden" name="txtUsuarioId" value="${data.cliente.usuario.id}"
 											</div>
@@ -130,8 +130,17 @@ $(document).ready(function () {
 											</tr>
 									`)
 								}
+								
+								var valorCompra = 0
 
 								data.itensTroca.forEach(function(item){
+									var valorProd = parseFloat(item.produto.preco)
+									var precificacao = parseFloat(item.produto.precificacao.percentual)
+									var valorTotal = valorProd*precificacao + valorProd
+									
+									
+									valorCompra += valorTotal
+									
 									$(`#itens-${data.id}`).append(
 											`
 											<span>${item.quantidade}x
@@ -149,6 +158,10 @@ $(document).ready(function () {
 											<input type="hidden" name="txtQuantidadeProduto" value="${item.quantidade}">
 									`)
 								})
+								valorCompra += parseFloat(data.pedido.frete.valor)
+								valorCompra = valorCompra.toFixed(2)
+								$(`#txtValorTotal-${data.id}`).val(valorCompra)
+								
 								if(data.statusTroca === "TROCAREPROVADA"){
 									$(`#status-${data.id}`).append(`
 											<span class="text-danger">Reprovada</span>

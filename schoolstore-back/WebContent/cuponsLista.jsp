@@ -184,6 +184,9 @@
 					</c:if>
 				</div>
 			</div>
+			
+
+			
 			<c:forEach var="mensagem" items="${resultado.getMensagens()}">
 				<c:choose>
 					<c:when test="${mensagem.getMensagemStatus() == 'ERRO'}">
@@ -198,6 +201,11 @@
 					</c:otherwise>
 				</c:choose>
 			</c:forEach>
+
+			<c:if test="${usuario.isAdmin() }">
+				<a href="#" class="btn btn-info btn-sm p-2 mb-2" data-toggle="modal" id="modalCupomButton"
+			                   		 data-target="#modalCupom"> <i class="fas fa-plus pr-2"> Novo Cupom</i></a>
+			</c:if>
 
 			<div class="row">
 				<div class="col-lg-12">
@@ -238,6 +246,35 @@
 				© 2020 Copyright: <a href="" target="_blank"> foxdevlabs.com </a>
 			</div>
 		</footer>
+	</div>
+	
+	<div class="modal fade" id="modalCupom" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<form action="app" method="POST">
+				<input type="hidden" name="tarefa" value="adicionarCupomPromocional"> 
+				<div class="modal-content">
+					<div class="modal-header text-center">
+						<h4 class="modal-title w-100 font-weight-bold">Novo Cupom Promocional</h4>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body mx-3">
+						<div class="form-row">
+							<div class="col-md-8 mb-3 md-form">
+								<label for="txtNumeroCartaoModal">Valor R$</label> 
+								<input type="text" maxlength="4" class="form-control" name="txtValorCupom" required>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer d-flex justify-content-center">
+						<button class="btn btn-unique" type="submit">
+							Adicionar <i class="fas fa-paper-plane-o ml-1"></i>
+						</button>
+					</div>
+				</div>
+			</form>
+		</div>
 	</div>
 
 	<script type="text/javascript" src="./js/jquery.min.js"></script>

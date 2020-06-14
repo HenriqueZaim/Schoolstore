@@ -27,6 +27,10 @@ public class CupomVH implements IViewHelper {
 		if(tarefa.equals("inativarCupom")) {
 			cupom.setId(Long.parseLong(request.getParameter("txtCupomId")));
 		}
+		if(tarefa.equals("adicionarCupomPromocional")) {
+			cupom.setValor(Float.parseFloat(request.getParameter("txtValorCupom")));
+			cupom.setCupomPromocional(true);
+		}
 
 		return cupom;
 	}
@@ -35,8 +39,11 @@ public class CupomVH implements IViewHelper {
 	public void setEntidade(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String tarefa = request.getParameter("tarefa");
-
-		if(tarefa.equals("inativarCupom")) {
+		
+		if(tarefa.equals("adicionarCupomPromocional")) {
+			request.getRequestDispatcher("cuponsLista.jsp").
+			forward(request, response);
+		}else if(tarefa.equals("inativarCupom")) {
 			request.getRequestDispatcher("cuponsLista.jsp").
 			forward(request, response);
 		}else {

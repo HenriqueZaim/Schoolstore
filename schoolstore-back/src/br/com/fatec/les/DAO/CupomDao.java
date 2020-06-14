@@ -36,14 +36,18 @@ public class CupomDao implements IDao{
 				+ "cup_dataHoraVencimento,"
 				+ "cup_cupomPromocional "
 				+ ") "
-				+ " VALUES ( ?, ?, true, NOW(), NOW(), ?)";
+				+ " VALUES ( ?, ?, true, NOW(), NOW() + INTERVAL 30 DAY, ?)";
 		
 		PreparedStatement pstm = null;
 		
 		try {
 			pstm = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			pstm.setFloat(1, cupom.getValor());
-			pstm.setLong(2, cupom.getUsuario().getId());
+			if(cupom.getUsuario() != null)
+				pstm.setLong(2, cupom.getUsuario().getId());
+			else {
+				pstm.setNull(2, java.sql.Types.INTEGER);
+			}
 			pstm.setBoolean(3, cupom.isCupomPromocional());
 			pstm.executeUpdate();
 

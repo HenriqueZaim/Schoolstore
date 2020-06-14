@@ -104,8 +104,10 @@ public class ServletController extends HttpServlet{
     	vhMap.put("consultarCarrinho", new CarrinhoVH());
     	vhMap.put("atualizarCarrinho", new CarrinhoVH());
     	vhMap.put("listarItensCarrinho", new CarrinhoVH());
+    	vhMap.put("efetuarPagamento", new CarrinhoVH());
     	commandMap.put("consultarCarrinho", new ConsultarCommand());
     	commandMap.put("atualizarCarrinho", new AtualizarCommand());
+    	commandMap.put("efetuarPagamento", new AtualizarCommand());
     	commandMap.put("listarItensCarrinho", new ConsultarCommand());
     	
     	// produtos
@@ -121,12 +123,15 @@ public class ServletController extends HttpServlet{
     	commandMap.put("adicionarProduto", new AtualizarCommand());
     	
     	// Cupons
+    	
     	vhMap.put("consultarCupons", new CupomVH());
     	vhMap.put("inativarCupom", new CupomVH());
     	vhMap.put("consultarCuponsPromocionais", new CupomVH());
+    	vhMap.put("adicionarCupomPromocional", new CupomVH());
     	commandMap.put("consultarCupons", new ConsultarCommand());
     	commandMap.put("consultarCuponsPromocionais", new ConsultarCommand());
     	commandMap.put("inativarCupom", new DeletarCommand());
+    	commandMap.put("adicionarCupomPromocional", new SalvarCommand());
 	}
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
