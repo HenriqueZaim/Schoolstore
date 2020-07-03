@@ -1,6 +1,7 @@
 package br.com.fatec.les.DAO;
 
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,7 +43,10 @@ public class CidadeDao implements IDao{
 		String sql = "SELECT "
 				+ "cid_id, "
 				+ "cid_nome, "
-				+ "cid_est_id "
+				+ "cid_est_id,"
+				+ "cid_ativo,"
+				+ "cid_dataHoraCriacao,"
+				+ "cid_dataHoraAtualizacao "
 				+ " FROM tb_cidade "
 				+ " WHERE cid_ativo = 1 ";
 		if(cidade.getId() != null) {
@@ -65,6 +69,9 @@ public class CidadeDao implements IDao{
 				
 				c.setId(Long.parseLong(rs.getString("cid_id")));
 				c.setNome(rs.getString("cid_nome"));
+				c.setAtivo(rs.getBoolean("cid_ativo"));
+				c.setDataHoraCriacao(rs.getObject("cid_dataHoraCriacao", LocalDateTime.class));
+				c.setDataHoraAtualizacao(rs.getObject("cid_dataHoraAtualizacao", LocalDateTime.class));
 				
 				if(cidade.getId() != null) {
 					e.setId(Long.parseLong(rs.getString("cid_est_id")));

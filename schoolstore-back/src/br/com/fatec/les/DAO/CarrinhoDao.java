@@ -5,12 +5,12 @@ import java.util.List;
 
 
 import java.sql.*;
+import java.time.LocalDateTime;
 
 import br.com.fatec.les.database.ConexaoFactory;
 import br.com.fatec.les.facade.Mensagem;
 import br.com.fatec.les.facade.MensagemStatus;
 import br.com.fatec.les.model.config.ADominio;
-import br.com.fatec.les.model.config.EntidadeDominio;
 import br.com.fatec.les.model.usuario.Carrinho;
 import br.com.fatec.les.model.usuario.ItemCarrinho;
 
@@ -180,7 +180,10 @@ public class CarrinhoDao implements IDao{
 		String sql = "SELECT "
 				+ "car_id, "
 				+ "car_subTotal, "
-				+ "car_validade "
+				+ "car_validade,"
+				+ "car_ativo,"
+				+ "car_dataHoraCriacao,"
+				+ "car_dataHoraAtualizacao "
 				+ " FROM tb_carrinho "
 				+ " WHERE car_ativo = 1 "
 				+ " AND car_id = " + carrinho.getId() + "";
@@ -194,7 +197,10 @@ public class CarrinhoDao implements IDao{
 				
 				c.setId(rs.getLong("car_id"));
 				c.setSubTotal(rs.getFloat("car_subTotal"));
-//				c.setValidade(LocalDateTime.parse(rs.getString("car_validade")));
+				c.setAtivo(rs.getBoolean("car_ativo"));
+				c.setValidade(rs.getObject("car_validade", LocalDateTime.class));
+				c.setDataHoraCriacao(rs.getObject("car_dataHoraCriacao", LocalDateTime.class));
+				c.setDataHoraAtualizacao(rs.getObject("car_dataHoraAtualizacao", LocalDateTime.class));
 				
 				List<ADominio> itemsBanco = new ArrayList<ADominio>();
 				List<ItemCarrinho> itemsCarrinho = new ArrayList<ItemCarrinho>();

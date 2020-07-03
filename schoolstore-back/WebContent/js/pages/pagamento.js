@@ -94,6 +94,7 @@ $(document).ready(function () {
 												<div class="card-body">
 													<ul>
 														<li><b>Nome impresso: </b>${cartao.nomeImpresso}</li>
+														<li><b>Bandeira: </b>${cartao.bandeiraCartao}</li>
 														<li><b>Número: </b>${cartao.numero}</li>
 														<li><b>Código: </b>${cartao.codigo}</li>
 														<li><b>Favorito: </b>${cartao.favorito == true ? "Sim" : "Não"}</li>

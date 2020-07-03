@@ -265,6 +265,16 @@
             <div class="col mb-3 md-form">
               <label for="txtNomeImpressoModal">Nome Impresso*</label> <input type="text" class="form-control"
                 id="txtNomeImpressoModal" required maxlength="100">
+            </div>		
+			<div class="col mb-3">
+              <label for="txtBandeiraModal">Bandeira*</label> 
+              <select id="txtBandeiraModal" required>
+              	<option value="VISA" >Visa</option>
+				<option value="ELO" >Elo</option>
+				<option value="HIPERCARD" >Hipercard</option>
+              	<option value="CABAL" >Cabal</option>              	             	              
+              	<option value="MASTERCARD">Mastercard</option>
+              </select>
             </div>
           </div>
           <div class="form-row">

@@ -137,7 +137,10 @@ public class CupomDao implements IDao{
 				+ "cup_valor,"
 				+ "cup_cupomPromocional,"
 				+ "cup_dataHoraVencimento, "
-				+ "cup_usu_id"
+				+ "cup_usu_id,"
+				+ "cup_ativo,"
+				+ "cup_dataHoraCriacao,"
+				+ "cup_dataHoraAtualizacao"
 				+ " FROM tb_cupom WHERE cup_ativo = 1";
 		if(cupom.getUsuario() != null && cupom.getUsuario().getId() != null) {
 			sql += " AND cup_usu_id = " + cupom.getUsuario().getId();
@@ -162,6 +165,9 @@ public class CupomDao implements IDao{
 				c.setValor(rs.getFloat("cup_valor"));
 				c.setCupomPromocional(rs.getBoolean("cup_cupomPromocional"));
 				c.setDataHoraVencimento(rs.getObject("cup_dataHoraVencimento",LocalDateTime.class));
+				c.setAtivo(rs.getBoolean("cup_ativo"));
+				c.setDataHoraCriacao(rs.getObject("cup_dataHoraCriacao", LocalDateTime.class));
+				c.setDataHoraAtualizacao(rs.getObject("cup_dataHoraAtualizacao", LocalDateTime.class));
 				
 				u.setId(rs.getLong("cup_usu_id"));
 				c.setUsuario(u);

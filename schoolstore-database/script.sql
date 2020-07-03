@@ -15,7 +15,8 @@ CREATE TABLE tb_fornecedor
   for_cnpj VARCHAR(20) NOT NULL,
   for_nome VARCHAR(100) NOT NULL,
   for_ativo BOOLEAN NOT NULL,
-  for_dataCriacao DATETIME NOT NULL,
+  for_dataHoraCriacao DATETIME NOT NULL,
+  for_dataHoraAtualizacao DATETIME DEFAULT NULL,
   PRIMARY KEY (for_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -26,6 +27,7 @@ CREATE TABLE tb_estado
  est_sigla CHAR(2) NOT NULL,
  est_ativo BOOLEAN NOT NULL,
  est_dataHoraCriacao DATETIME NOT NULL,
+ est_dataHoraAtualizacao DATETIME DEFAULT NULL,
  PRIMARY KEY (est_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -35,6 +37,7 @@ CREATE TABLE tb_precificacao
   pre_percentual DECIMAL(3,2) NOT NULL,
   pre_ativo BOOLEAN NOT NULL,
   pre_dataHoraCriacao DATETIME NOT NULL,
+  pre_dataHoraAtualizacao DATETIME DEFAULT NULL,
   PRIMARY KEY (pre_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -45,6 +48,7 @@ CREATE TABLE tb_carrinho
   car_validade DATETIME DEFAULT NULL,
   car_ativo BOOLEAN NOT NULL,
   car_dataHoraCriacao DATETIME NOT NULL,
+  car_dataHoraAtualizacao DATETIME DEFAULT NULL,
   PRIMARY KEY (car_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -53,6 +57,7 @@ CREATE TABLE tb_imagem
  ima_id INT NOT NULL AUTO_INCREMENT,
  ima_ativo BOOLEAN NOT NULL,
  ima_dataHoraCriacao DATETIME NOT NULL,
+ ima_dataHoraAtualizacao DATETIME DEFAULT NULL,
  ima_nome VARCHAR(100) NOT NULL,
  ima_descricao VARCHAR(100) NOT NULL,
  ima_caminho VARCHAR(255) NOT NULL,
@@ -65,6 +70,7 @@ CREATE TABLE tb_cidade
  cid_nome VARCHAR(100) NOT NULL,
  cid_ativo BOOLEAN NOT NULL,
  cid_dataHoraCriacao DATETIME NOT NULL,
+ cid_dataHoraAtualizacao DATETIME DEFAULT NULL,
  cid_est_id INT NOT NULL,
  PRIMARY KEY (cid_id),
  FOREIGN KEY(cid_est_id) REFERENCES tb_estado(est_id)
@@ -75,6 +81,7 @@ CREATE TABLE tb_usuario
  usu_id INT NOT NULL AUTO_INCREMENT,
  usu_ativo BOOLEAN NOT NULL,
  usu_dataHoraCriacao DATETIME NOT NULL,
+ usu_dataHoraAtualizacao DATETIME DEFAULT NULL,
  usu_email VARCHAR(100) NOT NULL,
  usu_senha VARCHAR(100) NOT NULL,
  usu_admin BOOLEAN NOT NULL,
@@ -91,6 +98,7 @@ CREATE TABLE tb_cliente
  cli_numeroDocumento VARCHAR(25) NOT NULL,
  cli_ativo BOOLEAN NOT NULL,
  cli_dataHoraCriacao DATETIME NOT NULL,
+ cli_dataHoraAtualizacao DATETIME DEFAULT NULL,
  cli_usu_id INT NOT NULL,
  cli_car_id INT NOT NULL,
  PRIMARY KEY (cli_id),
@@ -103,11 +111,13 @@ CREATE TABLE tb_cartaoCredito
   ccr_id INT NOT NULL AUTO_INCREMENT,
   ccr_ativo BOOLEAN NOT NULL,
   ccr_dataHoraCriacao DATETIME NOT NULL,
+  ccr_dataHoraAtualizacao DATETIME DEFAULT NULL,
   ccr_numero VARCHAR(16) NOT NULL,
   ccr_codigo VARCHAR(3) NOT NULL,
   ccr_nomeImpresso VARCHAR(100) NOT NULL,
   ccr_favorito BOOLEAN NOT NULL,
   ccr_cli_id INT NOT NULL,
+  ccr_bandeiraCartao VARCHAR(20) DEFAULT NULL,
   PRIMARY KEY (ccr_id),
   FOREIGN KEY(ccr_cli_id) REFERENCES tb_cliente(cli_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -125,6 +135,7 @@ CREATE TABLE tb_endereco
  end_favorito BOOLEAN NOT NULL,
  end_ativo BOOLEAN NOT NULL,
  end_dataHoraCriacao DATETIME NOT NULL,
+ end_dataHoraAtualizacao DATETIME DEFAULT NULL,
  end_cid_id INT NOT NULL,
  end_cli_id INT NOT NULL,
  PRIMARY KEY (end_id),
@@ -140,6 +151,7 @@ CREATE TABLE tb_produto
   pro_descricao VARCHAR(400) NOT NULL,
   pro_ativo BOOLEAN NOT NULL,
   pro_dataHoraCriacao DATETIME NOT NULL,
+  pro_dataHoraAtualizacao DATETIME DEFAULT NULL,
   pro_ima_id INT NOT NULL,
   pro_pre_id INT NOT NULL, 
   PRIMARY KEY (pro_id),
@@ -164,6 +176,7 @@ CREATE TABLE tb_categoria
   cat_nome VARCHAR(100) NOT NULL,
   cat_ativo BOOLEAN NOT NULL,
   cat_dataHoraCriacao DATETIME NOT NULL,
+  cat_dataHoraAtualizacao DATETIME DEFAULT NULL,
   cat_pro_id INT NOT NULL, 
   PRIMARY KEY (cat_id),
   FOREIGN KEY(cat_pro_id) REFERENCES tb_produto(pro_id)
@@ -200,6 +213,7 @@ CREATE TABLE tb_cupom
   cup_ativo BOOLEAN NOT NULL,
   cup_dataHoraCriacao DATETIME NOT NULL,
   cup_dataHoraVencimento DATETIME DEFAULT NULL,
+  cup_dataHoraAtualizacao DATETIME DEFAULT NULL,
   cup_cupomPromocional BOOLEAN DEFAULT false,
   cup_usu_id INT DEFAULT NULL,
   PRIMARY KEY (cup_id),
@@ -263,6 +277,7 @@ CREATE TABLE tb_frete
   fre_end_id INT NOT NULL,
   fre_ativo BOOLEAN NOT NULL,
   fre_dataHoraCriacao DATETIME NOT NULL,
+  fre_dataHoraAtualizacao DATETIME DEFAULT NULL,
   PRIMARY KEY (fre_id),
   FOREIGN KEY(fre_end_id) REFERENCES tb_endereco(end_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -274,7 +289,7 @@ CREATE TABLE tb_pedido
   ped_statusPedido VARCHAR(20) NOT NULL,
   ped_ativo BOOLEAN NOT NULL,
   ped_dataHoraCriacao DATETIME NOT NULL,
-  ped_dataHoraAtualizacao DATETIME NOT NULL,
+  ped_dataHoraAtualizacao DATETIME DEFAULT NULL,
   ped_fpag_id INT NOT NULL,
   ped_fre_id INT NOT NULL,
   ped_cli_id INT NOT NULL,
@@ -299,6 +314,7 @@ CREATE TABLE tb_troca
 (
   tro_id INT NOT NULL AUTO_INCREMENT,
   tro_dataHoraCriacao DATETIME NOT NULL,
+  tro_dataHoraAtualizacao DATETIME DEFAULT NULL,
   tro_ativo BOOLEAN NOT NULL,
   tro_ped_id INT NOT NULL,
   tro_cli_id INT NOT NULL,

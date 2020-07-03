@@ -142,6 +142,7 @@ $(document).ready(function () {
 							<input type="hidden" name="txtNomeImpressoCartao" value="${cartao.nomeImpresso}">
 							<input type="hidden" name="txtNumeroCartao" value="${cartao.numero}">
 							<input type="hidden" name="txtFavoritoCartao" value="${cartao.favorito}">
+							<input type="hidden" name="txtBandeiraCartao" value="${cartao.bandeiraCartao}">
 						  	<input type="hidden" name="txtNome" value="${data.nome}">
 							<button type="button" style="white-space: nowrap;" class="btn btn-link teal-text visualizarCartao text-lowercase p-0 font-weight-bold" >*.${cartao.numero.substr(12,16)}
 								${cartao.favorito === true ? '<i class="fas fa-star"></i>' : ""}
@@ -155,6 +156,7 @@ $(document).ready(function () {
 					  let numeroCartao = $(this).parent().find("input[name='txtNumeroCartao']").val();
 					  let favorito = $(this).parent().find("input[name='txtFavoritoCartao']").val();
 					  let nomeCliente = $(this).parent().find("input[name='txtNome']").val();
+					  let bandeira = $(this).parent().find("input[name='txtBandeiraCartao']").val()
 					
 					  favorito = favorito === "true" ? "Sim" : "Não"
 					
@@ -168,6 +170,7 @@ $(document).ready(function () {
 					        <p class="text-center">${nomeCliente}</p>
 					        <ul>
 					          <li><b>Código: </b>${codigoCartao}</li>
+					          <li><b>Bandeira: </b>${bandeira}</li>
 					          <li><b>Número: </b>${numeroCartao}</li>
 					          <li><b>Nome Impresso: </b>${nomeImpressoCartao}</li>
 					          <li><b>Favorito: </b>${favorito}</li>

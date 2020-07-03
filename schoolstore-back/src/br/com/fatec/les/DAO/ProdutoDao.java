@@ -1,6 +1,7 @@
 package br.com.fatec.les.DAO;
 
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,7 +54,10 @@ public class ProdutoDao implements IDao{
 				+ "pro_preco, "
 				+ "pro_descricao,"
 				+ "pro_ima_id, "
-				+ "pro_pre_id "
+				+ "pro_pre_id,"
+				+ "pro_ativo,"
+				+ "pro_dataHoraCriacao,"
+				+ "pro_dataHoraAtualizacao "
 				+ " FROM tb_produto "
 				+ " WHERE pro_ativo = 1 ";
 		if(produto.getId() != null) {
@@ -81,6 +85,9 @@ public class ProdutoDao implements IDao{
 				p.setDescricao(rs.getString("pro_descricao"));
 				p.setPreco(rs.getFloat("pro_preco"));
 				p.setId(rs.getLong("pro_id"));
+				p.setAtivo(rs.getBoolean("pro_ativo"));
+				p.setDataHoraAtualizacao(rs.getObject("pro_dataHoraAtualizacao", LocalDateTime.class));
+				p.setDataHoraCriacao(rs.getObject("pro_dataHoraCriacao", LocalDateTime.class));
 				
 				i.setId(rs.getLong("pro_ima_id"));
 				p.setImagem((Imagem)imagemDao.consultar(i).get(0));

@@ -1,6 +1,7 @@
 package br.com.fatec.les.DAO;
 
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,6 +9,7 @@ import br.com.fatec.les.database.ConexaoFactory;
 import br.com.fatec.les.facade.Mensagem;
 import br.com.fatec.les.facade.MensagemStatus;
 import br.com.fatec.les.model.config.ADominio;
+import br.com.fatec.les.model.pagamento.cartao.BandeiraCartao;
 import br.com.fatec.les.model.pagamento.cartao.CartaoCredito;
 import br.com.fatec.les.model.usuario.Cliente;
 
@@ -29,10 +31,11 @@ public class CartaoCreditoDao implements IDao{
 				+ "ccr_favorito, "
 				+ "ccr_cli_id, "
 				+ "ccr_codigo, "
+				+ "ccr_bandeiraCartao, "
 				+ "ccr_ativo, "
 				+ "ccr_dataHoraCriacao "
 				+ ") "
-				+ " VALUES ( ?, ?, ?, ?, ?, true, NOW())";
+				+ " VALUES ( ?, ?, ?, ?, ?, ?, true, NOW())";
 		
 		PreparedStatement pstm = null;
 		
@@ -43,6 +46,7 @@ public class CartaoCreditoDao implements IDao{
 			pstm.setBoolean(3, cartaoCredito.isFavorito());
 			pstm.setLong(4, cartaoCredito.getCliente().getId());
 			pstm.setString(5, cartaoCredito.getCodigo());
+			pstm.setString(6, cartaoCredito.getBandeiraCartao().toString());
 			pstm.executeUpdate();
 
 			mensagem.setMensagem("Operação realizada com sucesso!");
@@ -113,7 +117,11 @@ public class CartaoCreditoDao implements IDao{
 				+ "ccr_nomeImpresso, "
 				+ "ccr_favorito, "
 				+ "ccr_codigo, "
-				+ "ccr_cli_id "
+				+ "ccr_cli_id,"
+				+ "ccr_ativo,"
+				+ "ccr_dataHoraCriacao,"
+				+ "ccr_dataHoraAtualizacao,"
+				+ "ccr_bandeiraCartao "
 				+ " FROM tb_cartaoCredito WHERE ccr_ativo = 1 ";
 		if(cartaoEntidade.getId() != null) {
 			sql += "AND ccr_id = " + cartaoEntidade.getId();
@@ -137,6 +145,10 @@ public class CartaoCreditoDao implements IDao{
 				cartaoCredito.setFavorito(rs.getString("ccr_favorito").equals("1") ? true : false);
 				cliente.setId(Long.parseLong(rs.getString("ccr_cli_id")));
 				cartaoCredito.setCliente(cliente);
+				cartaoCredito.setAtivo(rs.getBoolean("ccr_ativo"));
+				cartaoCredito.setDataHoraCriacao(rs.getObject("ccr_dataHoraCriacao", LocalDateTime.class));
+				cartaoCredito.setDataHoraAtualizacao(rs.getObject("ccr_dataHoraAtualizacao", LocalDateTime.class));
+				cartaoCredito.setBandeiraCartao(BandeiraCartao.valueOf(rs.getString("ccr_bandeiraCartao")));
 				
 				cartoes.add(cartaoCredito);
 			}

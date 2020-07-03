@@ -1,6 +1,7 @@
 package br.com.fatec.les.DAO;
 
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -68,7 +69,10 @@ public class UsuarioDao implements IDao{
 				+ "usu_senha, "
 				+ "usu_email, "
 				+ "usu_ima_id,"
-				+ "usu_admin "
+				+ "usu_admin,"
+				+ "usu_ativo,"
+				+ "usu_dataHoraCriacao,"
+				+ "usu_dataHoraAtualizacao "
 				+ " FROM tb_usuario WHERE usu_ativo = 1 ";
 		if(usuario.getId() != null) {
 			sql += " AND usu_id = " + usuario.getId();
@@ -103,6 +107,9 @@ public class UsuarioDao implements IDao{
 				u.setAdmin(rs.getBoolean("usu_admin"));
 				i.setId(rs.getLong("usu_ima_id"));
 				u.setImagem((Imagem)imagemDao.consultar(i).get(0));
+				u.setAtivo(rs.getBoolean("usu_ativo"));
+				u.setDataHoraCriacao(rs.getObject("usu_dataHoraCriacao", LocalDateTime.class));
+				u.setDataHoraAtualizacao(rs.getObject("usu_dataHoraAtualizacao", LocalDateTime.class));
 				
 				ct.setUsuario(u);
 				cuponsEntidade.addAll(cupomDao.consultar(ct));

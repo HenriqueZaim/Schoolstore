@@ -1,6 +1,7 @@
 package br.com.fatec.les.DAO;
 
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -273,7 +274,10 @@ public class ClienteDao implements IDao{
 				+ "cli_numeroTelefone, "
 				+ "cli_numeroDocumento, "
 				+ "cli_usu_id,"
-				+ "cli_car_id "
+				+ "cli_car_id,"
+				+ "cli_ativo,"
+				+ "cli_dataHoraCriacao,"
+				+ "cli_dataHoraAtualizacao "
 				+ " FROM tb_cliente WHERE cli_ativo = 1 ";
 		if(cliente.getId() != null) {
 			sql += " AND cli_id = " + cliente.getId() + "";
@@ -308,6 +312,9 @@ public class ClienteDao implements IDao{
 				c.setNome(rs.getString("cli_nome"));
 				c.setNumeroTelefone(rs.getString("cli_numeroTelefone"));
 				c.setNumeroDocumento(rs.getString("cli_numeroDocumento"));
+				c.setAtivo(rs.getBoolean("cli_ativo"));
+				c.setDataHoraCriacao(rs.getObject("cli_dataHoraCriacao", LocalDateTime.class));
+				c.setDataHoraAtualizacao(rs.getObject("cli_dataHoraAtualizacao", LocalDateTime.class));
 				
 				e.setCliente(c);
 				enderecosEntidade.addAll(enderecoDao.consultar(e));

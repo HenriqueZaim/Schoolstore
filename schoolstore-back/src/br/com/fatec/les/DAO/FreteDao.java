@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -89,7 +90,10 @@ public class FreteDao implements IDao{
 				+ "fre_id, "
 				+ "fre_valor, "
 				+ "fre_previsaoEmDias, "
-				+ "fre_end_id "
+				+ "fre_end_id,"
+				+ "fre_ativo,"
+				+ "fre_dataHoraCriacao,"
+				+ "fre_dataHoraAtualizacao "
 				+ " FROM tb_frete "
 				+ " WHERE fre_ativo = 1 ";
 		if(frete.getId() != null) {
@@ -110,6 +114,9 @@ public class FreteDao implements IDao{
 				f.setId(rs.getLong("fre_id"));
 				f.setValor(rs.getFloat("fre_valor"));
 				f.setPrevisaoEmDias(rs.getInt("fre_previsaoEmDias"));
+				f.setAtivo(rs.getBoolean("fre_ativo"));
+				f.setDataHoraCriacao(rs.getObject("fre_dataHoraCriacao", LocalDateTime.class));
+				f.setDataHoraAtualizacao(rs.getObject("fre_dataHoraAtualizacao", LocalDateTime.class));
 				
 				e.setId(rs.getLong("fre_end_id"));
 				f.setEndereco((Endereco)enderecoDao.consultar(e).get(0));

@@ -158,8 +158,8 @@ INSERT INTO `tb_carrinho` (`car_id`, `car_subTotal`, `car_validade`, `car_ativo`
 INSERT INTO `tb_cliente` (`cli_id`, `cli_nome`, `cli_numeroTelefone`, `cli_numeroDocumento`, `cli_ativo`, `cli_dataHoraCriacao`, `cli_usu_id`, `cli_car_id`) VALUES
 (1, 'Henrique', '12341234123', '23057010806333', 1, '2020-01-01 09:33:43', 2, 1);
 
-INSERT INTO `tb_cartaoCredito` (`ccr_id`, `ccr_ativo`, `ccr_dataHoraCriacao`, `ccr_numero`, `ccr_codigo`, `ccr_nomeImpresso`, `ccr_favorito`, `ccr_cli_id`) VALUES
-(1, 1, '2020-01-01 09:33:43', '1234123412341234', '234', 'qwerqwerqwer', 1, 1);
+INSERT INTO `tb_cartaoCredito` (`ccr_id`, `ccr_ativo`, `ccr_dataHoraCriacao`, `ccr_numero`, `ccr_codigo`, `ccr_nomeImpresso`, `ccr_favorito`, `ccr_cli_id`, `ccr_bandeiraCartao`) VALUES
+(1, 1, '2020-01-01 09:33:43', '1234123412341234', '234', 'qwerqwerqwer', 1, 1, 'MASTERCARD');
 
 INSERT INTO `tb_endereco` (`end_id`, `end_nome`, `end_logradouro`, `end_bairro`, `end_cep`, `end_numero`, `end_complemento`, `end_referencia`, `end_favorito`, `end_ativo`, `end_dataHoraCriacao`, `end_cid_id`, `end_cli_id`) VALUES
 (1, 'qwerqwer', 'qwerqwer', 'qweqwe', '12312-312', 123, 'qweqwe', 'qweqwerqw', 1, 1, '2020-01-01 09:33:43', 101, 1);

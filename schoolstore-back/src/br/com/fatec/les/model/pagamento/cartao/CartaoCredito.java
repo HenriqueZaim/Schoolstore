@@ -10,7 +10,14 @@ public class CartaoCredito extends EntidadeDominio{
 	private String nomeImpresso;
 	private boolean favorito;
 	private Cliente cliente;
+	private BandeiraCartao bandeiraCartao;
 	
+	public BandeiraCartao getBandeiraCartao() {
+		return bandeiraCartao;
+	}
+	public void setBandeiraCartao(BandeiraCartao bandeiraCartao) {
+		this.bandeiraCartao = bandeiraCartao;
+	}
 	public Cliente getCliente() {
 		return cliente;
 	}

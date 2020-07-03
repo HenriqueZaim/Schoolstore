@@ -13,12 +13,9 @@ import br.com.fatec.les.database.ConexaoFactory;
 import br.com.fatec.les.facade.Mensagem;
 import br.com.fatec.les.facade.MensagemStatus;
 import br.com.fatec.les.model.config.ADominio;
-import br.com.fatec.les.model.endereco.Endereco;
 import br.com.fatec.les.model.estoque.Estoque;
 import br.com.fatec.les.model.pagamento.FormaPagamento;
-import br.com.fatec.les.model.pagamento.cartao.CartaoCredito;
 import br.com.fatec.les.model.pagamento.cupom.Cupom;
-import br.com.fatec.les.model.pagamento.cupom.PagamentoCupom;
 import br.com.fatec.les.model.pedido.Frete;
 import br.com.fatec.les.model.pedido.ItemPedido;
 import br.com.fatec.les.model.pedido.Pedido;
@@ -53,10 +50,9 @@ public class PedidoDao implements IDao{
 				+ "ped_fre_id, "
 				+ "ped_fpag_id, "
 				+ "ped_ativo, "
-				+ "ped_dataHoraCriacao,"
-				+ "ped_dataHoraAtualizacao "
+				+ "ped_dataHoraCriacao"
 				+ ") "
-				+ " VALUES ( ?, ?, ?, ?, ?, true, NOW(), NOW())";
+				+ " VALUES ( ?, ?, ?, ?, ?, true, NOW())";
 		
 		PreparedStatement pstm = null;
 		

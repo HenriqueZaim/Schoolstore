@@ -170,6 +170,7 @@ $("#btnSalvarCartao").click(function () {
   let codigo = $("#txtCodigoModal").val()
   let numero = $("#txtNumeroCartaoModal").val()
   let favorito = $("#txtFavoritoCartaoModal").val()
+  let bandeira =  $("#txtBandeiraModal").val()
   let digitos = numero.substr(12,15)
 
   let idHeading = `${nome}-${codigo}`
@@ -194,6 +195,7 @@ $("#btnSalvarCartao").click(function () {
               <div class="card-body">
                   <ul>
                     <li><b>Nome impresso: </b>${nome}</li>
+                    <li><b>Bandeira: </b>${bandeira}</li>
                     <li><b>Número: </b>${numero}</li>
                     <li><b>Código de segurança: </b>${codigo}</li>
                     <li><b>Favorito: </b>${favorito}</li>
@@ -207,6 +209,7 @@ $("#btnSalvarCartao").click(function () {
           <input type="hidden" name="txtCodigoCartao" value="${codigo}">
           <input type="hidden" name="txtNumeroCartao" value="${numero}">
           <input type="hidden" name="txtFavoritoCartao" value="${favorito}">
+          <input type="hidden" name="txtBandeiraCartao" value="${bandeira}">
       </div>
   `)
 

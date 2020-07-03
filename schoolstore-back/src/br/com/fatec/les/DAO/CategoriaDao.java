@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,7 +47,10 @@ public class CategoriaDao implements IDao{
 		
 		String sql = "SELECT "
 				+ "cat_id, "
-				+ "cat_nome "
+				+ "cat_nome,"
+				+ "cat_ativo,"
+				+ "cat_dataHoraCriacao,"
+				+ "cat_dataHoraAtualizacao "
 				+ " FROM tb_categoria "
 				+ " WHERE cat_ativo = 1 "
 				+ " AND cat_pro_id = " + produto.getId() + "";
@@ -59,6 +63,9 @@ public class CategoriaDao implements IDao{
 				Categoria categoria = new Categoria();
 				categoria.setNome(rs.getString("cat_nome"));
 				categoria.setId(rs.getLong("cat_id"));
+				categoria.setAtivo(rs.getBoolean("cat_ativo"));
+				categoria.setDataHoraCriacao(rs.getObject("cat_dataHoraCriacao", LocalDateTime.class));
+				categoria.setDataHoraAtualizacao(rs.getObject("cat_dataHoraAtualizacao", LocalDateTime.class));
 				categorias.add(categoria);
 			}
 		}catch(SQLException e) {

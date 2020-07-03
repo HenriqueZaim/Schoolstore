@@ -169,6 +169,7 @@
 											<div class="card-body">
 												<ul>
 													<li><b>Número do cartão: </b>${cartao.getNumero()}</li>
+													<li><b>Bandeira: </b>${cartao.getBandeiraCartao()}</li>
 													<li><b>Nome Impresso: </b>${cartao.getNomeImpresso()}</li>
 													<li><b>Código de segurança: </b>${cartao.getCodigo()}</li>
 													<li><b>Favorito: </b>${cartao.isFavorito() ? "sim" : "não"}</li>
@@ -181,6 +182,7 @@
 										<input type="hidden" name="txtNumeroCartao" value="${cartao.getNumero()}"> 
 										<input type="hidden" name="txtCartaoCreditoId" value="${cartao.getId()}"> 
 										<input type="hidden" name="txtFavoritoCartao" value="${cartao.isFavorito()}"> 
+										<input type="hidden" name="txtBandeiraCartao" value="${cartao.getBandeiraCartao()}"> 
 										<input type="hidden" name="txtNomeImpressoCartao" value="${cartao.getNomeImpresso()}"> 
 										
 
@@ -291,6 +293,16 @@
 						<div class="col mb-3 md-form">
 							<label for="txtNomeImpressoModal">Nome Impresso*</label> <input type="text" class="form-control" id="txtNomeImpressoModal" required maxlength="100">
 						</div>
+						<div class="col mb-3">
+			              <label for="txtBandeiraModal">Bandeira*</label> 
+			              <select id="txtBandeiraModal" required>
+			              	<option value="VISA" >Visa</option>
+							<option value="ELO" >Elo</option>
+							<option value="HIPERCARD" >Hipercard</option>
+			              	<option value="CABAL" >Cabal</option>              	             	              
+			              	<option value="MASTERCARD">Mastercard</option>
+			              </select>
+			            </div>
 					</div>
 					<div class="form-row">
 						<div class="col-md-8 mb-3 md-form">

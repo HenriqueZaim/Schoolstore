@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import br.com.fatec.les.model.config.ADominio;
+import br.com.fatec.les.model.pagamento.cartao.BandeiraCartao;
 import br.com.fatec.les.model.pagamento.cartao.CartaoCredito;
 import br.com.fatec.les.model.usuario.Cliente;
 
@@ -33,7 +34,8 @@ public class CartaoCreditoVH implements IViewHelper{
 				cartaoCredito.setNomeImpresso(request.getParameterValues("txtNomeImpressoCartao")[i]);
 				cartaoCredito.setNumero(request.getParameterValues("txtNumeroCartao")[i]);
 				cartaoCredito.setFavorito(Boolean.parseBoolean(request.getParameterValues("txtFavoritoCartao")[i]));
-
+				cartaoCredito.setBandeiraCartao(BandeiraCartao.valueOf(request.getParameterValues("txtBandeiraCartao")[i]));
+				
 				cartoes.add(cartaoCredito);
 			}
 		}

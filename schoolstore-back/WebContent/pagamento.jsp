@@ -188,6 +188,16 @@
 								<label for="txtNomeImpressoModal">Nome Impresso*</label> 
 								<input type="text" class="form-control" id="txtNomeImpressoModal" name="txtNomeImpressoCartao" required maxlength="100">
 							</div>
+							<div class="col mb-3">
+				              <label for="txtBandeiraModal">Bandeira*</label> 
+				              <select id="txtBandeiraModal" name="txtBandeiraCartao" required>
+				              	<option value="VISA" >Visa</option>
+								<option value="ELO" >Elo</option>
+								<option value="HIPERCARD" >Hipercard</option>
+				              	<option value="CABAL" >Cabal</option>              	             	              
+				              	<option value="MASTERCARD">Mastercard</option>
+				              </select>
+				            </div>
 						</div>
 						<div class="form-row">
 							<div class="col-md-8 mb-3 md-form">

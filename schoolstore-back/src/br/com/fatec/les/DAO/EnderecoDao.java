@@ -1,6 +1,7 @@
 package br.com.fatec.les.DAO;
 
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -130,7 +131,10 @@ public class EnderecoDao implements IDao{
 				+ "end_favorito,"
 				+ "end_nome, "
 				+ "end_cid_id,"
-				+ "end_cli_id "
+				+ "end_cli_id,"
+				+ "end_ativo,"
+				+ "end_dataHoraCriacao,"
+				+ "end_dataHoraAtualizacao "
 				+ " FROM tb_endereco WHERE end_ativo = 1 ";
 		if(enderecoEntidade.getId() != null) {
 			sql += "AND end_id = " + enderecoEntidade.getId();
@@ -163,6 +167,9 @@ public class EnderecoDao implements IDao{
 				endereco.setReferencia(rs.getString("end_referencia"));
 				endereco.setFavorito(rs.getString("end_favorito").equals("1") ? true : false);
 				endereco.setNome(rs.getString("end_nome"));
+				endereco.setAtivo(rs.getBoolean("end_ativo"));
+				endereco.setDataHoraCriacao(rs.getObject("end_dataHoraCriacao", LocalDateTime.class));
+				endereco.setDataHoraAtualizacao(rs.getObject("end_dataHoraAtualizacao", LocalDateTime.class));
 				
 				enderecos.add(endereco);
 			}

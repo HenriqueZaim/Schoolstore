@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,7 +44,10 @@ public class FornecedorDao implements IDao{
 		String sql = "SELECT "
 				+ "for_id, "
 				+ "for_cnpj, "
-				+ "for_nome "
+				+ "for_nome,"
+				+ "for_ativo,"
+				+ "for_dataHoraCriacao,"
+				+ "for_dataHoraAtualizacao "
 				+ " FROM tb_fornecedor "
 				+ " WHERE for_id = " + fornecedor.getId() + "";
 
@@ -56,6 +60,9 @@ public class FornecedorDao implements IDao{
 				f.setId(rs.getLong("for_id"));
 				f.setCnpj(rs.getString("for_cnpj"));
 				f.setNome(rs.getString("for_nome"));
+				f.setAtivo(rs.getBoolean("for_ativo"));
+				f.setDataHoraCriacao(rs.getObject("for_dataHoraCriacao", LocalDateTime.class));
+				f.setDataHoraAtualizacao(rs.getObject("for_dataHoraCriacao", LocalDateTime.class));
 				fornecedores.add(f);
 			}
 		}catch(SQLException e) {

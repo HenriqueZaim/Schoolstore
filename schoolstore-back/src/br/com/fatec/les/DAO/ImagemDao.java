@@ -1,6 +1,7 @@
 package br.com.fatec.les.DAO;
 
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -129,7 +130,10 @@ public class ImagemDao implements IDao{
 				+ "ima_id, "
 				+ "ima_nome, "
 				+ "ima_descricao,"
-				+ "ima_caminho "
+				+ "ima_caminho,"
+				+ "ima_ativo,"
+				+ "ima_dataHoraCriacao,"
+				+ "ima_dataHoraAtualizacao "
 				+ " FROM tb_imagem WHERE ima_ativo = 1 ";
 		if(imagem.getId() != null) {
 			sql += "AND ima_id = " + imagem.getId();
@@ -148,6 +152,9 @@ public class ImagemDao implements IDao{
 				i.setFoto(rs.getString("ima_nome"));
 				i.setDescricao(rs.getString("ima_descricao"));
 				i.setCaminho(rs.getString("ima_caminho"));
+				i.setAtivo(rs.getBoolean("ima_ativo"));
+				i.setDataHoraCriacao(rs.getObject("ima_dataHoraCriacao", LocalDateTime.class));
+				i.setDataHoraAtualizacao(rs.getObject("ima_dataHoraAtualizacao", LocalDateTime.class));
 
 				imagens.add(i);
 			}

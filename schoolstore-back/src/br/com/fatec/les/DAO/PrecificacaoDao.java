@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,7 +43,10 @@ public class PrecificacaoDao implements IDao{
 		
 		String sql = "SELECT "
 				+ "pre_id, "
-				+ "pre_percentual "
+				+ "pre_percentual,"
+				+ "pre_ativo,"
+				+ "pre_dataHoraCriacao,"
+				+ "pre_dataHoraAtualizacao "
 				+ " FROM tb_precificacao "
 				+ " WHERE pre_ativo = 1 "
 				+ " AND pre_id = " + precificacao.getId() + "";
@@ -55,6 +59,9 @@ public class PrecificacaoDao implements IDao{
 				Precificacao p = new Precificacao();
 				p.setId(rs.getLong("pre_id"));
 				p.setPercentual(rs.getFloat("pre_percentual"));
+				p.setAtivo(rs.getBoolean("pre_ativo"));
+				p.setDataHoraCriacao(rs.getObject("pre_dataHoraCriacao", LocalDateTime.class));
+				p.setDataHoraAtualizacao(rs.getObject("pre_dataHoraAtualizacao", LocalDateTime.class));
 				precificacoes.add(p);
 			}
 		}catch(SQLException e) {
