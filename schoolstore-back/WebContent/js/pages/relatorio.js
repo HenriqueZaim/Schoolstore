@@ -482,7 +482,6 @@ $("#txtDataInicio").change(function(){
 			var dia = parseInt($("#txtDataInicio").val().substr(8,2))
 			
 			itens.entidades.forEach(function(item){
-				debugger
 				if(item.dataHoraCriacao.date.month === item.dataHoraAtualizacao.date.month){
 					if(item.dataHoraCriacao.date.month <= mes){
 						if(item.dataHoraCriacao.date.month == mes){

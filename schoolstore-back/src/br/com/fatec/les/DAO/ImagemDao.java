@@ -7,8 +7,8 @@ import java.util.List;
 import br.com.fatec.les.database.ConexaoFactory;
 import br.com.fatec.les.facade.Mensagem;
 import br.com.fatec.les.facade.MensagemStatus;
-import br.com.fatec.les.model.assets.ADominio;
-import br.com.fatec.les.model.assets.Imagem;
+import br.com.fatec.les.model.config.ADominio;
+import br.com.fatec.les.model.config.Imagem;
 
 public class ImagemDao implements IDao{
 

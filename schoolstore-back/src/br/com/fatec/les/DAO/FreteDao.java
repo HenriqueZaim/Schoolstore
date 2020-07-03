@@ -11,7 +11,7 @@ import java.util.List;
 import br.com.fatec.les.database.ConexaoFactory;
 import br.com.fatec.les.facade.Mensagem;
 import br.com.fatec.les.facade.MensagemStatus;
-import br.com.fatec.les.model.assets.ADominio;
+import br.com.fatec.les.model.config.ADominio;
 import br.com.fatec.les.model.endereco.Endereco;
 import br.com.fatec.les.model.pedido.Frete;
 

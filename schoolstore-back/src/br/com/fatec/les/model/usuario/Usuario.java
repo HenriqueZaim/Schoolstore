@@ -2,8 +2,8 @@ package br.com.fatec.les.model.usuario;
 
 import java.util.List;
 
-import br.com.fatec.les.model.assets.EntidadeDominio;
-import br.com.fatec.les.model.assets.Imagem;
+import br.com.fatec.les.model.config.EntidadeDominio;
+import br.com.fatec.les.model.config.Imagem;
 import br.com.fatec.les.model.pagamento.cupom.Cupom;
 
 public class Usuario extends EntidadeDominio{

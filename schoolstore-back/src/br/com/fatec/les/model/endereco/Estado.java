@@ -2,7 +2,7 @@ package br.com.fatec.les.model.endereco;
 
 import java.util.List;
 
-import br.com.fatec.les.model.assets.EntidadeNomeada;
+import br.com.fatec.les.model.config.EntidadeNomeada;
 
 public class Estado extends EntidadeNomeada{
 

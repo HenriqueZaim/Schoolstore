@@ -6,7 +6,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import br.com.fatec.les.model.assets.ADominio;
+import br.com.fatec.les.model.config.ADominio;
 
 public interface IViewHelper {
 	public ADominio getEntidade(HttpServletRequest request);

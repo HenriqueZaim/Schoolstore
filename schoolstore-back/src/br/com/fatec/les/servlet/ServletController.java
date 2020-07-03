@@ -16,7 +16,7 @@ import br.com.fatec.les.command.DeletarCommand;
 import br.com.fatec.les.command.ICommand;
 import br.com.fatec.les.command.SalvarCommand;
 import br.com.fatec.les.facade.Resultado;
-import br.com.fatec.les.model.assets.ADominio;
+import br.com.fatec.les.model.config.ADominio;
 import br.com.fatec.les.viewHelper.CarrinhoVH;
 import br.com.fatec.les.viewHelper.CartaoCreditoVH;
 import br.com.fatec.les.viewHelper.ClienteVH;
@@ -26,6 +26,7 @@ import br.com.fatec.les.viewHelper.EstadoVH;
 import br.com.fatec.les.viewHelper.IViewHelper;
 import br.com.fatec.les.viewHelper.PedidoVH;
 import br.com.fatec.les.viewHelper.ProdutoVH;
+import br.com.fatec.les.viewHelper.RelatorioVH;
 import br.com.fatec.les.viewHelper.TrocaVH;
 import br.com.fatec.les.viewHelper.UsuarioVH;
 
@@ -53,6 +54,10 @@ public class ServletController extends HttpServlet{
     	commandMap.put("deletarCliente", new DeletarCommand());
     	commandMap.put("consultarCliente", new ConsultarCommand());
     	commandMap.put("atualizarCliente", new AtualizarCommand());
+    	
+    	// relatorio
+    	vhMap.put("relatorio", new RelatorioVH());
+    	commandMap.put("relatorio", new ConsultarCommand());
     	
     	// Get nos estados e cidades
     	vhMap.put("cadastroCliente", new EstadoVH()); //TODO: Alterar nome da tarefa

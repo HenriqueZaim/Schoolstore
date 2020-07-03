@@ -1,6 +1,6 @@
 package br.com.fatec.les.model.pedido;
 
-import br.com.fatec.les.model.assets.ADominio;
+import br.com.fatec.les.model.config.ADominio;
 import br.com.fatec.les.model.produto.Produto;
 
 public class ItemPedido extends ADominio{

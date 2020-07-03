@@ -1,8 +1,8 @@
 package br.com.fatec.les.command;
 
 import br.com.fatec.les.facade.Resultado;
-import br.com.fatec.les.model.assets.ADominio;
-import br.com.fatec.les.model.assets.EntidadeDominio;
+import br.com.fatec.les.model.config.ADominio;
+import br.com.fatec.les.model.config.EntidadeDominio;
 
 public class SalvarCommand extends AbstractCommand{
 	@Override

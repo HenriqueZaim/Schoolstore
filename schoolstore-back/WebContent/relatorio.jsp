@@ -1,7 +1,7 @@
 <%@page import="java.util.List"%>
 <%@page import="javax.security.auth.message.callback.PrivateKeyCallback.Request"%>
 <%@page import="br.com.fatec.les.model.usuario.Usuario"%>
-<%@page import="br.com.fatec.les.model.assets.EntidadeDominio"%>
+<%@page import="br.com.fatec.les.model.config.EntidadeDominio"%>
 <%@page import="br.com.fatec.les.facade.Resultado"%>
 <%@page import="java.util.ArrayList"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -181,11 +181,17 @@
 					<div class="card mb-4 wow fadeIn ">
 						<div class="row justify-items-center text-center pt-5">
 							<div class="col-lg-6 text-center">
-								<label for="txtDataInicio">Início do período</label> <br> <input type="date" id="txtDataInicio" min="2020-01-01" max="2020-06-15" placeholder="00/00/0000">
+								<label for="txtDataInicio">Início do período</label> <br> <input type="date" id="txtDataInicio" max="2020-07-06" placeholder="00/00/0000">
 							</div>
 							<div class="col-lg-6 text-center">
-								<label for="txtDataFim" max="">Fim do período</label> <br> <input type="date" id="txtDataFim" min="2020-01-02" max="2020-06-16" placeholder="00/00/0000">
+								<label for="txtDataFim">Fim do período</label> <br> <input type="date" id="txtDataFim" max="2020-07-06" placeholder="00/00/0000">
 							</div>
+						</div>
+						<div class="row justify-items-center text-center pt-5">
+							<div class="col-lg-12 text-center">
+								<button class="btn btn-success buscarRelatorio" type="button">Pesquisar</button>
+							</div>
+						
 						</div>
 						<section class="dark-grey-text p-4 w-50 d-flex mx-auto">
 							<canvas id="myChart" height="200"></canvas>
@@ -209,7 +215,7 @@
 	<script type="text/javascript" src="./js/mdb.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js" integrity="sha256-TQq84xX6vkwR0Qs1qH5ADkP+MvH0W+9E7TdHJsoIQiM=" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" crossorigin="anonymous"></script>
-	<script type="text/javascript" src="./js/pages/relatorio.js"></script>
+	<script type="text/javascript" src="./js/pages/relatorio-novo.js"></script>
 
 </body>
 

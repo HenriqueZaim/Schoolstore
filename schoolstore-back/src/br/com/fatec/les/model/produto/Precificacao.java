@@ -1,6 +1,6 @@
 package br.com.fatec.les.model.produto;
 
-import br.com.fatec.les.model.assets.EntidadeDominio;
+import br.com.fatec.les.model.config.EntidadeDominio;
 
 public class Precificacao extends EntidadeDominio{
 

@@ -15,10 +15,12 @@ import br.com.fatec.les.DAO.EstadoDao;
 import br.com.fatec.les.DAO.IDao;
 import br.com.fatec.les.DAO.PedidoDao;
 import br.com.fatec.les.DAO.ProdutoDao;
+import br.com.fatec.les.DAO.RelatorioDao;
 import br.com.fatec.les.DAO.TrocaDao;
 import br.com.fatec.les.DAO.UsuarioDao;
-import br.com.fatec.les.model.assets.ADominio;
-import br.com.fatec.les.model.assets.EntidadeDominio;
+import br.com.fatec.les.model.config.ADominio;
+import br.com.fatec.les.model.config.EntidadeDominio;
+import br.com.fatec.les.model.config.Relatorio;
 import br.com.fatec.les.model.endereco.Endereco;
 import br.com.fatec.les.model.endereco.Estado;
 import br.com.fatec.les.model.pagamento.cartao.CartaoCredito;
@@ -60,6 +62,7 @@ public class Facade implements IFacade{
 		TrocaDao trocaDao = new TrocaDao();
 		EnderecoDao enderecoDao = new EnderecoDao();
 		CartaoCreditoDao cartaoCreditoDao = new CartaoCreditoDao();
+		RelatorioDao relatorioDao = new RelatorioDao();
 		
 		
 		daoMap.put(Cliente.class.getName(), clienteDao);
@@ -72,6 +75,7 @@ public class Facade implements IFacade{
 		daoMap.put(Troca.class.getName(), trocaDao);
 		daoMap.put(Endereco.class.getName(), enderecoDao);
 		daoMap.put(CartaoCredito.class.getName(), cartaoCreditoDao);
+		daoMap.put(Relatorio.class.getName(), relatorioDao);
 
 
 		IStrategy clienteDocumentoStrategy = new ClienteDocumentoStrategy();

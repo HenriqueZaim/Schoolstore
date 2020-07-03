@@ -9,8 +9,8 @@ import java.sql.*;
 import br.com.fatec.les.database.ConexaoFactory;
 import br.com.fatec.les.facade.Mensagem;
 import br.com.fatec.les.facade.MensagemStatus;
-import br.com.fatec.les.model.assets.ADominio;
-import br.com.fatec.les.model.assets.EntidadeDominio;
+import br.com.fatec.les.model.config.ADominio;
+import br.com.fatec.les.model.config.EntidadeDominio;
 import br.com.fatec.les.model.usuario.Carrinho;
 import br.com.fatec.les.model.usuario.ItemCarrinho;
 

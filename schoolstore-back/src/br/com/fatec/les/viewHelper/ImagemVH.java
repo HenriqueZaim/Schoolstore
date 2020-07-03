@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.bind.DatatypeConverter;
 
-import br.com.fatec.les.model.assets.ADominio;
-import br.com.fatec.les.model.assets.Imagem;
+import br.com.fatec.les.model.config.ADominio;
+import br.com.fatec.les.model.config.Imagem;
 
 public class ImagemVH implements IViewHelper{
 

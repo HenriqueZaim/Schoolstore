@@ -1,6 +1,6 @@
 package br.com.fatec.les.model.pagamento.cartao;
 
-import br.com.fatec.les.model.assets.ADominio;
+import br.com.fatec.les.model.config.ADominio;
 import br.com.fatec.les.model.pagamento.FormaPagamento;
 
 public class PagamentoCartao extends ADominio{

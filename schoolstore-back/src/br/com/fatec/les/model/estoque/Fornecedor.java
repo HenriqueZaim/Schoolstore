@@ -1,6 +1,6 @@
 package br.com.fatec.les.model.estoque;
 
-import br.com.fatec.les.model.assets.EntidadeNomeada;
+import br.com.fatec.les.model.config.EntidadeNomeada;
 
 public class Fornecedor extends EntidadeNomeada{
 

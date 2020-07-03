@@ -1,6 +1,6 @@
 package br.com.fatec.les.model.usuario;
 
-import br.com.fatec.les.model.assets.ADominio;
+import br.com.fatec.les.model.config.ADominio;
 import br.com.fatec.les.model.produto.Produto;
 
 public class ItemCarrinho extends ADominio{

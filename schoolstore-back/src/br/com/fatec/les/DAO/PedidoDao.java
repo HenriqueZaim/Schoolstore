@@ -12,7 +12,7 @@ import java.util.List;
 import br.com.fatec.les.database.ConexaoFactory;
 import br.com.fatec.les.facade.Mensagem;
 import br.com.fatec.les.facade.MensagemStatus;
-import br.com.fatec.les.model.assets.ADominio;
+import br.com.fatec.les.model.config.ADominio;
 import br.com.fatec.les.model.endereco.Endereco;
 import br.com.fatec.les.model.estoque.Estoque;
 import br.com.fatec.les.model.pagamento.FormaPagamento;
@@ -297,7 +297,7 @@ public class PedidoDao implements IDao{
 		if(pedido.getCliente() != null && pedido.getCliente().getId() != null) {
 			sql += " AND ped_cli_id = " + pedido.getCliente().getId() + "";
 		}
-		if(pedido.getId() != null) {
+		else if(pedido.getId() != null) {
 			sql += " AND ped_id = " + pedido.getId() + "";
 		}
 		

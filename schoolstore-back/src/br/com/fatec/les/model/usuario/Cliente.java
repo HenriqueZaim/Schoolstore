@@ -2,7 +2,7 @@ package br.com.fatec.les.model.usuario;
 
 import java.util.List;
 
-import br.com.fatec.les.model.assets.EntidadeNomeada;
+import br.com.fatec.les.model.config.EntidadeNomeada;
 import br.com.fatec.les.model.endereco.Endereco;
 import br.com.fatec.les.model.pagamento.cartao.CartaoCredito;
 import br.com.fatec.les.model.pedido.Pedido;

@@ -2,7 +2,7 @@ package br.com.fatec.les.model.pagamento;
 
 import java.util.List;
 
-import br.com.fatec.les.model.assets.ADominio;
+import br.com.fatec.les.model.config.ADominio;
 import br.com.fatec.les.model.pagamento.cartao.PagamentoCartao;
 import br.com.fatec.les.model.pagamento.cupom.PagamentoCupom;
 

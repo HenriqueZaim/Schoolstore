@@ -1,6 +1,6 @@
 package br.com.fatec.les.model.pedido;
 
-import br.com.fatec.les.model.assets.EntidadeDominio;
+import br.com.fatec.les.model.config.EntidadeDominio;
 import br.com.fatec.les.model.endereco.Endereco;
 
 public class Frete extends EntidadeDominio{

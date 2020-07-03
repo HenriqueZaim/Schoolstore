@@ -1,4 +1,4 @@
-package br.com.fatec.les.model.assets;
+package br.com.fatec.les.model.config;
 
 public abstract class ADominio {
 

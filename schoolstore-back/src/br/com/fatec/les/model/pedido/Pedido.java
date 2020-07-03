@@ -3,7 +3,7 @@ package br.com.fatec.les.model.pedido;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import br.com.fatec.les.model.assets.EntidadeDominio;
+import br.com.fatec.les.model.config.EntidadeDominio;
 import br.com.fatec.les.model.pagamento.FormaPagamento;
 import br.com.fatec.les.model.usuario.Cliente;
 

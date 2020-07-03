@@ -13,7 +13,9 @@ $(document).ready(function () {
 	  success: response => {
 		  console.log(response)
 		  response.entidades.forEach(function(data){
-			  if(cliente === "" || cliente === null || cliente === undefined){
+			  if(data.ativo){
+				  if(cliente === "" || cliente === null || cliente === undefined){
+				 
 				  $("#tablePedidos").append(`
 				  			<tr class="text-center">
 		                      <th scope="row">${data.id}</th>
@@ -324,7 +326,7 @@ $(document).ready(function () {
 						  <input type="hidden" name="txtCupomId" value="${item.cupom.id}">
 				  `)
 			})
-			
+			  } 
 		})	
 	  }
   })

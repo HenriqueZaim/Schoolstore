@@ -10,7 +10,7 @@ import java.util.List;
 import br.com.fatec.les.database.ConexaoFactory;
 import br.com.fatec.les.facade.Mensagem;
 import br.com.fatec.les.facade.MensagemStatus;
-import br.com.fatec.les.model.assets.ADominio;
+import br.com.fatec.les.model.config.ADominio;
 import br.com.fatec.les.model.pagamento.FormaPagamento;
 import br.com.fatec.les.model.pagamento.cupom.Cupom;
 import br.com.fatec.les.model.pagamento.cupom.PagamentoCupom;
@@ -64,14 +64,12 @@ public class PagamentoCupomDao implements IDao{
 
 	@Override
 	public Mensagem deletar(ADominio entidade) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException("Operação não suportada.");
 	}
 
 	@Override
 	public Mensagem atualizar(ADominio entidade) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException("Operação não suportada.");
 	}
 
 	@Override

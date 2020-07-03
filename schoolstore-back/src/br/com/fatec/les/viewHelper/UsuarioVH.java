@@ -14,8 +14,8 @@ import br.com.fatec.les.DAO.ClienteDao;
 import br.com.fatec.les.facade.Mensagem;
 import br.com.fatec.les.facade.MensagemStatus;
 import br.com.fatec.les.facade.Resultado;
-import br.com.fatec.les.model.assets.ADominio;
-import br.com.fatec.les.model.assets.Imagem;
+import br.com.fatec.les.model.config.ADominio;
+import br.com.fatec.les.model.config.Imagem;
 import br.com.fatec.les.model.usuario.Cliente;
 import br.com.fatec.les.model.usuario.Usuario;
 

@@ -1,6 +1,6 @@
 package br.com.fatec.les.model.pagamento.cartao;
 
-import br.com.fatec.les.model.assets.EntidadeDominio;
+import br.com.fatec.les.model.config.EntidadeDominio;
 import br.com.fatec.les.model.usuario.Cliente;
 
 public class CartaoCredito extends EntidadeDominio{

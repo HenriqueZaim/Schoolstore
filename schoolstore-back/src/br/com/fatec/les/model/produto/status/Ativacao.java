@@ -1,6 +1,6 @@
 package br.com.fatec.les.model.produto.status;
 
-import br.com.fatec.les.model.assets.EntidadeDominio;
+import br.com.fatec.les.model.config.EntidadeDominio;
 import br.com.fatec.les.model.produto.Produto;
 
 public class Ativacao extends EntidadeDominio{
