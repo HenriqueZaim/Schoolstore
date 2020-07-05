@@ -13,7 +13,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta http-equiv="x-ua-compatible" content="ie=edge">
-<title>Menu principal</title>
+<title>Alterar Senha</title>
 <link rel="stylesheet" href="./css/bootstrap.min.css">
 <link rel="stylesheet" href="./css/mdb.min.css">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
@@ -141,7 +141,7 @@
 
 				<c:if test="${!usuario.isAdmin()}">
 					<div class="list-group list-group-flush mt-5">
-						<a href="clienteMenu.jsp" class="list-group-item active list-group-item-action waves-effect"><i class="fas fa-th-list mr-3"></i> Menu Principal
+						<a href="clienteMenu.jsp" class="list-group-item list-group-item-action waves-effect"><i class="fas fa-th-list mr-3"></i> Menu Principal
 						</a>
 
 						<form action="app" method="POST">
@@ -156,7 +156,7 @@
 						</a>
 						<a href="cuponsLista.jsp" class="list-group-item list-group-item-action waves-effect"> <i class="fas fa-ticket-alt mr-3"></i>Meus Cupons
 						</a>
-						<a href="alterarSenha.jsp" class="list-group-item list-group-item-action waves-effect"> <i class="fas fa-tools mr-3"></i>Alterar Senha
+						<a href="alterarSenha.jsp" class="list-group-item active list-group-item-action waves-effect"> <i class="fas fa-tools mr-3"></i>Alterar Senha
 						</a>
 						<a href="alterarEndereco.jsp" class="list-group-item list-group-item-action waves-effect"> <i class="fas fa-map-marked mr-3"></i>Alterar endereço
 						</a>
@@ -170,13 +170,13 @@
 				</c:if>
 				<c:if test="${usuario.isAdmin()}">
 					<div class="list-group list-group-flush mt-5">
-						<a href="clienteMenu.jsp" class="list-group-item active list-group-item-action waves-effect"> <i class="fas fa-th-list mr-3"></i>Menu Principal
+						<a href="clienteMenu.jsp" class="list-group-item list-group-item-action waves-effect"> <i class="fas fa-th-list mr-3"></i>Menu Principal
 					</a> <a href="clienteLista.jsp" class="list-group-item  list-group-item-action waves-effect"> <i class="fas fa-users mr-3"></i>Lista de Clientes
 					</a> <a href="adminProdutoLista.jsp" class="list-group-item list-group-item-action waves-effect"> <i class="fas fa-box-open mr-3"></i>Lista de Produtos
 					</a> <a href="pedidoLista.jsp" class="list-group-item list-group-item-action waves-effect"> <i class="fas fa-exchange-alt mr-3"></i>Lista de Pedidos
 					</a> <a href="trocaLista.jsp" class="list-group-item list-group-item-action waves-effect"> <i class="fas fa-exchange-alt mr-3"></i>Lista de Trocas
 					</a> <a href="cuponsLista.jsp" class="list-group-item list-group-item-action waves-effect"> <i class="fas fa-ticket-alt mr-3"></i>Lista de Cupons
-					</a><a href="alterarSenha.jsp" class="list-group-item list-group-item-action waves-effect"> <i class="fas fa-tools mr-3"></i>Alterar Senha
+					</a><a href="alterarSenha.jsp" class="list-group-item active list-group-item-action waves-effect"> <i class="fas fa-tools mr-3"></i>Alterar Senha
 						</a> 
 					<a href="relatorio.jsp" id="relatorios" class="list-group-item list-group-item-action waves-effect"> <i class="fas fa-chart-line mr-3"></i>Relatorios
 					</a>
@@ -203,105 +203,29 @@
 			</c:forEach>
 			<div class="card mb-4 wow fadeIn">
 				<div class="card-body">
-					<h1 class="mb-2 mb-sm-0 pt-1">Menu Principal</h1>
+					<h1 class="mb-2 mb-sm-0 pt-1">Alteração de Senha</h1>
 				</div>
 			</div>
 			<div class="card mb-4 wow fadeIn">
 				<section class="dark-grey-text p-4">
-					<c:choose>
-						<c:when test="${!usuario.isAdmin()}">
-							<div class="row mt-5">
-								<div class="col-md-4">
-									<div class="card">
-										<div class="card-header teal darken-3 text-white">
-											<h3 class="card-header-title mb-0">Meu Carrinho</h3>
-										</div>
-										<div class="card-body">
-											<p>Lorem ipsum dolor sit amet.</p>
-										</div>
-										<div class="card-footer text-right teal darken-1">
-											<form action="app" method="POST">
-												<input type="hidden" name="tarefa" value="consultarCarrinho"> <input type="hidden" name="txtCarrinhoId" value="${cliente.getCarrinho().getId()}">
-												<button type="submit" class="btn btn-link p-0 text-white font-weight-bold">Visualizar Carrinho</button>
-											</form>
-										</div>
-									</div>
-								</div>
-								<div class="col-md-4">
-									<div class="card">
-										<div class="card-header teal darken-3 text-white">
-											<h3 class="card-header-title mb-0">Meu Cupons</h3>
-										</div>
-										<div class="card-body">
-											<p>Lorem ipsum dolor sit amet.</p>
-										</div>
-										<div class="card-footer text-right teal darken-1">
-											<a href="cuponsLista.jsp" class="btn btn-link p-0 text-white font-weight-bold">Visualizar Cupons</a>
-										</div>
-									</div>
-								</div>
-								<div class="col-md-4">
-									<div class="card">
-										<div class="card-header teal darken-3 text-white">
-											<h3 class="card-header-title mb-0">Meus pedidos</h3>
-										</div>
-										<div class="card-body">
-											<p>Lorem ipsum dolor sit amet.</p>
-										</div>
-										<div class="card-footer text-right teal darken-1">
-											<a href="pedidoLista.jsp" class="btn btn-link p-0 text-white font-weight-bold">Visualizar Pedidos</a>
-										</div>
-									</div>
-								</div>
+					<form action="app" method="POST">
+						<div class="form-row">
+							<div class="col-3 mb-3 md-form">
+								<label for="txtSenha">Nova Senha*</label> 
+								<input type="password" class="form-control" name="txtSenha" required>
 							</div>
-						</c:when>
-						<c:otherwise>
-							<h3 class="h2">Olá, Admin!</h3>
-							<hr class="mb-4">
-							<div class="row">
-								<div class="col-md-4">
-									<div class="card">
-										<div class="card-header green darken-3 text-white">
-											<h3 class="card-header-title mb-0">Lista de Clientes</h3>
-										</div>
-										<div class="card-body">
-											<p>Lorem ipsum dolor sit amet.</p>
-										</div>
-										<div class="card-footer text-right green darken-1">
-											<a href="clienteLista.jsp" class="btn btn-link p-0 text-white font-weight-bold">Visualizar Clientes</a>
-										</div>
-									</div>
-								</div>
-								<div class="col-md-4">
-									<div class="card">
-										<div class="card-header green darken-3 text-white">
-											<h3 class="card-header-title mb-0">Estoque</h3>
-										</div>
-										<div class="card-body">
-											<p>Lorem ipsum dolor sit amet.</p>
-										</div>
-										<div class="card-footer text-right green darken-1">
-											<a href="adminProdutoLista.jsp" class="btn btn-link p-0 text-white font-weight-bold">Visualizar Produtos</a>
-
-										</div>
-									</div>
-								</div>
-								<div class="col-md-4">
-									<div class="card">
-										<div class="card-header green darken-3 text-white">
-											<h3 class="card-header-title mb-0">Lista de Pedidos</h3>
-										</div>
-										<div class="card-body">
-											<p>Lorem ipsum dolor sit amet.</p>
-										</div>
-										<div class="card-footer text-right green darken-1">
-											<a href="pedidoLista.jsp" class="btn btn-link p-0 text-white font-weight-bold">Visualizar Pedidos</a>
-										</div>
-									</div>
-								</div>
+						</div>
+						<div class="form-row">
+							<div class="col-3 mb-3 md-form">
+								<label for="txtConfirmacaoSenha">Confirme sua Senha*</label> 
+								<input type="password" class="form-control" required>
 							</div>
-						</c:otherwise>
-					</c:choose>
+						</div>
+						
+						<input type="hidden" name="txtUsuarioId" value="${usuario.getId()}">
+						<input type="hidden" name="tarefa" value="alterarSenha">
+						<button id="submit-form" class="btn btn-success btn-md btn-rounded" type="submit">Salvar Senha</button>
+					</form>
 				</section>
 			</div>
 		</div>

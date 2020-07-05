@@ -40,6 +40,12 @@ public class UsuarioVH implements IViewHelper{
 			return usuario;
 		}
 		
+		if(tarefa.equals("alterarSenha")) {
+			usuario.setId(Long.parseLong(request.getParameter("txtUsuarioId")));
+			usuario.setSenha(request.getParameter("txtSenha"));	
+			return usuario;
+		}
+		
 		usuario.setAdmin(false);
 		usuario.setEmail(request.getParameter("txtEmail"));
 		usuario.setSenha(request.getParameter("txtSenha"));	
@@ -51,49 +57,58 @@ public class UsuarioVH implements IViewHelper{
 	public void setEntidade(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		    
-			Resultado resultado = new Resultado();
 			
-			resultado = (Resultado)request.getAttribute("resultado");
-			if(resultado.getEntidades().isEmpty() || resultado.getEntidades() == null) {
-				Mensagem mensagem = new Mensagem();
-				mensagem.setMensagem("Login e/ou senha inválido(s)");
-				mensagem.setMensagemStatus(MensagemStatus.ERRO);
-				
-				ArrayList<Mensagem> mensagens = new ArrayList<Mensagem>();
-				mensagens.add(mensagem);
-				
-				resultado = new Resultado();
-				resultado.setMensagens(mensagens);
-				
-				request.setAttribute("resultado", resultado);
-				request.getRequestDispatcher("usuarioLogin.jsp").
+			String tarefa = request.getParameter("tarefa");
+
+			if(tarefa.equals("alterarSenha")) {
+				request.getRequestDispatcher("clienteMenu.jsp").
 				forward(request, response);
 			}else {
-				Usuario usuario = (Usuario) resultado.getEntidades().get(0);
-			     
-	            HttpSession session = request.getSession();
-	            
-	            session.invalidate();
-	            session = request.getSession();
-	            session.setMaxInactiveInterval(15*60);
-	            
-	            if(!usuario.isAdmin()) {
-	            	try{
-	            		ClienteDao clienteDao = new ClienteDao();
-			            Cliente cliente = new Cliente();
-			            cliente.setUsuario(usuario);
-			            cliente = (Cliente) clienteDao.consultar(cliente).get(0);
-			            session.setAttribute("cliente", cliente);
-	            	}catch(SQLException e) {
-	            		
-	            	}
-	            }
-	            
-	            session.setAttribute("status", "on");
-	            session.setAttribute("usuario", usuario);
+				Resultado resultado = new Resultado();
+				resultado = (Resultado)request.getAttribute("resultado");
+				if(resultado.getEntidades().isEmpty() || resultado.getEntidades() == null) {
+					Mensagem mensagem = new Mensagem();
+					mensagem.setMensagem("Login e/ou senha inválido(s)");
+					mensagem.setMensagemStatus(MensagemStatus.ERRO);
+					
+					ArrayList<Mensagem> mensagens = new ArrayList<Mensagem>();
+					mensagens.add(mensagem);
+					
+					resultado = new Resultado();
+					resultado.setMensagens(mensagens);
+					
+					request.setAttribute("resultado", resultado);
+					request.getRequestDispatcher("usuarioLogin.jsp").
+					forward(request, response);
+				}else {
+					Usuario usuario = (Usuario) resultado.getEntidades().get(0);
+				     
+		            HttpSession session = request.getSession();
+		            
+		            session.invalidate();
+		            session = request.getSession();
+		            session.setMaxInactiveInterval(15*60);
+		            
+		            if(!usuario.isAdmin()) {
+		            	try{
+		            		ClienteDao clienteDao = new ClienteDao();
+				            Cliente cliente = new Cliente();
+				            cliente.setUsuario(usuario);
+				            cliente = (Cliente) clienteDao.consultar(cliente).get(0);
+				            session.setAttribute("cliente", cliente);
+		            	}catch(SQLException e) {
+		            		
+		            	}
+		            }
+		            
+		            session.setAttribute("status", "on");
+		            session.setAttribute("usuario", usuario);
 
-	            response.sendRedirect("clienteMenu.jsp");
+		            response.sendRedirect("clienteMenu.jsp");
+				}
 			}
+			
+			
    
 	}
 }

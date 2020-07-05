@@ -141,12 +141,12 @@
 								<label for="txtBairroModal">Bairro*</label> <input type="text" class="form-control" id="txtBairroModal" name="txtBairro" required maxlength="100">
 							</div>
 							<div class="col-md-4 mb-3 md-form">
-								<label for="txtComplementoModal">Complemento</label> <input type="text" maxlength="100" class="form-control" id="txtComplementoModal" name="txtComplemento" required>
+								<label for="txtComplementoModal">Complemento</label> <input type="text" maxlength="100" class="form-control" id="txtComplementoModal" name="txtComplemento">
 							</div>
 						</div>
 						<div class="form-row">
 							<div class="col mb-3 md-form">
-								<label for="txtReferenciaModal">Referência</label> <input type="text" class="form-control" id="txtReferenciaModal" name="txtReferencia" required maxlength="100">
+								<label for="txtReferenciaModal">Referência</label> <input type="text" class="form-control" id="txtReferenciaModal" name="txtReferencia" maxlength="100">
 							</div>
 						</div>
 						<div class="form-row">

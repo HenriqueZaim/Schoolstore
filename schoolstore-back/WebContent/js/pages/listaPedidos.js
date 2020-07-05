@@ -54,10 +54,7 @@ $(document).ready(function () {
 		                      <td>R$ ${data.valor}</td>
 						  	  <td>R$ ${data.formaPagamento.valorTotal}</td>
 						  	  <td id="formasPagamento-${data.id}"></td>
-						  	  <td>
-						  	  	<button type="button" class="btn btn-sm btn-link text-info p-0 font-weight-bold" data-toggle="modal" data-target="#modal-endereco-${data.id}">
-								  ${data.frete.endereco.nome}
-								</button>
+						  	  <td id="bota-end-${data.id}">
 								
 								<div class="modal fade" id="modal-endereco-${data.id}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
 								  aria-hidden="true">
@@ -134,6 +131,23 @@ $(document).ready(function () {
 		                    </tr>
 				  `)
 				  
+				  if(data.frete.endereco.ativo){
+					  $(`#bota-end-${data.id}`).prepend(`
+							  <button type="button" class="btn btn-sm btn-link text-info p-0 font-weight-bold" data-toggle="modal" data-target="#modal-endereco-${data.id}">
+							  	${data.frete.endereco.nome}
+							  </button>
+					  
+					  `)
+				  }else{
+					  $(`#bota-end-${data.id}`).prepend(`
+							  <button type="button" class="btn btn-sm btn-link disabled p-0 font-weight-bold" data-toggle="modal" data-target="#modal-endereco-${data.id}">
+							  	${data.frete.endereco.nome}
+							  </button>
+					  
+					  `)
+				  }
+				 
+						  	  	
 				  if(data.statusPedido === "REPROVADO"){
 					  $(`#modalSelect-${data.id}`).parent().prepend(`<span class="alert alert-warning">Não será possível realizar esta operação!</span>`)
 					  $(`#alterarStatusBotao-${data.id}`).prop("disabled", true)

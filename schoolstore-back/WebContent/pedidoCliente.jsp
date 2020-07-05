@@ -149,7 +149,9 @@
 					</a> <a href="pedidoLista.jsp" class="list-group-item list-group-item-action waves-effect"> <i class="fas fa-exchange-alt mr-3"></i>Lista de Pedidos
 					</a> <a href="trocaLista.jsp" class="list-group-item list-group-item-action waves-effect"> <i class="fas fa-exchange-alt mr-3"></i>Lista de Trocas
 					</a> <a href="cuponsLista.jsp" class="list-group-item list-group-item-action waves-effect"> <i class="fas fa-ticket-alt mr-3"></i>Lista de Cupons
-					</a> <a href="relatorio.jsp" class="list-group-item list-group-item-action waves-effect"> <i class="fas fa-chart-line mr-3"></i>Relatórios
+					</a><a href="alterarSenha.jsp" class="list-group-item list-group-item-action waves-effect"> <i class="fas fa-tools mr-3"></i>Alterar Senha
+						</a> 
+					<a href="relatorio.jsp" class="list-group-item list-group-item-action waves-effect"> <i class="fas fa-chart-line mr-3"></i>Relatórios
 					</a>
 					</div>
 			</div>
@@ -251,7 +253,12 @@
 												</c:forEach>
 											</td>
 											<td>
-												<button type="button" class="btn btn-sm btn-link text-info p-0 font-weight-bold" data-toggle="modal" data-target="#modal-endereco-${pedido.getId()}">${pedido.getFrete().getEndereco().getNome()}</button>
+												<c:if test="${pedido.getFrete().getEndereco().isAtivo() }">
+													<button type="button" class="btn btn-sm btn-link text-info p-0 font-weight-bold" data-toggle="modal" data-target="#modal-endereco-${pedido.getId()}">${pedido.getFrete().getEndereco().getNome()}</button>
+												</c:if>
+												<c:if test="${!pedido.getFrete().getEndereco().isAtivo() }">
+													<button type="button" class="btn btn-sm btn-link disabled p-0 font-weight-bold" data-toggle="modal" data-target="#modal-endereco-${pedido.getId()}">${pedido.getFrete().getEndereco().getNome()}</button>
+												</c:if>
 
 												<div class="modal fade" id="modal-endereco-${pedido.getId()}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 													<div class="modal-dialog" role="document">

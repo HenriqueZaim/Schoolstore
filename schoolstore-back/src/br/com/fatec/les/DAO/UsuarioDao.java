@@ -25,26 +25,38 @@ public class UsuarioDao implements IDao{
 		Usuario usuario  = (Usuario) entidade;
 		conexao = ConexaoFactory.getConnection();
 		mensagem = new Mensagem();
-		String sql = "UPDATE tb_usuario SET "
-				+ "usu_email = ? "
-				+ " WHERE usu_id = ?";
 		
 		PreparedStatement pstm = null;
 		
 		try {
-			if(usuario.getImagem().getId() == null) {
-				mensagem = imagemDao.atualizar(usuario.getImagem());
-				if(mensagem.getMensagemStatus() == MensagemStatus.ERRO)
-					return mensagem;
+			if(usuario.getSenha() != null) {
+				String sql = "UPDATE tb_usuario SET "
+						+ "usu_senha = ? "
+						+ " WHERE usu_id = ?";
+				pstm = conexao.prepareStatement(sql);
+				pstm.setString(1, usuario.getSenha());
+				pstm.setLong(2, usuario.getId());
+				pstm.executeUpdate();
+				mensagem.setMensagem("Senha atualizada com sucesso!");
+				mensagem.setMensagemStatus(MensagemStatus.SUCESSO);
+			}else {
+				String sql = "UPDATE tb_usuario SET "
+						+ "usu_email = ? "
+						+ " WHERE usu_id = ?";
+				
+				if(usuario.getImagem().getId() == null) {
+					mensagem = imagemDao.atualizar(usuario.getImagem());
+					if(mensagem.getMensagemStatus() == MensagemStatus.ERRO)
+						return mensagem;
+				}
+				pstm = conexao.prepareStatement(sql);
+				pstm.setString(1, usuario.getEmail());
+				pstm.setLong(2, usuario.getId());
+				pstm.executeUpdate();
+				mensagem.setMensagem("Usuário atualizado com sucesso!");
+				mensagem.setMensagemStatus(MensagemStatus.SUCESSO);
 			}
-			
-			mensagem = new Mensagem();
-			pstm = conexao.prepareStatement(sql);
-			pstm.setString(1, usuario.getEmail());
-			pstm.setLong(2, usuario.getId());
-			pstm.executeUpdate();
-			mensagem.setMensagem("Usuário atualizado com sucesso!");
-			mensagem.setMensagemStatus(MensagemStatus.SUCESSO);
+
 		}catch(SQLException e) {
 			mensagem.setMensagem("Ocorreu um erro durante a operação. Tente novamente ou consulte a equipe de desenvolvimento.");
 			mensagem.setMensagemStatus(MensagemStatus.ERRO);

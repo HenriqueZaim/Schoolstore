@@ -111,6 +111,7 @@
 							</div>
 							<div class="accordion md-accordion" id="accordionEndereco" role="tablist" aria-multiselectable="true">
 								<c:forEach var="endereco" items="${cliente.getEnderecos()}">
+									<c:if test="${endereco.isAtivo() }">
 									<div class="card">
 										<div class="card-header" role="tab" id="${endereco.getId()}">
 											<h5 class="mb-0">
@@ -139,6 +140,7 @@
 
 										<input type="hidden" name="txtEndereco" value="true"> <input type="hidden" name="txtEnderecoId" value="${endereco.getId()}"> <input type="hidden" name="txtCep" value="${endereco.getCep()}"> <input type="hidden" name="txtBairro" value="${endereco.getBairro()}"> <input type="hidden" name="txtLogradouro" value="${endereco.getLogradouro()}"> <input type="hidden" name="txtCidadeId" value="${endereco.getCidade().getId()}"> <input type="hidden" name="txtReferencia" value="${endereco.getReferencia()}"> <input type="hidden" name="txtComplemento" value="${endereco.getComplemento()}"> <input type="hidden" name="txtNumero" value="${endereco.getNumero()}"> <input type="hidden" name="txtFavoritoEndereco" value="${endereco.isFavorito()}"> <input type="hidden" name="txtNomeEndereco" value="${endereco.getNome() }">
 									</div>
+									</c:if>
 								</c:forEach>
 							</div>
 						</div>

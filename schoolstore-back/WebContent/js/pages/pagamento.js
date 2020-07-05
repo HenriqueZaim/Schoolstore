@@ -12,6 +12,7 @@ $(document).ready(function () {
 	  success: (response) => {
 		  response.entidades.forEach(function(data){
 			  data.enderecos.forEach(function(endereco) {
+				  if(endereco.ativo){
 				  $("#accordionEndereco").append(`
 						  <div class="card">
 						  <div class="card-header" role="tab" id="endereco${endereco.id}">
@@ -53,7 +54,7 @@ $(document).ready(function () {
 
 						  </div>
 				  `)
-				  
+				  }
 				  if(endereco.favorito){
 					  $(".card").find(`#endereco${endereco.id}`).find(".enderecoFavorito").prepend(`
 								<input type="radio" class="form-check-input enderecoInput" id="enderecoInput${endereco.id }" name="enderecoInput" value="${endereco.id }" checked>

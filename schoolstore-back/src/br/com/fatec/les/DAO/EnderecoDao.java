@@ -135,7 +135,13 @@ public class EnderecoDao implements IDao{
 				+ "end_ativo,"
 				+ "end_dataHoraCriacao,"
 				+ "end_dataHoraAtualizacao "
-				+ " FROM tb_endereco WHERE end_ativo = 1 ";
+				+ " FROM tb_endereco ";
+		if(enderecoEntidade.isAtivo()) {
+			sql += "WHERE end_ativo = 1 ";
+		}else {
+			sql += "WHERE (end_ativo = 1 OR end_ativo = 0) ";
+		}
+		
 		if(enderecoEntidade.getId() != null) {
 			sql += "AND end_id = " + enderecoEntidade.getId();
 		}

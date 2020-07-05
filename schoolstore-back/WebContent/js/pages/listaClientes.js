@@ -93,12 +93,23 @@ $(document).ready(function () {
 							<input type="hidden" name="txtFavorito" value="${endereco.favorito}">
 							<input type="hidden" name="txtBairro" value="${endereco.bairro}">
 							<input type="hidden" name="txtNome" value="${data.nome}">
-							<button type="button" style="white-space: nowrap;" class="btn btn-link teal-text visualizarEndereco p-0 font-weight-bold" >${endereco.nome}
-								${endereco.favorito === true ? '<i class="fas fa-star"></i>' : ""}
-							</button>
+
 
 					`	
 				  )
+				  if(endereco.ativo){
+					  $(`#enderecos-${data.id}`).append(`
+							  <button type="button" style="white-space: nowrap;" class="btn btn-link teal-text visualizarEndereco p-0 font-weight-bold" >${endereco.nome}
+								${endereco.favorito === true ? '<i class="fas fa-star"></i>' : ""}
+							</button>
+					  `)
+				  }else{
+					  $(`#enderecos-${data.id}`).append(`
+							  <button type="button" style="white-space: nowrap;" class="btn btn-link disabled visualizarEndereco p-0 font-weight-bold" >${endereco.nome}
+								${endereco.favorito === true ? '<i class="fas fa-star"></i>' : ""}
+							</button>
+					  `)
+				  }
 				  $(".visualizarEndereco").click(function(){
 					  let cep = $(this).parent().find("input[name='txtCep']").val();
 					  let estado = $(this).parent().find("input[name='txtEstado']").val();

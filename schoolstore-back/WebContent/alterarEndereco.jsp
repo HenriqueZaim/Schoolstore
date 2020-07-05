@@ -13,7 +13,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta http-equiv="x-ua-compatible" content="ie=edge">
-<title>Meu carrinho</title>
+<title>Lista de endereços</title>
 <link rel="stylesheet" href="./css/bootstrap.min.css">
 <link rel="stylesheet" href="./css/mdb.min.css">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
@@ -145,7 +145,7 @@
 
 					<form action="app" method="POST">
 						<input type="hidden" name="tarefa" value="consultarCarrinho"> <input type="hidden" name="txtCarrinhoId" value="${cliente.getCarrinho().getId()}">
-						<button type="submit" class="list-group-item active list-group-item-action waves-effect">
+						<button type="submit" class="list-group-item list-group-item-action waves-effect">
 							<i class="fas fa-cart-arrow-down mr-3"></i>Meu Carrinho
 						</button>
 					</form>
@@ -156,10 +156,10 @@
 						</a>
 						<a href="alterarSenha.jsp" class="list-group-item list-group-item-action waves-effect"> <i class="fas fa-tools mr-3"></i>Alterar Senha
 						</a>
-						<a href="alterarEndereco.jsp" class="list-group-item list-group-item-action waves-effect"> <i class="fas fa-map-marked mr-3"></i>Alterar endereço
+						<a href="alterarEndereco.jsp" class="list-group-item active list-group-item-action waves-effect"> <i class="fas fa-map-marked mr-3"></i>Alterar endereço
 						</a>
 					<form action="app" method="POST">
-						<input type="hidden" name="txtUsuarioId" value="${usuario.getId()}"> <input type="hidden" name="txtClienteId" value="${cliente.getId()}"> <input type="hidden" name="txtImagemId" value="${usuario.getImagem().getId()}"> <input type="hidden" name="tarefa" value="editaCliente">
+						<input type="hidden" name="txtUsuarioId" value="${usuario.getId()}"> <input type="hidden" id="txtClienteId" name="txtClienteId" value="${cliente.getId()}"> <input type="hidden" name="txtImagemId" value="${usuario.getImagem().getId()}"> <input type="hidden" name="tarefa" value="editaCliente">
 						<button type="submit" class="list-group-item list-group-item-action waves-effect">
 							<i class="fa fa-user mr-3"></i> Meu Perfil
 						</button>
@@ -173,7 +173,7 @@
 		<div class="container-fluid mt-5">
 			<div class="card mb-4 wow fadeIn">
 				<div class="card-body d-sm-flex justify-content-between">
-					<h1 class="mb-2 mb-sm-0 pt-1">Carrinho</h1>
+					<h1 class="mb-2 mb-sm-0 pt-1">Lista de Endereços</h1>
 				</div>
 			</div>
 			<c:forEach var="mensagem" items="${resultado.getMensagens()}">
@@ -190,83 +190,19 @@
 					</c:otherwise>
 				</c:choose>
 			</c:forEach>
-			<c:forEach var="carrinho" items="${resultado.getEntidades()}">
-				<c:choose>
-					<c:when test="${carrinho.getItensCarrinho().size() == 0}">
-						<div class="alert alert-primary text-center p-0 border-0" role="alert">
-							<span class="d-block px-3 py-2 font-weight-bold"><i class="fas fa-exclamation-circle p-0 px-2"></i>Seu carrinho está vazio!</span>
-						</div>
-					</c:when>
-					<c:otherwise>
-						<div class="card mb-4 wow fadeIn">
-							<form action="app" method="post">
-								<section class="dark-grey-text">
-									<div class="table-responsive">
-										<table class="table product-table mb-0">
-											<thead class="blue-gradient text-white ">
-												<tr>
-													<th></th>
-													<th class="font-weight-bold"><strong>Nome</strong></th>
-													<th class="font-weight-bold"><strong>Preço</strong></th>
-													<th class="font-weight-bold"><strong>Quantidade</strong></th>
-													<th class="font-weight-bold"><strong>Excluir</strong></th>
-												</tr>
-											</thead>
-											<tbody>
-												<c:forEach var="item" items="${carrinho.getItensCarrinho()}">
-													<tr>
-														<td><img src="${item.getProduto().getImagem().getCaminho() }" width="70%" alt="${item.getProduto().getImagem().getDescricao() }" class="img-fluid z-depth-0"></td>
-														<td>
-															<h5 class="mt-3">
-																<strong>${item.getProduto().getNome() }</strong>
-															</h5>
-														</td>
-														<td class="preco">R$${ 
-															Math.round( 
-																(
-																	(
-																		item.getProduto().getPreco() * item.getProduto().getPrecificacao().getPercentual() + item.getProduto().getPreco()
-																	) 
-																	*
-																		item.getQuantidade()
-																	
-																) 
-																* 100
-															) / 100}</td>
-														<td><input type="number" class="quantidade" name="txtQuantidade" value="${item.getQuantidade()}" min="1" max="${item.getProduto().getEstoque().getQuantidadeTotal()}" aria-label="Search" class="form-control" style="width: 100px"></td>
-														<td>
-															<button type="button" class="btn btn-sm btn-danger excluir" data-toggle="tooltip" data-placement="top" title="Remove item">X</button>
-														</td>
-														<input type="hidden" class="precificacao" value="${ item.getProduto().getPrecificacao().getPercentual()}">
-														<input type="hidden" class="valor" value="${item.getProduto().getPreco()}">
-														<input type="hidden" class="valorSomado" value="${ (Math.round((item.getProduto().getPreco() * item.getProduto().getPrecificacao().getPercentual() + item.getProduto().getPreco())) * 100) / 100}">
-														<input type="hidden" name="txtProdutoId" value="${item.getProduto().getId() }">
-													</tr>
-												</c:forEach>
 
-												<tr>
-													<td>
-														<h4 class="mt-2">
-															<strong>Total</strong>
-														</h4>
-													</td>
-													<td class="text-right"><input type="hidden" name="txtValorTotal" id="subTotal" value="${carrinho.getSubTotal() }">
-														<h4 class="mt-2" id="valorTotalCompra">R$ ${carrinho.getSubTotal() }</h4></td>
-													<td colspan="3" class="text-right"><input type="hidden" name="tarefa" id="txtTarefa" value="efetuarPagamento"> <input type="hidden" name="txtCarrinhoId" value="${cliente.getCarrinho().getId()}">
-														<button type="submit" id="botaoSubmit" class="btn btn-primary btn-rounded">
-															Completar compra <i class="fas fa-angle-right right"></i>
-														</button></td>
-												</tr>
-											</tbody>
-										</table>
-									</div>
-								</section>
-							</form>
-						</div>
-					</c:otherwise>
-				</c:choose>
-			</c:forEach>
 
+		</div>
+		<div class="container-fluid mt-5">
+			<div class="card mb-4 wow fadeIn">
+				<section class="dark-grey-text p-4">
+					<div class="accordion md-accordion" id="accordionEndereco" role="tablist" aria-multiselectable="true">
+									
+								</div>
+					<a href="#" class="btn btn-link text-info p-2 mb-2" data-toggle="modal" id="modalEnderecoButton" data-target="#modalEndereco"> <i class="fas fa-plus pr-2"> Novo endereço</i>
+					</a>
+				</section>
+			</div>
 		</div>
 		</main>
 
@@ -276,13 +212,86 @@
 			</div>
 		</footer>
 	</div>
+	
+	<div class="modal fade" id="modalEndereco" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<form action="app" method="POST"> 
+				<input type="hidden" name="tarefa" value="adicionarEnderecoLista">
+				<input type="hidden" name="txtClienteId" value="${cliente.getId() }">
+				<div class="modal-content">
+					<div class="modal-header text-center">
+						<h4 class="modal-title w-100 font-weight-bold">Novo Endereço</h4>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body mx-3">
+						<div class="form-row">
+							<div class="col-md-4 mb-3 md-form">
+								<label for="txtCepModal">CEP*</label> 
+								<input type="text" class="form-control" id="txtCepModal" name="txtCep" required maxlength="8">
+							</div>
+							<div class="col-md-8 mb-3 md-form">
+								<label for="txtLogradouroModal">Logradouro*</label> 
+								<input type="text" class="form-control" id="txtLogradouroModal" name="txtLogradouro" required maxlength="100">
+							</div>
+						</div>
+						<div class="form-row">
+							<div class="col-md-6 mb-3 md-form">
+								<select style="width: 100%;" id="txtEstadoModal" required searchable="Selecione..">
+									<option value="" disabled selected>Selecione seu estado*</option>
+
+								</select>
+							</div>
+							<div class="col-md-6 mb-3 md-form">
+								<select style="width: 100%;" id="txtCidadeModal" name="txtCidadeId" required placeholder="Selecione..">
+									<option value="" disabled selected>Selecione sua cidade*</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-row">
+							<div class="col-md-4 mb-3 md-form">
+								<label for="txtNumeroModal">Número*</label> <input type="number" min="1" max="9999" maxlength="4" name="txtNumero" class="form-control" id="txtNumeroModal" required>
+							</div>
+							<div class="col-md-4 mb-3 md-form">
+								<label for="txtBairroModal">Bairro*</label> <input type="text" class="form-control" id="txtBairroModal" name="txtBairro" required maxlength="100">
+							</div>
+							<div class="col-md-4 mb-3 md-form">
+								<label for="txtComplementoModal">Complemento</label> <input type="text" maxlength="100" class="form-control" id="txtComplementoModal" name="txtComplemento" >
+							</div>
+						</div>
+						<div class="form-row">
+							<div class="col mb-3 md-form">
+								<label for="txtReferenciaModal">Referência</label> <input type="text" class="form-control" id="txtReferenciaModal" name="txtReferencia"  maxlength="100">
+							</div>
+						</div>
+						<div class="form-row">
+							<div class="col mb-3 md-form">
+								<label for="txtNomeEnderecoModal">Identificação de Endereço*</label> <input type="text" class="form-control" id="txtNomeEnderecoModal" name="txtNomeEndereco" required maxlength="100">
+							</div>
+						</div>
+						<div class="form-row">
+							<div class="col mb-3 md-form">
+								<input class="form-check-input" type="checkbox" value="false" name="txtFavoritoEndereco" id="txtFavoritoModal"> <label class="form-check-label" for="txtFavoritoModal"> Marcar como favorito </label>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer d-flex justify-content-center">
+						<button class="btn btn-unique" type="submit" id="btnSalvarEndereco">
+							Adicionar <i class="fas fa-paper-plane-o ml-1"></i>
+						</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
 
 
 	<script type="text/javascript" src="./js/jquery.min.js"></script>
 	<script type="text/javascript" src="./js/popper.min.js"></script>
 	<script type="text/javascript" src="./js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="./js/mdb.min.js"></script>
-	<script type="text/javascript" src="./js/pages/carrinho.js"></script>
+	<script type="text/javascript" src="./js/pages/alterarEndereco.js"></script>
 
 </body>
 

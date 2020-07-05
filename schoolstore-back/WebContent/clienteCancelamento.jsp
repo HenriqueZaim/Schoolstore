@@ -154,6 +154,10 @@
 						</a>
 						<a href="cupomLista.jsp" class="list-group-item list-group-item-action waves-effect"> <i class="fas fa-ticket-alt mr-3"></i>Meus Cupons
 						</a>
+						<a href="alterarSenha.jsp" class="list-group-item list-group-item-action waves-effect"> <i class="fas fa-tools mr-3"></i>Alterar Senha
+						</a>
+						<a href="alterarEndereco.jsp" class="list-group-item list-group-item-action waves-effect"> <i class="fas fa-map-marked mr-3"></i>Alterar endereço
+						</a>
 					<form action="app" method="POST">
 						<input type="hidden" name="txtUsuarioId" value="${usuario.getId()}"> <input type="hidden" name="txtClienteId" value="${cliente.getId()}"> <input type="hidden" name="txtImagemId" value="${usuario.getImagem().getId()}"> <input type="hidden" name="tarefa" value="editaCliente">
 						<button type="submit" class="list-group-item list-group-item-action waves-effect">

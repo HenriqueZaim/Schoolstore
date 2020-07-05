@@ -83,8 +83,14 @@ public class ServletController extends HttpServlet{
     	// Endereços
     	vhMap.put("adicionarEndereco", new EnderecoVH());
     	vhMap.put("removerEndereco", new EnderecoVH());
+    	vhMap.put("adicionarEnderecoLista", new EnderecoVH());
+    	vhMap.put("removerEnderecoLista", new EnderecoVH());
+    	vhMap.put("consultarEndereco", new EnderecoVH());
     	commandMap.put("adicionarEndereco", new SalvarCommand());
     	commandMap.put("removerEndereco", new DeletarCommand());
+    	commandMap.put("adicionarEnderecoLista", new SalvarCommand());
+    	commandMap.put("removerEnderecoLista", new DeletarCommand());
+    	commandMap.put("consultarEndereco", new ConsultarCommand());
     	
     	// Cartão
     	vhMap.put("adicionarCartao", new CartaoCreditoVH());
@@ -105,6 +111,8 @@ public class ServletController extends HttpServlet{
     	// Login de usuário
     	vhMap.put("loginUsuario", new UsuarioVH());
     	vhMap.put("logoutUsuario", new UsuarioVH());
+    	vhMap.put("alterarSenha", new UsuarioVH());
+    	commandMap.put("alterarSenha", new AtualizarCommand());
     	commandMap.put("loginUsuario", new ConsultarCommand());
     	commandMap.put("logoutUsuario", new ConsultarCommand());
     	

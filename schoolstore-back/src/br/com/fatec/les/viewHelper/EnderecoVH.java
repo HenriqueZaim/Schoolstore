@@ -7,6 +7,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+
+import br.com.fatec.les.facade.Resultado;
 import br.com.fatec.les.model.config.ADominio;
 import br.com.fatec.les.model.endereco.Cidade;
 import br.com.fatec.les.model.endereco.Endereco;
@@ -53,7 +56,7 @@ public class EnderecoVH implements IViewHelper{
 	public ADominio getEntidade(HttpServletRequest request) {
 		Endereco endereco = new Endereco();
 		String tarefa = request.getParameter("tarefa");
-		if(tarefa.equals("adicionarEndereco")) {
+		if(tarefa.equals("adicionarEndereco") || tarefa.equals("adicionarEnderecoLista")) {
 			CidadeVH cidadeVH = new CidadeVH();
 			ClienteVH clienteVH = new ClienteVH();
 			endereco.setNome(request.getParameter("txtNomeEndereco"));
@@ -69,6 +72,10 @@ public class EnderecoVH implements IViewHelper{
 			request.setAttribute("txtCidadeIdAtual", request.getParameter("txtCidadeId"));
 
 			endereco.setCidade((Cidade)cidadeVH.getEntidade(request));
+		}else if(tarefa.equals("consultarEndereco")) {
+			ClienteVH clienteVH = new ClienteVH();
+			endereco.setCliente((Cliente) clienteVH.getEntidade(request));
+			endereco.setAtivo(request.getParameter("txtAtivo").equals("true") ? true : false);
 		}else {
 			endereco.setId(Long.parseLong(request.getParameter("txtEnderecoId")));
 		}
@@ -79,8 +86,23 @@ public class EnderecoVH implements IViewHelper{
 	@Override
 	public void setEntidade(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		String tarefa = request.getParameter("tarefa");
+		if(tarefa.equals("consultarEndereco")) {
+			Resultado resultado = new Resultado();
+			
+			resultado = (Resultado)request.getAttribute("resultado");
+			
+			String json = new Gson().toJson(resultado);
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			response.getWriter().write(json);
+		}else if(tarefa.equals("adicionarEnderecoLista") || tarefa.equals("removerEnderecoLista")){
+			request.getRequestDispatcher("alterarEndereco.jsp").
+			forward(request, response);
+		}else {
+			response.sendRedirect("pagamento.jsp");
+		}
 
-		response.sendRedirect("pagamento.jsp");
 		
 	}
 
