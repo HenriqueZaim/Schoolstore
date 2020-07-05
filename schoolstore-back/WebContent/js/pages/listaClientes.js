@@ -7,7 +7,6 @@ $(document).ready(function () {
 		  response.entidades.forEach(function(data){
 			  $("#tableClientes").append(`
 			  			<tr class="text-center">
-	                      <th scope="row">${data.id}</th>
 	                      <td> ${data.nome} </td>
 	                      <td> ${data.numeroTelefone} </td>
 	                      <td id="enderecos-${data.id}">
@@ -15,6 +14,15 @@ $(document).ready(function () {
 	                      </td>
 	                      <td id="cartoes-${data.id}">
 	                      
+	                      </td>
+	                      <td>
+	                      	<form action="app" method="POST">
+	                          <input type="hidden" name="txtClienteId" value="${data.id}">
+	    
+	                          <input type="hidden" name="tarefa" value="pesquisaPedidosCliente">
+	                          <button type="submit"
+	                            class="btn btn-sm btn-link p-0 teal-text font-weight-bold">Ver Todos</button>
+	                        </form>
 	                      </td>
 	                      <td>
 	                        <form action="app" method="POST">

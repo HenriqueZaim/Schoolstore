@@ -180,11 +180,11 @@
 
 								<thead>
 									<tr class="font-weight-bold text-center">
-										<th>#Id</th>
 										<th>Nome</th>
 										<th>Telefone</th>
 										<th>Endereços</th>
 										<th>Cartões</th>
+										<th>Pedidos</th>
 										<th colspan="2">Ação</th>
 									</tr>
 								</thead>

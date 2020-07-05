@@ -10,7 +10,6 @@ public class Produto extends EntidadeNomeada{
 
 	private float preco;
 	private String descricao;
-	private String codBarras;
 	private List<Categoria> categorias;
 	private Imagem imagem;
 	private Estoque estoque;
@@ -27,12 +26,6 @@ public class Produto extends EntidadeNomeada{
 	}
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
-	}
-	public String getCodBarras() {
-		return codBarras;
-	}
-	public void setCodBarras(String codBarras) {
-		this.codBarras = codBarras;
 	}
 	public List<Categoria> getCategorias() {
 		return categorias;

@@ -79,7 +79,7 @@ VALUES
 (62, 17),
 (64, 18);
 
-INSERT INTO tb_fornecedor (for_nome, for_cnpj, for_ativo, for_dataCriacao)
+INSERT INTO tb_fornecedor (for_nome, for_cnpj, for_ativo, for_dataHoraCriacao)
 VALUES 
 ("Industria A","1234123443", b'1', NOW()),
 ("Industria B","1234123443", b'1', NOW()),

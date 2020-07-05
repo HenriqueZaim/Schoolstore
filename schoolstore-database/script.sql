@@ -182,30 +182,6 @@ CREATE TABLE tb_categoria
   FOREIGN KEY(cat_pro_id) REFERENCES tb_produto(pro_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE tb_inativacao
-(
-  ina_id INT NOT NULL AUTO_INCREMENT,
-  ina_ativo BOOLEAN NOT NULL,
-  ina_dataCriacao DATETIME NOT NULL,
-  ina_descricao VARCHAR(400) NOT NULL,
-  ina_statusInativacao VARCHAR(20) NOT NULL, 
-  ina_pro_id INT NOT NULL,
-  PRIMARY KEY (ina_id),
-  FOREIGN KEY(ina_pro_id) REFERENCES tb_produto(pro_id)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-CREATE TABLE tb_ativacao 
-(
-  ati_id INT NOT NULL AUTO_INCREMENT,
-  ati_ativo BOOLEAN NOT NULL,
-  ati_dataCriacao DATETIME NOT NULL,
-  ati_descricao VARCHAR(400) NOT NULL,
-  ati_statusAtivacao VARCHAR(20) NOT NULL, 
-  ati_pro_id INT NOT NULL,
-  PRIMARY KEY (ati_id),
-  FOREIGN KEY(ati_pro_id) REFERENCES tb_produto(pro_id)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 CREATE TABLE tb_cupom
 (
   cup_id INT NOT NULL AUTO_INCREMENT,
@@ -220,8 +196,6 @@ CREATE TABLE tb_cupom
   FOREIGN KEY(cup_usu_id) REFERENCES tb_usuario(usu_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-
-
 CREATE TABLE tb_pagamentoCupom
 (
   pcu_id INT NOT NULL AUTO_INCREMENT,
@@ -232,9 +206,6 @@ CREATE TABLE tb_pagamentoCupom
   FOREIGN KEY(pcu_fpag_id) REFERENCES tb_formaPagamento(fpag_id),
   PRIMARY KEY (pcu_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
-
 
 CREATE TABLE tb_pagamentoCartao
 (

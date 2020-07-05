@@ -62,10 +62,11 @@ public class ServletController extends HttpServlet{
     	// Get nos estados e cidades
     	vhMap.put("cadastroCliente", new EstadoVH()); //TODO: Alterar nome da tarefa
     	commandMap.put("cadastroCliente", new ConsultarCommand());
-    	
+
     	// Pedido
     	vhMap.put("efetuarPedido", new PedidoVH());
     	vhMap.put("consultarPedidos", new PedidoVH());
+    	vhMap.put("pesquisaPedidosCliente", new PedidoVH());
     	vhMap.put("alterarStatusPedido", new PedidoVH());
     	vhMap.put("consultarPedido", new PedidoVH());
     	vhMap.put("consultarPedidoCancelamento", new PedidoVH());
@@ -76,6 +77,8 @@ public class ServletController extends HttpServlet{
     	commandMap.put("efetuarCancelamento", new DeletarCommand());
     	commandMap.put("consultarPedido", new ConsultarCommand());
     	commandMap.put("consultarPedidoCancelamento", new ConsultarCommand());
+    	commandMap.put("pesquisaPedidosCliente", new ConsultarCommand());
+
     	
     	// Endereços
     	vhMap.put("adicionarEndereco", new EnderecoVH());
