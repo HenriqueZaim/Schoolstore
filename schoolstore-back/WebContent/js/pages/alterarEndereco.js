@@ -27,7 +27,7 @@ $(document).ready(function () {
 					  <form action="app" method="post">
 					  	<input type="hidden" name="tarefa" value="removerEnderecoLista">
 					  	<input type="hidden" name="txtEnderecoId" value="${endereco.id}">
-					  	<button type="submit" class="btn btn-link text-danger p-0"><i class="fa fa-times"></i></button>
+					  	<button type="submit" id="eapagar${endereco.id}" class="btn btn-link text-danger p-0"><i class="fa fa-times"></i></button>
 					  </form>
 
 					  </div>

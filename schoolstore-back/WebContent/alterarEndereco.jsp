@@ -215,7 +215,7 @@
 	
 	<div class="modal fade" id="modalEndereco" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog" role="document">
-			<form action="app" method="POST"> 
+			<form action="app" method="POST" id="enderecoNovo"> 
 				<input type="hidden" name="tarefa" value="adicionarEnderecoLista">
 				<input type="hidden" name="txtClienteId" value="${cliente.getId() }">
 				<div class="modal-content">

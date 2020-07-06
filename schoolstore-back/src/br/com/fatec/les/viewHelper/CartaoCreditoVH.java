@@ -57,6 +57,7 @@ public class CartaoCreditoVH implements IViewHelper{
 			cartaoCredito.setNumero(request.getParameter("txtNumeroCartao"));
 			cartaoCredito.setFavorito(Boolean.parseBoolean(request.getParameter("txtFavoritoCartao")));
 			cartaoCredito.setCliente((Cliente)clienteVH.getEntidade(request));
+			cartaoCredito.setBandeiraCartao(BandeiraCartao.valueOf(request.getParameter("txtBandeiraCartao")));
 		}else {
 			cartaoCredito.setId(Long.parseLong(request.getParameter("txtCartaoCreditoId")));
 		}

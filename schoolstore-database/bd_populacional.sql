@@ -5631,7 +5631,8 @@ VALUES
 
 INSERT INTO `tb_usuario` (`usu_id`, `usu_ativo`, `usu_dataHoraCriacao`, `usu_email`, `usu_senha`, `usu_admin`, `usu_ima_id`) VALUES
 (1, 1, '2020-01-01 09:31:04', 'admin@admin.com', 'qwer1234', 1, 1),
-(2, 1, '2020-01-01 09:33:43', 'henrique@gmail.com', 'qwer1234', 0, 20);
+(2, 1, '2020-01-01 09:33:43', 'henrique@gmail.com', 'qwer1234', 0, 20),
+(3, 1, '2020-01-01 09:33:43', 'joao@gmail.com', 'qwer1234', 0, 20);
 
 INSERT INTO tb_produto (pro_nome, pro_preco, pro_descricao, pro_ima_id, pro_pre_id, pro_ativo, pro_dataHoraCriacao)
 VALUES 
@@ -5749,21 +5750,26 @@ VALUES
 
 
 INSERT INTO `tb_carrinho` (`car_id`, `car_subTotal`, `car_validade`, `car_ativo`, `car_dataHoraCriacao`) VALUES
-(1, '48.070', '2020-06-20 10:28:50', 1, '2020-01-01 09:33:43');
+(1, '0', '2020-06-20 10:28:50', 1, '2020-01-01 09:33:43'),
+(2, '0', '2020-06-20 10:28:50', 1, '2020-01-01 09:33:43');
 
 INSERT INTO `tb_cliente` (`cli_id`, `cli_nome`, `cli_numeroTelefone`, `cli_numeroDocumento`, `cli_ativo`, `cli_dataHoraCriacao`, `cli_usu_id`, `cli_car_id`) VALUES
-(1, 'Henrique', '12341234123', '23057010806333', 1, '2020-01-01 09:33:43', 2, 1);
+(1, 'Henrique', '12341234123', '23057010806333', 1, '2020-01-01 09:33:43', 2, 1),
+(2, 'Joao', '44444411122', '01234567890', 1, '2020-01-01 09:33:43', 3, 2);
 
 INSERT INTO `tb_cartaoCredito` (`ccr_id`, `ccr_ativo`, `ccr_dataHoraCriacao`, `ccr_numero`, `ccr_codigo`, `ccr_nomeImpresso`, `ccr_favorito`, `ccr_cli_id`, `ccr_bandeiraCartao`) VALUES
-(1, 1, '2020-01-01 09:33:43', '1234123412341234', '234', 'qwerqwerqwer', 1, 1, 'MASTERCARD');
+(1, 1, '2020-01-01 09:33:43', '1234123412341234', '234', 'qwerqwerqwer', 1, 1, 'MASTERCARD'),
+(2, 1, '2020-01-01 09:33:43', '1234123412341234', '234', 'qwerqwerqwer', 1, 2, 'MASTERCARD');
+
 
 INSERT INTO `tb_endereco` (`end_id`, `end_nome`, `end_logradouro`, `end_bairro`, `end_cep`, `end_numero`, `end_complemento`, `end_referencia`, `end_favorito`, `end_ativo`, `end_dataHoraCriacao`, `end_cid_id`, `end_cli_id`) VALUES
-(1, 'qwerqwer', 'qwerqwer', 'qweqwe', '12312-312', 123, 'qweqwe', 'qweqwerqw', 1, 1, '2020-01-01 09:33:43', 101, 1);
+(1, 'Casa 1', 'qwerqwer', 'qweqwe', '12312-312', 123, 'qweqwe', 'qweqwerqw', 1, 1, '2020-01-01 09:33:43', 101, 1),
+(2, 'Casa 2', 'qwerqwer', 'qweqwe', '12312-312', 123, 'qweqwe', 'qweqwerqw', 1, 1, '2020-01-01 09:33:43', 101, 2);
 
 INSERT INTO tb_cupom (cup_valor, cup_usu_id, cup_ativo, cup_dataHoraCriacao,cup_dataHoraVencimento, cup_cupomPromocional) VALUES
-(10, 2, b'1', NOW(), NULL, b'0'),
-(20, 2, b'1', NOW(), NULL, b'0'),
-(30, 2, b'1', NOW(), NULL, b'0'),
+(10, 3, b'1', NOW(), NULL, b'0'),
+(20, 3, b'1', NOW(), NULL, b'0'),
+(30, 3, b'1', NOW(), NULL, b'0'),
 (50, 2, b'1', NOW(), NULL, b'0'),
 (100, 2, b'1', NOW(), NULL, b'0');
 

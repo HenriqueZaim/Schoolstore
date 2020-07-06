@@ -79,10 +79,9 @@ public class PedidoTest {
     driver.findElement(By.name("txtQuantidade")).sendKeys("1");
 
     driver.findElement(By.id("botaoSubmit")).click();
-    Thread.sleep(2000);
+    Thread.sleep(5000);
     driver.findElement(By.cssSelector(".enderecoFavorito > .form-check-label")).click();
-    driver.findElement(By.cssSelector(".cartaoFavorito > .form-check-label")).click();
-    driver.findElement(By.cssSelector("#cupom6 .form-check-label")).click();
+    driver.findElement(By.cssSelector("#cupom1 .form-check-label")).click();
     driver.findElement(By.id("botaoSubmit")).click();
     driver.findElement(By.linkText("Meu Pedidos")).click();
     driver.findElement(By.cssSelector(".rounded-circle")).click();
@@ -173,73 +172,73 @@ public class PedidoTest {
     Thread.sleep(4000);
     driver.findElement(By.linkText("Lista de Trocas")).click();
     Thread.sleep(4000);
-    driver.findElement(By.id("alterarStatusBotao-5")).click();
+    driver.findElement(By.id("alterarStatusBotao-1")).click();
     {
-      WebElement dropdown = driver.findElement(By.id("modalSelect-5"));
+      WebElement dropdown = driver.findElement(By.id("modalSelect-1"));
       dropdown.findElement(By.xpath("//option[. = 'Autorizada']")).click();
     }
     {
-      WebElement element = driver.findElement(By.id("modalSelect-5"));
+      WebElement element = driver.findElement(By.id("modalSelect-1"));
       Actions builder = new Actions(driver);
       builder.moveToElement(element).clickAndHold().perform();
     }
     {
-      WebElement element = driver.findElement(By.id("modalSelect-5"));
+      WebElement element = driver.findElement(By.id("modalSelect-1"));
       Actions builder = new Actions(driver);
       builder.moveToElement(element).perform();
     }
     {
-      WebElement element = driver.findElement(By.id("modalSelect-5"));
+      WebElement element = driver.findElement(By.id("modalSelect-1"));
       Actions builder = new Actions(driver);
       builder.moveToElement(element).release().perform();
     }
-    driver.findElement(By.id("modalSelect-5")).click();
+    driver.findElement(By.id("modalSelect-1")).click();
     driver.findElement(By.cssSelector(".btn-success")).click();
     Thread.sleep(4000);
-    driver.findElement(By.id("alterarStatusBotao-5")).click();
+    driver.findElement(By.id("alterarStatusBotao-1")).click();
     {
-      WebElement dropdown = driver.findElement(By.id("modalSelect-5"));
+      WebElement dropdown = driver.findElement(By.id("modalSelect-1"));
       dropdown.findElement(By.xpath("//option[. = 'Em troca']")).click();
     }
     {
-      WebElement element = driver.findElement(By.id("modalSelect-5"));
+      WebElement element = driver.findElement(By.id("modalSelect-1"));
       Actions builder = new Actions(driver);
       builder.moveToElement(element).clickAndHold().perform();
     }
     {
-      WebElement element = driver.findElement(By.id("modalSelect-5"));
+      WebElement element = driver.findElement(By.id("modalSelect-1"));
       Actions builder = new Actions(driver);
       builder.moveToElement(element).perform();
     }
     {
-      WebElement element = driver.findElement(By.id("modalSelect-5"));
+      WebElement element = driver.findElement(By.id("modalSelect-1"));
       Actions builder = new Actions(driver);
       builder.moveToElement(element).release().perform();
     }
-    driver.findElement(By.id("modalSelect-5")).click();
+    driver.findElement(By.id("modalSelect-1")).click();
     driver.findElement(By.cssSelector(".btn-success")).click();
     Thread.sleep(4000);
-    driver.findElement(By.id("alterarStatusBotao-5")).click();
+    driver.findElement(By.id("alterarStatusBotao-1")).click();
     {
-      WebElement dropdown = driver.findElement(By.id("modalSelect-5"));
+      WebElement dropdown = driver.findElement(By.id("modalSelect-1"));
       dropdown.findElement(By.xpath("//option[. = 'Trocado']")).click();
     }
     {
-      WebElement element = driver.findElement(By.id("modalSelect-5"));
+      WebElement element = driver.findElement(By.id("modalSelect-1"));
       Actions builder = new Actions(driver);
       builder.moveToElement(element).clickAndHold().perform();
     }
     {
-      WebElement element = driver.findElement(By.id("modalSelect-5"));
+      WebElement element = driver.findElement(By.id("modalSelect-1"));
       Actions builder = new Actions(driver);
       builder.moveToElement(element).perform();
     }
     {
-      WebElement element = driver.findElement(By.id("modalSelect-5"));
+      WebElement element = driver.findElement(By.id("modalSelect-1"));
       Actions builder = new Actions(driver);
       builder.moveToElement(element).release().perform();
     }
-    driver.findElement(By.id("modalSelect-5")).click();
+    driver.findElement(By.id("modalSelect-1")).click();
     driver.findElement(By.cssSelector(".btn-success")).click();
   }
 }
