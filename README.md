@@ -48,7 +48,6 @@ Serão utilizados para esta camada as tecnologias:
  - **JQUERY**
 
 
-
 A classe de controle, representado no pelo componente **SERVLET** do Java, recebe a requisição e gerencia a comunicação entre a camada de apresentação e a aplicação baseado no padrão MVC.
  
  Na **VIEWHELPER**, os dados da requisição são montados de acordo com seu caso de uso.
@@ -64,6 +63,7 @@ A camada de persistência utiliza o padrão arquitetural **DAO (*Data Access Obj
 
 O diagrama a abaixo representa a organização das classes dentro dos pacotes,
 tanto da arquitetura como da aplicação que fará uso da arquitetura.
+
 ![alt text](https://github.com/HenriqueZaim/les-project/blob/master/DOCUMENTA%C3%87%C3%83O/imgs/arquiteturaModel.jpg?raw=true)
 
 ## Visão de Caso de Uso
@@ -72,7 +72,9 @@ tanto da arquitetura como da aplicação que fará uso da arquitetura.
 
 ## Visão de Lógica
 Esta visão representa o diagrama do ponto de vista da organização dos pacotes do sistema nas camadas de **Apresentação**, **Negócio** e **Persistência**.
+
 ![alt text](https://github.com/HenriqueZaim/les-project/blob/master/DOCUMENTA%C3%87%C3%83O/imgs/Camadas.jpg?raw=true)
+
 - **Apresentação:** Camada de apresentação acessível ao cliente por meio de interface gráfica.
 - **Negócio:** Contém classes que controlam a execução das funcionalidades do sistema.
 - **Persistência:** Contém classes responsáveis por persistir as entidades de modelo dentro do banco de dados relacional MYSQL.
@@ -80,18 +82,22 @@ Esta visão representa o diagrama do ponto de vista da organização dos pacotes
 #### 1. Camada de Apresentação
 Nesta camada, haverá o pacote que contém todos os arquivos relacionados à exibição de informações para o usuário (Apresentação), o que engloba as páginas JSP e HTML, imagens, dentre outros. **Este pacote se comunica com o de controle**, onde estão as operações responsáveis pela comunicação com as
 classes da camada de negócio.
+
 ![alt text](https://github.com/HenriqueZaim/les-project/blob/master/DOCUMENTA%C3%87%C3%83O/imgs/apresentacao.jpg?raw=true)
 
 #### 2. Camada de Negócio
 O pacote de negócio contém as classes responsáveis por controlar as regras de negócio da aplicação. O pacote domínio **(*model*)**, contém as classes que representam os domínios. O pacote controle contém as classes de controle do fluxo de informações.
+
 ![alt text](https://github.com/HenriqueZaim/les-project/blob/master/DOCUMENTA%C3%87%C3%83O/imgs/negocio.jpg?raw=true)
 
 #### 3. Camada de Persistência
 O pacote de persistência irá possuir o pacote **DAO**, que contém as classes e interfaces responsáveis por persistir as informações do sistema no banco de dados relacional.
+
 ![alt text](https://github.com/HenriqueZaim/Schoolstore/blob/master/DOCUMENTA%C3%87%C3%83O/imgs/Camada%20de%20persistencia.jpg?raw=true)
 
 ## Visão de Implantação
 Para a configuração em questão, é indicado os nós físicos, que executarão o sistema, e as respectivas interconexões.
+
 ![alt text](https://github.com/HenriqueZaim/Schoolstore/blob/master/DOCUMENTA%C3%87%C3%83O/imgs/implantacao.png?raw=true)
 
 - **Dispositivo com acesso à internet:** Nó responsável pelo acesso a aplicação via interface
@@ -148,4 +154,4 @@ Os prazos apresentados são uma estimativa inicial considerando as informações
 RUP. Rational Unified Process.
 
 ## Licença
-MIT © [Henrique Zaim](https://github.com/HenriqueZaim/Schoolstore/blob/master/LICENSE.txt)
+MIT © [Henrique Zaim](https://github.com/HenriqueZaim/Schoolstore/blob/master/LICENSE.TXT)
